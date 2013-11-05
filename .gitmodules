@@ -1,0 +1,43 @@
+[submodule "vim"]
+	path = vim
+	url = https://github.com/carlhuda/janus.git
+
+[submodule "janus/base16-vim"]
+	path = janus/base16-vim
+	url = https://github.com/chriskempson/base16-vim.git
+
+[submodule "janus/blade"]
+	path = janus/blade
+	url = https://github.com/johnhamelink/blade.vim.git
+
+[submodule "janus/emmet-vim"]
+	path = janus/emmet-vim
+	url = https://github.com/mattn/emmet-vim.git
+
+[submodule "janus/tabular"]
+	path = janus/tabular
+	url = https://github.com/godlygeek/tabular.git
+
+[submodule "janus/tcomment_vim"]
+	path = janus/tcomment_vim
+	url = https://github.com/tomtom/tcomment_vim
+
+[submodule "janus/vim-actionscript"]
+	path = janus/vim-actionscript
+	url = https://github.com/jeroenbourgois/vim-actionscript.git
+
+[submodule "janus/vim-airline"]
+	path = janus/vim-airline
+	url = https://github.com/bling/vim-airline.git
+
+[submodule "janus/vim-coffee-script"]
+	path = janus/vim-coffee-script
+	url = https://github.com/kchmck/vim-coffee-script.git
+
+[submodule "janus/vim-markdown"]
+	path = janus/vim-markdown
+	url = https://github.com/plasticboy/vim-markdown.git
+
+[submodule "janus/vim-multiple-cursors"]
+	path = janus/vim-multiple-cursors
+	url = https://github.com/terryma/vim-multiple-cursors.git

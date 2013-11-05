@@ -1,0 +1,5 @@
+set t_Co=256
+colorscheme base16-ocean
+set background=light;
+set guioptions-=T
+set guifont=Source\ Code\ Pro\ for\ Powerline:h16

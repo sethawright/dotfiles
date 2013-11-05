@@ -1,0 +1,6 @@
+" Trying leader as comma for a while
+let mapleader = ","
+
+" Disable Janus plugins
+call janus#disable_plugin('nerdcommenter')
+" call janus#disable_plugin('nerdtree')
