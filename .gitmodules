@@ -41,3 +41,7 @@
 [submodule "janus/vim-multiple-cursors"]
 	path = janus/vim-multiple-cursors
 	url = https://github.com/terryma/vim-multiple-cursors.git
+
+[submodule "janus/ctrlp-funky"]
+	path = janus/ctrlp-funky
+	url = https://github.com/tacahiroy/ctrlp-funky.git
