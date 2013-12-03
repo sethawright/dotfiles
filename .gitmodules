@@ -6,9 +6,9 @@
 	path = janus/base16-vim
 	url = https://github.com/chriskempson/base16-vim.git
 
-[submodule "janus/blade"]
-	path = janus/blade
-	url = https://github.com/johnhamelink/blade.vim.git
+[submodule "janus/vim-blade"]
+	path = janus/vim-blade
+	url = https://github.com/xsbeats/vim-blade.git
 
 [submodule "janus/emmet-vim"]
 	path = janus/emmet-vim

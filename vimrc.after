@@ -23,8 +23,8 @@ let g:airline_theme='base16'
 
 " Colorscheme
 set background=light
-colorscheme base16-ocean
-let base16colorspace=256  " Access colors present in 256 colorspace
+colorscheme base16-seth
+" let base16colorspace=256  " Access colors present in 256 colorspace
 
 " Copy to my osx clipboard
 set clipboard=unnamed
@@ -66,7 +66,7 @@ let twitvim_show_header = 0
 let twitvim_count = 100
 let twitvim_browser_cmd = 'open'
 
-" highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+highlight LineNr ctermfg=DarkGrey ctermbg=NONE guifg=#cccccc guibg=NONE
 " highlight Normal ctermfg=239 ctermbg=white guibg=white
 
 autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade " Fix blade auto-indent
