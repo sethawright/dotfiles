@@ -22,7 +22,7 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_theme='base16'
 
 " Colorscheme
-set background=light
+set background=dark
 colorscheme base16-seth
 " let base16colorspace=256  " Access colors present in 256 colorspace
 

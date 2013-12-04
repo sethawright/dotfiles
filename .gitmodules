@@ -45,3 +45,7 @@
 [submodule "janus/ctrlp-funky"]
 	path = janus/ctrlp-funky
 	url = https://github.com/tacahiroy/ctrlp-funky.git
+
+[submodule "janus/vim-gitgutter.git"]
+    path = janus/vim-gitgutter
+    url = https://github.com/airblade/vim-gitgutter.git
