@@ -4,6 +4,9 @@ ZSH=$HOME/.oh-my-zsh
 alias vi='mvim -v'
 alias vim='mvim -v'
 
+alias pomstop='thyme -s'
+alias pomstart='thyme -d'
+
 alias homemail="mutt -F ~/.mutt/asethwright.gmail"
 alias workmail="mutt -F ~/.mutt/seth.swarminteractive"
 alias servicemail="mutt -F ~/.mutt/service.swarminteractive"
@@ -61,5 +64,9 @@ plugins=(git tmux osx rand-quote web-search)
 # Customize to your needs...
 export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/Users/Seth/Dropbox/Swarm/Web/Script/Anthony:/Users/Seth/SSH:$PATH
 
-source $ZSH/oh-my-zsh.sh
+# Use rvm
+if [[ -s $HOME/.rvm/scripts/rvm ]]; then
+  source $HOME/.rvm/scripts/rvm;
+fi
 
+source $ZSH/oh-my-zsh.sh

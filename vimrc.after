@@ -14,7 +14,9 @@ let g:vim_markdown_folding_disabled=1
 
 " Airline Config
 set laststatus=2
-set t_Co=16
+set t_Co=256
+let g:airline#extensions#ctrlp#color_template = 'replace'
+let g:airline#extensions#hunks#non_zero_only = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
 let g:airline_powerline_fonts = 1
@@ -22,15 +24,20 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_theme='base16'
 
 " Colorscheme
-set background=dark
-colorscheme base16-seth
+if has('gui_running')
+    set background=dark
+else
+    set background=light
+endif
+colorscheme base16-tomorrow
 " let base16colorspace=256  " Access colors present in 256 colorspace
 
 " Copy to my osx clipboard
 set clipboard=unnamed
 
 " Nerd tree
-let g:NERDTreeWinPos = "left"
+let g:NERDTreeWinPos = "right"
+let NERDTreeQuitOnOpen = 1
 
 " Allow more/less time for leader
 set timeoutlen=500
@@ -40,6 +47,11 @@ set ttimeoutlen=50
 :nnoremap <C-S-t> :tabnew<CR>
 :nnoremap <C-S-l> gt
 :nnoremap <C-S-h> gT
+
+" File saving
+:noremap <Leader>s :update<CR>
+:noremap <Leader>w :update<CR>
+:noremap <Leader>q :q<CR>
 
 " Allow mouse use when needed (hopefully never)
 if has('mouse')
@@ -58,15 +70,12 @@ else
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
-nnoremap <Leader>fu :CtrlPFunky<Cr>
-nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+" Funky function search
+:nnoremap <C-O> :CtrlPFunky<Cr>
+:nnoremap <leader>tg :GitGutterToggle<Cr>
+:GitGutterDisable
 
-" VIM Twitter
-let twitvim_show_header = 0
-let twitvim_count = 100
-let twitvim_browser_cmd = 'open'
-
-highlight LineNr ctermfg=DarkGrey ctermbg=NONE guifg=#cccccc guibg=NONE
+highlight LineNr ctermbg=NONE guibg=NONE
 " highlight Normal ctermfg=239 ctermbg=white guibg=white
 
 autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade " Fix blade auto-indent

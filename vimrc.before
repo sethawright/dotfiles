@@ -1,6 +1,12 @@
 " Trying leader as comma for a while
 let mapleader = ","
 
+" Syntastic Symbols
+let g:syntastic_error_symbol = '✗ '
+let g:syntastic_style_error_symbol = '✠ '
+let g:syntastic_warning_symbol = '∆ '
+let g:syntastic_style_warning_symbol = '! '
+
 " Disable Janus plugins
 call janus#disable_plugin('nerdcommenter')
 " call janus#disable_plugin('nerdtree')

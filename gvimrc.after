@@ -3,4 +3,4 @@ set guioptions-=T
 set guioptions-=R
 set guioptions-=r
 set guioptions-=L
-set guifont=Source\ Code\ Pro\ for\ Powerline:h18
+set guifont=Source\ Code\ Pro\ for\ Powerline:h15

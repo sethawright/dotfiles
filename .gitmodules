@@ -49,3 +49,7 @@
 [submodule "janus/vim-gitgutter.git"]
     path = janus/vim-gitgutter
     url = https://github.com/airblade/vim-gitgutter.git
+
+[submodule "janus/vim-colors-solarized.git"]
+    path = janus/vim-colors-solarized
+    url = https://github.com/altercation/vim-colors-solarized.git
