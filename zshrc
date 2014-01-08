@@ -4,8 +4,11 @@ ZSH=$HOME/.oh-my-zsh
 alias vi='mvim -v'
 alias vim='mvim -v'
 
-alias pomstop='thyme -s'
-alias pomstart='thyme -d'
+alias taskend='thyme -s'
+alias task='thyme -d'
+alias tasklog='thyme -d -l'
+alias showlog='pomlog'
+alias taskbreak='task -t 5 -c seth -m "break"'
 
 alias homemail="mutt -F ~/.mutt/asethwright.gmail"
 alias workmail="mutt -F ~/.mutt/seth.swarminteractive"
