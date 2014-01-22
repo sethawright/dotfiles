@@ -15,22 +15,16 @@ let g:vim_markdown_folding_disabled=1
 " Airline Config
 set laststatus=2
 set t_Co=256
+" let g:airline_left_sep=''
+" let g:airline_right_sep=''
+" let g:airline#extensions#tabline#left_sep = ''
+" let g:airline#extensions#tabline#right_sep = ''
 let g:airline#extensions#ctrlp#color_template = 'replace'
 let g:airline#extensions#hunks#non_zero_only = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_theme='seth'
-
-" Colorscheme
-if has('gui_running')
-    set background=light
-else
-    set background=dark
-endif
-colorscheme base16-tomorrow
-" let base16colorspace=256  " Access colors present in 256 colorspace
 
 " Copy to my osx clipboard
 set clipboard=unnamed
@@ -49,6 +43,9 @@ set ttimeoutlen=50
 :nnoremap <leader>l gt
 :nnoremap <C-S-h> gT
 :nnoremap <leader>h gT
+
+" Yank to end of selection
+:vmap Y y`]o<esc>p
 
 " Vimrc Refresh
 :nnoremap <leader>vr :source ~/.vimrc.after<CR>
@@ -70,13 +67,42 @@ else
 endif
 
 " Function and file search
+:nnoremap <C-U> :CtrlPFunky<Cr>
 :nnoremap <C-O> :CtrlPFunky<Cr>
 :nnoremap <leader>fu :CtrlPFunky<Cr>
 :nnoremap <leader>fp :CtrlP<Cr>
-:nnoremap <leader>fph :CtrlP ~<Cr>
 :nnoremap <leader>tg :GitGutterToggle<Cr>
+let g:ctrlp_max_files=0
 :GitGutterDisable
 
-highlight LineNr ctermbg=NONE guibg=NONE
+" Environment Switching
+:nnoremap <leader>efd :call SetSethEnv('freelance', 'dark')<Cr>
+:nnoremap <leader>efl :call SetSethEnv('freelance', 'light')<Cr>
+:nnoremap <leader>ewd :call SetSethEnv('work', 'dark')<Cr>
+:nnoremap <leader>ewl :call SetSethEnv('work', 'light')<Cr>
 
-autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade " Fix blade auto-indent
+" Tasks
+:nnoremap <leader>ta Go[ ]
+:nnoremap <leader>tc mz0lrx`z
+:nnoremap <leader>tm mz0lr-`z
+:nnoremap <leader>tu mz0lr `z
+
+function! SetSethEnv(env, bg)
+    if a:env == 'work'
+        let g:airline_theme='seth'
+        colorscheme base16-ocean
+    else
+        let g:airline_theme='solarized'
+        colorscheme solarized
+    endif
+
+    if(a:bg == 'dark')
+        set background=dark
+    else
+        set background=light
+    endif
+
+    highlight LineNr ctermbg=NONE guibg=NONE
+endfunction
+
+:call SetSethEnv('work', 'dark')
