@@ -9,16 +9,17 @@ set noswapfile
 :set wrapmargin=0
 syntax on
 
+" Mouse
+set mouse=a
+map <ScrollWheelUp> <C-Y>
+map <ScrollWheelDown> <C-E>
+
 " No markdown folding
 let g:vim_markdown_folding_disabled=1
 
 " Airline Config
 set laststatus=2
 set t_Co=256
-" let g:airline_left_sep=''
-" let g:airline_right_sep=''
-" let g:airline#extensions#tabline#left_sep = ''
-" let g:airline#extensions#tabline#right_sep = ''
 let g:airline#extensions#ctrlp#color_template = 'replace'
 let g:airline#extensions#hunks#non_zero_only = 1
 let g:airline#extensions#tabline#enabled = 1
@@ -106,3 +107,4 @@ function! SetSethEnv(env, bg)
 endfunction
 
 :call SetSethEnv('work', 'dark')
+autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade " Fix blade auto-indent
