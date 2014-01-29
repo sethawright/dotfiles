@@ -1,8 +1,0 @@
-[GntWidget::binding]
-c-x = context-menu
-
-[GntWindow::binding]
-c-o = show-menu
-c-s = sort-status
-c-a = sort-alpha
-

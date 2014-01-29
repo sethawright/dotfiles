@@ -73,7 +73,7 @@ endif
 :nnoremap <leader>fu :CtrlPFunky<Cr>
 :nnoremap <leader>fp :CtrlP<Cr>
 :nnoremap <leader>tg :GitGutterToggle<Cr>
-let g:ctrlp_max_files=0
+let g:ctrlp_max_files=30000
 :GitGutterDisable
 
 " Environment Switching
@@ -81,6 +81,7 @@ let g:ctrlp_max_files=0
 :nnoremap <leader>efl :call SetSethEnv('freelance', 'light')<Cr>
 :nnoremap <leader>ewd :call SetSethEnv('work', 'dark')<Cr>
 :nnoremap <leader>ewl :call SetSethEnv('work', 'light')<Cr>
+:nnoremap <leader>fws :FixWhitespace<CR>
 
 " Tasks
 :nnoremap <leader>ta Go[ ]
