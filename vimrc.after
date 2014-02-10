@@ -5,8 +5,9 @@ set shiftwidth=4
 set expandtab
 set nobackup
 set noswapfile
-:set textwidth=0
-:set wrapmargin=0
+set textwidth=0
+set wrapmargin=0
+filetype plugin indent on
 syntax on
 
 " Mouse
@@ -82,6 +83,7 @@ let g:ctrlp_max_files=30000
 :nnoremap <leader>ewd :call SetSethEnv('work', 'dark')<Cr>
 :nnoremap <leader>ewl :call SetSethEnv('work', 'light')<Cr>
 :nnoremap <leader>fws :FixWhitespace<CR>
+:nnoremap <leader>fi  ggVG>gv<<esc>
 
 " Tasks
 :nnoremap <leader>ta Go[ ]
@@ -92,7 +94,7 @@ let g:ctrlp_max_files=30000
 function! SetSethEnv(env, bg)
     if a:env == 'work'
         let g:airline_theme='seth'
-        colorscheme base16-ocean
+        colorscheme base16-tomorrow
     else
         let g:airline_theme='solarized'
         colorscheme solarized
@@ -104,7 +106,7 @@ function! SetSethEnv(env, bg)
         set background=light
     endif
 
-    highlight LineNr ctermbg=NONE guibg=NONE
+    highlight LineNr ctermfg=yellow ctermbg=NONE guibg=NONE
 endfunction
 
 :call SetSethEnv('work', 'dark')
