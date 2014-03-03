@@ -3,6 +3,7 @@ ZSH=$HOME/.oh-my-zsh
 
 alias vi='mvim -v'
 alias vim='mvim -v'
+alias e='mvim -v'
 
 alias taskend='thyme -s'
 alias task='thyme -d'

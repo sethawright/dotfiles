@@ -27,6 +27,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
+:nnoremap <leader>at :AirlineToggle<cr>
 
 " Copy to my osx clipboard
 set clipboard=unnamed
@@ -85,6 +86,9 @@ let g:ctrlp_max_files=30000
 :nnoremap <leader>fws :FixWhitespace<CR>
 :nnoremap <leader>fi  ggVG>gv<<esc>
 
+" Select all
+:nnoremap <leader><leader>a ggVG
+
 " Tasks
 :nnoremap <leader>ta Go[ ]
 :nnoremap <leader>tc mz0lrx`z
@@ -102,12 +106,13 @@ function! SetSethEnv(env, bg)
 
     if(a:bg == 'dark')
         set background=dark
+        highlight LineNr ctermfg=yellow ctermbg=NONE guibg=NONE
     else
         set background=light
+        highlight LineNr ctermfg=blue ctermbg=NONE guibg=NONE
     endif
 
-    highlight LineNr ctermfg=yellow ctermbg=NONE guibg=NONE
 endfunction
 
-:call SetSethEnv('work', 'dark')
+:call SetSethEnv('work', 'light')
 autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade " Fix blade auto-indent
