@@ -54,6 +54,25 @@ set ttimeoutlen=50
 :nnoremap <leader>vr :source ~/.vimrc.after<CR>
 :nnoremap <leader>ve :tabedit ~/.vimrc.after<CR>
 
+" more natural split resizing
+set splitbelow
+set splitright
+
+:nnoremap = :res +10<CR>
+:nnoremap - :res -10<CR>
+
+:nnoremap + :vertical res +10<CR>
+:nnoremap _ :vertical res -10<CR>
+
+:nnoremap <leader>wl :wincmd l<CR>
+:nnoremap <leader>wh :wincmd h<CR>
+:nnoremap <leader>wj :wincmd j<CR>
+:nnoremap <leader>wk :wincmd k<CR>
+
+" Add space above/below
+:nnoremap <leader>o o<esc>k
+:nnoremap <leader>O O<esc>j
+
 " File saving
 :noremap <Leader>s :update<CR>
 :noremap <Leader>w :update<CR>
@@ -97,7 +116,7 @@ let g:ctrlp_max_files=30000
 
 function! SetSethEnv(env, bg)
     if a:env == 'work'
-        let g:airline_theme='seth'
+        let g:airline_theme='base16'
         colorscheme base16-tomorrow
     else
         let g:airline_theme='solarized'
