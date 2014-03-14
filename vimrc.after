@@ -116,7 +116,7 @@ let g:ctrlp_max_files=30000
 
 function! SetSethEnv(env, bg)
     if a:env == 'work'
-        let g:airline_theme='base16'
+        let g:airline_theme='seth'
         colorscheme base16-tomorrow
     else
         let g:airline_theme='solarized'
