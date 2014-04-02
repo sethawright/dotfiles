@@ -80,13 +80,13 @@ set splitright
 :noremap <Leader>q :q<CR>
 
 " Change cursor to smaller on insert mode
-if exists('$TMUX')
-    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-else
-    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-endif
+" if exists('$TMUX')
+"     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+"     let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+" else
+"     let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+"     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+" endif
 
 " Function and file search
 :nnoremap <C-U> :CtrlPFunky<Cr>
@@ -115,23 +115,26 @@ let g:ctrlp_max_files=30000
 :nnoremap <leader>tu mz0lr `z
 
 function! SetSethEnv(env, bg)
-    if a:env == 'work'
-        let g:airline_theme='seth'
-        colorscheme base16-tomorrow
+    if(a:bg == 'dark')
+        set background=dark
     else
-        let g:airline_theme='solarized'
+        set background=light
+    endif
+
+    if a:env == 'work'
+        colorscheme base16-ocean
+        AirlineTheme seth
+    else
         colorscheme solarized
+        AirlineTheme solarized
     endif
 
     if(a:bg == 'dark')
-        set background=dark
         highlight LineNr ctermfg=yellow ctermbg=NONE guibg=NONE
     else
-        set background=light
         highlight LineNr ctermfg=blue ctermbg=NONE guibg=NONE
     endif
-
 endfunction
 
-:call SetSethEnv('work', 'light')
+:call SetSethEnv('work', 'dark')
 autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade " Fix blade auto-indent
