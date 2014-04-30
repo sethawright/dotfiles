@@ -25,3 +25,6 @@
 	prompt = false
 [mergetool "fugitive"]
 	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f

@@ -7,6 +7,7 @@ set nobackup
 set noswapfile
 set textwidth=0
 set wrapmargin=0
+set foldmethod=manual
 filetype plugin indent on
 syntax on
 
@@ -80,22 +81,22 @@ set splitright
 :noremap <Leader>q :q<CR>
 
 " Change cursor to smaller on insert mode
-" if exists('$TMUX')
-"     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-"     let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-" else
-"     let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-"     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-" endif
+if exists('$TMUX')
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+    autocmd VimLeave * silent !echo -ne "\033]112\007"
+else
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+    autocmd VimLeave * silent !echo -ne "\033]112\007"
+endif
 
 " Function and file search
 :nnoremap <C-U> :CtrlPFunky<Cr>
 :nnoremap <C-O> :CtrlPFunky<Cr>
 :nnoremap <leader>fu :CtrlPFunky<Cr>
 :nnoremap <leader>fp :CtrlP<Cr>
-:nnoremap <leader>tg :GitGutterToggle<Cr>
 let g:ctrlp_max_files=30000
-:GitGutterDisable
 
 " Environment Switching
 :nnoremap <leader>efd :call SetSethEnv('freelance', 'dark')<Cr>
@@ -114,6 +115,9 @@ let g:ctrlp_max_files=30000
 :nnoremap <leader>tm mz0lr-`z
 :nnoremap <leader>tu mz0lr `z
 
+" No search highlighting
+set nohlsearch
+
 function! SetSethEnv(env, bg)
     if(a:bg == 'dark')
         set background=dark
@@ -122,7 +126,7 @@ function! SetSethEnv(env, bg)
     endif
 
     if a:env == 'work'
-        colorscheme base16-ocean
+        colorscheme base16-google
         AirlineTheme seth
     else
         colorscheme solarized
@@ -136,5 +140,5 @@ function! SetSethEnv(env, bg)
     endif
 endfunction
 
-:call SetSethEnv('work', 'dark')
+:call SetSethEnv('work', 'light')
 autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade " Fix blade auto-indent
