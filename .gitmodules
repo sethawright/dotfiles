@@ -54,6 +54,10 @@
     path = janus/vim-colors-solarized
     url = https://github.com/altercation/vim-colors-solarized.git
 
+[submodule "janus/vim-colors-pencil.git"]
+    path = janus/vim-colors-pencil
+    url = https://github.com/reedes/vim-colors-pencil.git
+
 [submodule "janus/better-indent-support-for-php-with-html.git"]
     path = janus/better-indent-support-for-php-with-html
     url = https://github.com/captbaritone/better-indent-support-for-php-with-html.git
