@@ -8,6 +8,11 @@ set noswapfile
 set textwidth=0
 set wrapmargin=0
 set foldmethod=manual
+set nohlsearch
+set noshowmode
+set noru
+set laststatus=0
+
 filetype plugin indent on
 syntax on
 
@@ -19,16 +24,40 @@ map <ScrollWheelDown> <C-E>
 " No markdown folding
 let g:vim_markdown_folding_disabled=1
 
+function! Tabline()
+  let s = ''
+  for i in range(tabpagenr('$'))
+    let tab = i + 1
+    let winnr = tabpagewinnr(tab)
+    let buflist = tabpagebuflist(tab)
+    let bufnr = buflist[winnr - 1]
+    let bufname = bufname(bufnr)
+    let bufmodified = getbufvar(bufnr, "&mod")
+
+    let s .= ' %' . tab . 'T'
+    let s .= (tab == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#')
+    let s .= (bufname != '' ? ''. fnamemodify(bufname, ':t') . '' : '[No Name] ')
+
+    if bufmodified
+      let s .= '[+] '
+    endif
+  endfor
+
+  let s .= '%#TabLineFill#'
+  return s
+endfunction
+set tabline=%!Tabline()
+
 " Airline Config
-set laststatus=2
-set t_Co=256
-let g:airline#extensions#ctrlp#color_template = 'replace'
-let g:airline#extensions#hunks#non_zero_only = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
-:nnoremap <leader>at :AirlineToggle<cr>
+" set laststatus=2
+" set t_Co=256
+" let g:airline#extensions#ctrlp#color_template = 'replace'
+" let g:airline#extensions#hunks#non_zero_only = 1
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#show_buffers = 0
+" let g:airline_powerline_fonts = 1
+" let g:airline#extensions#tabline#fnamemod = ':t'
+" :nnoremap <leader>at :AirlineToggle<cr>
 
 " Copy to my osx clipboard
 set clipboard=unnamed
@@ -115,9 +144,6 @@ let g:ctrlp_max_files=30000
 :nnoremap <leader>tm mz0lr-`z
 :nnoremap <leader>tu mz0lr `z
 
-" No search highlighting
-set nohlsearch
-
 function! SetSethEnv(env, bg)
     if(a:bg == 'dark')
         set background=dark
@@ -127,10 +153,10 @@ function! SetSethEnv(env, bg)
 
     if a:env == 'work'
         colorscheme base16-google
-        AirlineTheme seth
+        " AirlineTheme seth
     else
         colorscheme solarized
-        AirlineTheme solarized
+        " AirlineTheme solarized
     endif
 
     if(a:bg == 'dark')
@@ -138,6 +164,10 @@ function! SetSethEnv(env, bg)
     else
         highlight LineNr ctermfg=blue ctermbg=NONE guibg=NONE
     endif
+
+    highlight TabLine ctermfg=blue ctermbg=NONE
+    highlight TabLineFill ctermbg=NONE
+    highlight TabLineSel ctermfg=cyan ctermbg=NONE
 endfunction
 
 :call SetSethEnv('work', 'light')

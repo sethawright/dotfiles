@@ -23,6 +23,8 @@ alias safari='open -a Safari'
 alias mail='open -a Mail'
 alias finder='open -a Finder'
 alias tmsize='tmux detach -a'
+alias swarmint='ssh swarmint@swarm.swarm1.com'
+alias admin='ssh admin@swarm.swarm1.com'
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
