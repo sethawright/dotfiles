@@ -10,7 +10,7 @@ dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
 
 # list of files/folders to symlink in homedir
-files="bash_history bash_login bashrc janus vim bash_profile vimrc.after vimrc.before tmuxifier tmux.conf gvimrc.after gitconfig gitignore_global mutt muttrc offlineimaprc mailcap pearrc thymerc viminfo zshrc"
+files="bash_history bash_login bashrc bash_profile vim vimrc tmuxifier tmux.conf gvimrc gitconfig gitignore_global pearrc viminfo zshrc"
 
 ##########
 
@@ -31,13 +31,3 @@ for file in $files; do
     echo "Creating symlink to $file in home directory."
     ln -s $dir/$file ~/.$file
 done
-
-echo "Moving any existing dotfiles from ~ to $olddir"
-mv ~/.vimrc ~/dotfiles_old/
-echo "Creating symlink to .vimrc in home directory."
-ln -s ~/.vim/janus/vim/vimrc ~/.vimrc
-
-echo "Moving any existing dotfiles from ~ to $olddir"
-mv ~/.gvimrc ~/dotfiles_old/
-echo "Creating symlink to .vimrc in home directory."
-ln -s ~/.vim/janus/vim/gvimrc ~/.gvimrc

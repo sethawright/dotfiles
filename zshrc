@@ -5,16 +5,6 @@ alias vi='mvim -v'
 alias vim='mvim -v'
 alias e='mvim -v'
 
-alias taskend='thyme -s'
-alias task='thyme -d'
-alias tasklog='thyme -d -l'
-alias showlog='pomlog'
-alias taskbreak='task -t 5 -c seth -m "break"'
-
-alias homemail="mutt -F ~/.mutt/asethwright.gmail"
-alias workmail="mutt -F ~/.mutt/seth.swarminteractive"
-alias servicemail="mutt -F ~/.mutt/service.swarminteractive"
-
 alias espresso='open -a Espresso'
 alias firefox='open -a firefox'
 alias preview='open -a Preview'

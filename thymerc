@@ -1,8 +1,0 @@
-set :tmux, true
-
-after do |seconds_left|
-    unless @log
-       `osascript -e 'display notification "Time is up!" with title "Pomodoro"'`
-       `afplay ~/Music/Sounds/New_Message.m4a`
-   end
-end
