@@ -137,8 +137,8 @@ set ttimeoutlen=50
 :vmap Y y`]o<esc>p
 
 " Vimrc Refresh
-:nnoremap <leader>vr :source ~/.vimrc.after<CR>
-:nnoremap <leader>ve :tabedit ~/.vimrc.after<CR>
+:nnoremap <leader>vr :source ~/.vimrc<CR>
+:nnoremap <leader>ve :tabedit ~/.vimrc<CR>
 
 " more natural split resizing
 set splitbelow
