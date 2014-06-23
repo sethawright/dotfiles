@@ -31,6 +31,7 @@ call vundle#end()
 filetype plugin indent on
 let mapleader=","
 syntax on
+setlocal fo+=aw
 
 " Basic Formatting
 set smartindent

@@ -1,0 +1,100 @@
+set mbox_type=maildir
+set editor="vim"
+set sendmail_wait=-1
+set folder=""
+set spoolfile=~/Maildir/
+set move = no
+set delete = yes
+set include
+set abort_nosubject=no
+set text_flowed=yes
+set pager_index_lines=18
+set pager_context = 3
+set pager_stop
+set menu_scroll
+set envelope_from
+set edit_headers
+set fast_reply
+set askcc
+set fcc_attach
+unset mime_forward                   # forward attachments as part of body
+set forward_format = "Fwd: %s"       # format of subject when forwarding
+set forward_decode
+set attribution = "On %d, %n wrote:"
+set reply_to
+set reverse_name
+set include
+set forward_quote
+set sig_on_top
+set sig_dashes = no
+
+set header_cache="~/.mutt/cache/headers"
+set message_cachedir="~/.mutt/cache/bodies"
+set certificate_file=~/.mutt/certificates
+set signature="~/.mutt/signature.gmail"
+
+set sort_aux=last-date-received
+
+ignore *
+unignore from subject to cc date x-mailer x-url user-agent
+hdr_order from to cc date subject x-mailer user-agent
+
+# IMAP
+set realname = "Seth Wright"
+set from="Seth Wright <asethwright@gmail.com>"
+set imap_user = 'asethwright@gmail.com'
+source ~/.mutt/pw.gmail
+
+# Checking mail
+set timeout = 10
+set mail_check = 5
+set beep_new
+
+set spoolfile = imaps://imap.gmail.com/INBOX
+set folder = imaps://imap.gmail.com/
+set record=""
+set postponed="imaps://imap.gmail.com/[Gmail]/Drafts"
+set mbox="imaps://imap.gmail.com/[Gmail]/All Mail"
+
+# Generic
+bind generic l select-entry
+bind generic <right> select-entry
+
+# Index
+bind index l display-message
+bind index h change-folder
+bind index <right> display-message
+bind index <left> change-folder
+bind index H display-toggle-weed
+macro index , '<change-folder>!^M'
+macro index I '<tag-pattern>~N^M<tag-prefix><toggle-new><tag-prefix><tag-entry>'
+
+# Pager
+bind pager j next-line
+bind pager k previous-line
+bind pager h exit
+bind pager l view-attachments
+bind pager <down> next-line
+bind pager <up> previous-line
+bind pager <left> exit
+bind pager <right> view-attachments
+bind pager H display-toggle-weed
+macro pager , '<change-folder>!^M'
+
+bind index gg       first-entry
+bind index G        last-entry
+
+bind index R        group-reply
+bind index <tab>    sync-mailbox
+bind index <space>  collapse-thread
+
+# Attach
+bind attach l view-attach
+bind attach <right> view-attach
+bind attach h exit
+bind attach <left> exit
+bind attach H display-toggle-weed
+
+# Compose
+bind compose l view-attach
+bind compose <right> view-attach

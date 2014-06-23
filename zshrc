@@ -66,3 +66,4 @@ if [[ -s $HOME/.rvm/scripts/rvm ]]; then
 fi
 
 source $ZSH/oh-my-zsh.sh
+source ~/.fzf.zsh
