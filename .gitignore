@@ -3,3 +3,4 @@ vim/bundle/*
 bash_history
 twitvim.token
 offlineimaprc
+.mutt/pw.*
