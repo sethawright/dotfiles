@@ -266,7 +266,7 @@ function! SetSethEnv(env, bg)
     highlight TabLineSel ctermfg=cyan ctermbg=NONE
 endfunction
 
-:call SetSethEnv('work', 'dark')
+:call SetSethEnv('work', 'light')
 autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade " Fix blade auto-indent
 
 " Nerdtree

@@ -1,17 +1,20 @@
-set mbox_type=maildir
-set editor="vim"
-set sendmail_wait=-1
+set mbox_type=Maildir
+set editor='vim + -c "setlocal wrapmargin=0 textwidth=0 wrap nocp linebreak nohlsearch"  -c ":silent+/^$"'
+set sendmail_wait=1
 set folder=""
-set spoolfile=~/Maildir/
+set markers=no
+set folder = ~/Mail                                 # mailbox location
+set spoolfile = "+Gmail/INBOX"                           # default inbox
+
 set move = no
 set delete = yes
 set include
 set abort_nosubject=no
 set text_flowed=yes
-set pager_index_lines=18
-set pager_context = 3
-set pager_stop
-set menu_scroll
+# set pager_index_lines = 23
+# set pager_context = 3
+# set pager_stop
+# set menu_scroll
 set envelope_from
 set edit_headers
 set fast_reply
@@ -27,11 +30,13 @@ set include
 set forward_quote
 set sig_on_top
 set sig_dashes = no
+set query_command="/usr/local/Cellar/lbdb/0.38.2/bin/lbdbq '%s'"
+
+source ~/.mutt/gmail.muttrc                                        # source as default
 
 set header_cache="~/.mutt/cache/headers"
 set message_cachedir="~/.mutt/cache/bodies"
 set certificate_file=~/.mutt/certificates
-set signature="~/.mutt/signature.gmail"
 
 set sort_aux=last-date-received
 
@@ -39,22 +44,10 @@ ignore *
 unignore from subject to cc date x-mailer x-url user-agent
 hdr_order from to cc date subject x-mailer user-agent
 
-# IMAP
-set realname = "Seth Wright"
-set from="Seth Wright <asethwright@gmail.com>"
-set imap_user = 'asethwright@gmail.com'
-source ~/.mutt/pw.gmail
-
 # Checking mail
 set timeout = 10
 set mail_check = 5
 set beep_new
-
-set spoolfile = imaps://imap.gmail.com/INBOX
-set folder = imaps://imap.gmail.com/
-set record=""
-set postponed="imaps://imap.gmail.com/[Gmail]/Drafts"
-set mbox="imaps://imap.gmail.com/[Gmail]/All Mail"
 
 # Generic
 bind generic l select-entry
@@ -81,12 +74,12 @@ bind pager <right> view-attachments
 bind pager H display-toggle-weed
 macro pager , '<change-folder>!^M'
 
-bind index gg       first-entry
-bind index G        last-entry
+bind index gg first-entry
+bind index G last-entry
 
-bind index R        group-reply
-bind index <tab>    sync-mailbox
-bind index <space>  collapse-thread
+bind index R group-reply
+bind index <tab> sync-mailbox
+bind index <space> collapse-thread
 
 # Attach
 bind attach l view-attach
@@ -98,3 +91,40 @@ bind attach H display-toggle-weed
 # Compose
 bind compose l view-attach
 bind compose <right> view-attach
+
+# Formats
+set date_format         = "%m/%d/%y at %I:%M%p"
+set index_format        = "%3C  %S   %D  •  %-25.25L %s %> %c"
+set pager_format        = "Reading message %C of %m %> %lL [%P]" # pager statusbar
+set folder_format       = "%2C %t %N %8s %d %f"                  # mailbox list view
+set status_format       = " %?M?%M/?%m Mails %?n?%n new, ?%?u?%u unread, ?%?p?%p drafts, ?%?t?%t +tagged, ?%?d?%d deleted, ?[%f %l]  %?b?%b unread messages. ?%>  %V  [%P]"
+set alias_format        = "%4n %t %-20a  %r"
+
+# Sidebar Patch
+mailboxes +Gmail/INBOX +Gmail/[Gmail].Sent\ Mail +Gmail/[Gmail].Spam +Gmail/[Gmail].Drafts
+mailboxes +Swarm/INBOX +Swarm/INBOX.Sent\ Messages +Swarm/INBOX.Drafts +Swarm/INBOX.Archive
+
+# run offlineimap to sync mail
+macro index O "<shell-escape>offlineimap -u quiet<enter>"
+macro index o "<shell-escape>offlineimap -u quiet -qf INBOX<enter>"
+
+# account specific sources
+folder-hook Swarm/* source ~/.mutt/swarm.muttrc
+folder-hook Gmail/* source ~/.mutt/gmail.muttrc
+
+# Sidebar
+set sidebar_width=34
+set sidebar_visible=yes
+set sidebar_delim=' | '
+
+bind index,pager <UP> sidebar-prev
+bind index,pager <DOWN> sidebar-next
+bind index,pager <RIGHT> sidebar-open
+
+macro index,pager B '<enter-command>toggle sidebar_visible<enter>'
+macro index,pager S "<enter-command>unset wait_key<enter><shell-escape>mutt_notmuch ~/.mutt/tmp<enter><change-folder-readonly>~/.mutt/tmp<enter>" "search mail (using notmuch)"
+
+color indicator brightwhite blue
+color error brightred black
+color status yellow default
+color hdrdefault blue default

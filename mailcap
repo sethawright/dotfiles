@@ -1,0 +1,7 @@
+application/*; cp %s ~/Downloads && open ~/Downloads
+image/*; cp %s ~/Downloads && open ~/Downloads
+text/*; cp %s ~/Downloads && open ~/Downloads
+
+# HTML
+#text/html; lynx -force_html %s
+text/html; view_attachment %s html
