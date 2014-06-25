@@ -11,10 +11,10 @@ set delete = yes
 set include
 set abort_nosubject=no
 set text_flowed=yes
-# set pager_index_lines = 23
+# set pager_index_lines = 20
 # set pager_context = 3
 # set pager_stop
-# set menu_scroll
+set menu_scroll
 set envelope_from
 set edit_headers
 set fast_reply
@@ -39,6 +39,8 @@ set message_cachedir="~/.mutt/cache/bodies"
 set certificate_file=~/.mutt/certificates
 
 set sort_aux=last-date-received
+set sort=reverse-date-received
+set sort_browser=reverse-date
 
 ignore *
 unignore from subject to cc date x-mailer x-url user-agent

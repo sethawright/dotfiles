@@ -60,10 +60,5 @@ plugins=(git subl tmux osx rand-quote web-search)
 # Customize to your needs...
 export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/Users/Seth/Dropbox/Swarm/Web/Script:/Users/Seth/SSH:$PATH
 
-# Use rvm
-if [[ -s $HOME/.rvm/scripts/rvm ]]; then
-  source $HOME/.rvm/scripts/rvm;
-fi
-
 source $ZSH/oh-my-zsh.sh
 source ~/.fzf.zsh

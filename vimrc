@@ -31,7 +31,6 @@ call vundle#end()
 filetype plugin indent on
 let mapleader=","
 syntax on
-setlocal fo+=aw
 
 " Basic Formatting
 set smartindent
@@ -46,7 +45,6 @@ set wrapmargin=0
 set nowrap
 set backspace=indent,eol,start
 set expandtab
-set list
 
 " List Chars
 set listchars=""
