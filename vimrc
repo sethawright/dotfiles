@@ -87,9 +87,9 @@ set wildignore+=*/tmp/cache/assets/*/sprockets/*,*/tmp/cache/assets/*/sass/*
 set wildignore+=*.swp,*~,._*
 
 " Mouse
-set mouse=a
-map <ScrollWheelUp> <C-Y>
-map <ScrollWheelDown> <C-E>
+" set mouse=a
+" map <ScrollWheelUp> <C-Y>
+" map <ScrollWheelDown> <C-E>
 
 " No markdown folding
 let g:vim_markdown_folding_disabled=1
@@ -204,15 +204,15 @@ vmap <C-j> ]egv
 nmap <leader>hs :set hlsearch! hlsearch?<CR>
 
 " Change cursor to smaller on insert mode
-if exists('$TMUX')
-    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-    autocmd VimLeave * silent !echo -ne "\033]112\007"
-else
-    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-    autocmd VimLeave * silent !echo -ne "\033]112\007"
-endif
+" if exists('$TMUX')
+"     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+"     let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+"     autocmd VimLeave * silent !echo -ne "\033]112\007"
+" else
+"     let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+"     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+"     autocmd VimLeave * silent !echo -ne "\033]112\007"
+" endif
 
 " Function and file search
 :nnoremap <C-U> :CtrlPFunky<Cr>
@@ -264,7 +264,7 @@ function! SetSethEnv(env, bg)
     highlight TabLineSel ctermfg=cyan ctermbg=NONE
 endfunction
 
-:call SetSethEnv('work', 'light')
+:call SetSethEnv('work', 'dark')
 autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade " Fix blade auto-indent
 
 " Nerdtree

@@ -79,8 +79,8 @@ macro pager , '<change-folder>!^M'
 bind index gg first-entry
 bind index G last-entry
 
-bind index R group-reply
-bind index <tab> sync-mailbox
+bind index,pager R group-reply
+bind index,pager <tab> sync-mailbox
 bind index <space> collapse-thread
 
 # Attach
@@ -126,7 +126,7 @@ bind index,pager <RIGHT> sidebar-open
 macro index,pager B '<enter-command>toggle sidebar_visible<enter>'
 macro index,pager S "<enter-command>unset wait_key<enter><shell-escape>mutt_notmuch ~/.mutt/tmp<enter><change-folder-readonly>~/.mutt/tmp<enter>" "search mail (using notmuch)"
 
-color indicator brightwhite blue
+color indicator blue default
 color error brightred black
 color status yellow default
-color hdrdefault blue default
+color hdrdefault magenta default
