@@ -214,6 +214,19 @@ nmap <leader>hs :set hlsearch! hlsearch?<CR>
 "     autocmd VimLeave * silent !echo -ne "\033]112\007"
 " endif
 
+" Cursor to yellow on insert mode
+" Blue on command/other mode
+" Note the use of hex codes (ie 3971ED)
+if exists('$TMUX')
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\033]Pl3971ED\033\\"
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\033]PlFBA922\033\\"
+    autocmd VimLeave * silent !echo -ne "\033]Pl3971ED\033\\"
+else
+    let &t_EI = "\033]Pl3971ED\033\\"
+    let &t_SI = "\033]PlFBA922\033\\"
+    autocmd VimLeave * silent !echo -ne "\033]Pl3971ED\033\\"
+endif
+
 " Function and file search
 :nnoremap <C-U> :CtrlPFunky<Cr>
 :nnoremap <C-O> :CtrlPFunky<Cr>
@@ -264,7 +277,6 @@ function! SetSethEnv(env, bg)
     highlight TabLineSel ctermfg=cyan ctermbg=NONE
 endfunction
 
-:call SetSethEnv('work', 'dark')
 autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade " Fix blade auto-indent
 
 " Nerdtree
@@ -322,3 +334,5 @@ if exists("t:NERDTreeBufName")
   endif
 endif
 endfunction
+
+:call SetSethEnv('work', 'dark')
