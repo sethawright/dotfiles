@@ -1,5 +1,5 @@
 set mbox_type=Maildir
-set editor='vim + -c "setlocal wrapmargin=0 textwidth=0 wrap nocp linebreak nohlsearch"  -c ":silent+/^$"'
+set editor='mvim -v + -c "setlocal wrapmargin=0 textwidth=0 wrap nocp linebreak nohlsearch"  -c ":silent+/^$"'
 set sendmail_wait=1
 set folder=""
 set markers=no
@@ -49,7 +49,6 @@ hdr_order from to cc date subject x-mailer user-agent
 # Checking mail
 set timeout = 10
 set mail_check = 5
-set beep_new
 
 # Generic
 bind generic l select-entry
@@ -96,7 +95,7 @@ bind compose <right> view-attach
 
 # Formats
 set date_format         = "%m/%d/%y at %I:%M%p"
-set index_format        = "%3C  %S   %D  •  %-25.25L %s %> %c"
+set index_format        = "%3C  %S  %D  %?X?∆&•?  %-25.25L    %s %> %c"
 set pager_format        = "Reading message %C of %m %> %lL [%P]" # pager statusbar
 set folder_format       = "%2C %t %N %8s %d %f"                  # mailbox list view
 set status_format       = " %?M?%M/?%m Mails %?n?%n new, ?%?u?%u unread, ?%?p?%p drafts, ?%?t?%t +tagged, ?%?d?%d deleted, ?[%f %l]  %?b?%b unread messages. ?%>  %V  [%P]"
@@ -105,6 +104,7 @@ set alias_format        = "%4n %t %-20a  %r"
 # Sidebar Patch
 mailboxes +Gmail/INBOX +Gmail/[Gmail].Sent\ Mail +Gmail/[Gmail].Spam +Gmail/[Gmail].Drafts
 mailboxes +Swarm/INBOX +Swarm/INBOX.Sent\ Messages +Swarm/INBOX.Drafts +Swarm/INBOX.Archive
+mailboxes +Service/INBOX
 
 # run offlineimap to sync mail
 macro index O "<shell-escape>offlineimap -u quiet<enter>"
@@ -113,11 +113,12 @@ macro index o "<shell-escape>offlineimap -u quiet -qf INBOX<enter>"
 # account specific sources
 folder-hook Swarm/* source ~/.mutt/swarm.muttrc
 folder-hook Gmail/* source ~/.mutt/gmail.muttrc
+folder-hook Service/* source ~/.mutt/service.muttrc
 
 # Sidebar
 set sidebar_width=34
 set sidebar_visible=yes
-set sidebar_delim=' | '
+set sidebar_delim='  │'
 
 bind index,pager <UP> sidebar-prev
 bind index,pager <DOWN> sidebar-next
