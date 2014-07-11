@@ -32,6 +32,10 @@ set sig_on_top
 set sig_dashes = no
 set query_command="/usr/local/Cellar/lbdb/0.38.2/bin/lbdbq '%s'"
 
+auto_view text/html
+alternative_order text/plain text/enriched text/html
+bind attach <return> view-mailcap
+
 source ~/.mutt/gmail.muttrc                                        # source as default
 
 set header_cache="~/.mutt/cache/headers"

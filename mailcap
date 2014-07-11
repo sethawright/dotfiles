@@ -2,6 +2,8 @@ application/*; cp %s ~/Downloads && open ~/Downloads
 image/*; cp %s ~/Downloads && open ~/Downloads
 
 # HTML
-#text/html; lynx -force_html %s
+# text/html; w3m -I %{charset} -T text/html; copiousoutput;
+text/html; lynx %s; nametemplate=%s.html
+text/html; lynx -dump %s; nametemplate=%s.html; copiousoutput
 text/plain; vim %s
 text/html; vim %s
