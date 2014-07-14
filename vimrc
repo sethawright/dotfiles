@@ -10,6 +10,7 @@ Plugin 'mileszs/ack.vim'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-surround'
 Plugin 'chriskempson/base16-vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'mattn/emmet-vim'
@@ -158,6 +159,9 @@ set splitright
 :nnoremap <leader>o o<esc>k
 :nnoremap <leader>O O<esc>j
 
+" Visual selection of text on a line
+:nnoremap <leader>vl ^v$h
+
 " File saving
 :noremap <Leader>s :update<CR>
 :noremap <Leader>w :update<CR>
@@ -179,7 +183,11 @@ nmap <leader>l mQviwu`Q
 nmap <silent> <leader>ul :t.<CR>Vr=
 
 " set text wrapping toggles
-nmap <silent> <leader>tw :set invwrap<CR>:set wrap?<CR>
+nmap <silent> <leader>tw :set invwrap<CR>:set wrap?<CR>:set list?<CR>:set linebreak?<CR>
+
+" even on wrap, i only want to go one line
+noremap <buffer> <silent> k gk
+noremap <buffer> <silent> j gj
 
 " find merge conflict markers
 nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
@@ -335,4 +343,4 @@ if exists("t:NERDTreeBufName")
 endif
 endfunction
 
-:call SetSethEnv('work', 'light')
+:call SetSethEnv('work', 'dark')
