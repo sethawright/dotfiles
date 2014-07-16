@@ -343,4 +343,4 @@ if exists("t:NERDTreeBufName")
 endif
 endfunction
 
-:call SetSethEnv('work', 'dark')
+:call SetSethEnv('work', 'light')

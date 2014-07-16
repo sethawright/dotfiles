@@ -93,6 +93,10 @@ bind attach h exit
 bind attach <left> exit
 bind attach H display-toggle-weed
 
+# Postpone
+bind compose p postpone-message
+bind index p recall-message
+
 # Compose
 bind compose l view-attach
 bind compose <right> view-attach
