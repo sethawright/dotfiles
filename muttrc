@@ -31,6 +31,7 @@ set forward_quote
 set sig_on_top
 set sig_dashes = no
 set query_command="/usr/local/Cellar/lbdb/0.38.2/bin/lbdbq '%s'"
+macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
 
 auto_view text/html
 alternative_order text/plain text/enriched text/html

@@ -3,7 +3,7 @@ set guioptions-=T
 set guioptions-=R
 set guioptions-=r
 set guioptions-=L
-set guifont=Nitti\ Basic\ Light:h16
+set guifont=Nitti\ Basic\ Light:h18
 set linespace=8
 set nonumber
 set wrap linebreak nolist
@@ -29,7 +29,7 @@ function! FocusOff()
     set nocursorline
     colorscheme pencil
     :hi NonText guifg=bg
-    set guifont=Nitti\ Basic\ Light:h16
+    set guifont=Nitti\ Basic\ Light:h18
 
     noremap <buffer> <silent> k gk
     noremap <buffer> <silent> j gj

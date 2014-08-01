@@ -6,6 +6,7 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 Plugin 'kien/ctrlp.vim'
+Plugin 'szw/vim-ctrlspace'
 Plugin 'mileszs/ack.vim'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'tpope/vim-fugitive'
@@ -14,6 +15,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'chriskempson/base16-vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'mattn/emmet-vim'
+Plugin 'godlygeek/tabular'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'jeroenbourgois/vim-actionscript'
 Plugin 'kchmck/vim-coffee-script'
@@ -37,6 +39,7 @@ syntax on
 set smartindent
 set number
 set ruler
+set hidden
 
 " Spacing & Whitespace
 set tabstop=4
@@ -95,29 +98,7 @@ set wildignore+=*.swp,*~,._*
 " No markdown folding
 let g:vim_markdown_folding_disabled=1
 
-function! Tabline()
-  let s = ''
-  for i in range(tabpagenr('$'))
-    let tab = i + 1
-    let winnr = tabpagewinnr(tab)
-    let buflist = tabpagebuflist(tab)
-    let bufnr = buflist[winnr - 1]
-    let bufname = bufname(bufnr)
-    let bufmodified = getbufvar(bufnr, "&mod")
-
-    let s .= ' %' . tab . 'T'
-    let s .= (tab == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#')
-    let s .= (bufname != '' ? ''. fnamemodify(bufname, ':t') . '' : '[No Name] ')
-
-    if bufmodified
-      let s .= '[+] '
-    endif
-  endfor
-
-  let s .= '%#TabLineFill#'
-  return s
-endfunction
-set tabline=%!Tabline()
+set showtabline=0
 
 " Copy to my osx clipboard
 set clipboard=unnamed
@@ -128,9 +109,9 @@ set ttimeoutlen=50
 
 " Tab Navigation
 :nnoremap <C-S-t> :tabnew<CR>
-:nnoremap <C-S-l> gt
+:nnoremap <C-S-l> :bn<CR>
 :nnoremap <leader>l gt
-:nnoremap <C-S-h> gT
+:nnoremap <C-S-h> :bp<CR>
 :nnoremap <leader>h gT
 
 " Yank to end of selection
@@ -139,6 +120,9 @@ set ttimeoutlen=50
 " Vimrc Refresh
 :nnoremap <leader>vr :source ~/.vimrc<CR>
 :nnoremap <leader>ve :tabedit ~/.vimrc<CR>
+
+" Show Current File Path
+:nnoremap <leader>fn :echo expand('%:p')<CR>
 
 " more natural split resizing
 set splitbelow
@@ -154,6 +138,7 @@ set splitright
 :nnoremap <leader>wh :wincmd h<CR>
 :nnoremap <leader>wj :wincmd j<CR>
 :nnoremap <leader>wk :wincmd k<CR>
+:nnoremap <leader>w= :wincmd =<CR>
 
 " Add space above/below
 :nnoremap <leader>o o<esc>k
@@ -166,7 +151,9 @@ set splitright
 :noremap <Leader>s :update<CR>
 :noremap <Leader>w :update<CR>
 :noremap <Leader>wq :wq!<CR>
-:noremap <Leader>q :q<CR>
+:noremap <Leader>bd :bd<CR>
+:noremap <Leader>q :wincmd q<CR>
+:noremap <Leader><leader>q :q!<CR>
 
 " Toggle paste mode
 nmap <silent> <F4> :set invpaste<CR>:set paste?<CR>
@@ -176,8 +163,8 @@ imap <silent> <F4> <ESC>:set invpaste<CR>:set paste?<CR>
 nnoremap <leader>fef :normal! gg=G``<CR>
 
 " upper/lower word
-nmap <leader>u mQviwU`Q
-nmap <leader>l mQviwu`Q
+nmap <leader>uc mQviwU`Q
+nmap <leader>lc mQviwu`Q
 
 " Underline the current line with '='
 nmap <silent> <leader>ul :t.<CR>Vr=
@@ -236,7 +223,8 @@ else
 endif
 
 " Function and file search
-:nnoremap <C-U> :CtrlPFunky<Cr>
+:nnoremap <C-I> :CtrlPBuffer<Cr>
+:nnoremap <C-U> :CtrlPMRU<Cr>
 :nnoremap <C-O> :CtrlPFunky<Cr>
 :nnoremap <leader>fu :CtrlPFunky<Cr>
 :nnoremap <leader>fp :CtrlP<Cr>
@@ -299,48 +287,48 @@ autocmd AuNERDTreeCmd FocusGained * call s:UpdateNERDTree()
 
 " If the parameter is a directory, cd into it
 function! s:CdIfDirectory(directory)
-let explicitDirectory = isdirectory(a:directory)
-let directory = explicitDirectory || empty(a:directory)
+    let explicitDirectory = isdirectory(a:directory)
+    let directory = explicitDirectory || empty(a:directory)
 
-if explicitDirectory
-  exe "cd " . fnameescape(a:directory)
-endif
+    if explicitDirectory
+      exe "cd " . fnameescape(a:directory)
+    endif
 
-" Allows reading from stdin
-" ex: git diff | mvim -R -
-if strlen(a:directory) == 0
-  return
-endif
+    " Allows reading from stdin
+    " ex: git diff | mvim -R -
+    if strlen(a:directory) == 0
+      return
+    endif
 
-if directory
-  NERDTree
-  wincmd p
-  bd
-endif
+    if directory
+      NERDTree
+      wincmd p
+      bd
+    endif
 
-if explicitDirectory
-  wincmd p
-endif
+    if explicitDirectory
+      wincmd p
+    endif
 endfunction
 
 " NERDTree utility function
 function! s:UpdateNERDTree(...)
-let stay = 0
+    let stay = 0
 
-if(exists("a:1"))
-  let stay = a:1
-end
-
-if exists("t:NERDTreeBufName")
-  let nr = bufwinnr(t:NERDTreeBufName)
-  if nr != -1
-    exe nr . "wincmd w"
-    exe substitute(mapcheck("R"), "<CR>", "", "")
-    if !stay
-      wincmd p
+    if(exists("a:1"))
+      let stay = a:1
     end
-  endif
-endif
+
+    if exists("t:NERDTreeBufName")
+      let nr = bufwinnr(t:NERDTreeBufName)
+      if nr != -1
+        exe nr . "wincmd w"
+        exe substitute(mapcheck("R"), "<CR>", "", "")
+        if !stay
+          wincmd p
+        end
+      endif
+    endif
 endfunction
 
 :call SetSethEnv('work', 'light')
