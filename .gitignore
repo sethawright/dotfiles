@@ -1,5 +1,6 @@
 vim/bundle/*
 !vim/bundle/Vundle.vim
+vim/.netrwhist
 bash_history
 twitvim.token
 offlineimaprc
