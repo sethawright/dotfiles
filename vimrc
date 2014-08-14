@@ -5,6 +5,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
+Plugin 'bling/vim-airline'
+Plugin 'wesQ3/vim-windowswap'
 Plugin 'kien/ctrlp.vim'
 Plugin 'szw/vim-ctrlspace'
 Plugin 'mileszs/ack.vim'
@@ -37,9 +39,9 @@ syntax on
 
 " Basic Formatting
 set smartindent
-set number
 set ruler
 set hidden
+set number
 
 " Spacing & Whitespace
 set tabstop=4
@@ -67,10 +69,16 @@ set foldmethod=manual
 set nobackup
 set noswapfile
 
+let g:airline_powerline_fonts = 1
+" let g:airline_left_sep = ' '
+" let g:airline_left_alt_sep = ' '
+" let g:airline_right_sep = ' '
+" let g:airline_right_alt_sep = ' '
+
 " Hide the status bar, i dont use it
-set noshowmode
-set noru
-set laststatus=0
+" set noshowmode
+" set noru
+set laststatus=2
 
 " Disable output and VCS files
 set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
@@ -127,6 +135,10 @@ set ttimeoutlen=50
 " more natural split resizing
 set splitbelow
 set splitright
+
+" change to relative numbering
+:nnoremap <leader>rn :set nonumber relativenumber<CR>
+:nnoremap <leader>rN :set number norelativenumber<CR>
 
 :nnoremap = :res +10<CR>
 :nnoremap - :res -10<CR>
@@ -222,6 +234,15 @@ else
     autocmd VimLeave * silent !echo -ne "\033]Pl3971ED\033\\"
 endif
 
+let g:goldenview__enable_default_mapping = 0
+
+" 1. split to tiled windows
+nmap <silent> <C-L>  <Plug>GoldenViewSplit
+
+" 2. quickly switch current window with the main pane
+nmap <silent> <C-M> <Plug>GoldenViewSwitchMain
+nmap <silent> <C-,> <Plug>GoldenViewSwitchToggle
+
 " Function and file search
 :nnoremap <C-I> :CtrlPBuffer<Cr>
 :nnoremap <C-U> :CtrlPMRU<Cr>
@@ -229,6 +250,7 @@ endif
 :nnoremap <leader>fu :CtrlPFunky<Cr>
 :nnoremap <leader>fp :CtrlP<Cr>
 let g:ctrlp_max_files=30000
+
 
 " Environment Switching
 :nnoremap <leader>efd :call SetSethEnv('freelance', 'dark')<Cr>
@@ -276,7 +298,7 @@ endfunction
 autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade " Fix blade auto-indent
 
 " Nerdtree
-let g:NERDTreeWinPos = "right"
+" let g:NERDTreeWinPos = "right"
 let NERDTreeQuitOnOpen = 1
 map <leader>n :NERDTreeToggle<CR>
 let NERDTreeHijackNetrw=0
@@ -331,4 +353,4 @@ function! s:UpdateNERDTree(...)
     endif
 endfunction
 
-:call SetSethEnv('work', 'light')
+:call SetSethEnv('work', 'dark')
