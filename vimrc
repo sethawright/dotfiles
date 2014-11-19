@@ -8,6 +8,7 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'bling/vim-airline'
 Plugin 'wesQ3/vim-windowswap'
 Plugin 'kien/ctrlp.vim'
+Plugin 'StanAngeloff/php.vim'
 Plugin 'szw/vim-ctrlspace'
 Plugin 'mileszs/ack.vim'
 Plugin 'Lokaltog/vim-easymotion'
@@ -25,6 +26,10 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'reedes/vim-colors-pencil'
+Plugin 'vim-scripts/xoria256.vim'
+Plugin 'w0ng/vim-hybrid'
+Plugin 'nanotech/jellybeans.vim'
+Plugin 'altercation/vim-colors-solarized'
 Plugin 'captbaritone/better-indent-support-for-php-with-html'
 Plugin 'xsbeats/vim-blade'
 Plugin 'bronson/vim-trailing-whitespace'
@@ -38,10 +43,11 @@ let mapleader=","
 syntax on
 
 " Basic Formatting
+set t_Co=256
 set smartindent
 set ruler
 set hidden
-set number
+set nonumber relativenumber
 
 " Spacing & Whitespace
 set tabstop=4
@@ -49,6 +55,8 @@ set shiftwidth=4
 set textwidth=0
 set wrapmargin=0
 set nowrap
+set linebreak
+set nolist
 set backspace=indent,eol,start
 set expandtab
 
@@ -69,16 +77,19 @@ set foldmethod=manual
 set nobackup
 set noswapfile
 
+" Airline is nice for if im using splits
+" Status bar is hidden otherwise
 let g:airline_powerline_fonts = 1
-" let g:airline_left_sep = ' '
-" let g:airline_left_alt_sep = ' '
-" let g:airline_right_sep = ' '
-" let g:airline_right_alt_sep = ' '
+let g:airline_left_sep = ' '
+let g:airline_left_alt_sep = ' '
+let g:airline_right_sep = ' '
+let g:airline_right_alt_sep = ' '
+set laststatus=2
 
-" Hide the status bar, i dont use it
+" Hide the status bar completely
 " set noshowmode
 " set noru
-set laststatus=2
+" set laststatus=2
 
 " Disable output and VCS files
 set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
@@ -98,7 +109,7 @@ set wildignore+=*/tmp/cache/assets/*/sprockets/*,*/tmp/cache/assets/*/sass/*
 " Disable temp and backup files
 set wildignore+=*.swp,*~,._*
 
-" Mouse
+" Mouse on
 " set mouse=a
 " map <ScrollWheelUp> <C-Y>
 " map <ScrollWheelDown> <C-E>
@@ -106,6 +117,7 @@ set wildignore+=*.swp,*~,._*
 " No markdown folding
 let g:vim_markdown_folding_disabled=1
 
+" Not using tabs in lieu of CtrlSpace
 set showtabline=0
 
 " Copy to my osx clipboard
@@ -136,16 +148,19 @@ set ttimeoutlen=50
 set splitbelow
 set splitright
 
-" change to relative numbering
+" change to absolute numbering
 :nnoremap <leader>rn :set nonumber relativenumber<CR>
 :nnoremap <leader>rN :set number norelativenumber<CR>
 
+" vertical resize
 :nnoremap = :res +10<CR>
 :nnoremap - :res -10<CR>
 
+" horizontal resize
 :nnoremap + :vertical res +10<CR>
 :nnoremap _ :vertical res -10<CR>
 
+" easier window motions
 :nnoremap <leader>wl :wincmd l<CR>
 :nnoremap <leader>wh :wincmd h<CR>
 :nnoremap <leader>wj :wincmd j<CR>
@@ -168,8 +183,8 @@ set splitright
 :noremap <Leader><leader>q :q!<CR>
 
 " Toggle paste mode
-nmap <silent> <F4> :set invpaste<CR>:set paste?<CR>
-imap <silent> <F4> <ESC>:set invpaste<CR>:set paste?<CR>
+nmap <leader><leader>p :set invpaste<CR>:set paste?<CR>
+imap <leader><leader>p <ESC>:set invpaste<CR>:set paste?<CR>
 
 " format the entire file
 nnoremap <leader>fef :normal! gg=G``<CR>
@@ -182,8 +197,9 @@ nmap <leader>lc mQviwu`Q
 nmap <silent> <leader>ul :t.<CR>Vr=
 
 " set text wrapping toggles
-nmap <silent> <leader>tw :set invwrap<CR>:set wrap?<CR>:set list?<CR>:set linebreak?<CR>
+nmap <silent> <leader>tw :set invwrap<CR>:set wrap?<CR>:set linebreak<CR>
 
+" set wrap linebreak nolist
 " even on wrap, i only want to go one line
 noremap <buffer> <silent> k gk
 noremap <buffer> <silent> j gj
@@ -210,39 +226,6 @@ vmap <C-j> ]egv
 " Toggle hlsearch with <leader>hs
 nmap <leader>hs :set hlsearch! hlsearch?<CR>
 
-" Change cursor to smaller on insert mode
-" if exists('$TMUX')
-"     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-"     let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-"     autocmd VimLeave * silent !echo -ne "\033]112\007"
-" else
-"     let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-"     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-"     autocmd VimLeave * silent !echo -ne "\033]112\007"
-" endif
-
-" Cursor to yellow on insert mode
-" Blue on command/other mode
-" Note the use of hex codes (ie 3971ED)
-if exists('$TMUX')
-    let &t_EI = "\<Esc>Ptmux;\<Esc>\033]Pl3971ED\033\\"
-    let &t_SI = "\<Esc>Ptmux;\<Esc>\033]PlFBA922\033\\"
-    autocmd VimLeave * silent !echo -ne "\033]Pl3971ED\033\\"
-else
-    let &t_EI = "\033]Pl3971ED\033\\"
-    let &t_SI = "\033]PlFBA922\033\\"
-    autocmd VimLeave * silent !echo -ne "\033]Pl3971ED\033\\"
-endif
-
-let g:goldenview__enable_default_mapping = 0
-
-" 1. split to tiled windows
-nmap <silent> <C-L>  <Plug>GoldenViewSplit
-
-" 2. quickly switch current window with the main pane
-nmap <silent> <C-M> <Plug>GoldenViewSwitchMain
-nmap <silent> <C-,> <Plug>GoldenViewSwitchToggle
-
 " Function and file search
 :nnoremap <C-I> :CtrlPBuffer<Cr>
 :nnoremap <C-U> :CtrlPMRU<Cr>
@@ -257,6 +240,8 @@ let g:ctrlp_max_files=30000
 :nnoremap <leader>efl :call SetSethEnv('freelance', 'light')<Cr>
 :nnoremap <leader>ewd :call SetSethEnv('work', 'dark')<Cr>
 :nnoremap <leader>ewl :call SetSethEnv('work', 'light')<Cr>
+:nnoremap <leader>eod :call SetSethEnv('other', 'dark')<Cr>
+:nnoremap <leader>eol :call SetSethEnv('other', 'light')<Cr>
 :nnoremap <leader>fws :FixWhitespace<CR>
 :nnoremap <leader>fi  ggVG>gv<<esc>
 
@@ -278,21 +263,40 @@ function! SetSethEnv(env, bg)
 
     if a:env == 'work'
         colorscheme base16-google
-        " AirlineTheme seth
+
+        " Insert mdoe has a thinner, yellow cursor
+        " allowing me to avoid any sort of
+        " status line indicator taking up unnecessary space
+        if exists('$TMUX')
+            " let &t_EI = "\<Esc>Ptmux;\<Esc>\033]Pl3971ED\033\\\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+            " let &t_SI = "\<Esc>Ptmux;\<Esc>\033]PlFBA922\033\\\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+
+            " let &t_EI = "\<Esc>Ptmux;\<Esc>\033]Pl3971ED\033\\"
+            " let &t_SI = "\<Esc>Ptmux;\<Esc>\033]PlFBA922\033\\"
+            " autocmd VimLeave * silent !echo -ne "\033]Pl3971ED\033\\"
+        else
+            " let &t_EI = "\033]Pl3971ED\033\\\<Esc>]50;CursorShape=0\x7"
+            " let &t_SI = "\033]PlFBA922\033\\\<Esc>]50;CursorShape=1\x7"
+            " autocmd VimLeave * silent !echo -ne "\033]Pl3971ED\033\\"
+        endif
+
+    elseif a:env =='freelance'
+        " let g:hybrid_use_iTerm_colors = 1
+        colorscheme hybrid
     else
         colorscheme solarized
-        " AirlineTheme solarized
     endif
 
     if(a:bg == 'dark')
-        highlight LineNr ctermfg=yellow ctermbg=NONE guibg=NONE
+        " highlight LineNr ctermfg=yellow ctermbg=NONE guibg=NONE
     else
-        highlight LineNr ctermfg=blue ctermbg=NONE guibg=NONE
+        " highlight LineNr ctermfg=blue ctermbg=NONE guibg=NONE
     endif
 
-    highlight TabLine ctermfg=blue ctermbg=NONE
-    highlight TabLineFill ctermbg=NONE
-    highlight TabLineSel ctermfg=cyan ctermbg=NONE
+    " highlight TabLine ctermfg=blue ctermbg=NONE
+    " highlight TabLineFill ctermbg=NONE
+    " highlight TabLineSel ctermfg=cyan ctermbg=NONE
+
 endfunction
 
 autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade " Fix blade auto-indent
@@ -353,4 +357,4 @@ function! s:UpdateNERDTree(...)
     endif
 endfunction
 
-:call SetSethEnv('work', 'dark')
+:call SetSethEnv('freelance', 'dark')

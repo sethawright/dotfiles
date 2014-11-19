@@ -1,5 +1,6 @@
 application/*; cp %s ~/Downloads && open ~/Downloads
 image/*; cp %s ~/Downloads && open ~/Downloads
+text/csv; cp %s ~/Downloads && open ~/Downloads
 
 # HTML
 # text/html; w3m -I %{charset} -T text/html; copiousoutput;

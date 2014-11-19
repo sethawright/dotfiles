@@ -3,9 +3,10 @@ set editor='mvim -v + -c "setlocal wrapmargin=0 textwidth=0 wrap nocp linebreak 
 set sendmail_wait=1
 set folder=""
 set markers=no
-set folder = ~/Mail                                 # mailbox location
+set folder = ~/Mail             # mailbox location
 set spoolfile = "+Gmail/INBOX"                           # default inbox
 
+set help = no
 set move = no
 set delete = yes
 set include
@@ -52,8 +53,8 @@ unignore from subject to cc date x-mailer x-url user-agent
 hdr_order from to cc date subject x-mailer user-agent
 
 # Checking mail
-set timeout = 10
-set mail_check = 5
+set timeout = 30
+set mail_check = 30
 
 # Generic
 bind generic l select-entry
@@ -103,8 +104,8 @@ bind compose l view-attach
 bind compose <right> view-attach
 
 # Formats
-set date_format         = "%m/%d/%y at %I:%M%p"
-set index_format        = "%3C  %S  %D  %?X?∆&•?  %-25.25L    %s %> %c"
+set date_format         = "%m/%d"
+set index_format        = "%S  %D  %-25.25L  %?X?∆&•?  %s"
 set pager_format        = "Reading message %C of %m %> %lL [%P]" # pager statusbar
 set folder_format       = "%2C %t %N %8s %d %f"                  # mailbox list view
 set status_format       = " %?M?%M/?%m Mails %?n?%n new, ?%?u?%u unread, ?%?p?%p drafts, ?%?t?%t +tagged, ?%?d?%d deleted, ?[%f %l]  %?b?%b unread messages. ?%>  %V  [%P]"
