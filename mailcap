@@ -1,4 +1,5 @@
 application/*; cp %s ~/Downloads && open ~/Downloads
+audio/*; cp %s ~/Downloads && open ~/Downloads
 image/*; cp %s ~/Downloads && open ~/Downloads
 text/csv; cp %s ~/Downloads && open ~/Downloads
 

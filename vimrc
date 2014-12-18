@@ -288,9 +288,9 @@ function! SetSethEnv(env, bg)
     endif
 
     if(a:bg == 'dark')
-        " highlight LineNr ctermfg=yellow ctermbg=NONE guibg=NONE
+        highlight LineNr ctermbg=NONE guibg=NONE
     else
-        " highlight LineNr ctermfg=blue ctermbg=NONE guibg=NONE
+        highlight LineNr ctermbg=NONE guibg=NONE
     endif
 
     " highlight TabLine ctermfg=blue ctermbg=NONE
@@ -357,4 +357,4 @@ function! s:UpdateNERDTree(...)
     endif
 endfunction
 
-:call SetSethEnv('freelance', 'dark')
+:call SetSethEnv('work', 'light')
