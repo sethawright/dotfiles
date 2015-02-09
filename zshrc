@@ -10,11 +10,13 @@ alias firefox='open -a firefox'
 alias preview='open -a Preview'
 alias chrome='open -a Google\ Chrome'
 alias safari='open -a Safari'
-alias mail='open -a Mail'
+alias mail='mutt'
 alias finder='open -a Finder'
 alias tmsize='tmux detach -a'
 alias swarmint='ssh swarmint@swarm.swarm1.com'
 alias staging='ssh staging@swarm.swarm1.com'
+alias redesign='ssh redesign@swarm.swarm1.com'
+alias chat='mcabber'
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
