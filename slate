@@ -9,6 +9,7 @@ config   windowHintsBackgroundColor       96;96;64;0.5
 config   windowHintsIgnoreHiddenWindows   false
 config   windowHintsSpread                true
 config   windowHintsSpreadPadding         10
+config   windowHintsRoundedCornerSize     3
 config   windowHintsSpreadSearchWidth     80
 config   windowHintsSpreadSearchHeight    80
 config   undoOps                          move,resize
@@ -16,6 +17,7 @@ config   undoOps                          move,resize
 # monitor aliases
 alias   mon-laptop          1440x900
 alias   mon-asus            2560x1440
+alias   mon-hp              1920x1080
 alias   mon-laptop-retina   1920x1200
 
 # set up how much padding to be used
@@ -90,14 +92,10 @@ bind   j:ctrl;alt   resize   +0     +10%
 bind   k:ctrl;alt   resize   +0     -10%
 
 # Push Bindings
-bind   l:ctrl;cmd   push   right   bar-resize:screenSizeX/3
-bind   h:ctrl;cmd   push   left    bar-resize:screenSizeX/3
+bind   l:ctrl;cmd   push   right   bar-resize:screenSizeX/2
+bind   h:ctrl;cmd   push   left    bar-resize:screenSizeX/2
 bind   k:ctrl;cmd   push   up      bar-resize:screenSizeY/2
 bind   j:ctrl;cmd   push   down    bar-resize:screenSizeY/2
-bind   l:alt;cmd    push   right   bar-resize:((screenSizeX*2)/3)
-bind   h:alt;cmd    push   left    bar-resize:((screenSizeX*2)/3)
-bind   k:alt;cmd    push   up      bar-resize:((screenSizeY*2)/3)
-bind   j:alt;cmd    push   down    bar-resize:((screenSizeY*2)/3)
 
 # Optimized Window Size
 bind   z:ctrl;cmd;alt   ${normal}
@@ -121,14 +119,21 @@ bind   return:alt;cmd         ${centered-med}
 bind   return:shift;alt;cmd   ${centered-lg}
 
 # Change Monitor
-bind   h:alt   ${centered-lg}    ${mon-laptop}
-bind   l:alt   ${centered-med}   ${mon-asus}
+bind   1:alt;ctrl   ${centered-lg}    ${mon-laptop}
+bind   2:alt;ctrl   ${centered-med}   ${mon-asus}
+bind   3:alt;ctrl   ${centered-med}   ${mon-hp}
 
 # Nudge Bindings
-bind   right:ctrl   nudge   +10%   +0
-bind   left:ctrl    nudge   -10%   +0
-bind   up:ctrl      nudge   +0     -10%
-bind   down:ctrl    nudge   +0     +10%
+bind   right:ctrl   nudge   +1%   +0
+bind   left:ctrl    nudge   -1%   +0
+bind   up:ctrl      nudge   +0     -1%
+bind   down:ctrl    nudge   +0     +1%
+
+# Nudge Bindings
+bind   right:ctrl;shift   nudge   +10%   +0
+bind   left:ctrl;shift    nudge   -10%   +0
+bind   up:ctrl;shift      nudge   +0     -10%
+bind   down:ctrl;shift    nudge   +0     +10%
 
 # Show Hints Window
 bind   esc:cmd hint
