@@ -1,14 +1,16 @@
 set mbox_type=Maildir
-set editor='mvim -v + -c "setlocal wrapmargin=0 textwidth=0 wrap nocp linebreak nohlsearch"  -c ":silent+/^$"'
+set editor='vim + -c "setlocal wrapmargin=0 textwidth=0 wrap nocp linebreak nohlsearch"  -c ":silent+/^$"'
 set sendmail_wait=1
 set folder=""
 set markers=no
-set folder = ~/Mail             # mailbox location
-set spoolfile = "+Gmail/INBOX"                           # default inbox
+set folder = ~/Mail/aliases             # mailbox location
+set spoolfile = "+Gmail"                           # default inbox
 
 set help = no
 set move = no
 set delete = yes
+set beep = no
+set beep_new = no
 set include
 set abort_nosubject=no
 set text_flowed=yes
@@ -61,7 +63,6 @@ bind generic l select-entry
 bind generic <right> select-entry
 
 # Index
-bind index l display-message
 bind index h change-folder
 bind index <right> display-message
 bind index <left> change-folder
@@ -112,21 +113,27 @@ set status_format       = " %?M?%M/?%m Mails %?n?%n new, ?%?u?%u unread, ?%?p?%p
 set alias_format        = "%4n %t %-20a  %r"
 
 # Sidebar Patch
-mailboxes +Gmail/INBOX +Gmail/[Gmail].Sent\ Mail +Gmail/[Gmail].Spam +Gmail/[Gmail].Drafts
-mailboxes +Swarm/INBOX +Swarm/INBOX.Sent\ Messages +Swarm/INBOX.Drafts +Swarm/INBOX.Archive
-mailboxes +Service/INBOX
+mailboxes +Gmail
+mailboxes +G-sent
+mailboxes +G-drafts
+mailboxes +G-trash
+mailboxes +Swarm
+mailboxes +S-sent
+mailboxes +S-drafts
+mailboxes +S-trash
+mailboxes +Service
 
 # run offlineimap to sync mail
 macro index O "<shell-escape>offlineimap -u quiet<enter>"
 macro index o "<shell-escape>offlineimap -u quiet -qf INBOX<enter>"
 
 # account specific sources
-folder-hook Swarm/* source ~/.mutt/swarm.muttrc
-folder-hook Gmail/* source ~/.mutt/gmail.muttrc
-folder-hook Service/* source ~/.mutt/service.muttrc
+folder-hook Swarm* source ~/.mutt/swarm.muttrc
+folder-hook Gmail* source ~/.mutt/gmail.muttrc
+folder-hook Service* source ~/.mutt/service.muttrc
 
 # Sidebar
-set sidebar_width=34
+set sidebar_width=25
 set sidebar_visible=yes
 set sidebar_delim='  │'
 
