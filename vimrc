@@ -35,6 +35,7 @@ Plugin 'xsbeats/vim-blade'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'chrisbra/csv.vim'
 Plugin 'vim-ruby/vim-ruby'
+Plugin 'pangloss/vim-javascript'
 
 call vundle#end()
 
@@ -129,10 +130,8 @@ set ttimeoutlen=50
 
 " Tab Navigation
 :nnoremap <C-S-t> :tabnew<CR>
-:nnoremap <C-S-l> :bn<CR>
-:nnoremap <leader>l gt
-:nnoremap <C-S-h> :bp<CR>
-:nnoremap <leader>h gT
+:nnoremap <leader>l :bn<CR>
+:nnoremap <leader>h :bp<CR>
 
 " Yank to end of selection
 :vmap Y y`]o<esc>p
@@ -234,6 +233,10 @@ nmap <leader>hs :set hlsearch! hlsearch?<CR>
 :nnoremap <leader>fp :CtrlP<Cr>
 let g:ctrlp_max_files=30000
 
+" GoldenView
+nmap <silent> <C-L>  <Plug>GoldenViewSplit
+nmap <silent> <F8>   <Plug>GoldenViewSwitchMain
+nmap <silent> <S-F8> <Plug>GoldenViewSwitchToggle
 
 " Environment Switching
 :nnoremap <leader>efd :call SetSethEnv('freelance', 'dark')<Cr>
@@ -357,4 +360,4 @@ function! s:UpdateNERDTree(...)
     endif
 endfunction
 
-:call SetSethEnv('work', 'light')
+:call SetSethEnv('work', 'dark')
