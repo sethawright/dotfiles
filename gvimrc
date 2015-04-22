@@ -5,7 +5,10 @@ set guioptions-=R
 set guioptions-=r
 set guioptions-=L
 set linespace=8
-set guifont=Source\ Code\ Pro\ for\ Powerline:h13
+set guifont=Source\ Code\ Pro\ for\ Powerline:h12
+set norelativenumber
+set laststatus=0
+:call SetSethEnv('work', 'light')
 
 " set guifont=Nitti\ Basic\ Light:h18
 " set nonumber

@@ -5,6 +5,7 @@ alias vi='mvim -v'
 # alias vim='mvim -v'
 alias e='mvim -v'
 
+alias todo='vim ~/Documents/todo.txt + -c "set norelativenumber laststatus=0"'
 alias espresso='open -a Espresso'
 alias firefox='open -a firefox'
 alias preview='open -a Preview'
@@ -66,3 +67,5 @@ export TERM=xterm-256color
 
 source $ZSH/oh-my-zsh.sh
 source ~/.fzf.zsh
+
+alias news='newsbeuter'

@@ -5,7 +5,7 @@ text/csv; cp %s ~/Downloads && open ~/Downloads
 
 # HTML
 # text/html; w3m -I %{charset} -T text/html; copiousoutput;
-text/html; lynx %s; nametemplate=%s.html
-text/html; lynx -dump %s; nametemplate=%s.html; copiousoutput
-text/plain; vim %s
-text/html; vim %s
+text/html; w3m %s; nametemplate=%s.html
+text/html; w3m -dump %s; nametemplate=%s.html; copiousoutput
+text/plain; vim %s -c "setlocal norelativenumber laststatus=0 wrapmargin=0 textwidth=0 wrap nocp linebreak nohlsearch"
+text/html; vim %s -c "setlocal norelativenumber laststatus=0 wrapmargin=0 textwidth=0 wrap nocp linebreak nohlsearch"

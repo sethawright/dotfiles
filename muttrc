@@ -1,6 +1,7 @@
 set mbox_type=Maildir
-set editor='vim + -c "setlocal wrapmargin=0 textwidth=0 wrap nocp linebreak nohlsearch"  -c ":silent+/^$"'
-set sendmail_wait=1
+set editor='vim + -c "setlocal norelativenumber laststatus=0 wrapmargin=0 textwidth=0 wrap nocp linebreak nohlsearch" -c ":normal gg8jzzi"'
+
+set sendmail_wait=0
 set folder=""
 set markers=no
 set folder = ~/Mail/aliases             # mailbox location
@@ -113,14 +114,17 @@ set status_format       = " %?M?%M/?%m Mails %?n?%n new, ?%?u?%u unread, ?%?p?%p
 set alias_format        = "%4n %t %-20a  %r"
 
 # Sidebar Patch
+mailboxes +-----GMAIL-----
 mailboxes +Gmail
 mailboxes +G-sent
 mailboxes +G-drafts
 mailboxes +G-trash
+mailboxes +-----SWARM-----
 mailboxes +Swarm
 mailboxes +S-sent
 mailboxes +S-drafts
 mailboxes +S-trash
+mailboxes +----SERVICE----
 mailboxes +Service
 
 # run offlineimap to sync mail
