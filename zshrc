@@ -1,6 +1,8 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
+stty -ixon
+
 alias vi='mvim -v'
 # alias vim='mvim -v'
 alias e='mvim -v'
@@ -63,7 +65,7 @@ plugins=(git subl tmux osx rand-quote web-search)
 # Customize to your needs...
 export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/Users/Seth/Dropbox/Swarm/Web/Script:/Users/Seth/SSH:$PATH
 export PROMPT_COMMAND='echo -ne "\033]0;Terminal\007"'
-export TERM=xterm-256color
+export TERM=screen-256color
 
 source $ZSH/oh-my-zsh.sh
 source ~/.fzf.zsh
