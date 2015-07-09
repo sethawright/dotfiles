@@ -25,6 +25,7 @@ set fast_reply
 set askcc
 set fcc_attach
 unset mime_forward                   # forward attachments as part of body
+unset collapse_unread
 set forward_format = "Fwd: %s"       # format of subject when forwarding
 set forward_decode
 set attribution = "On %d, %n wrote:"
@@ -48,7 +49,8 @@ set message_cachedir="~/.mutt/cache/bodies"
 set certificate_file=~/.mutt/certificates
 
 set sort_aux=last-date-received
-set sort=reverse-date-received
+set sort=reverse-date
+set strict_threads=yes
 set sort_browser=reverse-date
 
 ignore *
@@ -57,11 +59,14 @@ hdr_order from to cc date subject x-mailer user-agent
 
 # Checking mail
 set timeout = 30
-set mail_check = 30
+set mail_check = 60
 
 # Generic
 bind generic l select-entry
 bind generic <right> select-entry
+
+bind index - collapse-thread
+bind index _ collapse-all
 
 # Index
 bind index h change-folder
