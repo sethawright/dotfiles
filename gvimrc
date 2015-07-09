@@ -10,35 +10,41 @@ set norelativenumber
 set laststatus=0
 :call SetSethEnv('work', 'light')
 
-" set guifont=Nitti\ Basic\ Light:h18
-" set nonumber
-" set wrap linebreak nolist
-" set background=light
-" colorscheme pencil
-"
-" :nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
-" :hi NonText guifg=bg
-"
-" function! FocusOn()
-"     set cursorline
-"     colorscheme pencil-focus
-"     :hi CursorLine cterm=NONE ctermbg=NONE ctermfg=white guibg=NONE guifg=#424242
-"     :hi NonText guifg=bg
-"     set guifont=Nitti\ Basic\ Light:h22
-"
-"     noremap <buffer> <silent> k gkzz
-"     noremap <buffer> <silent> j gjzz
-" endfunction
-"
-" function! FocusOff()
-"     set nocursorline
-"     colorscheme pencil
-"     :hi NonText guifg=bg
-"     set guifont=Nitti\ Basic\ Light:h18
-"
-"     noremap <buffer> <silent> k gk
-"     noremap <buffer> <silent> j gj
-" endfunction
-"
-" :nnoremap <leader>fo :call FocusOn()<Cr>
-" :nnoremap <leader>fO :call FocusOff()<Cr>
+:nnoremap <leader>wr :call DistractionFreeWriting()<Cr>
+:nnoremap <leader>df :call DistractionFreeFS()<Cr>
+
+let g:fullscreen_colorscheme = "iawriter"
+let g:fullscreen_font = "Nitti\ Basic\ Light:h27"
+let g:normal_colorscheme = "base16-google"
+let g:normal_font="Source\ Code\ Pro\ for\ Powerline:h12"
+
+function! DistractionFreeFS()
+    colorscheme iawriter
+    set background=light
+    set gfn=Nitti\ Basic\ Light:h22                " font to use
+    set lines=40 columns=100           " size of the editable area
+    set fuoptions=background:#00f5f6f6 " macvim specific setting for editor's background color 
+    set wrap linebreak nolist
+    set guioptions-=r                  " remove right scrollbar
+    set laststatus=0                   " don't show status line
+    set linespace=5
+    set noruler                        " don't show ruler
+    set fullscreen                     " go to fullscreen editing mode
+    set display+=lastline " show incomplete paragraphs even when they don't fit on screen (avoid @'s)
+    set linebreak                      " break the lines on words
+endfunction
+
+function! DistractionFreeWriting()
+    colorscheme iawriter
+    set background=light
+    set gfn=Nitti\ Basic\ Light:h16                " font to use
+    set linespace=5
+    set wrap linebreak nolist
+    set display+=lastline " show incomplete paragraphs even when they don't fit on screen (avoid @'s)
+    set lines=40 columns=100           " size of the editable area
+    set fuoptions=background:#00f5f6f6 " macvim specific setting for editor's background color 
+    set guioptions-=r                  " remove right scrollbar
+    set laststatus=0                   " don't show status line
+    set noruler                        " don't show ruler
+    set linebreak                      " break the lines on words
+endfunction
