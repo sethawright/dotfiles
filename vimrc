@@ -29,6 +29,7 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'Yggdroot/indentLine'
+Plugin 'majutsushi/tagbar'
 
 " languages
 Plugin 'jeroenbourgois/vim-actionscript'
@@ -42,11 +43,14 @@ Plugin 'vim-ruby/vim-ruby'
 Plugin 'pangloss/vim-javascript'
 
 " colorschemes
+Plugin 'laktek/distraction-free-writing-vim'
 Plugin 'w0ng/vim-hybrid'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'chriskempson/base16-vim'
 Plugin 'tomasr/molokai'
 Plugin 'nanotech/jellybeans.vim'
+Plugin 'GertjanReynaert/cobalt2-vim-theme'
+Plugin 'blerins/flattown'
 
 call vundle#end()
 filetype plugin indent on
@@ -64,8 +68,8 @@ set ruler
 set hidden
 
 " relative line numbers
-set nonumber
-set relativenumber
+set number
+set norelativenumber
 
 " spacing & whitespace
 set tabstop=4
@@ -143,6 +147,9 @@ let g:indentLine_faster=1
 " no markdown folding
 let g:vim_markdown_folding_disabled=1
 
+" tagbar options
+let g:tagbar_sort = 0
+
 " copy to my osx clipboard, we also need reattach plugin here if using tmux
 set clipboard=unnamed
 
@@ -156,9 +163,14 @@ autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade
 " open a new tab
 :nnoremap <C-S-t> :tabnew<CR>
 
+:nnoremap <C-S-l> :tabn<CR>
+:nnoremap <C-S-h> :tabp<CR>
+
 " quick switch between buffers
 :nnoremap <leader>l :bn<CR>
 :nnoremap <leader>h :bp<CR>
+:nnoremap <leader>tb :TagbarToggle<CR>
+:vnoremap <leader>tc :s/\%V\<\(\w\)\(\w*\)\>/\u\1\L\2/ge<CR>
 
 " better copying
 :vnoremap <silent> y y`]
@@ -314,6 +326,8 @@ endfunction
 let NERDTreeQuitOnOpen = 1
 map <leader>n :NERDTreeToggle<CR>
 let NERDTreeHijackNetrw=0
+let NERDTreeMapOpenVSplit='v'
+let NERDTreeMapOpenSplit='s'
 
 " if the opening parameter is a directory, cd into it
 augroup AuNERDTreeCmd
@@ -366,3 +380,5 @@ endfunction
 
 " set environment
 :call SetSethEnv('work', 'dark')
+:call SetSethEnv('freelance', 'dark')
+:call SetSethEnv('work', 'light')
