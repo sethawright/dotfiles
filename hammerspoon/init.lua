@@ -19,8 +19,8 @@ local stepBig = 100
 
 hs.grid.MARGINX = 20
 hs.grid.MARGINY = 20
-hs.grid.GRIDHEIGHT = 5
-hs.grid.GRIDWIDTH = 7
+hs.grid.GRIDHEIGHT = 9
+hs.grid.GRIDWIDTH = 16
 
 hs.window.animationDuration = 0
 hs.hints.showTitleThresh = 0
@@ -37,7 +37,7 @@ hs.hotkey.bind(turbo, "return", function()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    hs.grid.set(win, {x = 1, y = 1, w = 5, h = 3}, screen)
+    hs.grid.set(win, {x = 1, y = 1, w = hs.grid.GRIDWIDTH - 2, h = hs.grid.GRIDHEIGHT - 2}, screen)
 end)
 
 -----------------------------------------------
@@ -82,56 +82,88 @@ hs.hotkey.bind(hyper, 'LEFT', function()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    hs.grid.set(win, {x = 0, y = 0, w = 5, h = 5}, screen)
+
+    local wide = math.floor(hs.grid.GRIDWIDTH / 3)
+    local rem = hs.grid.GRIDWIDTH - wide
+
+    hs.grid.set(win, {x = 0, y = 0, w = rem, h = hs.grid.GRIDHEIGHT}, screen)
 end)
 
 hs.hotkey.bind(hyper, 'RIGHT', function()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    hs.grid.set(win, {x = 2, y = 0, w = 5, h = 5}, screen)
+
+    local wide = math.floor(hs.grid.GRIDWIDTH / 3)
+    local rem = hs.grid.GRIDWIDTH - wide
+
+    hs.grid.set(win, {x = wide, y = 0, w = rem, h = hs.grid.GRIDHEIGHT}, screen)
 end)
 
 hs.hotkey.bind(dingShft, 'LEFT', function()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    hs.grid.set(win, {x = 0, y = 0, w = 2, h = 5}, screen)
+
+    local wide = math.floor(hs.grid.GRIDWIDTH / 3)
+    local rem = hs.grid.GRIDWIDTH - wide
+
+    hs.grid.set(win, {x = 0, y = 0, w = wide, h = hs.grid.GRIDHEIGHT}, screen)
 end)
 
 hs.hotkey.bind(dingShft, 'RIGHT', function()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    hs.grid.set(win, {x = 5, y = 0, w = 2, h = 5}, screen)
+
+    local wide = math.floor(hs.grid.GRIDWIDTH / 3)
+    local rem = hs.grid.GRIDWIDTH - wide
+
+    hs.grid.set(win, {x = rem, y = 0, w = wide, h = hs.grid.GRIDHEIGHT}, screen)
 end)
 
 hs.hotkey.bind(turbo, 'LEFT', function()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    hs.grid.set(win, {x = 1, y = 1, w = 3, h = 3}, screen)
+
+    local wide = math.floor(hs.grid.GRIDWIDTH / 3)
+    local rem = hs.grid.GRIDWIDTH - wide
+
+    hs.grid.set(win, {x = 1, y = 1, w = rem - 1, h = hs.grid.GRIDHEIGHT - 2}, screen)
 end)
 
 hs.hotkey.bind(turbo, 'RIGHT', function()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    hs.grid.set(win, {x = 3, y = 1, w = 3, h = 3}, screen)
+
+    local wide = math.floor(hs.grid.GRIDWIDTH / 3)
+    local rem = hs.grid.GRIDWIDTH - wide
+
+    hs.grid.set(win, {x = wide, y = 1, w = rem - 1, h = hs.grid.GRIDHEIGHT - 2}, screen)
 end)
 
 hs.hotkey.bind(ding, 'LEFT', function()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    hs.grid.set(win, {x = 1, y = 1, w = 2, h = 3}, screen)
+
+    local wide = math.floor(hs.grid.GRIDWIDTH / 3)
+    local rem = hs.grid.GRIDWIDTH - wide
+
+    hs.grid.set(win, {x = 1, y = 1, w = wide - 1, h = hs.grid.GRIDHEIGHT - 2}, screen)
 end)
 
 hs.hotkey.bind(ding, 'RIGHT', function()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    hs.grid.set(win, {x = 4, y = 1, w = 2, h = 3}, screen)
+
+    local wide = math.floor(hs.grid.GRIDWIDTH / 3)
+    local rem = hs.grid.GRIDWIDTH - wide
+
+    hs.grid.set(win, {x = rem, y = 1, w = wide - 1, h = hs.grid.GRIDHEIGHT - 2}, screen)
 end)
 
 -----------------------------------------------
