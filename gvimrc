@@ -7,15 +7,16 @@ set guioptions-=L
 set linespace=8
 set guifont=Source\ Code\ Pro\ for\ Powerline:h12
 set norelativenumber
+set nonumber
 set laststatus=0
-:call SetSethEnv('work', 'light')
+:call SetSethEnv('work', 'dark')
 
 :nnoremap <leader>wr :call DistractionFreeWriting()<Cr>
 :nnoremap <leader>df :call DistractionFreeFS()<Cr>
 
 let g:fullscreen_colorscheme = "iawriter"
 let g:fullscreen_font = "Nitti\ Basic\ Light:h27"
-let g:normal_colorscheme = "base16-google"
+let g:normal_colorscheme = "base16-ocean"
 let g:normal_font="Source\ Code\ Pro\ for\ Powerline:h12"
 
 function! DistractionFreeFS()

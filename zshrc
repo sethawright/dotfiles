@@ -7,19 +7,23 @@ alias vi='mvim -v'
 # alias vim='mvim -v'
 alias e='mvim -v'
 
-alias todo='vim ~/Documents/todo.txt + -c "set norelativenumber laststatus=0"'
+alias todo='vim ~/Documents/todo.md + -c "set norelativenumber invwrap wrap linebreak laststatus=0"'
 alias espresso='open -a Espresso'
 alias firefox='open -a firefox'
 alias preview='open -a Preview'
 alias chrome='open -a Google\ Chrome'
 alias safari='open -a Safari'
-alias mail='mutt'
+alias mail='mutt -f ~/Mail/Swarm/INBOX'
 alias finder='open -a Finder'
 alias tmsize='tmux detach -a'
-alias swarmint='ssh swarmint@swarm.swarm1.com'
+alias swarmint='ssh swarmint'
+alias swarm1='ssh swarm1'
+alias swarm2='ssh swarm2'
+alias swarm3='ssh swarm3'
 alias staging='ssh staging@swarm.swarm1.com'
 alias redesign='ssh redesign@swarm.swarm1.com'
 alias chat='mcabber'
+alias gmail='mutt -f ~/Mail/Gmail/INBOX'
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -65,9 +69,8 @@ plugins=(git subl tmux osx rand-quote web-search)
 # Customize to your needs...
 export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/Users/Seth/Dropbox/Swarm/Web/Script:/Users/Seth/SSH:$PATH
 export PROMPT_COMMAND='echo -ne "\033]0;Terminal\007"'
-export TERM=screen-256color
+export TERM=xterm-256color
 
 source $ZSH/oh-my-zsh.sh
-source ~/.fzf.zsh
 
 alias news='newsbeuter'

@@ -11,7 +11,7 @@ set help = no
 set move = no
 set delete = yes
 set beep = no
-set beep_new = no
+set beep_new = yes
 set include
 set abort_nosubject=no
 set text_flowed=yes
@@ -119,18 +119,18 @@ set status_format       = " %?M?%M/?%m Mails %?n?%n new, ?%?u?%u unread, ?%?p?%p
 set alias_format        = "%4n %t %-20a  %r"
 
 # Sidebar Patch
-mailboxes +-----GMAIL-----
-mailboxes +Gmail
-mailboxes +G-sent
-mailboxes +G-drafts
-mailboxes +G-trash
-mailboxes +-----SWARM-----
-mailboxes +Swarm
-mailboxes +S-sent
-mailboxes +S-drafts
-mailboxes +S-trash
-mailboxes +----SERVICE----
-mailboxes +Service
+# mailboxes +-----GMAIL-----
+# mailboxes +Gmail
+# mailboxes +G-sent
+# mailboxes +G-drafts
+# mailboxes +G-trash
+# mailboxes +-----SWARM-----
+# mailboxes +Swarm
+# mailboxes +S-sent
+# mailboxes +S-drafts
+# mailboxes +S-trash
+# mailboxes +----SERVICE----
+# mailboxes +Service
 
 # run offlineimap to sync mail
 macro index O "<shell-escape>offlineimap -u quiet<enter>"
@@ -142,15 +142,15 @@ folder-hook Gmail* source ~/.mutt/gmail.muttrc
 folder-hook Service* source ~/.mutt/service.muttrc
 
 # Sidebar
-set sidebar_width=25
-set sidebar_visible=yes
-set sidebar_delim='  │'
+# set sidebar_width=25
+# set sidebar_visible=yes
+# set sidebar_delim='  │'
 
-bind index,pager <UP> sidebar-prev
-bind index,pager <DOWN> sidebar-next
-bind index,pager <RIGHT> sidebar-open
+# bind index,pager <UP> sidebar-prev
+# bind index,pager <DOWN> sidebar-next
+# bind index,pager <RIGHT> sidebar-open
 
-macro index,pager B '<enter-command>toggle sidebar_visible<enter>'
+# macro index,pager B '<enter-command>toggle sidebar_visible<enter>'
 macro index,pager S "<enter-command>unset wait_key<enter><shell-escape>mutt_notmuch ~/.mutt/tmp<enter><change-folder-readonly>~/.mutt/tmp<enter>" "search mail (using notmuch)"
 
 color indicator blue default

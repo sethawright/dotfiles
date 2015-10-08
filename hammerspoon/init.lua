@@ -210,38 +210,38 @@ hs.hotkey.bind(mash, "Down", function()
 end)
 
 --- resize ----
-hs.hotkey.bind(turbo, "Left", function()
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
+-- hs.hotkey.bind(turbo, "Left", function()
+--   local win = hs.window.focusedWindow()
+--   local f = win:frame()
 
-  f.w = f.w - step
-  win:setFrame(f)
-end)
+--   f.w = f.w - step
+--   win:setFrame(f)
+-- end)
 
-hs.hotkey.bind(turbo, "Right", function()
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
+-- hs.hotkey.bind(turbo, "Right", function()
+--   local win = hs.window.focusedWindow()
+--   local f = win:frame()
 
-  f.w = f.w + step
+--   f.w = f.w + step
 
-  win:setFrame(f)
-end)
+--   win:setFrame(f)
+-- end)
 
-hs.hotkey.bind(turbo, "Up", function()
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
+-- hs.hotkey.bind(turbo, "Up", function()
+--   local win = hs.window.focusedWindow()
+--   local f = win:frame()
 
-  f.h = f.h - step
-  win:setFrame(f)
-end)
+--   f.h = f.h - step
+--   win:setFrame(f)
+-- end)
 
-hs.hotkey.bind(turbo, "Down", function()
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
+-- hs.hotkey.bind(turbo, "Down", function()
+--   local win = hs.window.focusedWindow()
+--   local f = win:frame()
 
-  f.h = f.h + step
-  win:setFrame(f)
-end)
+--   f.h = f.h + step
+--   win:setFrame(f)
+-- end)
 
 hs.hotkey.bind(mashift, "Left", function()
   local win = hs.window.focusedWindow()

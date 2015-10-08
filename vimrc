@@ -22,19 +22,18 @@ Plugin 'Lokaltog/vim-easymotion'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-obsession'
 Plugin 'mattn/emmet-vim'
 Plugin 'godlygeek/tabular'
 Plugin 'tpope/vim-commentary'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'Yggdroot/indentLine'
 Plugin 'majutsushi/tagbar'
 
 " languages
 Plugin 'jeroenbourgois/vim-actionscript'
 Plugin 'kchmck/vim-coffee-script'
-Plugin 'plasticboy/vim-markdown'
 Plugin 'chrisbra/csv.vim'
 Plugin 'xsbeats/vim-blade'
 Plugin 'StanAngeloff/php.vim'
@@ -43,14 +42,11 @@ Plugin 'vim-ruby/vim-ruby'
 Plugin 'pangloss/vim-javascript'
 
 " colorschemes
-Plugin 'laktek/distraction-free-writing-vim'
 Plugin 'w0ng/vim-hybrid'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'chriskempson/base16-vim'
 Plugin 'tomasr/molokai'
 Plugin 'nanotech/jellybeans.vim'
-Plugin 'GertjanReynaert/cobalt2-vim-theme'
-Plugin 'blerins/flattown'
 
 call vundle#end()
 filetype plugin indent on
@@ -61,6 +57,10 @@ let mapleader=","
 
 " use 256 colors when available
 set t_Co=256
+
+" show indention when wrapping
+set breakindent
+set showbreak=\ 
 
 " basic formatting
 set smartindent
@@ -137,15 +137,6 @@ set wildignore+=*/tmp/cache/assets/*/sprockets/*,*/tmp/cache/assets/*/sass/*
 
 " disable temp and backup files
 set wildignore+=*.swp,*~,._*
-
-" show indentation lines using faster method
-let g:indentLine_faster=1
-
-" toggle indentation lines
-:nnoremap <leader>ig :IndentLinesToggle<CR>
-
-" no markdown folding
-let g:vim_markdown_folding_disabled=1
 
 " tagbar options
 let g:tagbar_sort = 0
@@ -291,7 +282,7 @@ nmap <leader>hs :set hlsearch! hlsearch?<CR>
 :nnoremap <leader>fp :CtrlP<Cr>
 
 " more speedy startup of ctrlp
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$'
 let g:ctrlp_max_files=30000
 
 " select entire file
@@ -313,13 +304,18 @@ function! SetSethEnv(env, bg)
     endif
 
     if a:env == 'work'
-        colorscheme base16-google
+        let g:hybrid_use_Xresources = 1
+        set background=dark
+        colorscheme hybrid
     elseif a:env =='freelance'
         colorscheme solarized
     else
     endif
 
     highlight LineNr ctermbg=NONE guibg=NONE
+    hi link CtrlSpaceNormal Normal
+    hi link CtrlSpaceSelected Visual
+    hi link CtrlSpaceStatus Ctrlpdark
 endfunction
 
 " nerdtree settings
@@ -379,6 +375,6 @@ function! s:UpdateNERDTree(...)
 endfunction
 
 " set environment
-:call SetSethEnv('work', 'dark')
-:call SetSethEnv('freelance', 'dark')
+:call SetSethEnv('freelance', 'light')
 :call SetSethEnv('work', 'light')
+:call SetSethEnv('work', 'dark')
