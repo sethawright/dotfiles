@@ -7,11 +7,12 @@ set markers=no
 set folder = ~/Mail/aliases             # mailbox location
 set spoolfile = "+Gmail"                           # default inbox
 
+set beep = no
+set beep_new = yes
+
 set help = no
 set move = no
 set delete = yes
-set beep = no
-set beep_new = yes
 set include
 set abort_nosubject=no
 set text_flowed=yes
@@ -112,7 +113,7 @@ bind compose <right> view-attach
 
 # Formats
 set date_format         = "%m/%d"
-set index_format        = "%S  %D  %-25.25L  %?X?∆&•?  %s"
+set index_format        = "%S  %-20.20L  %?X?∆&•?  %-70.70s  %> %D"
 set pager_format        = "Reading message %C of %m %> %lL [%P]" # pager statusbar
 set folder_format       = "%2C %t %N %8s %d %f"                  # mailbox list view
 set status_format       = " %?M?%M/?%m Mails %?n?%n new, ?%?u?%u unread, ?%?p?%p drafts, ?%?t?%t +tagged, ?%?d?%d deleted, ?[%f %l]  %?b?%b unread messages. ?%>  %V  [%P]"
@@ -140,6 +141,7 @@ macro index o "<shell-escape>offlineimap -u quiet -qf INBOX<enter>"
 folder-hook Swarm* source ~/.mutt/swarm.muttrc
 folder-hook Gmail* source ~/.mutt/gmail.muttrc
 folder-hook Service* source ~/.mutt/service.muttrc
+folder-hook UNC* source ~/.mutt/unc.muttrc
 
 # Sidebar
 # set sidebar_width=25
@@ -151,9 +153,8 @@ folder-hook Service* source ~/.mutt/service.muttrc
 # bind index,pager <RIGHT> sidebar-open
 
 # macro index,pager B '<enter-command>toggle sidebar_visible<enter>'
-macro index,pager S "<enter-command>unset wait_key<enter><shell-escape>mutt_notmuch ~/.mutt/tmp<enter><change-folder-readonly>~/.mutt/tmp<enter>" "search mail (using notmuch)"
 
-color indicator blue default
+color indicator yellow default
 color error brightred black
 color status yellow default
 color hdrdefault magenta default

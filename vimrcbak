@@ -11,12 +11,11 @@ Plugin 'gmarik/Vundle.vim'
 
 " file/window organization
 Plugin 'scrooloose/nerdtree'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plugin 'bling/vim-airline'
 Plugin 'wesQ3/vim-windowswap'
-Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'kien/ctrlp.vim'
 Plugin 'szw/vim-ctrlspace'
-Plugin 'rking/ag.vim'
+Plugin 'mileszs/ack.vim'
 
 " utilities
 Plugin 'Lokaltog/vim-easymotion'
@@ -31,30 +30,23 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'majutsushi/tagbar'
-Plugin 'FelikZ/ctrlp-py-matcher'
 
 " languages
 Plugin 'jeroenbourgois/vim-actionscript'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'chrisbra/csv.vim'
+Plugin 'xsbeats/vim-blade'
 Plugin 'StanAngeloff/php.vim'
-Plugin 'jwalton512/vim-blade'
 Plugin 'captbaritone/better-indent-support-for-php-with-html'
 Plugin 'vim-ruby/vim-ruby'
-Plugin 'plasticboy/vim-markdown'
 Plugin 'pangloss/vim-javascript'
-Plugin 'digitaltoad/vim-pug'
 
 " colorschemes
 Plugin 'w0ng/vim-hybrid'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'chriskempson/base16-vim'
 Plugin 'tomasr/molokai'
-Plugin 'morhetz/gruvbox'
 Plugin 'nanotech/jellybeans.vim'
-Plugin 'kristijanhusak/vim-hybrid-material'
-Plugin 'NLKNguyen/papercolor-theme'
-Plugin 'jdkanani/vim-material-theme'
 
 call vundle#end()
 filetype plugin indent on
@@ -65,10 +57,10 @@ let mapleader=","
 
 " show indention when wrapping
 set breakindent
-set showbreak= 
+set showbreak=\ 
 
 " basic formatting
-set nosmartindent
+set smartindent
 set ruler
 set hidden
 
@@ -143,8 +135,8 @@ set wildignore+=*/tmp/cache/assets/*/sprockets/*,*/tmp/cache/assets/*/sass/*
 " disable temp and backup files
 set wildignore+=*.swp,*~,._*
 
-" bold is OK
-let g:enable_bold_font = 1
+" tagbar options
+let g:tagbar_sort = 0
 
 " copy to my osx clipboard, we also need reattach plugin here if using tmux
 set clipboard=unnamed
@@ -153,14 +145,8 @@ set clipboard=unnamed
 set timeoutlen=500
 set ttimeoutlen=50
 
-" auto refresh file changes
-set autoread
-
 " fix blade auto indent issue
 autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade
-
-" dont fold my markdown
-let g:vim_markdown_folding_disabled = 1
 
 " open a new tab
 :nnoremap <C-S-t> :tabnew<CR>
@@ -187,7 +173,6 @@ augroup myvimrc
   au!
   au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
-:nnoremap <leader><leader>r :so $MYVIMRC<CR>
 
 " quickly edit vimrc
 :noremap <leader>ve :tabedit ~/.vimrc<CR>
@@ -236,11 +221,6 @@ endfunction
 :noremap <Leader>bd :bd<CR>
 :noremap <Leader>q :wincmd q<CR>
 :noremap <Leader><leader>q :q!<CR>
-
-" jumping around, i always want my cursor to be in the middle
-:noremap <Leader><leader>q :q!<CR>
-:noremap L Lzz
-:noremap H Hzz
 
 " toggle paste mode
 nmap <leader><leader>p :set invpaste<CR>:set paste?<CR>
@@ -299,62 +279,11 @@ nmap <leader>hs :set hlsearch! hlsearch?<CR>
 :nnoremap <leader>fp :CtrlP<Cr>
 
 " more speedy startup of ctrlp
-if executable('ag')
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command =
-    \ 'ag %s --files-with-matches -g "" --ignore "*.min.js" --ignore "*.min.css"'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-
-else
-  " Fall back to using git ls-files if Ag is not available
-  let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
-  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
-endif
-
-if has('python') || has('python3')
-    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-endif
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$'
+let g:ctrlp_max_files=30000
 
 " select entire file
 :nnoremap <leader><leader>a ggVG
-
-" change cursor to underscore on visual mode or insert mode.
-if exists('$TMUX')
-  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
-  let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
-  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-else
-  let &t_SI = "\<Esc>]50;CursorShape=2\x7"
-  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-endif
-
-" seamless switching tmux panes
-if exists('$TMUX')
-  function! TmuxOrSplitSwitch(wincmd, tmuxdir)
-    let previous_winnr = winnr()
-    silent! execute "wincmd " . a:wincmd
-    if previous_winnr == winnr()
-      call system("tmux select-pane -" . a:tmuxdir)
-      redraw!
-    endif
-  endfunction
-
-  let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
-  let &t_ti = "\<Esc>]2;vim\<Esc>\\" . &t_ti
-  let &t_te = "\<Esc>]2;". previous_title . "\<Esc>\\" . &t_te
-
-  nnoremap <silent> <C-h> :call TmuxOrSplitSwitch('h', 'L')<cr>
-  nnoremap <silent> <C-j> :call TmuxOrSplitSwitch('j', 'D')<cr>
-  nnoremap <silent> <C-k> :call TmuxOrSplitSwitch('k', 'U')<cr>
-  nnoremap <silent> <C-l> :call TmuxOrSplitSwitch('l', 'R')<cr>
-else
-  map <C-h> <C-w>h
-  map <C-j> <C-w>j
-  map <C-k> <C-w>k
-  map <C-l> <C-w>l
-endif
 
 " environment switching
 :nnoremap <leader>efd :call SetSethEnv('freelance', 'dark')<Cr>
@@ -364,16 +293,10 @@ endif
 :nnoremap <leader>eod :call SetSethEnv('other', 'dark')<Cr>
 :nnoremap <leader>eol :call SetSethEnv('other', 'light')<Cr>
 
-set t_Co=256
-let base16colorspace=256
-let g:hybrid_custom_term_colors=1
-let g:hybrid_reduced_contrast=1
-
 function! SetSethEnv(col, bg)
+    set t_Co=256
     exec 'set background='.a:bg
     exec 'colorscheme '.a:col
-
-    let g:airline_theme = 'seth'
 
     highlight LineNr ctermbg=NONE guibg=NONE
     hi link CtrlSpaceNormal Normal
@@ -384,7 +307,6 @@ endfunction
 " nerdtree settings
 let NERDTreeQuitOnOpen = 1
 map <leader>n :NERDTreeToggle<CR>
-map <leader>m :NERDTreeFind<CR>
 let NERDTreeHijackNetrw=0
 let NERDTreeMapOpenVSplit='v'
 let NERDTreeMapOpenSplit='s'
@@ -439,4 +361,4 @@ function! s:UpdateNERDTree(...)
 endfunction
 
 " set environment
-:call SetSethEnv('hybrid', 'dark')
+:call SetSethEnv('jellybeans', 'dark')

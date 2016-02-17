@@ -9,7 +9,7 @@ set guifont=Source\ Code\ Pro\ for\ Powerline:h12
 set norelativenumber
 set nonumber
 set laststatus=0
-:call SetSethEnv('work', 'dark')
+:call SetSethEnv('base16-google', 'light')
 
 :nnoremap <leader>wr :call DistractionFreeWriting()<Cr>
 :nnoremap <leader>df :call DistractionFreeFS()<Cr>

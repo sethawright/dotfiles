@@ -19,7 +19,7 @@ local stepBig = 100
 
 hs.grid.MARGINX = 20
 hs.grid.MARGINY = 20
-hs.grid.GRIDHEIGHT = 9
+hs.grid.GRIDHEIGHT = 10
 hs.grid.GRIDWIDTH = 16
 
 hs.window.animationDuration = 0
@@ -44,10 +44,10 @@ end)
 -- Change grid sizing
 -----------------------------------------------
 
-hs.hotkey.bind(hyper, '=', function() hs.grid.adjustNumberOfRows( 1) end)
-hs.hotkey.bind(hyper, '-', function() hs.grid.adjustNumberOfRows(-1) end)
-hs.hotkey.bind(mash, '=', function() hs.grid.adjustNumberOfColumns( 1) end)
-hs.hotkey.bind(mash, '-', function() hs.grid.adjustNumberOfColumns(-1) end)
+-- hs.hotkey.bind(hyper, '=', function() hs.grid.adjustNumberOfRows( 1) end)
+-- hs.hotkey.bind(hyper, '-', function() hs.grid.adjustNumberOfRows(-1) end)
+-- hs.hotkey.bind(mash, '=', function() hs.grid.adjustNumberOfColumns( 1) end)
+-- hs.hotkey.bind(mash, '-', function() hs.grid.adjustNumberOfColumns(-1) end)
 
 -----------------------------------------------
 -- Snap windows
@@ -170,8 +170,8 @@ end)
 -- Change screens
 -----------------------------------------------
 
-hs.hotkey.bind({"ctrl", "alt"}, 'LEFT', hs.grid.pushWindowNextScreen)
-hs.hotkey.bind({"ctrl", "alt"}, 'RIGHT', hs.grid.pushWindowPrevScreen)
+hs.hotkey.bind({"ctrl", "alt"}, 'LEFT', hs.grid.pushWindowPrevScreen)
+hs.hotkey.bind({"ctrl", "alt"}, 'RIGHT', hs.grid.pushWindowNextScreen)
 
 -----------------------------------------------
 --- Free Movements
