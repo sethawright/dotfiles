@@ -35,6 +35,8 @@ Plugin 'FelikZ/ctrlp-py-matcher'
 
 " languages
 Plugin 'jeroenbourgois/vim-actionscript'
+Plugin 'mxw/vim-jsx'
+Plugin 'isRuslan/vim-es6'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'chrisbra/csv.vim'
 Plugin 'StanAngeloff/php.vim'
@@ -65,7 +67,7 @@ let mapleader=","
 
 " show indention when wrapping
 set breakindent
-set showbreak= 
+set showbreak=\ 
 
 " basic formatting
 set nosmartindent
@@ -73,8 +75,8 @@ set ruler
 set hidden
 
 " relative line numbers
-set number
-set norelativenumber
+set nonumber
+set relativenumber
 
 " spacing & whitespace
 set tabstop=4
@@ -107,6 +109,9 @@ set noswapfile
 " no cursor line highlight
 set nocursorline
 set nocursorcolumn
+
+" dont match parenthesis, they are usually wrong
+let loaded_matchparen = 1
 
 " more natural split resizing
 set splitbelow

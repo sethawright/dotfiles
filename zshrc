@@ -1,9 +1,5 @@
 stty -ixon
 
-alias vi='mvim -v'
-# alias vim='mvim -v'
-alias e='mvim -v'
-
 alias todo='vim ~/Dropbox/Documents/Todo/todo.md + -c "set norelativenumber nonumber invwrap wrap linebreak laststatus=0"'
 alias espresso='open -a Espresso'
 alias firefox='open -a firefox'
@@ -30,6 +26,8 @@ alias scott='ssh Scott@192.168.1.17'
 alias randall='ssh relmo@192.168.1.15'
 alias render='ssh render@192.168.1.20'
 alias timestamp='date +"%Y-%m-%d %H:%M:%S"'
+alias v="vim ."
+alias adbpic='adb shell screencap -p | perl -pe "s/\x0D\x0A/\x0A/g" > "/Users/seth/Downloads/firetvscreenshot_$(date +%Y%m%d-%H%M%S).png"'
 
 alias gs="git status;gg s"
 alias gg='noglob gg'
@@ -44,7 +42,7 @@ alias gst="git status;gg s"
 alias gp="git push"
 
 # Customize to your needs...
-export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/Users/Seth/Dropbox/Swarm/Web/Script:/Users/Seth/SSH:$PATH
+export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/Users/Seth/Dropbox/Swarm/Web/Script:/Users/Seth/SSH:/Users/seth/Library/Android/sdk/platform-tools:$PATH
 [[ $TMUX = "" ]] && export TERM="screen-256color"
 
 source ~/.config/antigen/antigen.zsh
@@ -53,9 +51,10 @@ antigen use oh-my-zsh
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle mafredri/zsh-async
 antigen bundle sindresorhus/pure
-# antigen bundle git
 antigen bundle sublime
+antigen bundle colorize
 antigen bundle tmux
+antigen bundle vi-mode
 
 antigen apply
 
