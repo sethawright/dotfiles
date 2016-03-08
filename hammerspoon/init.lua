@@ -19,8 +19,8 @@ local stepBig = 100
 
 hs.grid.MARGINX = 20
 hs.grid.MARGINY = 20
-hs.grid.GRIDHEIGHT = 10
-hs.grid.GRIDWIDTH = 16
+hs.grid.GRIDHEIGHT = 8
+hs.grid.GRIDWIDTH = 12
 
 hs.window.animationDuration = 0
 hs.hints.showTitleThresh = 0

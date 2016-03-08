@@ -12,10 +12,10 @@ alias gmail='mutt -f ~/Mail/Gmail/INBOX'
 alias unc='mutt -f ~/Mail/UNC/INBOX'
 alias finder='open -a Finder'
 alias tmsize='tmux detach -a'
-alias swarmint='ssh swarmint'
-alias swarm1='ssh swarm1'
-alias swarm2='ssh swarm2'
-alias swarm3='ssh swarm3'
+alias swarmint='ssh swarmint@swarm.swarm1.com'
+alias swarm1='ssh seth@swarm.swarmwebhosting.com'
+alias swarm2='ssh seth@swarm.swarmwebhosting2.com'
+alias swarm3='ssh seth@swarm.swarm1.com'
 alias gridserver='ssh seth'
 alias staging='ssh staging@swarm.swarm1.com'
 alias redesign='ssh redesign@swarm.swarm1.com'
@@ -37,12 +37,12 @@ alias gc="git commit"
 alias gco="git checkout"
 alias gac="git commit -a"
 alias gd="git difftool"
-alias gs="git status;gg s"
-alias gst="git status;gg s"
+alias gs="gg s"
+alias gst="gg s"
 alias gp="git push"
 
 # Customize to your needs...
-export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/Users/Seth/Dropbox/Swarm/Web/Script:/Users/Seth/SSH:/Users/seth/Library/Android/sdk/platform-tools:$PATH
+export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/Users/asethwright/Dropbox/Swarm/Web/Script:/Users/asethwright/SSH:/Users/asethwright/Library/Android/sdk/platform-tools:$PATH
 [[ $TMUX = "" ]] && export TERM="screen-256color"
 
 source ~/.config/antigen/antigen.zsh

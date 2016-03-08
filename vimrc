@@ -46,6 +46,7 @@ Plugin 'vim-ruby/vim-ruby'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'pangloss/vim-javascript'
 Plugin 'digitaltoad/vim-pug'
+Plugin 'nikvdp/ejs-syntax'
 
 " colorschemes
 Plugin 'w0ng/vim-hybrid'
@@ -341,7 +342,11 @@ if exists('$TMUX')
     let previous_winnr = winnr()
     silent! execute "wincmd " . a:wincmd
     if previous_winnr == winnr()
-      call system("tmux select-pane -" . a:tmuxdir)
+      if a:tmuxdir == 'L'
+        call system("tmux select-pane -L && tmux resize-pane -Z")
+      else
+        call system("tmux select-pane -" . a:tmuxdir)
+      endif
       redraw!
     endif
   endfunction
