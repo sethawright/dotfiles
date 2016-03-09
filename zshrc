@@ -29,7 +29,6 @@ alias timestamp='date +"%Y-%m-%d %H:%M:%S"'
 alias v="vim ."
 alias adbpic='adb shell screencap -p | perl -pe "s/\x0D\x0A/\x0A/g" > "/Users/seth/Downloads/firetvscreenshot_$(date +%Y%m%d-%H%M%S).png"'
 
-alias gs="git status;gg s"
 alias gg='noglob gg'
 alias ga="gg a"
 alias gaa="git add ."
@@ -37,8 +36,8 @@ alias gc="git commit"
 alias gco="git checkout"
 alias gac="git commit -a"
 alias gd="git difftool"
-alias gs="gg s"
-alias gst="gg s"
+alias gs="git status;gg s"
+alias gst="gs"
 alias gp="git push"
 
 # Customize to your needs...
