@@ -3,7 +3,7 @@
 	email = asethwright@gmail.com
 [core]
 	editor = vim
-	excludesfile = /Users/asethwright/.gitignore_global
+	excludesfile = /Users/seth/.gitignore_global
 	quotepath = false
 [color]
 	status = auto

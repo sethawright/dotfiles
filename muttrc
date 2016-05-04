@@ -119,20 +119,6 @@ set folder_format       = "%2C %t %N %8s %d %f"                  # mailbox list 
 set status_format       = " %?M?%M/?%m Mails %?n?%n new, ?%?u?%u unread, ?%?p?%p drafts, ?%?t?%t +tagged, ?%?d?%d deleted, ?[%f %l]  %?b?%b unread messages. ?%>  %V  [%P]"
 set alias_format        = "%4n %t %-20a  %r"
 
-# Sidebar Patch
-# mailboxes +-----GMAIL-----
-# mailboxes +Gmail
-# mailboxes +G-sent
-# mailboxes +G-drafts
-# mailboxes +G-trash
-# mailboxes +-----SWARM-----
-# mailboxes +Swarm
-# mailboxes +S-sent
-# mailboxes +S-drafts
-# mailboxes +S-trash
-# mailboxes +----SERVICE----
-# mailboxes +Service
-
 # run offlineimap to sync mail
 macro index O "<shell-escape>offlineimap -u quiet<enter>"
 macro index o "<shell-escape>offlineimap -u quiet -qf INBOX<enter>"

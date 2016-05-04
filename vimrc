@@ -32,6 +32,7 @@ Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'majutsushi/tagbar'
 Plugin 'FelikZ/ctrlp-py-matcher'
+Plugin 'scrooloose/syntastic'
 
 " languages
 Plugin 'jeroenbourgois/vim-actionscript'
@@ -67,8 +68,8 @@ syntax on
 let mapleader=","
 
 " show indention when wrapping
-set breakindent
-set showbreak=\ 
+" set breakindent
+" set showbreak=\ 
 
 " basic formatting
 set nosmartindent
@@ -76,8 +77,8 @@ set ruler
 set hidden
 
 " relative line numbers
-set nonumber
-set relativenumber
+set number
+set norelativenumber
 
 " spacing & whitespace
 set tabstop=4
@@ -118,18 +119,37 @@ let loaded_matchparen = 1
 set splitbelow
 set splitright
 
+set fillchars+=vert:│ 
+
 " simpler airline display
 let g:airline_powerline_fonts = 1
-let g:airline_left_sep = ' '
-let g:airline_left_alt_sep = ' '
-let g:airline_right_sep = ' '
-let g:airline_right_alt_sep = ' '
+
+" let g:airline#extensions#tabline#tab_min_count = 2
+" let g:airline#extensions#tabline#buf_min_count = 2
+" let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#enabled = 0
+" let g:airline#extensions#tabline#left_sep = ''
+" let g:airline#extensions#tabline#left_alt_sep = '┃'
+
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = '┃'
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = '┃'
+
+let g:indentLine_faster = 1
+let g:indentLine_leadingSpaceChar = '∙'
+let g:indentLine_char = '│'
+let g:indentLine_first_char = '│'
+let g:indentLine_fileTypeExclude = ['', 'qf', 'gitv', 'tagbar', 'vimfiler', 'unite', 'help', 'man', 'gitcommit', 'vimwiki', 'notes']
 
 " status bar is hidden if only one split
 set laststatus=1
 
-" never show the tab line bar (use ctrl-space)
-set showtabline=0
+" todo
+nnoremap <silent> <leader>td :set norelativenumber nonumber invwrap wrap linebreak laststatus=0<CR>
+
+" dont show the tab line
+set showtabline=1
 
 " disable output and vcs files
 set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
@@ -171,12 +191,11 @@ let g:vim_markdown_folding_disabled = 1
 " open a new tab
 :nnoremap <C-S-t> :tabnew<CR>
 
-:nnoremap <C-S-l> :tabn<CR>
-:nnoremap <C-S-h> :tabp<CR>
+:nnoremap Ò :bn<CR>
+:nnoremap Ó :bp<CR>
+:nnoremap Ô :tabn<CR>
+:nnoremap  :tabp<CR>
 
-" quick switch between buffers
-:nnoremap <leader>l :bn<CR>
-:nnoremap <leader>h :bp<CR>
 :nnoremap <leader>tb :TagbarToggle<CR>
 :vnoremap <leader>tc :s/\%V\<\(\w\)\(\w*\)\>/\u\1\L\2/ge<CR>
 
@@ -191,7 +210,7 @@ let g:vim_markdown_folding_disabled = 1
 " vimrc refresh automatically
 augroup myvimrc
   au!
-  au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+  au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,.vimrc_background so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
 :nnoremap <leader><leader>r :so $MYVIMRC<CR>
 
@@ -222,11 +241,17 @@ endfunction
 :nnoremap _ :vertical res -10<CR>
 
 " easier window motions with leader
-:nnoremap <leader>wl :wincmd l<CR>
-:nnoremap <leader>wh :wincmd h<CR>
-:nnoremap <leader>wj :wincmd j<CR>
-:nnoremap <leader>wk :wincmd k<CR>
+:nnoremap ¬ :wincmd l<CR>
+:nnoremap ˙ :wincmd h<CR>
+:nnoremap ∆ :wincmd j<CR>
+:nnoremap ˚ :wincmd k<CR>
 :nnoremap <leader>w= :wincmd =<CR>
+
+" quick function to toggle the tabline
+:nnoremap <silent> <leader>tl :execute 'set showtabline=' . (&showtabline ==# 0 ? 2 : 0)<CR>
+
+" quick function to toggle the status line
+:nnoremap <silent> <leader>sl :execute 'set laststatus=' . (&laststatus ==# 1 ? 2 : 1)<CR>
 
 " add space above/below current line
 :nnoremap <leader>o o<esc>k
@@ -329,7 +354,6 @@ endif
 " change cursor to underscore on visual mode or insert mode.
 if exists('$TMUX')
   let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
-  let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
   let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 else
   let &t_SI = "\<Esc>]50;CursorShape=2\x7"
@@ -337,34 +361,34 @@ else
 endif
 
 " seamless switching tmux panes
-if exists('$TMUX')
-  function! TmuxOrSplitSwitch(wincmd, tmuxdir)
-    let previous_winnr = winnr()
-    silent! execute "wincmd " . a:wincmd
-    if previous_winnr == winnr()
-      if a:tmuxdir == 'L'
-        call system("tmux select-pane -L && tmux resize-pane -Z")
-      else
-        call system("tmux select-pane -" . a:tmuxdir)
-      endif
-      redraw!
-    endif
-  endfunction
+" if exists('$TMUX')
+"   function! TmuxOrSplitSwitch(wincmd, tmuxdir)
+"     let previous_winnr = winnr()
+"     silent! execute "wincmd " . a:wincmd
+"     if previous_winnr == winnr()
+"       if a:tmuxdir == 'L'
+"         call system("tmux select-pane -L && tmux resize-pane -Z")
+"       else
+"         call system("tmux select-pane -" . a:tmuxdir)
+"       endif
+"       redraw!
+"     endif
+"   endfunction
 
-  let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
-  let &t_ti = "\<Esc>]2;vim\<Esc>\\" . &t_ti
-  let &t_te = "\<Esc>]2;". previous_title . "\<Esc>\\" . &t_te
+"   let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
+"   let &t_ti = "\<Esc>]2;vim\<Esc>\\" . &t_ti
+"   let &t_te = "\<Esc>]2;". previous_title . "\<Esc>\\" . &t_te
 
-  nnoremap <silent> <C-h> :call TmuxOrSplitSwitch('h', 'L')<cr>
-  nnoremap <silent> <C-j> :call TmuxOrSplitSwitch('j', 'D')<cr>
-  nnoremap <silent> <C-k> :call TmuxOrSplitSwitch('k', 'U')<cr>
-  nnoremap <silent> <C-l> :call TmuxOrSplitSwitch('l', 'R')<cr>
-else
-  map <C-h> <C-w>h
-  map <C-j> <C-w>j
-  map <C-k> <C-w>k
-  map <C-l> <C-w>l
-endif
+"   nnoremap <silent> <C-h> :call TmuxOrSplitSwitch('h', 'L')<cr>
+"   nnoremap <silent> <C-j> :call TmuxOrSplitSwitch('j', 'D')<cr>
+"   nnoremap <silent> <C-k> :call TmuxOrSplitSwitch('k', 'U')<cr>
+"   nnoremap <silent> <C-l> :call TmuxOrSplitSwitch('l', 'R')<cr>
+" else
+"   map <C-h> <C-w>h
+"   map <C-j> <C-w>j
+"   map <C-k> <C-w>k
+"   map <C-l> <C-w>l
+" endif
 
 " environment switching
 :nnoremap <leader>efd :call SetSethEnv('freelance', 'dark')<Cr>
@@ -383,13 +407,20 @@ function! SetSethEnv(col, bg)
     exec 'set background='.a:bg
     exec 'colorscheme '.a:col
 
-    let g:airline_theme = 'seth'
-
     highlight LineNr ctermbg=NONE guibg=NONE
     hi link CtrlSpaceNormal Normal
     hi link CtrlSpaceSelected Visual
     hi link CtrlSpaceStatus Ctrlpdark
 endfunction
+
+if filereadable(expand("~/.vimrc_background"))
+    source ~/.vimrc_background
+
+    highlight LineNr ctermbg=NONE guibg=NONE
+    hi link CtrlSpaceNormal Normal
+    hi link CtrlSpaceSelected Visual
+    hi link CtrlSpaceStatus Ctrlpdark
+endif
 
 " nerdtree settings
 let NERDTreeQuitOnOpen = 1
@@ -448,5 +479,3 @@ function! s:UpdateNERDTree(...)
     endif
 endfunction
 
-" set environment
-:call SetSethEnv('hybrid', 'dark')
