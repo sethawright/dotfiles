@@ -29,12 +29,14 @@ Plugin 'godlygeek/tabular'
 Plugin 'tpope/vim-commentary'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tacahiroy/ctrlp-funky'
+Plugin 'junegunn/goyo.vim'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'majutsushi/tagbar'
 Plugin 'FelikZ/ctrlp-py-matcher'
-Plugin 'scrooloose/syntastic'
 
 " languages
+Plugin 'posva/vim-vue'
+Plugin 'editorconfig/editorconfig-vim'
 Plugin 'jeroenbourgois/vim-actionscript'
 Plugin 'mxw/vim-jsx'
 Plugin 'isRuslan/vim-es6'
@@ -56,9 +58,6 @@ Plugin 'chriskempson/base16-vim'
 Plugin 'tomasr/molokai'
 Plugin 'morhetz/gruvbox'
 Plugin 'nanotech/jellybeans.vim'
-Plugin 'kristijanhusak/vim-hybrid-material'
-Plugin 'NLKNguyen/papercolor-theme'
-Plugin 'jdkanani/vim-material-theme'
 
 call vundle#end()
 filetype plugin indent on
@@ -68,17 +67,26 @@ syntax on
 let mapleader=","
 
 " show indention when wrapping
-" set breakindent
-" set showbreak=\ 
+set breakindent
 
 " basic formatting
-set nosmartindent
+set smartindent
+set autoindent
 set ruler
 set hidden
+
+" faster performance
+set ttyfast
+let html_no_rendering=1 " Don't render italic, bold, links in HTML
+let loaded_matchparen=1 " Don't load matchit.vim (paren/bracket matching)
+set noshowmatch         " Don't match parentheses/brackets
+set nocursorline        " Don't paint cursor line
+set nocursorcolumn      " Don't paint cursor column
 
 " relative line numbers
 set number
 set norelativenumber
+set display=lastline
 
 " spacing & whitespace
 set tabstop=4
@@ -148,6 +156,15 @@ set laststatus=1
 " todo
 nnoremap <silent> <leader>td :set norelativenumber nonumber invwrap wrap linebreak laststatus=0<CR>
 
+" this is going to hurt me until they fix osx sierra
+:imap jk <esc>
+:vnoremap <CR> <Esc>
+
+" often i want to make a new line above the one i'm inputting
+:imap kk <esc>O
+:imap jj <esc>o
+
+
 " dont show the tab line
 set showtabline=1
 
@@ -169,7 +186,7 @@ set wildignore+=*/tmp/cache/assets/*/sprockets/*,*/tmp/cache/assets/*/sass/*
 " disable temp and backup files
 set wildignore+=*.swp,*~,._*
 
-" bold is OK
+" bold is ok
 let g:enable_bold_font = 1
 
 " copy to my osx clipboard, we also need reattach plugin here if using tmux
@@ -185,11 +202,17 @@ set autoread
 " fix blade auto indent issue
 autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade
 
+" fix bad highlighting on multi language buffers
+autocmd BufEnter * :syntax sync fromstart
+
 " dont fold my markdown
 let g:vim_markdown_folding_disabled = 1
 
 " open a new tab
 :nnoremap <C-S-t> :tabnew<CR>
+
+" yank text of an entire file
+:nnoremap <leader>yf ggVGy
 
 :nnoremap Ò :bn<CR>
 :nnoremap Ó :bp<CR>
@@ -213,6 +236,10 @@ augroup myvimrc
   au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,.vimrc_background so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
 :nnoremap <leader><leader>r :so $MYVIMRC<CR>
+
+" change shift width quickly
+:noremap <leader>w2 :set tabstop=2 shiftwidth=2<CR>
+:noremap <leader>w4 :set tabstop=4 shiftwidth=4<CR>
 
 " quickly edit vimrc
 :noremap <leader>ve :tabedit ~/.vimrc<CR>
@@ -309,8 +336,14 @@ nmap <C-j> ]e
 vmap <C-k> [egv
 vmap <C-j> ]egv
 
+" jsx doesnt need an extension
+let g:jsx_ext_required = 0
+
 " remove trailing whitespaces
 :nnoremap <leader>fws :FixWhitespace<CR>
+
+" emmet expand with tab
+imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
 " fix indentation to spaces
 :nnoremap <leader>fi  ggVG>gv<<esc>
@@ -477,5 +510,30 @@ function! s:UpdateNERDTree(...)
         end
       endif
     endif
+endfunction
+
+map <leader>G :Goyo<CR>
+
+" Goyo options
+function! s:goyo_enter()
+    set wrap
+    set textwidth=0
+    set nocp
+    set linebreak
+    set nolist
+    set showbreak=
+    nohlsearch
+endfunction
+
+function! s:goyo_leave()
+    set showbreak=\ \ 
+    set nowrap
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+function! StrongTerms(...)
+    execute "%s/\d\+\.\s.\{-}\./<strong>\0<\/strong>/g"
 endfunction
 

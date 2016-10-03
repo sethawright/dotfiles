@@ -1,4 +1,5 @@
 stty -ixon
+export HISTIGNORE="jrnl *"
 
 source ~/.config/antigen/antigen.zsh
 
@@ -39,19 +40,46 @@ alias christine='ssh cmh@192.168.1.14'
 alias scott='ssh Scott@192.168.1.17'
 alias randall='ssh relmo@192.168.1.15'
 alias render='ssh render@192.168.1.20'
+alias linux='ssh linux'
 alias timestamp='date +"%Y-%m-%d %H:%M:%S"'
 alias v="vim ."
 alias e="vim"
+alias s="subl ."
 alias adbpic='adb shell screencap -p | perl -pe "s/\x0D\x0A/\x0A/g" > "/Users/seth/Downloads/firetvscreenshot_$(date +%Y%m%d-%H%M%S).png"'
 
+if [ -n "$TMUX" ]; then
+  # Tell tmux to pass the escape sequences through
+  # (Source: http://permalink.gmane.org/gmane.comp.terminal-emulators.tmux.user/1324)
+  printf_template="\033Ptmux;\033\033]4;%d;rgb:%s\007\033\\"
+  printf_template_var="\033Ptmux;\033\033]%d;rgb:%s\007\033\\"
+  printf_template_custom="\033Ptmux;\033\033]%s%s\007\033\\"
+elif [ "${TERM%%-*}" = "screen" ]; then
+  # GNU screen (screen, screen-256color, screen-256color-bce)
+  printf_template="\033P\033]4;%d;rgb:%s\007\033\\"
+  printf_template_var="\033P\033]%d;rgb:%s\007\033\\"
+  printf_template_custom="\033P\033]%s%s\007\033\\"
+else
+  printf_template="\033]4;%d;rgb:%s\033\\"
+  printf_template_var="\033]%d;rgb:%s\033\\"
+  printf_template_custom="\033]%s%s\033\\"
+fi
+
 # quick theme switching
-alias light='base16_hybrid_light'
-alias dark='base16_hybrid_dark'
-alias base16='base16_default_dark'
-alias ocean='base16_ocean_dark'
-alias eighties='base16_eighties_dark'
-alias railscasts='base16_railscasts_dark'
-alias flat='base16_flat_dark'
+alias light='base16_hybridlight'
+alias dark='base16_hybriddark'
+alias oceanic='base16_oceanicnext'
+alias base16='base16_default-dark'
+alias ocean='base16_ocean'
+alias eighties='base16_eighties'
+alias railscasts='base16_railscasts'
+alias flat='base16_flat'
+alias themes='ls /Users/seth/.config/base16-shell/scripts/'
+alias cursor_magenta='printf $printf_template_custom Pl e1bee7' # cursor
+alias cursor_yellow='printf $printf_template_custom Pl ffff8d' # cursor
+alias cursor_red='printf $printf_template_custom Pl ff8a80' # cursor
+alias cursor_orange='printf $printf_template_custom Pl ffcc80' # cursor
+alias cursor_blue='printf $printf_template_custom Pl 82b1ff' # cursor
+alias cursor_green='printf $printf_template_custom Pl b9f6ca' # cursor
 
 alias gg='noglob gg'
 alias ga="gg a"
@@ -65,7 +93,7 @@ alias gst="gs"
 alias gp="git push"
 
 # Customize to your needs...
-export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/Users/seth/Dropbox/Swarm/Web/Script:/Users/seth/SSH:/Users/seth/Library/Android/sdk/platform-tools:$PATH
+export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Users/seth/Dropbox/Swarm/Web/Script:/Users/seth/Scripts:/Users/seth/Library/Android/sdk/platform-tools:/Users/seth/Library/Android/sdk/tools:$PATH
 
 if [ -n "$PS1" ]; then
   if ! [ -f ~/.config/base16-shell/profile_helper.sh ]; then
