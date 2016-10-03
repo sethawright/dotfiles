@@ -31,3 +31,7 @@ for file in $files; do
     echo "Creating symlink to $file in home directory."
     ln -s $dir/$file ~/.$file
 done
+
+# custom locations
+mv ~/.karabiner.d/configuration/karabiner.json ~/dotfiles_old/
+ln -s $dir/karabiner.json ~/.karabiner.d/configuration/karabiner.json
