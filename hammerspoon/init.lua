@@ -37,20 +37,66 @@ layout1 = {
 
 layout2 = {
   {'Google Chrome', display_macbook, lay_big, 'all'},
+  {'Mail', display_macbook, lay_big, "all"},
+  {'Messages', display_macbook, {x=1, y=2, w=2, h=4}, "Messages"},
+  {'Messages', display_macbook, {x=0, y=2, w=1, h=4}, "Google Talk List"},
+  {'Spotify', display_macbook, lay_big, "all"},
   {'Safari', display_macbook, lay_big, 'all'},
   {'Firefox', display_macbook, lay_big, 'all'},
   {'Sublime Text', display_asus, lay_big, 'all'},
   {'iTerm2', display_asus, lay_big, 'all'},
-  {'Messages', display_macbook, {x=1, y=2, w=2, h=4}, "Messages"},
-  {'Messages', display_macbook, {x=0, y=2, w=1, h=4}, "Google Talk List"},
-  {'Spotify', display_macbook, lay_big, "all"},
-  {'Mail', display_macbook, lay_big, "all"},
   {'Sequel Pro', display_asus, lay_med, "all"},
   {'MacVim', display_asus, lay_side_sm, "all"}
 }
 
 -- A global variable for the Hyper Mode
-k = hs.hotkey.modal.new({}, "F19")
+k = hs.hotkey.modal.new({'cmd'}, 'escape')
+function k:entered() s:exit(); o:exit(); i:exit(); p:exit(); end
+
+-- used if you are ok pressing three triggers
+s = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'u', 'Size')
+function s:entered() k:exit(); o:exit(); i:exit(); p:exit(); end
+
+o = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'o', 'Open')
+function o:entered() k:exit(); s:exit(); i:exit(); p:exit(); end
+
+i = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'i', 'Small')
+function i:entered() k:exit(); s:exit(); o:exit(); p:exit(); end
+
+p = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'p', 'Large')
+function p:entered() k:exit(); s:exit(); o:exit(); i:exit(); end
+
+quitAll = function()
+    i:exit(); o:exit(); s:exit(); p:exit(); k:exit();
+end
+
+-- Bind the Hyper key
+k:bind('', 'escape', quitAll)
+o:bind('', 'escape', quitAll)
+s:bind('', 'escape', quitAll)
+i:bind('', 'escape', quitAll)
+p:bind('', 'escape', quitAll)
+
+-- used if you want multi key presses like vim/tmux
+u = hs.hotkey.modal.new({}, "F18")
+pressedS = function() s:enter() end
+releasedS = function() end
+k:bind({}, 'u', nil, pressedS, releasedS)
+
+p = hs.hotkey.modal.new({}, "F15")
+pressedP = function() p:enter() end
+releasedP = function() end
+k:bind({}, 'p', nil, pressedP, releasedP)
+
+i = hs.hotkey.modal.new({}, "F17")
+pressedI = function() i:enter(); end
+releasedI = function() end
+k:bind({}, 'i', nil, pressedI, releasedI)
+
+o = hs.hotkey.modal.new({}, "F16")
+pressedA = function() o:enter() end
+releasedA = function() end
+k:bind('', 'o', nil, pressedA, releasedA)
 
 launch = function(appname)
   hs.application.launchOrFocus(appname)
@@ -58,34 +104,40 @@ launch = function(appname)
 end
 
 -- Single keybinding for functions
-singlelayouts = {
-  {'1', function() applyLayout(layout1); end},
-  {'2', function() applyLayout(layout2); end},
-  {'RETURN', hs.grid.maximizeWindow},
-  {'J', hs.grid.resizeWindowTaller},
-  {'H', hs.grid.resizeWindowThinner},
-  {'K', hs.grid.resizeWindowShorter},
-  {'L', hs.grid.resizeWindowWider},
-  {'DOWN', hs.grid.pushWindowDown},
-  {'UP', hs.grid.pushWindowUp},
-  {'LEFT', hs.grid.pushWindowLeft},
-  {'RIGHT', hs.grid.pushWindowRight}
-}
-
-for i, lay in ipairs(singlelayouts) do
-  k:bind({}, lay[1], function() lay[2](); end)
-end
-
--- Positional Layouts
-p = hs.hotkey.modal.new({}, "F15")
-doublelayouts = {
-  {'C', function()
+mainBindings = {
+  {'1', function() applyLayout(layout1); k:exit(); end},
+  {'2', function() applyLayout(layout2); k:exit(); end},
+  {'RETURN', function() hs.grid.maximizeWindow(); k:exit(); end},
+  {"'", function()
       local win = hs.window.focusedWindow()
       local f = win:frame()
       local screen = win:screen()
       hs.grid.set(win, {x = 1, y = 1, w = hs.grid.GRIDWIDTH - 2, h = hs.grid.GRIDHEIGHT - 2}, screen)
+      k:exit();
     end
   },
+  {'J', hs.grid.pushWindowDown},
+  {'K', hs.grid.pushWindowUp},
+  {'H', hs.grid.pushWindowLeft},
+  {'L', hs.grid.pushWindowRight}
+}
+
+for i, lay in ipairs(mainBindings) do
+  k:bind({}, lay[1], function() lay[2](); end)
+end
+
+sBindings = {
+  {'J', hs.grid.resizeWindowTaller},
+  {'H', hs.grid.resizeWindowThinner},
+  {'K', hs.grid.resizeWindowShorter},
+  {'L', hs.grid.resizeWindowWider},
+}
+
+for b, lay in ipairs(sBindings) do
+  s:bind({}, lay[1], function() lay[2](); end)
+end
+
+pBindings = {
   {'H', function()
       local win = hs.window.focusedWindow()
       local f = win:frame()
@@ -93,15 +145,6 @@ doublelayouts = {
       local wide = math.floor(hs.grid.GRIDWIDTH / 3)
       local rem = hs.grid.GRIDWIDTH - wide
       hs.grid.set(win, {x = 0, y = 0, w = rem, h = hs.grid.GRIDHEIGHT}, screen)
-    end
-  },
-  {'L', function()
-      local win = hs.window.focusedWindow()
-      local f = win:frame()
-      local screen = win:screen()
-      local wide = math.floor(hs.grid.GRIDWIDTH / 3)
-      local rem = hs.grid.GRIDWIDTH - wide
-      hs.grid.set(win, {x = wide, y = 0, w = rem, h = hs.grid.GRIDHEIGHT}, screen)
     end
   },
   {'J', function()
@@ -122,7 +165,42 @@ doublelayouts = {
       hs.grid.set(win, {x = wide, y = 1, w = rem - 1, h = hs.grid.GRIDHEIGHT - 2}, screen)
     end
   },
-  {'F', function()
+  {'L', function()
+      local win = hs.window.focusedWindow()
+      local f = win:frame()
+      local screen = win:screen()
+      local wide = math.floor(hs.grid.GRIDWIDTH / 3)
+      local rem = hs.grid.GRIDWIDTH - wide
+      hs.grid.set(win, {x = wide, y = 0, w = rem, h = hs.grid.GRIDHEIGHT}, screen)
+    end
+  }
+}
+
+for b, lay in ipairs(pBindings) do
+  p:bind({}, lay[1], function() lay[2](); p:exit(); k:exit(); end)
+end
+
+-- Small Positional Layouts
+iBindings = {
+  {'H', function()
+      local win = hs.window.focusedWindow()
+      local f = win:frame()
+      local screen = win:screen()
+      local wide = math.floor(hs.grid.GRIDWIDTH / 3)
+      local rem = hs.grid.GRIDWIDTH - wide
+      hs.grid.set(win, {x = 0, y = 0, w = wide, h = hs.grid.GRIDHEIGHT}, screen)
+    end
+  },
+  {'J', function()
+      local win = hs.window.focusedWindow()
+      local f = win:frame()
+      local screen = win:screen()
+      local wide = math.floor(hs.grid.GRIDWIDTH / 3)
+      local rem = hs.grid.GRIDWIDTH - wide
+      hs.grid.set(win, {x = 1, y = 1, w = wide - 1, h = hs.grid.GRIDHEIGHT - 2}, screen)
+    end
+  },
+  {'K', function()
       local win = hs.window.focusedWindow()
       local f = win:frame()
       local screen = win:screen()
@@ -131,27 +209,22 @@ doublelayouts = {
       hs.grid.set(win, {x = rem, y = 1, w = wide - 1, h = hs.grid.GRIDHEIGHT - 2}, screen)
     end
   },
-  {'D', function()
+  {'L', function()
       local win = hs.window.focusedWindow()
       local f = win:frame()
       local screen = win:screen()
       local wide = math.floor(hs.grid.GRIDWIDTH / 3)
       local rem = hs.grid.GRIDWIDTH - wide
-      hs.grid.set(win, {x = 1, y = 1, w = wide - 1, h = hs.grid.GRIDHEIGHT - 2}, screen)
+      hs.grid.set(win, {x = rem, y = 0, w = wide, h = hs.grid.GRIDHEIGHT}, screen)
     end
   }
 }
 
-for i, lay in ipairs(doublelayouts) do
-  p:bind({}, lay[1], function() lay[2](); p:exit(); end)
+for a, lay in ipairs(iBindings) do
+  i:bind({}, lay[1], function() lay[2](); i:exit(); k:exit(); end)
 end
 
-pressedP = function() p:enter() end
-releasedP = function() end
-k:bind({}, 'p', nil, pressedP, releasedP)
-
 -- Open applications
-o = hs.hotkey.modal.new({}, "F16")
 apps = {
   {'c', 'Google Chrome'},
   {'e', 'Mail'},
@@ -159,45 +232,33 @@ apps = {
   {'f', 'Finder'},
   {'s', 'Spotify'},
   {'m', 'Messages'},
+  {'q', 'Sequel Pro'},
+  {'p', 'Pages'},
+  {'x', 'Xcode'},
+  {'r', 'Reminders'},
+  {'h', 'Hues'},
+  {'v', 'MacVim'},
+  {'u', 'Sublime Text'},
 }
-for i, app in ipairs(apps) do
-  o:bind({}, app[1], function() launch(app[2]); o:exit(); end)
+for f, app in ipairs(apps) do
+  o:bind({}, app[1], function() launch(app[2]); o:exit(); k:exit(); end)
 end
-
-pressedA = function() o:enter() end
-releasedA = function() end
-k:bind({}, 'o', nil, pressedA, releasedA)
 
 -- Shortcut to reload config
 rfun = function()
-  hs.reload()
-  hs.alert.show("Config loaded")
-  k.triggered = true
+  hs.reload();
+  hs.alert.show('Config loaded');
+  k:exit();
 end
-k:bind({}, 'r', nil, rfun)
-
--- Enter Hyper Mode when F18 (Hyper/Capslock) is pressed
-pressedF18 = function()
-  k.triggered = false
-  k:enter()
-end
-
--- Leave Hyper Mode when F18 (Hyper/Capslock) is pressed,
---   send ESCAPE if no other keys are pressed.
-releasedF18 = function()
-  k:exit()
-  if not k.triggered then
-    hs.eventtap.keyStroke({}, 'ESCAPE')
-  end
-end
-
--- Bind the Hyper key
-f18 = hs.hotkey.bind({}, 'F18', pressedF18, releasedF18)
+k:bind('', 'r', rfun)
 
 -- Automatic Display Switching
 function screensChangedCallback()
   newNumberOfScreens = #hs.screen.allScreens()
   print("Screens Changed to " .. newNumberOfScreens .. ".")
+
+  hs.grid.setGrid('10x8', 'Color LCD');
+  hs.grid.setGrid('10x8', 'ASUS PB278');
 
   if lastNumberOfScreens ~= newNumberOfScreens then
     if newNumberOfScreens == 1 then

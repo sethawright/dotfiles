@@ -21,43 +21,30 @@ Plugin 'rking/ag.vim'
 " utilities
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-obsession'
+Plugin 'tpope/vim-unimpaired'
 Plugin 'mattn/emmet-vim'
-Plugin 'godlygeek/tabular'
 Plugin 'tpope/vim-commentary'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'junegunn/goyo.vim'
 Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'majutsushi/tagbar'
 Plugin 'FelikZ/ctrlp-py-matcher'
 
 " languages
 Plugin 'posva/vim-vue'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'jeroenbourgois/vim-actionscript'
-Plugin 'mxw/vim-jsx'
-Plugin 'isRuslan/vim-es6'
-Plugin 'kchmck/vim-coffee-script'
 Plugin 'chrisbra/csv.vim'
 Plugin 'StanAngeloff/php.vim'
 Plugin 'jwalton512/vim-blade'
-Plugin 'captbaritone/better-indent-support-for-php-with-html'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'pangloss/vim-javascript'
-Plugin 'digitaltoad/vim-pug'
-Plugin 'nikvdp/ejs-syntax'
 
 " colorschemes
 Plugin 'w0ng/vim-hybrid'
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'chriskempson/base16-vim'
-Plugin 'tomasr/molokai'
-Plugin 'morhetz/gruvbox'
-Plugin 'nanotech/jellybeans.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -76,12 +63,15 @@ set ruler
 set hidden
 
 " faster performance
-set ttyfast
 let html_no_rendering=1 " Don't render italic, bold, links in HTML
 let loaded_matchparen=1 " Don't load matchit.vim (paren/bracket matching)
 set noshowmatch         " Don't match parentheses/brackets
 set nocursorline        " Don't paint cursor line
 set nocursorcolumn      " Don't paint cursor column
+
+" decrease escape timeout
+set timeoutlen=500
+set ttimeoutlen=0
 
 " relative line numbers
 set number
@@ -121,7 +111,7 @@ set nocursorline
 set nocursorcolumn
 
 " dont match parenthesis, they are usually wrong
-let loaded_matchparen = 1
+set noshowmatch
 
 " more natural split resizing
 set splitbelow
@@ -131,19 +121,11 @@ set fillchars+=vert:│
 
 " simpler airline display
 let g:airline_powerline_fonts = 1
-
-" let g:airline#extensions#tabline#tab_min_count = 2
-" let g:airline#extensions#tabline#buf_min_count = 2
-" let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#enabled = 0
-" let g:airline#extensions#tabline#left_sep = ''
-" let g:airline#extensions#tabline#left_alt_sep = '┃'
-
 let g:airline_left_sep = ''
 let g:airline_left_alt_sep = '┃'
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = '┃'
-
 let g:indentLine_faster = 1
 let g:indentLine_leadingSpaceChar = '∙'
 let g:indentLine_char = '│'
@@ -153,17 +135,9 @@ let g:indentLine_fileTypeExclude = ['', 'qf', 'gitv', 'tagbar', 'vimfiler', 'uni
 " status bar is hidden if only one split
 set laststatus=1
 
-" todo
-nnoremap <silent> <leader>td :set norelativenumber nonumber invwrap wrap linebreak laststatus=0<CR>
-
-" this is going to hurt me until they fix osx sierra
-:imap jk <esc>
-:vnoremap <CR> <Esc>
-
 " often i want to make a new line above the one i'm inputting
 :imap kk <esc>O
 :imap jj <esc>o
-
 
 " dont show the tab line
 set showtabline=1
@@ -186,49 +160,19 @@ set wildignore+=*/tmp/cache/assets/*/sprockets/*,*/tmp/cache/assets/*/sass/*
 " disable temp and backup files
 set wildignore+=*.swp,*~,._*
 
-" bold is ok
-let g:enable_bold_font = 1
-
 " copy to my osx clipboard, we also need reattach plugin here if using tmux
 set clipboard=unnamed
 
-" allow more/less time for leader
-set timeoutlen=500
-set ttimeoutlen=50
-
-" auto refresh file changes
-set autoread
-
-" fix blade auto indent issue
-autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade
-
-" fix bad highlighting on multi language buffers
-autocmd BufEnter * :syntax sync fromstart
-
-" dont fold my markdown
+" dont fold markdown
 let g:vim_markdown_folding_disabled = 1
 
 " open a new tab
 :nnoremap <C-S-t> :tabnew<CR>
 
-" yank text of an entire file
-:nnoremap <leader>yf ggVGy
-
 :nnoremap Ò :bn<CR>
 :nnoremap Ó :bp<CR>
 :nnoremap Ô :tabn<CR>
 :nnoremap  :tabp<CR>
-
-:nnoremap <leader>tb :TagbarToggle<CR>
-:vnoremap <leader>tc :s/\%V\<\(\w\)\(\w*\)\>/\u\1\L\2/ge<CR>
-
-" better copying
-:vnoremap <silent> y y`]
-:vnoremap <silent> p p`]
-:nnoremap <silent> p p`]
-:noremap gV `[v`]
-:nnoremap <silent> p p`]
-:nnoremap <silent> p p`]
 
 " vimrc refresh automatically
 augroup myvimrc
@@ -249,6 +193,14 @@ augroup END
 
 " relative number toggling
 :nnoremap <leader>rn :call NumToggle()<CR>
+
+" better copying
+:vnoremap <silent> y y`]
+:vnoremap <silent> p p`]
+:nnoremap <silent> p p`]
+:noremap gV `[v`]
+:nnoremap <silent> p p`]
+:nnoremap <silent> p p`]
 
 function! NumToggle()
     set relativenumber!
@@ -317,10 +269,6 @@ nmap <silent> <leader>ul :t.<CR>Vr=
 " set text wrapping toggles
 nmap <silent> <leader>tw :set invwrap<CR>:set wrap?<CR>:set linebreak<CR>
 
-" even on wrap, i only want to go one line
-noremap <buffer> <silent> k gk
-noremap <buffer> <silent> j gj
-
 " find merge conflict markers
 nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
 
@@ -336,14 +284,8 @@ nmap <C-j> ]e
 vmap <C-k> [egv
 vmap <C-j> ]egv
 
-" jsx doesnt need an extension
-let g:jsx_ext_required = 0
-
 " remove trailing whitespaces
 :nnoremap <leader>fws :FixWhitespace<CR>
-
-" emmet expand with tab
-imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
 " fix indentation to spaces
 :nnoremap <leader>fi  ggVG>gv<<esc>
@@ -393,36 +335,6 @@ else
   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
-" seamless switching tmux panes
-" if exists('$TMUX')
-"   function! TmuxOrSplitSwitch(wincmd, tmuxdir)
-"     let previous_winnr = winnr()
-"     silent! execute "wincmd " . a:wincmd
-"     if previous_winnr == winnr()
-"       if a:tmuxdir == 'L'
-"         call system("tmux select-pane -L && tmux resize-pane -Z")
-"       else
-"         call system("tmux select-pane -" . a:tmuxdir)
-"       endif
-"       redraw!
-"     endif
-"   endfunction
-
-"   let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
-"   let &t_ti = "\<Esc>]2;vim\<Esc>\\" . &t_ti
-"   let &t_te = "\<Esc>]2;". previous_title . "\<Esc>\\" . &t_te
-
-"   nnoremap <silent> <C-h> :call TmuxOrSplitSwitch('h', 'L')<cr>
-"   nnoremap <silent> <C-j> :call TmuxOrSplitSwitch('j', 'D')<cr>
-"   nnoremap <silent> <C-k> :call TmuxOrSplitSwitch('k', 'U')<cr>
-"   nnoremap <silent> <C-l> :call TmuxOrSplitSwitch('l', 'R')<cr>
-" else
-"   map <C-h> <C-w>h
-"   map <C-j> <C-w>j
-"   map <C-k> <C-w>k
-"   map <C-l> <C-w>l
-" endif
-
 " environment switching
 :nnoremap <leader>efd :call SetSethEnv('freelance', 'dark')<Cr>
 :nnoremap <leader>efl :call SetSethEnv('freelance', 'light')<Cr>
@@ -439,7 +351,6 @@ let g:hybrid_reduced_contrast=1
 function! SetSethEnv(col, bg)
     exec 'set background='.a:bg
     exec 'colorscheme '.a:col
-
     highlight LineNr ctermbg=NONE guibg=NONE
     hi link CtrlSpaceNormal Normal
     hi link CtrlSpaceSelected Visual
@@ -448,7 +359,6 @@ endfunction
 
 if filereadable(expand("~/.vimrc_background"))
     source ~/.vimrc_background
-
     highlight LineNr ctermbg=NONE guibg=NONE
     hi link CtrlSpaceNormal Normal
     hi link CtrlSpaceSelected Visual
@@ -528,6 +438,10 @@ endfunction
 function! s:goyo_leave()
     set showbreak=\ \ 
     set nowrap
+    hi LineNr ctermbg=NONE guibg=NONE
+    hi link CtrlSpaceNormal Normal
+    hi link CtrlSpaceSelected Visual
+    hi link CtrlSpaceStatus Ctrlpdark
 endfunction
 
 autocmd! User GoyoEnter nested call <SID>goyo_enter()

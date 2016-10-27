@@ -1,6 +1,7 @@
 stty -ixon
 export HISTIGNORE="jrnl *"
 
+KEYTIMEOUT=1
 source ~/.config/antigen/antigen.zsh
 
 antigen use oh-my-zsh
@@ -27,8 +28,8 @@ alias unc='mutt -f ~/Mail/UNC/INBOX'
 alias finder='open -a Finder'
 alias tmsize='tmux detach -a'
 alias swarmint='ssh swarmint@swarm.swarm1.com'
-alias swarm1='ssh seth@swarm.swarmwebhosting.com'
-alias swarm2='ssh seth@swarm.swarmwebhosting2.com'
+alias swarm1='ssh swarm1'
+alias swarm2='ssh swarm2'
 alias swarm3='ssh seth@swarm.swarm1.com'
 alias gridserver='ssh seth'
 alias staging='ssh staging@swarm.swarm1.com'
@@ -93,7 +94,7 @@ alias gst="gs"
 alias gp="git push"
 
 # Customize to your needs...
-export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Users/seth/Dropbox/Swarm/Web/Script:/Users/seth/Scripts:/Users/seth/Library/Android/sdk/platform-tools:/Users/seth/Library/Android/sdk/tools:$PATH
+export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Users/seth/Dropbox/Swarm/Web/Script:/Users/seth/Scripts:/Users/seth/Library/Android/sdk/platform-tools:/Users/seth/Library/Android/sdk/tools:$PATH:$HOME/.yarn/bin
 
 if [ -n "$PS1" ]; then
   if ! [ -f ~/.config/base16-shell/profile_helper.sh ]; then
