@@ -13,27 +13,32 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'wesQ3/vim-windowswap'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'szw/vim-ctrlspace'
 Plugin 'rking/ag.vim'
 
 " utilities
+Plugin 'vimwiki/vimwiki'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'mattn/emmet-vim'
-Plugin 'tpope/vim-commentary'
+Plugin 'tomtom/tcomment_vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'junegunn/goyo.vim'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'FelikZ/ctrlp-py-matcher'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
 
 " languages
 Plugin 'posva/vim-vue'
+Plugin 'othree/html5.vim'
 Plugin 'editorconfig/editorconfig-vim'
+Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'jeroenbourgois/vim-actionscript'
 Plugin 'chrisbra/csv.vim'
 Plugin 'StanAngeloff/php.vim'
@@ -44,6 +49,9 @@ Plugin 'pangloss/vim-javascript'
 
 " colorschemes
 Plugin 'w0ng/vim-hybrid'
+Plugin 'rakr/vim-two-firewatch'
+Plugin 'tyrannicaltoucan/vim-quantum'
+Plugin 'KeitaNakamura/neodark.vim'
 Plugin 'chriskempson/base16-vim'
 
 call vundle#end()
@@ -57,7 +65,6 @@ let mapleader=","
 set breakindent
 
 " basic formatting
-set smartindent
 set autoindent
 set ruler
 set hidden
@@ -166,6 +173,9 @@ set clipboard=unnamed
 " dont fold markdown
 let g:vim_markdown_folding_disabled = 1
 
+" fix syntax highlighting in mixed files
+autocmd BufEnter * :syntax sync fromstart
+
 " open a new tab
 :nnoremap <C-S-t> :tabnew<CR>
 
@@ -201,6 +211,9 @@ augroup END
 :noremap gV `[v`]
 :nnoremap <silent> p p`]
 :nnoremap <silent> p p`]
+
+" format json
+:nnoremap <leader>fj :%!python -m json.tool<CR>
 
 function! NumToggle()
     set relativenumber!
@@ -335,27 +348,20 @@ else
   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
-" environment switching
-:nnoremap <leader>efd :call SetSethEnv('freelance', 'dark')<Cr>
-:nnoremap <leader>efl :call SetSethEnv('freelance', 'light')<Cr>
-:nnoremap <leader>ewd :call SetSethEnv('work', 'dark')<Cr>
-:nnoremap <leader>ewl :call SetSethEnv('work', 'light')<Cr>
-:nnoremap <leader>eod :call SetSethEnv('other', 'dark')<Cr>
-:nnoremap <leader>eol :call SetSethEnv('other', 'light')<Cr>
-
 set t_Co=256
 let base16colorspace=256
-let g:hybrid_custom_term_colors=1
 let g:hybrid_reduced_contrast=1
 
-function! SetSethEnv(col, bg)
-    exec 'set background='.a:bg
-    exec 'colorscheme '.a:col
-    highlight LineNr ctermbg=NONE guibg=NONE
-    hi link CtrlSpaceNormal Normal
-    hi link CtrlSpaceSelected Visual
-    hi link CtrlSpaceStatus Ctrlpdark
-endfunction
+if has("termguicolors")
+    set termguicolors
+endif
+
+set background=dark
+
+" colorscheme quantum
+let g:neodark#terminal_transparent = 1
+let g:neodark#use_256color = 1
+let g:airline_theme='quantum'
 
 if filereadable(expand("~/.vimrc_background"))
     source ~/.vimrc_background
@@ -451,3 +457,17 @@ function! StrongTerms(...)
     execute "%s/\d\+\.\s.\{-}\./<strong>\0<\/strong>/g"
 endfunction
 
+" fix shift-spc mapping (requires iterm2 key setup)
+:nmap ✠ <Plug>VimwikiSplitLink
+:vmap ✠ <Plug>VimwikiSplitLink
+
+" fix ctrl-spc mapping (requires iterm2 key setup)
+:nmap ¥ <Plug>VimwikiVSplitLink
+:vmap ✠ <Plug>VimwikiVSplitLink
+
+" Use markdown instead of wiki lang
+let g:vimwiki_list = [{'path': '$HOME/Dropbox/wiki', 'syntax': 'markdown', 'ext': '.md', 'automatic_nested_syntaxes': 1}]
+
+let g:snipMate = get(g:, 'snipMate', {}) " Allow for vimrc re-sourcing
+let g:snipMate.scope_aliases = {}
+let g:snipMate.scope_aliases['vue'] = 'javascript,css,html,scss'

@@ -15,7 +15,8 @@ antigen bundle vi-mode
 
 antigen apply
 
-alias todo='vim ~/Dropbox/Documents/Todo/todo.md + -c "set norelativenumber nonumber invwrap wrap linebreak laststatus=0"'
+alias todo='vim ~/Dropbox/Documents/Todo/todo.md + -c "set norelativenumber nonumber laststatus=0" -c "VimwikiIndex"'
+alias org='vim ~/Dropbox/Documents/Todo/todo.md + -c "set norelativenumber nonumber laststatus=0" -c "VimwikiIndex"'
 alias espresso='open -a Espresso'
 alias firefox='open -a firefox'
 alias preview='open -a Preview'
@@ -35,7 +36,6 @@ alias gridserver='ssh seth'
 alias staging='ssh staging@swarm.swarm1.com'
 alias redesign='ssh redesign@swarm.swarm1.com'
 alias chat='mcabber'
-alias colors='~/.config/base16-shell/colortest'
 alias dan='ssh danielniblock@192.168.1.13'
 alias christine='ssh cmh@192.168.1.14'
 alias scott='ssh Scott@192.168.1.17'
@@ -44,9 +44,15 @@ alias render='ssh render@192.168.1.20'
 alias linux='ssh linux'
 alias timestamp='date +"%Y-%m-%d %H:%M:%S"'
 alias v="vim ."
+alias n="nvim ."
 alias e="vim"
 alias s="subl ."
 alias adbpic='adb shell screencap -p | perl -pe "s/\x0D\x0A/\x0A/g" > "/Users/seth/Downloads/firetvscreenshot_$(date +%Y%m%d-%H%M%S).png"'
+alias firetv='adb kill-server && adb start-server && adb connect 192.168.1.110'
+alias charlotteobserver='open http://webmedia.newseum.org/newseum-multimedia/dfp/pdf6/NC_CO.pdf'
+alias newsobserver='open http://webmedia.newseum.org/newseum-multimedia/dfp/pdf6/NC_NO.pdf'
+alias washingtonpost='open http://webmedia.newseum.org/newseum-multimedia/dfp/pdf6/DC_WP.pdf'
+alias newyorktimes='open http://webmedia.newseum.org/newseum-multimedia/dfp/pdf6/NY_NYT.pdf'
 
 if [ -n "$TMUX" ]; then
   # Tell tmux to pass the escape sequences through
@@ -66,15 +72,6 @@ else
 fi
 
 # quick theme switching
-alias light='base16_hybridlight'
-alias dark='base16_hybriddark'
-alias oceanic='base16_oceanicnext'
-alias base16='base16_default-dark'
-alias ocean='base16_ocean'
-alias eighties='base16_eighties'
-alias railscasts='base16_railscasts'
-alias flat='base16_flat'
-alias themes='ls /Users/seth/.config/base16-shell/scripts/'
 alias cursor_magenta='printf $printf_template_custom Pl e1bee7' # cursor
 alias cursor_yellow='printf $printf_template_custom Pl ffff8d' # cursor
 alias cursor_red='printf $printf_template_custom Pl ff8a80' # cursor
@@ -104,9 +101,9 @@ if [ -n "$PS1" ]; then
   fi
 fi
 
-if [ -n $TMUX ]; then
-else
-    base16_hybrid_dark
-fi
+# if [ -n $TMUX ]; then
+# else
+#     base16_hybrid_dark
+# fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

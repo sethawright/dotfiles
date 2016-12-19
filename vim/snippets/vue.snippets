@@ -1,0 +1,25 @@
+snippet tmpl
+	<template>
+		<div class="${1:}">
+		</div>
+	</template>
+
+	<script>
+	export default {
+	}
+	</script>
+
+	<style${2: scoped}>
+	.$1 {
+	}
+	</style>
+snippet mnt
+	mounted () {
+		${0}
+	}
+snippet data
+	data () {
+		return {
+			${0}
+		}
+	}
