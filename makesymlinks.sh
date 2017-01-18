@@ -11,6 +11,7 @@ olddir=~/dotfiles_old             # old dotfiles backup directory
 
 # list of files/folders to symlink in homedir
 files="vim vimrc tmux.conf gvimrc gitconfig gitignore_global viminfo zshrc hammerspoon mutt muttrc"
+themes="base16-materialdark.sh base16-materiallight.sh"
 
 ##########
 
@@ -32,6 +33,9 @@ for file in $files; do
     ln -s $dir/$file ~/.$file
 done
 
+for theme in $themes; do
+    echo "Creating symlink to $theme in base16 shell."
+    ln -s $dir/$theme ~/.config/base16-shell/scripts/$theme
+done
+
 # custom locations
-mv ~/.karabiner.d/configuration/karabiner.json ~/dotfiles_old/
-ln -s $dir/karabiner.json ~/.karabiner.d/configuration/karabiner.json
