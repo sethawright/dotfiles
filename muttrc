@@ -25,7 +25,6 @@ set edit_headers
 set fast_reply
 set askcc
 set fcc_attach
-set mime_forward=yes
 unset collapse_unread
 set forward_format = "Fwd: %s"       # format of subject when forwarding
 set forward_decode

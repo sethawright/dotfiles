@@ -48,11 +48,8 @@ alias n="nvim ."
 alias e="vim"
 alias s="subl ."
 alias adbpic='adb shell screencap -p | perl -pe "s/\x0D\x0A/\x0A/g" > "/Users/seth/Downloads/firetvscreenshot_$(date +%Y%m%d-%H%M%S).png"'
-alias firetv='adb kill-server && adb start-server && adb connect 192.168.1.110'
-alias charlotteobserver='open http://webmedia.newseum.org/newseum-multimedia/dfp/pdf6/NC_CO.pdf'
-alias newsobserver='open http://webmedia.newseum.org/newseum-multimedia/dfp/pdf6/NC_NO.pdf'
-alias washingtonpost='open http://webmedia.newseum.org/newseum-multimedia/dfp/pdf6/DC_WP.pdf'
-alias newyorktimes='open http://webmedia.newseum.org/newseum-multimedia/dfp/pdf6/NY_NYT.pdf'
+alias firetv='adb kill-server && adb start-server && adb connect 192.168.1.104'
+alias news="newsbeuter"
 
 if [ -n "$TMUX" ]; then
   # Tell tmux to pass the escape sequences through
@@ -72,6 +69,8 @@ else
 fi
 
 # quick theme switching
+alias dark='base16_materialdark'
+alias light='base16_materiallight'
 alias cursor_magenta='printf $printf_template_custom Pl e1bee7' # cursor
 alias cursor_yellow='printf $printf_template_custom Pl ffff8d' # cursor
 alias cursor_red='printf $printf_template_custom Pl ff8a80' # cursor
@@ -91,7 +90,13 @@ alias gst="gs"
 alias gp="git push"
 
 # Customize to your needs...
-export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Users/seth/Dropbox/Swarm/Web/Script:/Users/seth/Scripts:/Users/seth/Library/Android/sdk/platform-tools:/Users/seth/Library/Android/sdk/tools:$PATH:$HOME/.yarn/bin
+export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:$PATH
+export PATH=$PATH:/Users/seth/Dropbox/Swarm/Web/Script
+export PATH=$PATH:/Users/seth/Scripts
+export PATH=$PATH:/Users/seth/Library/Android/sdk/platform-tools
+export PATH=$PATH:/Users/seth/Library/Android/sdk/tools
+export PATH=$PATH:$HOME/.yarn/bin
+export PATH=$PATH:$HOME/.composer/vendor/bin
 
 if [ -n "$PS1" ]; then
   if ! [ -f ~/.config/base16-shell/profile_helper.sh ]; then
@@ -101,9 +106,9 @@ if [ -n "$PS1" ]; then
   fi
 fi
 
-# if [ -n $TMUX ]; then
-# else
-#     base16_hybrid_dark
-# fi
+if [ -n $TMUX ]; then
+else
+    base16_materialdark
+fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

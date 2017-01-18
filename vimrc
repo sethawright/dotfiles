@@ -49,9 +49,6 @@ Plugin 'pangloss/vim-javascript'
 
 " colorschemes
 Plugin 'w0ng/vim-hybrid'
-Plugin 'rakr/vim-two-firewatch'
-Plugin 'tyrannicaltoucan/vim-quantum'
-Plugin 'KeitaNakamura/neodark.vim'
 Plugin 'chriskempson/base16-vim'
 
 call vundle#end()
@@ -348,24 +345,23 @@ else
   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
-set t_Co=256
-let base16colorspace=256
-let g:hybrid_reduced_contrast=1
-
-if has("termguicolors")
-    set termguicolors
-endif
-
-set background=dark
-
-" colorscheme quantum
-let g:neodark#terminal_transparent = 1
-let g:neodark#use_256color = 1
-let g:airline_theme='quantum'
-
+" use ~/.confg/base16-shell
 if filereadable(expand("~/.vimrc_background"))
+    set background=dark
+    set t_Co=256
+    let g:hybrid_custom_term_colors = 1
+    let g:hybrid_reduced_contrast = 1
+    let g:airline_theme = 'seth'
     source ~/.vimrc_background
     highlight LineNr ctermbg=NONE guibg=NONE
+    hi Special ctermfg=9
+    hi Function ctermfg=12
+    hi Keyword ctermfg=13
+    hi Include ctermfg=13
+    hi Export ctermfg=13
+    hi From ctermfg=13
+    hi Statement ctermfg=13
+    hi Search ctermbg=5
     hi link CtrlSpaceNormal Normal
     hi link CtrlSpaceSelected Visual
     hi link CtrlSpaceStatus Ctrlpdark
