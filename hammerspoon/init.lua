@@ -29,24 +29,30 @@ layout1 = {
   {'iTerm2', display_macbook, lay_big, 'all'},
   {'Messages', display_macbook, {x=1, y=2, w=2, h=4}, "Messages"},
   {'Messages', display_macbook, {x=0, y=2, w=1, h=4}, "Google Talk List"},
+  {'Messages', display_macbook, {x=0, y=2, w=1, h=4}, "Olark"},
   {'Spotify', display_macbook, lay_med, "all"},
   {'Mail', display_macbook, lay_med, "all"},
+  {'Spark', display_macbook, lay_med, "all"},
   {'Sequel Pro', display_macbook, lay_med, "all"},
-  {'MacVim', display_macbook, lay_side_big, "all"}
+  {'MacVim', display_macbook, lay_side_big, "all"},
+  {'Slack', display_macbook, lay_big, "all"}
 }
 
 layout2 = {
   {'Google Chrome', display_macbook, lay_big, 'all'},
   {'Mail', display_macbook, lay_big, "all"},
+  {'Spark', display_macbook, lay_big, "all"},
   {'Messages', display_macbook, {x=1, y=2, w=2, h=4}, "Messages"},
   {'Messages', display_macbook, {x=0, y=2, w=1, h=4}, "Google Talk List"},
+  {'Messages', display_macbook, {x=0, y=2, w=1, h=4}, "Olark"},
   {'Spotify', display_macbook, lay_big, "all"},
   {'Safari', display_macbook, lay_big, 'all'},
   {'Firefox', display_macbook, lay_big, 'all'},
   {'Sublime Text', display_asus, lay_big, 'all'},
   {'iTerm2', display_asus, lay_big, 'all'},
   {'Sequel Pro', display_asus, lay_med, "all"},
-  {'MacVim', display_asus, lay_side_sm, "all"}
+  {'MacVim', display_asus, lay_side_sm, "all"},
+  {'Slack', display_macbook, lay_big, "all"}
 }
 
 -- A global variable for the Hyper Mode
@@ -227,10 +233,11 @@ end
 -- Open applications
 apps = {
   {'c', 'Google Chrome'},
-  {'e', 'Mail'},
+  {'e', 'Spark'},
   {'t', 'iTerm'},
+  {'i', 'iTerm'},
   {'f', 'Finder'},
-  {'s', 'Spotify'},
+  {'s', 'Slack'},
   {'m', 'Messages'},
   {'q', 'Sequel Pro'},
   {'p', 'Pages'},
@@ -321,7 +328,19 @@ screenWatcher = hs.screen.watcher.new(screensChangedCallback)
 screenWatcher:start()
 
 -- Reload config on write
-hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
+function reloadConfig(files)
+    doReload = false
+    for _,file in pairs(files) do
+        if file:sub(-4) == ".lua" then
+            doReload = true
+        end
+    end
+    if doReload then
+        hs.reload()
+    end
+end
+
+hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
 
 -- Logging Utility
 function dump(o)

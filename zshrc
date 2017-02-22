@@ -6,6 +6,7 @@ source ~/.config/antigen/antigen.zsh
 
 antigen use oh-my-zsh
 antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle mafredri/zsh-async
 antigen bundle sindresorhus/pure
 antigen bundle sublime
@@ -40,6 +41,7 @@ alias dan='ssh danielniblock@192.168.1.13'
 alias christine='ssh cmh@192.168.1.14'
 alias scott='ssh Scott@192.168.1.17'
 alias randall='ssh relmo@192.168.1.15'
+alias intern='ssh render@192.168.1.19'
 alias render='ssh render@192.168.1.20'
 alias linux='ssh linux'
 alias timestamp='date +"%Y-%m-%d %H:%M:%S"'
@@ -74,7 +76,7 @@ alias light='base16_materiallight'
 alias cursor_magenta='printf $printf_template_custom Pl e1bee7' # cursor
 alias cursor_yellow='printf $printf_template_custom Pl ffff8d' # cursor
 alias cursor_red='printf $printf_template_custom Pl ff8a80' # cursor
-alias cursor_orange='printf $printf_template_custom Pl ffcc80' # cursor
+alias cursor_orange='printf $printf_template_custom Pl f96a38' # cursor
 alias cursor_blue='printf $printf_template_custom Pl 82b1ff' # cursor
 alias cursor_green='printf $printf_template_custom Pl b9f6ca' # cursor
 
@@ -98,6 +100,10 @@ export PATH=$PATH:/Users/seth/Library/Android/sdk/tools
 export PATH=$PATH:$HOME/.yarn/bin
 export PATH=$PATH:$HOME/.composer/vendor/bin
 
+# Node version manager
+export NVM_DIR="$HOME/.nvm"
+. "/usr/local/opt/nvm/nvm.sh"
+
 if [ -n "$PS1" ]; then
   if ! [ -f ~/.config/base16-shell/profile_helper.sh ]; then
     echo "Missing profile_helper.sh"
@@ -107,8 +113,10 @@ if [ -n "$PS1" ]; then
 fi
 
 if [ -n $TMUX ]; then
+    cursor_blue
 else
     base16_materialdark
+    cursor_blue
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -14,10 +14,12 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'nixprime/cpsm'
 Plugin 'szw/vim-ctrlspace'
 Plugin 'rking/ag.vim'
 
 " utilities
+" Plugin 'jiangmiao/auto-pairs'
 Plugin 'vimwiki/vimwiki'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'tpope/vim-fugitive'
@@ -29,7 +31,6 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'junegunn/goyo.vim'
 Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'FelikZ/ctrlp-py-matcher'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
@@ -39,16 +40,14 @@ Plugin 'posva/vim-vue'
 Plugin 'othree/html5.vim'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'cakebaker/scss-syntax.vim'
-Plugin 'jeroenbourgois/vim-actionscript'
-Plugin 'chrisbra/csv.vim'
 Plugin 'StanAngeloff/php.vim'
 Plugin 'jwalton512/vim-blade'
 Plugin 'vim-ruby/vim-ruby'
-Plugin 'plasticboy/vim-markdown'
 Plugin 'pangloss/vim-javascript'
 
 " colorschemes
 Plugin 'w0ng/vim-hybrid'
+Plugin 'vim-scripts/summerfruit256.vim'
 Plugin 'chriskempson/base16-vim'
 
 call vundle#end()
@@ -67,8 +66,8 @@ set ruler
 set hidden
 
 " faster performance
-let html_no_rendering=1 " Don't render italic, bold, links in HTML
-let loaded_matchparen=1 " Don't load matchit.vim (paren/bracket matching)
+" let html_no_rendering=1 " Don't render italic, bold, links in HTML
+" let loaded_matchparen=1 " Don't load matchit.vim (paren/bracket matching)
 set noshowmatch         " Don't match parentheses/brackets
 set nocursorline        " Don't paint cursor line
 set nocursorcolumn      " Don't paint cursor column
@@ -83,8 +82,8 @@ set norelativenumber
 set display=lastline
 
 " spacing & whitespace
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set textwidth=0
 set wrapmargin=0
 set nowrap
@@ -113,9 +112,6 @@ set noswapfile
 " no cursor line highlight
 set nocursorline
 set nocursorcolumn
-
-" dont match parenthesis, they are usually wrong
-set noshowmatch
 
 " more natural split resizing
 set splitbelow
@@ -311,6 +307,7 @@ nmap <leader>hs :set hlsearch! hlsearch?<CR>
 :nnoremap <C-I> :CtrlPBuffer<Cr>
 :nnoremap <C-U> :CtrlPMRU<Cr>
 :nnoremap <C-O> :CtrlPFunky<Cr>
+:nnoremap <C-T> :CtrlPTag<Cr>
 :nnoremap <leader>fu :CtrlPFunky<Cr>
 :nnoremap <leader>fp :CtrlP<Cr>
 
@@ -318,20 +315,18 @@ nmap <leader>hs :set hlsearch! hlsearch?<CR>
 if executable('ag')
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command =
-    \ 'ag %s --files-with-matches -g "" --ignore "*.min.js" --ignore "*.min.css"'
+    \ 'ag %s --files-with-matches -g "" --ignore "*.min.js" --ignore "*.min.css" --ignore "node_modules" --ignore ".git"'
 
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 
 else
   " Fall back to using git ls-files if Ag is not available
-  let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
+  let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$|node\_modules$'
   let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
 endif
 
-if has('python') || has('python3')
-    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-endif
+let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
 
 " select entire file
 :nnoremap <leader><leader>a ggVG
@@ -365,6 +360,7 @@ if filereadable(expand("~/.vimrc_background"))
     hi link CtrlSpaceNormal Normal
     hi link CtrlSpaceSelected Visual
     hi link CtrlSpaceStatus Ctrlpdark
+    hi MatchParen ctermbg=0
 endif
 
 " nerdtree settings
@@ -462,7 +458,7 @@ endfunction
 :vmap ✠ <Plug>VimwikiVSplitLink
 
 " Use markdown instead of wiki lang
-let g:vimwiki_list = [{'path': '$HOME/Dropbox/wiki', 'syntax': 'markdown', 'ext': '.md', 'automatic_nested_syntaxes': 1}]
+let g:vimwiki_list = [{'path': '$HOME/Dropbox/wiki', 'syntax': 'markdown', 'ext': '.md', 'nested_syntaxes': {'html': 'html', 'javascript': 'javascript', 'css': 'css', 'php': 'php', 'bash': 'bash'}}]
 
 let g:snipMate = get(g:, 'snipMate', {}) " Allow for vimrc re-sourcing
 let g:snipMate.scope_aliases = {}

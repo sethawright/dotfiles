@@ -8,6 +8,8 @@ if [ "${TERM%%-*}" = 'linux' ]; then
     return 2>/dev/null || exit 0
 fi
 
+colorchange Dark
+
 # color00="1c/26/2a" # Base 00 - Black
 # color01="dc/5c/60" # Base 08 - Red
 # color02="a0/cf/6e" # Base 0B - Green
@@ -27,7 +29,7 @@ color04="82/aa/ff" # Base 0D - Blue
 color05="c7/92/ea" # Base 0E - Magenta
 color06="89/dd/ff" # Base 0C - Cyan
 color07="3c/4c/54" # Base 05 - White
-color08="29/35/3b" # Base 03 - Bright Black
+color08="56/6f/7c" # Base 03 - Bright Black
 color09=$color01 # Base 08 - Bright Red
 color10=$color02 # Base 0B - Bright Green
 color11=$color03 # Base 0A - Bright Yellow
@@ -93,7 +95,7 @@ if [ -n "$ITERM_SESSION_ID" ]; then
   printf $printf_template_custom Pg eeffff # forground
   printf $printf_template_custom Ph 263238 # background
   printf $printf_template_custom Pi ee2b2a # bold color
-  printf $printf_template_custom Pj 2b3c41 # selection color
+  printf $printf_template_custom Pj eeffff # selection color
   printf $printf_template_custom Pk 536d7b # selected text color
   printf $printf_template_custom Pl ffcc00 # cursor
   printf $printf_template_custom Pm 263238 # cursor text
