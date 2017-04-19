@@ -194,9 +194,9 @@ call s:HL('jsThis', s:colors.gui.red, s:colors.cterm.red, '', '', '')
 call s:HL('jsUndefined', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
 
 " Markdown
-call s:HL('markdownCode', '', '', s:colors.gui.gray1, s:colors.cterm.gray1, '')
+call s:HL('markdownCode', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
 call s:HL('markdownCodeBlock', '', '', s:colors.gui.gray1, s:colors.cterm.gray1, '')
-call s:HL('markdownCodeDelimiter', s:colors.gui.gray3, s:colors.cterm.gray3, s:colors.gui.gray1, s:colors.cterm.gray1, '')
+call s:HL('markdownCodeDelimiter', s:colors.gui.gray1, s:colors.cterm.gray1, '', '', '')
 call s:HL('markdownHeadingDelimiter', s:colors.gui.green, s:colors.cterm.green, '', '', '')
 call s:HL('markdownHeadingRule', s:colors.gui.green, s:colors.cterm.green, '', '', '')
 call s:HL('markdownLinkText', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')

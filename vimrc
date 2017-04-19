@@ -32,6 +32,9 @@ syntax on
 " leader to comma
 let mapleader=","
 
+set timeoutlen=500
+set ttimeoutlen=0
+
 " various config
 set backspace=indent,eol,start
 set breakindent
@@ -301,6 +304,8 @@ nnoremap <leader>md :tabnew \| exec "read !marked --gfm " . shellescape(@#, 1)<C
 
 " Use markdown instead of wiki lang
 let g:vimwiki_list = [{'path': '$HOME/Dropbox/wiki', 'syntax': 'markdown', 'ext': '.md', 'nested_syntaxes': {'html': 'html', 'javascript': 'javascript', 'css': 'css', 'php': 'php', 'bash': 'bash'}}]
+
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'javascript', 'php', 'ruby', 'shell=sh', 'js=javascript', 'c', 'vim']
 
 " find syntax highlighting for the current text object
 nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'

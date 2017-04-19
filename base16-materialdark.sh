@@ -133,3 +133,5 @@ unset color21
 unset color_foreground
 unset color_background
 unset color_cursor
+
+echo "if !exists('g:colors_name') || g:colors_name != 'base16-materialdark'\ncolorscheme base16-materialdark\nendif" > ~/.vimrc_background
