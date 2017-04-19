@@ -12,6 +12,8 @@ olddir=~/dotfiles_old             # old dotfiles backup directory
 # list of files/folders to symlink in homedir
 files="vim vimrc tmux.conf gvimrc gitconfig gitignore_global viminfo zshrc hammerspoon mutt muttrc"
 themes="base16-materialdark.sh base16-materiallight.sh"
+colorschemes="base16-materialdark.vim base16-materiallight.vim"
+airlinethemes="base16_materialdark-airline.vim base16_materiallight-airline.vim"
 
 ##########
 
@@ -36,6 +38,17 @@ done
 for theme in $themes; do
     echo "Creating symlink to $theme in base16 shell."
     ln -s $dir/$theme ~/.config/base16-shell/scripts/$theme
+done
+
+for scheme in $colorschemes; do
+    echo "Creating symlink to $scheme in vim colors."
+    ln -s $dir/$scheme ~/.vim/colors/$scheme
+done
+
+for air in $airlinethemes; do
+    airmod="${air//-airline}"
+    echo "Creating symlink to $air in airline."
+    ln -s $dir/$air ~/.vim/autoload/airline/themes/$airmod
 done
 
 # custom locations

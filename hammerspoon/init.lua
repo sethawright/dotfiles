@@ -22,11 +22,11 @@ local lay_side_sm = {x = 1, y = 1, w = math.floor(hs.grid.GRIDWIDTH / 3) - 1, h 
 
 -- App name, display, grid layout, window name
 layout1 = {
-  {'Google Chrome', display_macbook, lay_big, 'all'},
-  {'Safari', display_macbook, lay_big, 'all'},
-  {'Firefox', display_macbook, lay_big, 'all'},
+  {'Google Chrome', display_macbook, lay_med, 'all'},
+  {'Safari', display_macbook, lay_med, 'all'},
+  {'Firefox', display_macbook, lay_med, 'all'},
   {'Sublime Text', display_macbook, lay_big, 'all'},
-  {'iTerm2', display_macbook, lay_big, 'all'},
+  {'iTerm', display_macbook, lay_big, 'all'},
   {'Messages', display_macbook, {x=1, y=2, w=2, h=4}, "Messages"},
   {'Messages', display_macbook, {x=0, y=2, w=1, h=4}, "Google Talk List"},
   {'Messages', display_macbook, {x=0, y=2, w=1, h=4}, "Olark"},
@@ -35,7 +35,7 @@ layout1 = {
   {'Spark', display_macbook, lay_med, "all"},
   {'Sequel Pro', display_macbook, lay_med, "all"},
   {'MacVim', display_macbook, lay_side_big, "all"},
-  {'Slack', display_macbook, lay_big, "all"}
+  {'Slack', display_macbook, lay_med, "all"}
 }
 
 layout2 = {
@@ -120,6 +120,15 @@ mainBindings = {
       local screen = win:screen()
       hs.grid.set(win, {x = 1, y = 1, w = hs.grid.GRIDWIDTH - 2, h = hs.grid.GRIDHEIGHT - 2}, screen)
       k:exit();
+    end
+  },
+  {'a', function()
+    launch('iTerm'); 
+    launch('Messages');
+    launch('Slack'); 
+    launch('Google Chrome');
+    applyLayout(layout1);
+    k:exit();
     end
   },
   {'J', hs.grid.pushWindowDown},
@@ -326,21 +335,6 @@ hs.hotkey.bind({"ctrl", "alt"}, 'RIGHT', hs.grid.pushWindowNextScreen)
 
 screenWatcher = hs.screen.watcher.new(screensChangedCallback)
 screenWatcher:start()
-
--- Reload config on write
-function reloadConfig(files)
-    doReload = false
-    for _,file in pairs(files) do
-        if file:sub(-4) == ".lua" then
-            doReload = true
-        end
-    end
-    if doReload then
-        hs.reload()
-    end
-end
-
-hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
 
 -- Logging Utility
 function dump(o)

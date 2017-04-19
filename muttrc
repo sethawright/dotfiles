@@ -16,6 +16,7 @@ set delete = yes
 set include
 set abort_nosubject=no
 set text_flowed=yes
+unset metoo
 # set pager_index_lines = 20
 # set pager_context = 3
 # set pager_stop
@@ -35,7 +36,7 @@ set include
 set forward_quote
 set sig_on_top
 set sig_dashes = no
-set query_command="/usr/local/Cellar/lbdb/0.41/bin/lbdbq '%s'"
+set query_command="lbdbq '%s'"
 macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
 
 auto_view text/html
@@ -121,6 +122,14 @@ set alias_format        = "%4n %t %-20a  %r"
 # run offlineimap to sync mail
 macro index O "<shell-escape>offlineimap -u quiet<enter>"
 macro index o "<shell-escape>offlineimap -u quiet -qf INBOX<enter>"
+
+macro index .cp '<change-folder>~/Mail/aliases/Gmail<enter>'
+macro index .cw '<change-folder>~/Mail/aliases/Swarm<enter>'
+macro index,browser .r "<enter-command>source ~/.muttrc<enter>"
+
+macro index .sn "l ^a^k~N|~O\n" # show unread/new/old only
+macro index .sf "l ~F\n" # show flagged messages only
+macro index .sa "l ^a^kall\n" # show all messages
 
 # account specific sources
 folder-hook Swarm* source ~/.mutt/swarm.muttrc

@@ -8,15 +8,15 @@ if [ "${TERM%%-*}" = 'linux' ]; then
     return 2>/dev/null || exit 0
 fi
 
-colorchange Light
+. ~/Scripts/colorchange Light
 
 color00="b0/be/c5" # Base 00 - Black
 color01="e8/3b/3f" # Base 08 - Red
-color02="37/92/37" # Base 0B - Green
+color02="40/a3/3f" # Base 0B - Green
 color03="f6/98/1e" # Base 0A - Yellow
-color04="1b/71/de" # Base 0D - Blue
+color04="1e/80/f0" # Base 0D - Blue
 color05="99/2b/ae" # Base 0E - Magenta
-color06="00/ac/c1" # Base 0C - Cyan
+color06="16/af/ca" # Base 0C - Cyan
 color07="c4/cf/d4" # Base 05 - White
 color08="7e/93/9e" # Base 03 - Bright Black
 color09="e8/3b/3f" # Base 08 - Bright Red
@@ -26,12 +26,12 @@ color12="1e/80/f0" # Base 0D - Bright Blue
 color13="99/2b/ae" # Base 0E - Bright Magenta
 color14="16/af/ca" # Base 0C - Bright Cyan
 color15="3c/4c/54" # Base 07 - Bright White
-color16="cc/78/33" # Base 09
-color17="bc/94/58" # Base 0F
-color18="27/29/35" # Base 01
-color19="3a/40/55" # Base 02
-color20="d4/cf/c9" # Base 04
-color21="f4/f1/ed" # Base 06
+color16="f0/71/78" # Base 09 (pink)
+color17="f7/8c/6c" # Base 0F (orange)
+color18="b2/cc/d6" # Base 01 (pale blue)
+color19="bb/80/b3" # Base 02 (violet)
+color20="ab/79/67" # Base 04 (brown)
+color21="e5/e9/ea" # Base 06
 color_foreground="1c/26/2a" # Base 00
 color_background="f7/f7/f7" # Base 05
 color_cursor="fc/74/53" # Base 05
@@ -87,7 +87,7 @@ if [ -n "$ITERM_SESSION_ID" ]; then
   printf $printf_template_custom Pi e83b3f # bold color
   printf $printf_template_custom Pj cfd8dc # selection color
   printf $printf_template_custom Pk 3c4c54 # selected text color
-  printf $printf_template_custom Pl fc7453 # cursor
+  printf $printf_template_custom Pl fbc02d # cursor
   printf $printf_template_custom Pm 364851 # cursor text
 else
   printf $printf_template_var 10 $color_foreground

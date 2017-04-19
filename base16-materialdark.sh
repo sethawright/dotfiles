@@ -1,14 +1,14 @@
 #!/bin/sh
 # base16-shell (https://github.com/chriskempson/base16-shell)
 # Base16 Shell template by Chris Kempson (http://chriskempson.com)
-# Railscasts scheme by Ryan Bates (http://railscasts.com)
+# Material Dark scheme by Seth Wright
 
 # This script doesn't support linux console (use 'vconsole' template instead)
 if [ "${TERM%%-*}" = 'linux' ]; then
     return 2>/dev/null || exit 0
 fi
 
-colorchange Dark
+. ~/Scripts/colorchange Dark
 
 # color00="1c/26/2a" # Base 00 - Black
 # color01="dc/5c/60" # Base 08 - Red
@@ -28,7 +28,7 @@ color03="ff/cb/6b" # Base 0A - Yellow
 color04="82/aa/ff" # Base 0D - Blue
 color05="c7/92/ea" # Base 0E - Magenta
 color06="89/dd/ff" # Base 0C - Cyan
-color07="3c/4c/54" # Base 05 - White
+color07="50/63/6d" # Base 05 - White
 color08="56/6f/7c" # Base 03 - Bright Black
 color09=$color01 # Base 08 - Bright Red
 color10=$color02 # Base 0B - Bright Green
@@ -37,12 +37,12 @@ color12=$color04 # Base 0D - Bright Blue
 color13=$color05 # Base 0E - Bright Magenta
 color14=$color06 # Base 0C - Bright Cyan
 color15="ee/ff/ff" # Base 07 - Bright White
-color16="cc/78/33" # Base 09
-color17="bc/94/58" # Base 0F
-color18="27/29/35" # Base 01
-color19="3a/40/55" # Base 02
-color20="d4/cf/c9" # Base 04
-color21="f4/f1/ed" # Base 06
+color16="f0/71/78" # Base 09 (pink)
+color17="f7/8c/6c" # Base 0F (orange)
+color18="b2/cc/d6" # Base 01 (pale blue)
+color19="bb/80/b3" # Base 02 (violet)
+color20="ab/79/67" # Base 04 (brown)
+color21="2f/3f/47" # Base 06
 color_foreground="ee/ff/ff" # Base 05
 color_background="26/32/38" # Base 00
 color_cursor="ff/cc/00" # Base 05
