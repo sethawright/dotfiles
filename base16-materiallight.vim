@@ -237,7 +237,7 @@ call s:HL('xmlEndTag', s:colors.gui.red, s:colors.cterm.red, '', '', '')
 
 " Other stuff
 call s:HL('CursorLineNr', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
-call s:HL('CtrlPMatch', s:colors.gui.brown, s:colors.cterm.brown, '', '', 'bold')
+call s:HL('CtrlPMatch', '', '', '', '', 'bold')
 hi MatchParen cterm=bold,underline ctermbg=NONE guibg=NONE gui=bold,underline guibg=NONE guifg=NONE
 hi link CtrlSpaceNormal Normal
 hi link CtrlSpaceSelected CursorLine
