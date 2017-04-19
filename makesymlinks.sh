@@ -10,7 +10,7 @@ dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
 
 # list of files/folders to symlink in homedir
-files="vim vimrc tmux.conf gvimrc gitconfig gitignore_global viminfo zshrc hammerspoon mutt muttrc"
+files="vim vimrc tmux.conf gvimrc gitconfig gitignore_global zshrc hammerspoon mutt muttrc"
 themes="base16-materialdark.sh base16-materiallight.sh"
 colorschemes="base16-materialdark.vim base16-materiallight.vim"
 airlinethemes="base16_materialdark-airline.vim base16_materiallight-airline.vim"
