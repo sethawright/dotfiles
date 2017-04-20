@@ -15,6 +15,7 @@ Plugin 'vimwiki/vimwiki'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'jiangmiao/auto-pairs'
 Plugin 'mattn/emmet-vim'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'junegunn/goyo.vim'
@@ -303,8 +304,7 @@ nnoremap <leader><leader>n :Explore .<CR>
 nnoremap <leader>md :tabnew \| exec "read !marked --gfm " . shellescape(@#, 1)<CR>
 
 " Use markdown instead of wiki lang
-let g:vimwiki_list = [{'path': '$HOME/Dropbox/wiki', 'syntax': 'markdown', 'ext': '.md', 'nested_syntaxes': {'html': 'html', 'javascript': 'javascript', 'css': 'css', 'php': 'php', 'bash': 'bash'}}]
-
+let g:vimwiki_list = [{'path': '$HOME/Dropbox/wiki', 'syntax': 'markdown', 'ext': '.md', 'nested_syntaxes': {'html': 'html', 'javascript': 'javascript', 'css': 'css', 'php': 'php', 'bash': 'sh'}}]
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'javascript', 'php', 'ruby', 'shell=sh', 'js=javascript', 'c', 'vim']
 
 " find syntax highlighting for the current text object

@@ -1,40 +1,51 @@
 #!/bin/sh
 # base16-shell (https://github.com/chriskempson/base16-shell)
 # Base16 Shell template by Chris Kempson (http://chriskempson.com)
-# Material Light scheme by Seth Wright
+# Material Dark scheme by Seth Wright
 
 # This script doesn't support linux console (use 'vconsole' template instead)
 if [ "${TERM%%-*}" = 'linux' ]; then
     return 2>/dev/null || exit 0
 fi
 
-. ~/Scripts/colorchange Light
+. ~/Scripts/colorchange Dark
 
-color00="b0/be/c5" # Base 00 - Black
-color01="e8/3b/3f" # Base 08 - Red
-color02="40/a3/3f" # Base 0B - Green
-color03="f6/98/1e" # Base 0A - Yellow
-color04="1e/80/f0" # Base 0D - Blue
-color05="99/2b/ae" # Base 0E - Magenta
-color06="16/af/ca" # Base 0C - Cyan
-color07="c4/cf/d4" # Base 05 - White
-color08="7e/93/9e" # Base 03 - Bright Black
-color09="e8/3b/3f" # Base 08 - Bright Red
-color10="40/a3/3f" # Base 0B - Bright Green
-color11="f6/98/1e" # Base 0A - Bright Yellow
-color12="1e/80/f0" # Base 0D - Bright Blue
-color13="99/2b/ae" # Base 0E - Bright Magenta
-color14="16/af/ca" # Base 0C - Bright Cyan
-color15="3c/4c/54" # Base 07 - Bright White
+# color00="1c/26/2a" # Base 00 - Black
+# color01="dc/5c/60" # Base 08 - Red
+# color02="a0/cf/6e" # Base 0B - Green
+# color03="ff/df/63" # Base 0A - Yellow
+# color04="54/a4/f3" # Base 0D - Blue
+# color05="c1/7c/cf" # Base 0E - Magenta
+# color05="c1/7c/cf" # Base 0E - Magenta
+# color06="70/d7/e5" # Base 0C - Cyan
+# color07="3c/4c/54" # Base 05 - White
+# color08="29/35/3b" # Base 03 - Bright Black
+
+color00="3c/4c/54" # Base 00 - Black
+color01="ff/53/70" # Base 08 - Red
+color02="c3/e8/8d" # Base 0B - Green
+color03="ff/cb/6b" # Base 0A - Yellow
+color04="82/aa/ff" # Base 0D - Blue
+color05="c7/92/ea" # Base 0E - Magenta
+color06="89/dd/ff" # Base 0C - Cyan
+color07="50/63/6d" # Base 05 - White
+color08="56/6f/7c" # Base 03 - Bright Black
+color09=$color01 # Base 08 - Bright Red
+color10=$color02 # Base 0B - Bright Green
+color11=$color03 # Base 0A - Bright Yellow
+color12=$color04 # Base 0D - Bright Blue
+color13=$color05 # Base 0E - Bright Magenta
+color14=$color06 # Base 0C - Bright Cyan
+color15="ee/ff/ff" # Base 07 - Bright White
 color16="f0/71/78" # Base 09 (pink)
 color17="f7/8c/6c" # Base 0F (orange)
 color18="b2/cc/d6" # Base 01 (pale blue)
 color19="bb/80/b3" # Base 02 (violet)
 color20="ab/79/67" # Base 04 (brown)
-color21="e5/e9/ea" # Base 06
-color_foreground="1c/26/2a" # Base 00
-color_background="f7/f7/f7" # Base 05
-color_cursor="fc/74/53" # Base 05
+color21="2f/3f/47" # Base 06
+color_foreground="ee/ff/ff" # Base 05
+color_background="26/32/38" # Base 00
+color_cursor="ff/cc/00" # Base 05
 
 if [ -n "$TMUX" ]; then
   # Tell tmux to pass the escape sequences through
@@ -81,14 +92,13 @@ printf $printf_template 21 $color21
 
 # foreground / background / cursor color
 if [ -n "$ITERM_SESSION_ID" ]; then
-  # iTerm2 proprietary escape codes
-  printf $printf_template_custom Pg 1c262a # forground
-  printf $printf_template_custom Ph f7f7f7 # background
-  printf $printf_template_custom Pi e83b3f # bold color
-  printf $printf_template_custom Pj cfd8dc # selection color
-  printf $printf_template_custom Pk 3c4c54 # selected text color
-  printf $printf_template_custom Pl fbc02d # cursor
-  printf $printf_template_custom Pm 364851 # cursor text
+  printf $printf_template_custom Pg eeffff # forground
+  printf $printf_template_custom Ph 263238 # background
+  printf $printf_template_custom Pi ee2b2a # bold color
+  printf $printf_template_custom Pj eeffff # selection color
+  printf $printf_template_custom Pk 536d7b # selected text color
+  printf $printf_template_custom Pl ffcc00 # cursor
+  printf $printf_template_custom Pm 263238 # cursor text
 else
   printf $printf_template_var 10 $color_foreground
   printf $printf_template_var 11 $color_background
@@ -124,4 +134,4 @@ unset color_foreground
 unset color_background
 unset color_cursor
 
-echo "if !exists('g:colors_name') || g:colors_name != 'base16-materiallight'\ncolorscheme base16-materiallight\nendif" > ~/.vimrc_background
+echo "if !exists('g:colors_name') || g:colors_name != 'materitermdark'\ncolorscheme materitermdark\nendif" > ~/.vimrc_background

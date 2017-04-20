@@ -54,8 +54,8 @@ alias work="mux start work"
 alias endwork="mux stop work"
 
 # quick theme switching
-alias dark='ln -sf ~/dotfiles/base16-materialdark.sh ~/.zsh_theme  && . ~/.zsh_theme'
-alias light='ln -sf ~/dotfiles/base16-materiallight.sh ~/.zsh_theme  && . ~/.zsh_theme'
+alias dark='ln -sf ~/dotfiles/materitermdark.sh ~/.zsh_theme  && . ~/.zsh_theme'
+alias light='ln -sf ~/dotfiles/materitermlight.sh ~/.zsh_theme  && . ~/.zsh_theme'
 
 # git stuff
 alias ga="gg a"

@@ -4,7 +4,7 @@ if exists('syntax_on')
   syntax reset
 endif
 
-let g:colors_name = 'base16-materiallight'
+let g:colors_name = 'materitermlight'
 let s:colors = {'gui' : {} , 'cterm' : {}}
 
 " Color Palette for CTERM

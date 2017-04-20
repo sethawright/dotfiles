@@ -1,1 +1,0 @@
-/Users/seth/dotfiles/base16_materialdark-airline.vim
