@@ -1,12 +1,13 @@
 #!/bin/sh
-# base16-shell (https://github.com/chriskempson/base16-shell)
-# Base16 Shell template by Chris Kempson (http://chriskempson.com)
-# Material Light scheme by Seth Wright
 
-# This script doesn't support linux console (use 'vconsole' template instead)
-if [ "${TERM%%-*}" = 'linux' ]; then
-    return 2>/dev/null || exit 0
-fi
+# Materiterm: Material for iTerm
+# Material Light scheme by Seth Wright (https://github.com/asethwright)
+
+# Based on the base16-shell template
+# by Chris Kempson (https://github.com/chriskempson)
+
+# Colors by Mattia Astorino (https://github.com/equinusocio)
+# from the Sublime Text 3 Material Theme
 
 . ~/Scripts/colorchange Light
 
@@ -124,4 +125,6 @@ unset color_foreground
 unset color_background
 unset color_cursor
 
+# add a dotfile that vim can read when loading up
+# will automatically set the color scheme to materitermdark
 echo "if !exists('g:colors_name') || g:colors_name != 'materitermlight'\ncolorscheme materitermlight\nendif" > ~/.vimrc_background
