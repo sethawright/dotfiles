@@ -84,7 +84,7 @@ call s:HL('PmenuSbar', '', '', s:colors.gui.pale_blue, s:colors.cterm.pale_blue,
 call s:HL('PmenuSel', s:colors.gui.fg, s:colors.cterm.fg, s:colors.gui.orange, s:colors.cterm.orange, '')
 call s:HL('PmenuThumb', '', '', s:colors.gui.orange, s:colors.cterm.orange, '')
 call s:HL('Question', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
-call s:HL('Search', '', '', s:colors.gui.yellow, s:colors.cterm.yellow, '')
+call s:HL('Search', '', '', s:colors.gui.purple, s:colors.cterm.purple, '')
 call s:HL('SignColumn', '', '', 'NONE', 'NONE', 'none')
 call s:HL('SpecialKey', s:colors.gui.gray3, s:colors.cterm.gray3, '', '', '')
 call s:HL('SpellBad', s:colors.gui.red, s:colors.cterm.red, s:colors.gui.gray1, s:colors.cterm.gray1, 'undercurl')
@@ -122,6 +122,7 @@ call s:HL('Special', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
 call s:HL('Underlined', s:colors.gui.blue, s:colors.cterm.blue, '', '', 'none')
 call s:HL('Error', s:colors.gui.red, s:colors.cterm.red, s:colors.gui.gray1, s:colors.cterm.gray1, 'bold')
 call s:HL('Todo', s:colors.gui.orange, s:colors.cterm.red, s:colors.gui.gray1, s:colors.cterm.gray1, 'bold')
+call s:HL('ExtraWhitespace', '', '', s:colors.gui.orange, s:colors.cterm.orange, '')
 
 " " CSS
 call s:HL('cssAttrComma', s:colors.gui.fg, s:colors.cterm.fg, '', '', '')
@@ -159,7 +160,7 @@ hi link gitcommitUnmergedArrow  gitcommitUnmergedFile
 call s:HL('htmlTag', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
 call s:HL('htmlEndTag', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
 call s:HL('htmlTagName', s:colors.gui.red, s:colors.cterm.red, '', '', '')
-call s:HL('htmlArg', s:colors.gui.yellow, s:colors.cterm.yellow, '', '', '')
+call s:HL('htmlArg', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
 call s:HL('htmlLink', s:colors.gui.fg, s:colors.cterm.fg, '', '', '')
 call s:HL('htmlSpecialChar', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
 call s:HL('htmlTitle', s:colors.gui.fg, s:colors.cterm.fg, '', '', '')
@@ -206,8 +207,11 @@ call s:HL('markdownListMarker', s:colors.gui.fg, s:colors.cterm.fg, '', '', '')
 call s:HL('markdownOrderedListMarker', s:colors.gui.fg, s:colors.cterm.fg, '', '', '')
 
 " Vimwiki
-call s:HL('VimwikiHeaderChar', s:colors.gui.green, s:colors.cterm.green, '', '', '')
+call s:HL('VimwikiHeaderChar', s:colors.gui.gray3, s:colors.cterm.gray3, '', '', '')
 call s:HL('VimwikiListTodo', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
+call s:HL('VimwikiPre', s:colors.gui.gray1, s:colors.cterm.gray1, '', '', '')
+call s:HL('VimwikiCode', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
+call s:HL('VimwikiCodeChar', s:colors.gui.gray1, s:colors.cterm.gray1, '', '', '')
 
 " PHP
 call s:HL('phpRegion', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')

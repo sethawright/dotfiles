@@ -15,8 +15,9 @@ Plugin 'vimwiki/vimwiki'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
-Plugin 'jiangmiao/auto-pairs'
+Plugin 'scrooloose/nerdtree'
 Plugin 'mattn/emmet-vim'
+Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'junegunn/goyo.vim'
 Plugin 'editorconfig/editorconfig-vim'
@@ -25,6 +26,7 @@ Plugin 'jwalton512/vim-blade'
 Plugin 'pangloss/vim-javascript'
 Plugin 'StanAngeloff/php.vim'
 Plugin 'vim-airline/vim-airline'
+Plugin 'SirVer/ultisnips'
 call vundle#end()
 
 filetype plugin indent on
@@ -70,6 +72,11 @@ set listchars+=precedes:<
 set splitbelow
 set splitright
 
+" very very rarely use this
+" but its nice to have, especially for class
+set mouse=a
+set ttymouse=xterm2
+
 " cleaner split markers
 set fillchars+=vert:│
 
@@ -109,15 +116,12 @@ set clipboard=unnamed
 " open a new tab
 :nnoremap <c-t> :tabnew<CR>
 
-" buffer navigation
-:nnoremap Ò :bn<CR>
-:nnoremap Ó :bp<CR>
-:nnoremap Ô :tabn<CR>
-:nnoremap  :tabp<CR>
-
 " change shift width quickly
 :noremap <leader>w2 :set tabstop=2 shiftwidth=2<CR>
 :noremap <leader>w4 :set tabstop=4 shiftwidth=4<CR>
+
+" search for visually selected text
+vnoremap // y/<C-R>"<CR>Nviw
 
 " quickly switch buffers
 nnoremap <leader>b :ls<CR>:b<Space>
@@ -136,9 +140,11 @@ nnoremap <leader>fs :sfind *
 nnoremap <leader>fv :vert sfind *
 nnoremap <leader>ft :tabfind *
 
-" netrw settings
+" netrw/nt settings
 let g:netrw_liststyle = 3
 let g:netrw_banner = 0
+let NERDTreeMinimalUI = 1
+let g:NERDTreeQuitOnOpen = 1
 
 " ag is much faster at finding files than ctrlp defaults
 if executable('ag')
@@ -183,13 +189,6 @@ nnoremap - :res -10<CR>
 nnoremap + :vertical res +10<CR>
 nnoremap _ :vertical res -10<CR>
 
-" easier window motions with leader
-nnoremap ¬ :wincmd l<CR>
-nnoremap ˙ :wincmd h<CR>
-nnoremap ∆ :wincmd j<CR>
-nnoremap ˚ :wincmd k<CR>
-nnoremap <leader>w= :wincmd =<CR>
-
 " visual selection of text on a line, not including the return char
 nnoremap <leader>vl ^v$h
 
@@ -223,6 +222,17 @@ nmap <C-j> ]e
 vmap <C-k> [egv
 vmap <C-j> ]egv
 
+" if you don't set this
+" it will break line swapping
+let g:tmux_navigator_no_mappings = 1
+
+" custom mappings with option instead of ctrl
+nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
+nnoremap <silent> « :wincmd =<cr>
+
 " remove trailing whitespaces
 nnoremap <leader>fws :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>:update<CR>
 
@@ -234,16 +244,13 @@ nnoremap <leader>hs :set hlsearch! hlsearch?<CR>
 
 " find functions
 nnoremap <C-o> :CtrlPFunky<Cr>
+nnoremap <C-> :CtrlPFunky<Cr>
 
 " show hidden files
 let g:ctrlp_show_hidden = 1
 
 " clean up tab display
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#tab_min_count = 2
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
+set showtabline=0
 
 " more speedy startup of ctrlp
 if executable('ag')
@@ -297,15 +304,26 @@ autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " nerdtree settings
-nnoremap <leader>n :Vexplore .<CR>
-nnoremap <leader><leader>n :Explore .<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
+let g:NERDTreeMapOpenSplit = 's'
+let g:NERDTreeMapOpenVSplit = 'v'
+let NERDTreeShowHidden = 1
 
 " convert current markdown file to html in a new tab
 nnoremap <leader>md :tabnew \| exec "read !marked --gfm " . shellescape(@#, 1)<CR>
 
 " Use markdown instead of wiki lang
-let g:vimwiki_list = [{'path': '$HOME/Dropbox/wiki', 'syntax': 'markdown', 'ext': '.md', 'nested_syntaxes': {'html': 'html', 'javascript': 'javascript', 'css': 'css', 'php': 'php', 'bash': 'sh'}}]
+let g:vimwiki_list = [{'path': '$HOME/Dropbox/wiki', 'syntax': 'markdown'}]
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'javascript', 'php', 'ruby', 'shell=sh', 'js=javascript', 'c', 'vim']
+
+" snippet expansion
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<c-p>"
+let g:UltiSnipsEditSplit="vertical"
+
+" edit the current snippets files
+:nnoremap <leader><leader>es :UltiSnipsEdit<CR>
 
 " find syntax highlighting for the current text object
 nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -317,6 +335,13 @@ if filereadable(expand("~/.vimrc_background"))
   set t_Co=256
   source ~/.vimrc_background
 endif
+
+au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+au InsertLeave * match ExtraWhitespace /\s\+$/
+
+" vue help
+autocmd FileType vue :syntax sync fromstart
+noremap <F9> <Esc>:syntax sync fromstart<CR>
 
 " vimrc refresh automatically
 augroup myvimrc

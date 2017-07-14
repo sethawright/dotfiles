@@ -84,7 +84,7 @@ call s:HL('PmenuSbar', '', '', s:colors.gui.pale_blue, s:colors.cterm.pale_blue,
 call s:HL('PmenuSel', s:colors.gui.fg, s:colors.cterm.fg, s:colors.gui.orange, s:colors.cterm.orange, '')
 call s:HL('PmenuThumb', '', '', s:colors.gui.orange, s:colors.cterm.orange, '')
 call s:HL('Question', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
-call s:HL('Search', '', '', s:colors.gui.yellow, s:colors.cterm.yellow, '')
+call s:HL('Search', '', '', s:colors.gui.purple, s:colors.cterm.purple, '')
 call s:HL('SignColumn', '', '', 'NONE', 'NONE', 'none')
 call s:HL('SpecialKey', s:colors.gui.gray3, s:colors.cterm.gray3, '', '', '')
 call s:HL('SpellBad', s:colors.gui.red, s:colors.cterm.red, s:colors.gui.gray1, s:colors.cterm.gray1, 'undercurl')
@@ -101,7 +101,7 @@ call s:HL('Visual', '', '', s:colors.gui.offwhite, s:colors.cterm.offwhite, '')
 call s:HL('WarningMsg', s:colors.gui.red, s:colors.cterm.red, '', '', '')
 call s:HL('WildMenu', s:colors.gui.fg, s:colors.cterm.fg, s:colors.gui.orange, s:colors.cterm.orange, '')
 
-" " Standard Syntax
+" Standard Syntax
 call s:HL('Comment', s:colors.gui.gray2, s:colors.cterm.gray2, '', '', '')
 call s:HL('Constant', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
 call s:HL('String', s:colors.gui.green, s:colors.cterm.green, '', '', '')
@@ -122,6 +122,7 @@ call s:HL('Special', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
 call s:HL('Underlined', s:colors.gui.blue, s:colors.cterm.blue, '', '', 'none')
 call s:HL('Error', s:colors.gui.red, s:colors.cterm.red, s:colors.gui.gray1, s:colors.cterm.gray1, 'bold')
 call s:HL('Todo', s:colors.gui.orange, s:colors.cterm.red, s:colors.gui.gray1, s:colors.cterm.gray1, 'bold')
+call s:HL('ExtraWhitespace', '', '', s:colors.gui.orange, s:colors.cterm.orange, '')
 
 " " CSS
 call s:HL('cssAttrComma', s:colors.gui.fg, s:colors.cterm.fg, '', '', '')
@@ -159,7 +160,7 @@ hi link gitcommitUnmergedArrow  gitcommitUnmergedFile
 call s:HL('htmlTag', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
 call s:HL('htmlEndTag', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
 call s:HL('htmlTagName', s:colors.gui.red, s:colors.cterm.red, '', '', '')
-call s:HL('htmlArg', s:colors.gui.yellow, s:colors.cterm.yellow, '', '', '')
+call s:HL('htmlArg', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
 call s:HL('htmlLink', s:colors.gui.fg, s:colors.cterm.fg, '', '', '')
 call s:HL('htmlSpecialChar', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
 call s:HL('htmlTitle', s:colors.gui.fg, s:colors.cterm.fg, '', '', '')
@@ -197,7 +198,7 @@ call s:HL('jsUndefined', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
 call s:HL('markdownCode', '', '', s:colors.gui.gray1, s:colors.cterm.gray1, '')
 call s:HL('markdownCodeBlock', '', '', s:colors.gui.gray1, s:colors.cterm.gray1, '')
 call s:HL('markdownCodeDelimiter', s:colors.gui.gray1, s:colors.cterm.gray1, '', '', '')
-call s:HL('markdownHeadingDelimiter', s:colors.gui.green, s:colors.cterm.green, '', '', '')
+call s:HL('markdownHeadingDelimiter', s:colors.gui.gray3, s:colors.cterm.gray3, '', '', '')
 call s:HL('markdownHeadingRule', s:colors.gui.green, s:colors.cterm.green, '', '', '')
 call s:HL('markdownLinkText', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
 call s:HL('markdownItalic', s:colors.gui.red, s:colors.cterm.red, '', '', '')
@@ -206,8 +207,11 @@ call s:HL('markdownListMarker', s:colors.gui.fg, s:colors.cterm.fg, '', '', '')
 call s:HL('markdownOrderedListMarker', s:colors.gui.fg, s:colors.cterm.fg, '', '', '')
 
 " Vimwiki
-call s:HL('VimwikiHeaderChar', s:colors.gui.green, s:colors.cterm.green, '', '', '')
+call s:HL('VimwikiHeaderChar', s:colors.gui.gray3, s:colors.cterm.gray3, '', '', '')
 call s:HL('VimwikiListTodo', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
+call s:HL('VimwikiPre', s:colors.gui.gray1, s:colors.cterm.gray1, '', '', '')
+call s:HL('VimwikiCode', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
+call s:HL('VimwikiCodeChar', s:colors.gui.gray1, s:colors.cterm.gray1, '', '', '')
 
 " PHP
 call s:HL('phpRegion', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
@@ -234,6 +238,9 @@ call s:HL('xmlAttrib', s:colors.gui.yellow, s:colors.cterm.yellow, '', '', '')
 call s:HL('xmlTag', s:colors.gui.red, s:colors.cterm.red, '', '', '')
 call s:HL('xmlTagName', s:colors.gui.red, s:colors.cterm.red, '', '', '')
 call s:HL('xmlEndTag', s:colors.gui.red, s:colors.cterm.red, '', '', '')
+
+" Sass
+call s:HL('sassVariable', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
 
 " Other stuff
 call s:HL('CursorLineNr', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')

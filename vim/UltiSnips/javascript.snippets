@@ -1,0 +1,136 @@
+snippet req "Require module"
+const ${1:module} = require('${2:/path/to/module}')
+endsnippet
+
+snippet import "ES6 Import"
+import $1 from '$2'$0
+endsnippet
+
+snippet importas "ES6 Import As"
+import ${1:*} as ${2:object} from '${3:/path/to/file}'$0
+endsnippet
+
+snippet class "ES6 Class"
+${1:export default }class ${2} {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet ed "Export default object"
+export default {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet get "Get Elements"
+getElement${1/(T)|.*/(?1:s)/}By${1:T}${1/(T)|(I)|.*/(?1:agName)(?2:d)/}('$2')
+endsnippet
+
+snippet q "Query Selector"
+querySelector('$1')$0
+endsnippet
+
+snippet qa "Query Selector All"
+querySelectorAll('$1')$0
+endsnippet
+
+snippet : "Object key key: 'value'"
+${1:key}: ${2:"${3:value}"}${4:, }
+endsnippet
+
+snippet fu "ES6 class function"
+${1:function_name} (${2}) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet fu, "ES6 class function with ,"
+${1:function_name} (${2}) {
+	${VISUAL}$0
+}${3:,}
+endsnippet
+
+snippet vf "Function assigned to var"
+${1:var }${2:function_name} = ($3) => {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet af "Anonymous ES6 Function"
+($1) => {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet () "Anonymous ES6 Function"
+($1) => {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet func "function (fun)" w
+function ${1:function_name} (${2}) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet afunc "Anonymous Function"
+function ($1) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet vfunc "Function assigned to var"
+${1:var }${2:function_name} = function $2 ($3) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet timeout "setTimeout function"
+setTimeout(() => {
+	${VISUAL}$0
+}, ${1:1000})
+endsnippet
+
+snippet fi "for prop in obj using hasOwnProperty" b
+for (${1:prop} in ${2:obj}) {
+	if ($2.hasOwnProperty($1)) {
+		${VISUAL}$0
+	}
+}
+endsnippet
+
+snippet if "if (condition) { ... }"
+if (${1:true}) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet ife "if (condition) { ... } else { ... }"
+if (${1:true}) {
+	${VISUAL}$0
+} else {
+	${2}
+}
+endsnippet
+
+snippet switch
+switch (${VISUAL}${1:expression}) {
+	case '${VISUAL}${3:case}':
+		${4}
+		break
+	${0}
+	default:
+		${2}
+}
+endsnippet
+
+snippet case "case 'xyz': ... break"
+case '${VISUAL}${1:case}':
+	${VISUAL}$0
+	break
+endsnippet
+
+snippet ret "Return statement"
+return ${VISUAL}$0
+endsnippet

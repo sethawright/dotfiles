@@ -10,8 +10,8 @@ local display_macbook = 'Color LCD'
 local display_asus = 'ASUS PB278'
 local lastNumberOfScreens = #hs.screen.allScreens()
 
-hs.grid.MARGINX = 10
-hs.grid.MARGINY = 10
+hs.grid.MARGINX = 20
+hs.grid.MARGINY = 20
 hs.grid.GRIDHEIGHT = 8
 hs.grid.GRIDWIDTH = 10
 
@@ -26,9 +26,9 @@ layout1 = {
   {'Safari', display_macbook, lay_med, 'all'},
   {'Firefox', display_macbook, lay_med, 'all'},
   {'Sublime Text', display_macbook, lay_big, 'all'},
-  {'iTerm', display_macbook, lay_big, 'all'},
+  {'iTerm2', display_macbook, lay_big, 'all'},
   {'Messages', display_macbook, {x=1, y=2, w=2, h=4}, "Messages"},
-  {'Messages', display_macbook, {x=0, y=2, w=1, h=4}, "Google Talk List"},
+  {'Messages', display_macbook, {x=0, y=2, w=1, h=4}, "Gmail"},
   {'Messages', display_macbook, {x=0, y=2, w=1, h=4}, "Olark"},
   {'Spotify', display_macbook, lay_med, "all"},
   {'Mail', display_macbook, lay_med, "all"},
@@ -43,7 +43,7 @@ layout2 = {
   {'Mail', display_macbook, lay_big, "all"},
   {'Spark', display_macbook, lay_big, "all"},
   {'Messages', display_macbook, {x=1, y=2, w=2, h=4}, "Messages"},
-  {'Messages', display_macbook, {x=0, y=2, w=1, h=4}, "Google Talk List"},
+  {'Messages', display_macbook, {x=0, y=2, w=1, h=4}, "Gmail"},
   {'Messages', display_macbook, {x=0, y=2, w=1, h=4}, "Olark"},
   {'Spotify', display_macbook, lay_big, "all"},
   {'Safari', display_macbook, lay_big, 'all'},
@@ -330,8 +330,8 @@ function applyLayout(layout)
 end
 
 -- Change screens
-hs.hotkey.bind({"ctrl", "alt"}, 'LEFT', hs.grid.pushWindowPrevScreen)
-hs.hotkey.bind({"ctrl", "alt"}, 'RIGHT', hs.grid.pushWindowNextScreen)
+hs.hotkey.bind({"ctrl", "alt"}, 'LEFT', hs.grid.pushWindowNextScreen)
+hs.hotkey.bind({"ctrl", "alt"}, 'RIGHT', hs.grid.pushWindowPrevScreen)
 
 screenWatcher = hs.screen.watcher.new(screensChangedCallback)
 screenWatcher:start()

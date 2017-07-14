@@ -1,0 +1,136 @@
+snippet vmapiinfacility
+Once we have a signed contract, you will be able to access all of our videos by accessing the following URL route:
+
+https://viewmedica.com/vm/${1:company}/68/aaa/en/mp4/20131001?key=${2:APIKEY}
+
+This route follows the schema https://viewmedica.com/vm/$1/CLIENTID/FILENAME/LANGUAGE/mp4/YYYYMMDD/?key=APIKEY
+
+To clarify some of these variables.
+
+CLIENTID - Should always be 68
+FILENAME - The filename you want to download
+LANGUAGE - en, es
+YYYYMMDD - GMT time that this file was last pulled. If the updated date of FILENAME is greater than the date provided, a successful download response will be sent. Otherwise a string will be sent stating "No update available." For example, the aaa video download URL above will return a video file because it was last updated on Nov. 10, 2013.
+
+I have added an API route that provides information about each one of our unique files. You can access it here:
+
+https://viewmedica.com/vm/api/fileinfo?key=$2
+
+This route will provide the following information in JSON format about each of our 1000+ videos:
+
+- Label
+- Filename
+- Video Length
+- Filesize (bytes)
+- Thumbnails (small, medium and large)
+
+Again, I ask that you setup your script to only make 3 to 4 video requests at a time so that our servers do not get overloaded. It would also be preferable if you could make the requests between the hours of 10PM and 4AM EST (our lower traffic times).
+
+Please don't forget to send along your IP address so that I can approve it to make these requests.
+endsnippet
+
+snippet vmapisetup
+Hi ${1:First},
+
+The documentation for our API can be found at https://github.com/swarminteractive/viewmedica-api.
+
+API key generated for client ${2:Client ID}: ${3:APIKEY}
+
+Please let me know if you have a specific need in mind and I will be happy to discuss the simplest implementation with you.
+
+Here is a sample request that I find helpful to new API users. You can request a JSON list of all ViewMedica items. Note that some items repeat. That is because we classify some of our 100+ videos into different taxonomies. The "files" are unique but one file may have multiple "A_" keys.
+
+https://swarminteractive.com/vm/api/video/?key=$3&description=true&taxonomy=false
+
+This JSONView plugin for Chrome can be helpful to visualize the data (https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc?hl=en).
+
+Here are some helpful links for embedding the ViewMedica player with the API.
+
+https://github.com/swarminteractive/viewmedica-api#embed-variables
+https://github.com/swarminteractive/viewmedica-api#controlling-the-player
+
+We also offer direct access to our stream our videos in MP4 format. If you’d like this access because you are developing a native application please let me know.
+
+Don’t hesitate to reach out if you have any questions!
+endsnippet
+
+snippet vmapiinterest
+Hi ${1:First},
+
+Our API can be leveraged in several ways. First, you can use JavaScript hooks to do things like pause, play or navigate to a particular video without reloading the page. You can even use these hooks to retrieve information about how far the user has progressed through the video.
+
+The API also allows you to fetch and update client data in our system. For example, you might want to fetch the list of active videos for a client. Or perhaps you want to see a JSON list of all of our video offerings, including the last reviewed date, runtime and file size.
+
+You can even create and update clients by posting data to our server. This includes functions like changing the user's art, player color, video selections, etc.
+
+The full API documentation can be found at https://github.com/swarminteractive/viewmedica-api. It will show the full functionality available. However, we are constantly working to improve our API offerings. So if you have a feature in mind that isn't available yet, please don't hesitate to mention it to me.
+
+Here is the API key generated for your account. You will need this to make any request.
+
+Client: ${2:Client ID}
+Key: ${3:APIKEY}
+
+Several sample requests can be found on the documentation page, but here is one to get a JSON list of all of our videos: https://swarminteractive.com/vm/api/video/?key=$3&description=true&taxonomy=false
+endsnippet
+
+snippet vmapivideo
+Hi ${1:First},
+
+I have created an API access route for you to our servers. To use the videos, you will want to use the “file” key in our API’s JSON response to format your request as follows:
+
+https://viewmedica.com/vm/${2:routename}/CLIENTID/FILE/LANGUAGE/?key=${3:APIKEY}
+
+There are three variable parameters here:
+
+CLIENTID is the ID of the client that you have created. You can use your main reseller ID which is ${4:CLIENTID}. These videos will have a demo watermark. As you create clients and activate and pay for them, they will get assigned a new ID. You will want to pass this instead of $4.
+
+FILE is the name of the file that you want to view. You can get these from our JSON API. Some examples might be: totknee, aaa, aaarepair, etc.
+
+LANGUAGE is a language parameter. The available options are en for English and es for Spanish.
+
+So here is an example request for ${5:Total Knee Replacement} in Spanish. The response will be an H.264 streaming file.
+
+https://viewmedica.com/vm/$2/$4/${6:totknee}/es/?key=$3
+
+Please let me know if you have any additional questions.
+endsnippet
+
+snippet vmcastmarketing
+Hi ${1:First},
+
+Thanks for your interest in ViewMedica. I have compiled some information to help get you started.
+
+VMcast (http://viewmedica.com/patient-education/vmcast.html) is the quickest way to instantly improve your waiting room TV. VMcast is a streaming product that can be implemented instantly to a connected device via HDMI cable.
+
+Any computer would be able to play our videos, but our recommendation is the Amazon Fire TV Stick ($40): http://viewmedica.com/vmcast-hardware-options.html
+
+The ViewMedica library offers more than 1000 videos. You can  preview all of our content here: http://viewmedica.com/patient-education/about-viewmedica-videos.html
+
+Depending on the package you buy, you can have access to all 1000+ on your VMcast playlists. We offer 3 packages for practices (basic, silver, gold). The basic plan starts at just $75/mo. for 25 videos. You can find more pricing information here: http://viewmedica.com/patient-education/practice-pricing.html
+
+When you're ready to get started, just click the "Get 1 Month Free" button on our website and follow the order process. Our activation process is immediate, so there is no downtime for you to wait for installation, etc. As soon as you can get your Fire TV stick or other hardware device set up you will be ready to go!
+
+Don’t hesitate to reach out if you have any questions! I'll be glad to provide more information.
+endsnippet
+
+snippet vmwebmarketing
+Hi ${1:First},
+
+Thanks for your interest in ViewMedica. I have compiled some information to help get you started.
+
+ViewMedica for your Website (https://viewmedica.com/patient-education/viewmedica-web.html) allows you to instantly add any of our more than 1000+ video offerings to your website. Our videos are current, evidence-based and focused. We also include Spanish and English versions with every video you purchase.
+
+The first thing I would recommend to you is previewing some of our content and seeing what might fit for your facility: http://viewmedica.com/patient-education/about-viewmedica-videos.html
+
+Next, a moment to look at some of the great features that our video player offers, like custom playlists, drawing on videos with markup mode and social media sharing: https://viewmedica.com/patient-education/viewmedica-player-features.html.
+
+When you purchase an account, the player can be heavily customized to your practice. You can upload your logo and change the color, contact information and spotlight photo to match your practice. This information will automatically update on your embed and the included brochures. You can even create custom image, text and video slides to play before and after videos.
+
+All of these features and more will be available when embedding ViewMedica on your website. They are also available via our included desktop applications for Windows and Mac and mobile applications for Android/iOS. Just a note: you can use the desktop application on as many office computers and devices as you need.
+
+Depending on the package you buy, you can have access to all 1000+ videos. We offer 3 packages for practices (basic, silver, gold). The basic plan starts at just $75/mo. for 25 videos. You can find more pricing information here: http://viewmedica.com/patient-education/practice-pricing.html
+
+When you're ready to get started, just click the "Get 1 Month Free" button on our website and follow the order process. Our activation process is immediate, so there is no downtime for you to wait for installation, etc. As soon as you activate and paste your embed code into your website you are ready to go! You can also use the desktop/mobile applications immediately.
+
+Don’t hesitate to reach out if you have any questions! I'll be glad to provide more information.
+endsnippet
