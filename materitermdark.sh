@@ -12,7 +12,7 @@
 . ~/Scripts/colorchange Dark
 
 color00="3c/4c/54" # Base 00 - Black
-color01="ff/53/70" # Base 08 - Red
+color01="f0/71/78" # Base 08 - Red
 color02="c3/e8/8d" # Base 0B - Green
 color03="ff/cb/6b" # Base 0A - Yellow
 color04="82/aa/ff" # Base 0D - Blue
@@ -20,12 +20,12 @@ color05="c7/92/ea" # Base 0E - Magenta
 color06="89/dd/ff" # Base 0C - Cyan
 color07="50/63/6d" # Base 05 - White
 color08="56/6f/7c" # Base 03 - Bright Black
-color09=$color01 # Base 08 - Bright Red
-color10=$color02 # Base 0B - Bright Green
-color11=$color03 # Base 0A - Bright Yellow
-color12=$color04 # Base 0D - Bright Blue
-color13=$color05 # Base 0E - Bright Magenta
-color14=$color06 # Base 0C - Bright Cyan
+color09="f0/71/78" # Base 08 - Bright Red
+color10="f7/8c/6c" # Base 0B - Bright Green
+color11="b2/cc/d6" # Base 0A - Bright Yellow
+color12="bb/80/b3" # Base 0D - Bright Blue
+color13="ab/79/67" # Base 0E - Bright Magenta
+color14="2f/3f/47" # Base 0C - Bright Cyan
 color15="ee/ff/ff" # Base 07 - Bright White
 color16="f0/71/78" # Base 09 (pink)
 color17="f7/8c/6c" # Base 0F (orange)

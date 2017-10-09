@@ -16,6 +16,7 @@ antigen apply
 
 alias todo='vim -c "set norelativenumber nonumber laststatus=0" -c "VimwikiIndex"'
 alias org='vim -c "set norelativenumber nonumber laststatus=0" -c "VimwikiIndex"'
+alias today='vim -c "set norelativenumber nonumber wrap textwidth=0 nocp linebreak nolist showbreak= laststatus=0" -c "VimwikiMakeDiaryNote"'
 alias espresso='open -a Espresso'
 alias firefox='open -a firefox'
 alias preview='open -a Preview'
@@ -27,12 +28,12 @@ alias gmail='mutt -f ~/Mail/Gmail/INBOX'
 alias unc='mutt -f ~/Mail/UNC/INBOX'
 alias finder='open -a Finder'
 alias tmsize='tmux detach -a'
-alias swarmint='ssh swarmint@swarm.swarm1.com'
-alias swarm1='ssh swarm1'
-alias swarm2='ssh swarm2'
-alias swarm3='ssh seth@swarm.swarm1.com'
+alias swarmint='ssh swarmint'
+alias swarmqs='ssh swarmqs'
+alias swarm='ssh swarm'
+alias backup='ssh swarmback'
 alias gridserver='ssh seth'
-alias staging='ssh staging@swarm.swarm1.com'
+alias staging='ssh staging'
 alias redesign='ssh redesign@swarm.swarm1.com'
 alias chat='mcabber'
 alias dan='ssh danielniblock@192.168.1.13'
@@ -48,7 +49,7 @@ alias e="vim"
 alias m="mvim"
 alias s="subl ."
 alias adbpic='adb shell screencap -p | perl -pe "s/\x0D\x0A/\x0A/g" > "/Users/seth/Downloads/firetvscreenshot_$(date +%Y%m%d-%H%M%S).png"'
-alias firetv='adb kill-server && adb start-server && adb connect 192.168.1.98'
+alias firetv='adb kill-server && adb start-server && adb connect 192.168.0.4'
 alias news="newsbeuter"
 alias work="mux start work"
 alias endwork="mux stop work"
@@ -86,3 +87,7 @@ if [[ -f ~/.zsh_theme ]]; then
 else
   dark
 fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

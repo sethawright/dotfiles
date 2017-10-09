@@ -11,21 +11,21 @@ let s:colors = {'gui' : {} , 'cterm' : {}}
 let s:colors.cterm.cursor    = 'NONE'
 let s:colors.cterm.bg        = 'NONE'
 let s:colors.cterm.fg        = '15'
-let s:colors.cterm.offwhite  = '21'
+let s:colors.cterm.offwhite  = '14'
 let s:colors.cterm.gray1     = '0'
 let s:colors.cterm.gray2     = '7'
 let s:colors.cterm.gray3     = '8'
 let s:colors.cterm.red       = '1'
 let s:colors.cterm.pink      = '16'
-let s:colors.cterm.orange    = '17'
+let s:colors.cterm.orange    = '10'
 let s:colors.cterm.yellow    = '3'
 let s:colors.cterm.green     = '2'
-let s:colors.cterm.pale_blue = '18'
+let s:colors.cterm.pale_blue = '11'
 let s:colors.cterm.blue      = '4'
 let s:colors.cterm.cyan      = '6'
 let s:colors.cterm.purple    = '5'
-let s:colors.cterm.violet    = '19'
-let s:colors.cterm.brown     = '20'
+let s:colors.cterm.violet    = '12'
+let s:colors.cterm.brown     = '13'
 
 " Color Palette for GUI
 let s:colors.gui.cursor      = '#ffcc00'
@@ -160,8 +160,10 @@ hi link gitcommitUnmergedArrow  gitcommitUnmergedFile
 call s:HL('htmlTag', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
 call s:HL('htmlEndTag', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
 call s:HL('htmlTagName', s:colors.gui.red, s:colors.cterm.red, '', '', '')
+call s:HL('htmlTagN', s:colors.gui.red, s:colors.cterm.red, '', '', '')
 call s:HL('htmlArg', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
 call s:HL('htmlLink', s:colors.gui.fg, s:colors.cterm.fg, '', '', '')
+call s:HL('htmlSpecialTagName', s:colors.gui.red, s:colors.cterm.red, '', '', '')
 call s:HL('htmlSpecialChar', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
 call s:HL('htmlTitle', s:colors.gui.fg, s:colors.cterm.fg, '', '', '')
 
@@ -188,6 +190,8 @@ call s:HL('jsFunction', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
 call s:HL('jsClassFuncName', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
 call s:HL('jsGlobalObjects', s:colors.gui.yellow, s:colors.cterm.yellow, '', '', '')
 call s:HL('jsGlobalNodeObjects', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
+call s:HL('jsObjectFuncName', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
+call s:HL('jsObjectKey', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
 call s:HL('jsNull', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
 call s:HL('jsStorageClass', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
 call s:HL('jsFuncArgs', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
