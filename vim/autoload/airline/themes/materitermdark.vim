@@ -1,7 +1,7 @@
 let g:airline#themes#materitermdark#palette = {}
 
 let s:N1 = [ '#3c4c54' , '#eeffff' , 'black' , 15      ]
-let s:N2 = [ '#eeffff' , '#566f7c' , 15      , 8       ]
+let s:N2 = [ '#eeffff' , '#566f7c' , 15      , 7       ]
 let s:N3 = [ '#ffffff' , '#3c4c54' , 255     , 'black' ]
 let g:airline#themes#materitermdark#palette.normal = airline#themes#generate_color_map(s:N1, s:N2, s:N3)
 let g:airline#themes#materitermdark#palette.normal.airline_a = ['#3c4c54', '#c3e88d', 7, 2, '']

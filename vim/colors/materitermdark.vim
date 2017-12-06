@@ -211,6 +211,8 @@ call s:HL('markdownListMarker', s:colors.gui.fg, s:colors.cterm.fg, '', '', '')
 call s:HL('markdownOrderedListMarker', s:colors.gui.fg, s:colors.cterm.fg, '', '', '')
 
 " Vimwiki
+call s:HL('VimwikiHeader1', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
+call s:HL('VimwikiHeader2', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
 call s:HL('VimwikiHeaderChar', s:colors.gui.gray3, s:colors.cterm.gray3, '', '', '')
 call s:HL('VimwikiListTodo', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
 call s:HL('VimwikiPre', s:colors.gui.gray1, s:colors.cterm.gray1, '', '', '')
