@@ -3,8 +3,8 @@ local step = 10
 local stepBig = 100
 
 -- No window animations
-hs.window.animationDuration = 0
-hs.hints.showTitleThresh = 0
+-- hs.window.animationDuration = 0
+-- hs.hints.showTitleThresh = 0
 
 local display_macbook = 'Color LCD'
 local display_asus = 'ASUS PB278'
@@ -57,52 +57,101 @@ layout2 = {
 
 -- A global variable for the Hyper Mode
 k = hs.hotkey.modal.new({'cmd'}, 'escape')
-function k:entered() s:exit(); o:exit(); i:exit(); p:exit(); end
+function k:entered() f:exit(); u:exit(); w:exit(); e:exit(); d:exit() s:exit(); o:exit(); i:exit(); p:exit(); end
 
 -- used if you are ok pressing three triggers
-s = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'u', 'Size')
-function s:entered() k:exit(); o:exit(); i:exit(); p:exit(); end
+s = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 's', 'Size (From Bottom left)')
+function s:entered() f:exit(); u:exit(); w:exit(); e:exit(); d:exit(); k:exit(); o:exit(); i:exit(); p:exit(); end
+
+d = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'd', 'Size (From Bottom right)')
+function d:entered() f:exit(); u:exit(); s:exit(); w:exit(); e:exit(); k:exit(); o:exit(); i:exit(); p:exit(); end
+
+w = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'd', 'Size (From top left)')
+function w:entered() f:exit(); u:exit(); s:exit(); e:exit(); d:exit(); k:exit(); o:exit(); i:exit(); p:exit(); end
+
+e = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'd', 'Size (From top right)')
+function s:entered() f:exit(); u:exit(); s:exit(); w:exit(); d:exit(); k:exit(); o:exit(); i:exit(); p:exit(); end
 
 o = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'o', 'Open')
-function o:entered() k:exit(); s:exit(); i:exit(); p:exit(); end
+function o:entered() f:exit(); u:exit(); w:exit(); e:exit(); d:exit(); k:exit(); s:exit(); i:exit(); p:exit(); end
 
 i = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'i', 'Small')
-function i:entered() k:exit(); s:exit(); o:exit(); p:exit(); end
+function i:entered() f:exit(); u:exit(); w:exit(); e:exit(); d:exit(); k:exit(); s:exit(); o:exit(); p:exit(); end
 
 p = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'p', 'Large')
-function p:entered() k:exit(); s:exit(); o:exit(); i:exit(); end
+function p:entered() f:exit(); u:exit(); w:exit(); e:exit(); d:exit(); k:exit(); s:exit(); o:exit(); i:exit(); end
+
+u = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'u', 'Half')
+function u:entered() f:exit(); p:exit(); w:exit(); e:exit(); d:exit(); k:exit(); s:exit(); o:exit(); i:exit(); end
+
+f = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'f', 'Focus')
+function f:entered() u:exit(); p:exit(); w:exit(); e:exit(); d:exit(); k:exit(); s:exit(); o:exit(); i:exit(); end
 
 quitAll = function()
-    i:exit(); o:exit(); s:exit(); p:exit(); k:exit();
+    f:exit(); u:exit(); d:exit(); i:exit(); o:exit(); s:exit(); p:exit(); k:exit(); e:exit(); w:exit();
 end
 
 -- Bind the Hyper key
+f:bind('', 'escape', quitAll)
 k:bind('', 'escape', quitAll)
 o:bind('', 'escape', quitAll)
 s:bind('', 'escape', quitAll)
 i:bind('', 'escape', quitAll)
 p:bind('', 'escape', quitAll)
+d:bind('', 'escape', quitAll)
+e:bind('', 'escape', quitAll)
+w:bind('', 'escape', quitAll)
+u:bind('', 'escape', quitAll)
 
 -- used if you want multi key presses like vim/tmux
-u = hs.hotkey.modal.new({}, "F18")
-pressedS = function() s:enter() end
-releasedS = function() end
-k:bind({}, 'u', nil, pressedS, releasedS)
+k:bind({}, 'm', nil, function()
+  k:enter(); w:exit(); e:exit(); d:exit() s:exit(); o:exit(); i:exit(); p:exit();
+end, function() end)
 
-p = hs.hotkey.modal.new({}, "F15")
+s = hs.hotkey.modal.new({})
+pressedS = function() s:enter(); d:exit(); e:exit(); w:exit(); end
+releasedS = function() end
+k:bind({}, 's', nil, pressedS, releasedS)
+
+d = hs.hotkey.modal.new({})
+pressedD = function() d:enter(); s:exit(); e:exit(); w:exit(); end
+releasedD = function() end
+k:bind({}, 'd', nil, pressedD, releasedD)
+
+e = hs.hotkey.modal.new({})
+pressedE = function() e:enter(); s:exit(); d:exit(); w:exit(); end
+releasedE = function() end
+k:bind({}, 'e', nil, pressedE, releasedE)
+
+w = hs.hotkey.modal.new({})
+pressedW = function() w:enter(); s:exit(); d:exit(); e:exit(); end
+releasedW = function() end
+k:bind({}, 'w', nil, pressedW, releasedW)
+
+p = hs.hotkey.modal.new({})
 pressedP = function() p:enter() end
 releasedP = function() end
 k:bind({}, 'p', nil, pressedP, releasedP)
 
-i = hs.hotkey.modal.new({}, "F17")
+i = hs.hotkey.modal.new({})
 pressedI = function() i:enter(); end
 releasedI = function() end
 k:bind({}, 'i', nil, pressedI, releasedI)
 
-o = hs.hotkey.modal.new({}, "F16")
+o = hs.hotkey.modal.new({})
 pressedA = function() o:enter() end
 releasedA = function() end
 k:bind('', 'o', nil, pressedA, releasedA)
+
+u = hs.hotkey.modal.new({})
+pressedU = function() u:enter() end
+releasedU = function() end
+k:bind('', 'u', nil, pressedU, releasedU)
+
+f = hs.hotkey.modal.new({})
+pressedF = function() f:enter() end
+releasedF = function() end
+k:bind('', 'f', nil, pressedF, releasedF)
 
 launch = function(appname)
   hs.application.launchOrFocus(appname)
@@ -110,7 +159,7 @@ launch = function(appname)
 end
 
 -- Single keybinding for functions
-mainBindings = {
+mainBindings= {
   {'1', function() applyLayout(layout1); k:exit(); end},
   {'2', function() applyLayout(layout2); k:exit(); end},
   {'RETURN', function() hs.grid.maximizeWindow(); k:exit(); end},
@@ -143,13 +192,89 @@ end
 
 sBindings = {
   {'J', hs.grid.resizeWindowTaller},
+  {'H', function ()
+      hs.grid.resizeWindowWider();
+      hs.grid.pushWindowLeft();
+    end
+  },
+  {'K', hs.grid.resizeWindowShorter},
+  {'L', function ()
+      hs.grid.resizeWindowThinner();
+      hs.grid.pushWindowRight();
+    end
+  },
+}
+
+for b, lay in ipairs(sBindings) do
+  s:bind({}, lay[1], function() lay[2](); end)
+end
+
+dBindings = {
+  {'J', hs.grid.resizeWindowTaller},
   {'H', hs.grid.resizeWindowThinner},
   {'K', hs.grid.resizeWindowShorter},
   {'L', hs.grid.resizeWindowWider},
 }
 
-for b, lay in ipairs(sBindings) do
-  s:bind({}, lay[1], function() lay[2](); end)
+for b, lay in ipairs(dBindings) do
+  d:bind({}, lay[1], function() lay[2](); end)
+end
+
+fBindings = {
+  {'J', hs.window.focusWindowSouth},
+  {'H', hs.window.focusWindowWest},
+  {'K', hs.window.focusWindowNorth},
+  {'L', hs.window.focusWindowEast},
+}
+
+for b, lay in ipairs(fBindings) do
+  f:bind({}, lay[1], function() lay[2](); f:exit(); k:exit(); end)
+end
+
+eBindings = {
+  {'J', function ()
+      hs.grid.resizeWindowShorter();
+      hs.grid.pushWindowDown();
+    end
+  },
+  {'H', hs.grid.resizeWindowThinner},
+  {'K', function ()
+      hs.grid.resizeWindowTaller();
+      hs.grid.pushWindowUp();
+    end
+  },
+  {'L', hs.grid.resizeWindowWider},
+}
+
+for b, lay in ipairs(eBindings) do
+  e:bind({}, lay[1], function() lay[2](); end)
+end
+
+wBindings = {
+  {'J', function ()
+      hs.grid.resizeWindowShorter();
+      hs.grid.pushWindowDown();
+    end
+  },
+  {'H', function ()
+      hs.grid.resizeWindowWider();
+      hs.grid.pushWindowLeft();
+    end
+  },
+  {'K', function ()
+      hs.grid.resizeWindowTaller();
+      hs.grid.pushWindowUp();
+    end
+  },
+  {'L', function ()
+      hs.grid.resizeWindowThinner();
+      hs.grid.pushWindowRight();
+    end
+  },
+}
+
+for b, lay in ipairs(wBindings) do
+  w:bind({}, lay[1], function() lay[2](); end)
 end
 
 pBindings = {
@@ -193,6 +318,49 @@ pBindings = {
 
 for b, lay in ipairs(pBindings) do
   p:bind({}, lay[1], function() lay[2](); p:exit(); k:exit(); end)
+end
+
+uBindings = {
+  {'H', function()
+      local win = hs.window.focusedWindow()
+      local f = win:frame()
+      local screen = win:screen()
+      local wide = math.floor(hs.grid.GRIDWIDTH / 2)
+      local rem = hs.grid.GRIDWIDTH - wide
+      hs.grid.set(win, {x = 0, y = 0, w = wide, h = hs.grid.GRIDHEIGHT}, screen)
+    end
+  },
+  {'J', function()
+      local win = hs.window.focusedWindow()
+      local f = win:frame()
+      local screen = win:screen()
+      local wide = math.floor(hs.grid.GRIDWIDTH / 2)
+      local rem = hs.grid.GRIDWIDTH - wide
+      hs.grid.set(win, {x = 1, y = 1, w = rem - 1, h = hs.grid.GRIDHEIGHT - 2}, screen)
+    end
+  },
+  {'K', function()
+      local win = hs.window.focusedWindow()
+      local f = win:frame()
+      local screen = win:screen()
+      local wide = math.floor(hs.grid.GRIDWIDTH / 2)
+      local rem = hs.grid.GRIDWIDTH - wide
+      hs.grid.set(win, {x = wide, y = 1, w = rem - 1, h = hs.grid.GRIDHEIGHT - 2}, screen)
+    end
+  },
+  {'L', function()
+      local win = hs.window.focusedWindow()
+      local f = win:frame()
+      local screen = win:screen()
+      local wide = math.floor(hs.grid.GRIDWIDTH / 2)
+      local rem = hs.grid.GRIDWIDTH - wide
+      hs.grid.set(win, {x = wide, y = 0, w = rem, h = hs.grid.GRIDHEIGHT}, screen)
+    end
+  }
+}
+
+for b, lay in ipairs(uBindings) do
+  u:bind({}, lay[1], function() lay[2](); u:exit(); k:exit(); end)
 end
 
 -- Small Positional Layouts
@@ -242,19 +410,15 @@ end
 -- Open applications
 apps = {
   {'c', 'Google Chrome'},
-  {'e', 'Spark'},
+  {'e', 'Mail'},
   {'t', 'iTerm'},
   {'i', 'iTerm'},
   {'f', 'Finder'},
   {'s', 'Slack'},
   {'m', 'Messages'},
   {'q', 'Sequel Pro'},
-  {'p', 'Pages'},
-  {'x', 'Xcode'},
-  {'r', 'Reminders'},
-  {'h', 'Hues'},
+  {'p', 'Spotify'},
   {'v', 'MacVim'},
-  {'u', 'Sublime Text'},
 }
 for f, app in ipairs(apps) do
   o:bind({}, app[1], function() launch(app[2]); o:exit(); k:exit(); end)
@@ -331,7 +495,12 @@ end
 
 -- Change screens
 hs.hotkey.bind({"ctrl", "alt"}, 'LEFT', hs.grid.pushWindowNextScreen)
-hs.hotkey.bind({"ctrl", "alt"}, 'RIGHT', hs.grid.pushWindowPrevScreen)
+hs.hotkey.bind({"ctrl", "alt"}, 'RIGHT', hs.grid.pushWindowPrevScreen, "Window Hints")
+
+-- window hints
+hs.hotkey.bind({"cmd", "shift"}, "return", function()
+  hs.hints.windowHints(nil);
+end)
 
 screenWatcher = hs.screen.watcher.new(screensChangedCallback)
 screenWatcher:start()

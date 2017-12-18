@@ -1,5 +1,7 @@
 stty -ixon
 
+export XDEBUG_CONFIG="idekey=VSCODE"
+
 KEYTIMEOUT=1
 source ~/.config/antigen/antigen.zsh
 
@@ -55,8 +57,9 @@ alias work="mux start work"
 alias endwork="mux stop work"
 
 # quick theme switching
-alias dark='ln -sf ~/dotfiles/materitermdark.sh ~/.zsh_theme  && . ~/.zsh_theme'
-alias light='ln -sf ~/dotfiles/materitermlight.sh ~/.zsh_theme  && . ~/.zsh_theme'
+alias dark='ln -sf ~/dotfiles/materitermdark.sh ~/.zsh_theme  && . ~/.zsh_theme && it2setcolor tab 253238'
+alias light='ln -sf ~/dotfiles/materitermlight.sh ~/.zsh_theme  && . ~/.zsh_theme && it2setcolor tab f7f7f7'
+alias nord='ln -sf ~/dotfiles/nord.sh ~/.zsh_theme && . ~/.zsh_theme && it2setcolor tab 2e3440'
 
 # git stuff
 alias ga="gg a"
@@ -84,8 +87,6 @@ source ~/.config/tmuxinator.zsh
 
 if [[ -f ~/.zsh_theme ]]; then
   . ~/.zsh_theme
-else
-  dark
 fi
 
 export NVM_DIR="$HOME/.nvm"

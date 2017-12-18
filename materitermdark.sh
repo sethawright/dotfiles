@@ -9,8 +9,6 @@
 # Colors by Mattia Astorino (https://github.com/equinusocio)
 # from the Sublime Text 3 Material Theme
 
-. ~/Scripts/colorchange Dark
-
 color00="3c/4c/54" # Base 00 - Black
 color01="f0/71/78" # Base 08 - Red
 color02="c3/e8/8d" # Base 0B - Green

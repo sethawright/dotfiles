@@ -6,22 +6,18 @@ set rtp+=~/.vim/bundle/Vundle.vim
 " load plugins
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
+Plugin 'morhetz/gruvbox'
+Plugin 'arcticicestudio/nord-vim'
+Plugin 'vimwiki/vimwiki'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'scrooloose/nerdtree'
 Plugin 'vim-ctrlspace/vim-ctrlspace'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'nixprime/cpsm'
-Plugin 'rking/ag.vim'
-Plugin 'vimwiki/vimwiki'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'scrooloose/nerdtree'
-Plugin 'mattn/emmet-vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'tomtom/tcomment_vim'
-Plugin 'junegunn/goyo.vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'editorconfig/editorconfig-vim'
 Plugin 'posva/vim-vue'
 Plugin 'jwalton512/vim-blade'
 Plugin 'pangloss/vim-javascript'
@@ -34,7 +30,7 @@ syntax on
 " leader to comma
 let mapleader=","
 
-set timeoutlen=500
+set timeoutlen=250
 set ttimeoutlen=0
 
 " various config
@@ -43,7 +39,7 @@ set breakindent
 set autoindent
 set ruler
 set hidden
-set number
+set nonumber
 set display=lastline
 set tabstop=2
 set shiftwidth=2
@@ -70,19 +66,14 @@ set listchars+=precedes:<
 set splitbelow
 set splitright
 
-" very very rarely use this
-" but its nice to have, especially for class
-set mouse=a
-set ttymouse=xterm2
-
 " cleaner split markers
 set fillchars+=vert:│
 
 " status bar is hidden if only one split
-set laststatus=1
+set laststatus=0
 
 " helps for finding files
-set wildmode=full
+set wildmode=longest:full,full
 set wildmenu
 set wildignorecase
 set wildcharm=<C-z>
@@ -112,48 +103,41 @@ set wildignore+=*.swp,*~,._*
 set clipboard=unnamed
 
 " change shift width quickly
-:noremap <leader>w2 :set tabstop=2 shiftwidth=2<CR>
-:noremap <leader>w4 :set tabstop=4 shiftwidth=4<CR>
+:noremap ,w2 :set tabstop=2 shiftwidth=2<CR>
+:noremap ,w4 :set tabstop=4 shiftwidth=4<CR>
 
 " search for visually selected text
 vnoremap // y/<C-R>"<CR>Nviw
 
 " find files
 set path=.,**
-nnoremap <leader>ff :find *
-nnoremap <leader>fs :sfind *
-nnoremap <leader>fv :vert sfind *
-nnoremap <leader>ft :tabfind *
+nnoremap ,f :find *
+nnoremap ,s :sfind *
+nnoremap ,v :vert sfind *
+nnoremap ,t :tabfind *
+nnoremap ,F :find <C-R>=expand('%:h').'/*'<CR>
+nnoremap ,S :sfind <C-R>=expand('%:h').'/*'<CR>
+nnoremap ,V :vert sfind <C-R>=expand('%:h').'/*'<CR>
+nnoremap ,T :tabfind <C-R>=expand('%:h').'/*'<CR>
+
+" buffer navigation
+nnoremap gb :ls<CR>:buffer<Space>
+nnoremap gB :ls<CR>:vert sb<space>
+nnoremap ,b :buffer *
+nnoremap ,,b :buffer *
 
 " netrw/nt settings
 let g:netrw_liststyle = 3
 let g:netrw_banner = 0
 let NERDTreeMinimalUI = 1
 let g:NERDTreeQuitOnOpen = 1
+nnoremap ,n :NERDTreeToggle<CR>
+let g:NERDTreeMapOpenSplit = 's'
+let g:NERDTreeMapOpenVSplit = 'v'
+let NERDTreeShowHidden = 1
 
-" ag is much faster at finding files than ctrlp defaults
-if executable('ag')
-  let g:ctrlp_user_command =
-        \ 'ag %s --files-with-matches -g "" --ignore "*.min.js" --ignore "*.min.css" --ignore "node_modules" --ignore ".git"'
-  let g:ctrlp_use_caching = 1
-else
-  let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$|node\_modules$'
-  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
-endif
-
-" cspm is a faster matcher in c
-let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
-
-" relative number toggling
-function! NumToggle()
-  set relativenumber!
-  if (&relativenumber > 0)
-    set nonumber
-  else
-    set number
-  endif
-endfunction
-nnoremap <leader>rn :call NumToggle()<CR>
+" mouse support -- hardly used but nice occasionally
+set mouse=a
 
 " better copying
 vnoremap <silent> y y`]
@@ -171,25 +155,19 @@ nnoremap - :res -10<CR>
 nnoremap + :vertical res +10<CR>
 nnoremap _ :vertical res -10<CR>
 
-" visual selection of text on a line, not including the return char
-nnoremap <leader>vl ^v$h
-
 " file saving
-noremap <leader>w :update<CR>
-noremap <leader>wq :wq!<CR>
-noremap <leader>q :wincmd q<CR>
-
-" surround with tag
-nnoremap <leader>st <leader>vl<C-Y>,
+noremap ,w :update<CR>
+noremap ,wq :wq!<CR>
+noremap ,q :wincmd q<CR>
 
 " format the entire file
-nnoremap <leader>fef :normal! gg=G``<CR>
+nnoremap ,,fef :normal! gg=G``<CR>
 
 " text wrapping toggles
-nnoremap <silent> <leader>tw :set invwrap<CR>:set wrap?<CR>:set linebreak<CR>
+nnoremap <silent> ,,tw :set invwrap<CR>:set wrap?<CR>:set linebreak<CR>
 
 " find merge conflict markers
-nnoremap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
+nnoremap <silent> ,,fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
 
 " map the arrow keys to be based on display lines, not physical lines
 noremap <Down> gj
@@ -207,13 +185,13 @@ vmap <C-S-j> ]egv
 nnoremap <silent> ≠ :wincmd =<cr>
 
 " remove trailing whitespaces
-nnoremap <leader>fws :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>:update<CR>
+nnoremap ,,fws :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>:update<CR>
 
 " fix indentation to spaces
-nnoremap <leader>fi ggVG>gv<<esc>
+nnoremap ,,fi ggVG>gv<<esc>
 
 " toggle search highlighting
-nnoremap <leader>hs :set hlsearch! hlsearch?<CR>
+nnoremap ,hs :set hlsearch! hlsearch?<CR>
 
 " find functions
 nnoremap <C-o> :CtrlPFunky<Cr>
@@ -225,7 +203,7 @@ let g:ctrlp_show_hidden = 1
 set showtabline=0
 
 " select entire file
-nnoremap <leader><leader>a ggVG
+nnoremap ,,a ggVG
 
 " change cursor to underscore on visual mode or insert mode.
 if exists('$TMUX')
@@ -236,42 +214,27 @@ else
   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
-" Goyo options
-function! s:goyo_enter()
-  set wrap
-  set textwidth=0
-  set nocp
-  set linebreak
-  set nolist
-  set showbreak=
-  nohlsearch
-endfunction
-
-function! s:goyo_leave()
-  set showbreak=\ \
-  set nowrap
-  hi LineNr ctermbg=NONE guibg=NONE
-  hi SignColumn guibg=NONE ctermbg=NONE
-  hi link CtrlSpaceNormal Normal
-  hi link CtrlSpaceSelected Visual
-  hi link CtrlSpaceStatus Ctrlpdark
-endfunction
-
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
-
-" nerdtree settings
-nnoremap <leader>n :NERDTreeToggle<CR>
-let g:NERDTreeMapOpenSplit = 's'
-let g:NERDTreeMapOpenVSplit = 'v'
-let NERDTreeShowHidden = 1
+let g:tmux_navigator_no_mappings = 1
+nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 
 " Use markdown instead of wiki lang
 let g:vimwiki_list = [{'path': '$HOME/Dropbox/wiki', 'syntax': 'markdown'}]
 let g:vimwiki_table_mappings = 0
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'javascript', 'php', 'ruby', 'shell=sh', 'js=javascript', 'c', 'vim']
-:nnoremap <leader>dp :VimwikiDiaryPrevDay<CR>
-:nnoremap <leader>dn :VimwikiDiaryNextDay<CR>
+:nnoremap ,dp :VimwikiDiaryPrevDay<CR>
+:nnoremap ,dn :VimwikiDiaryNextDay<CR>
+
+" ag is much faster at finding files than ctrlp defaults
+if executable('ag')
+  let g:ctrlp_user_command =
+        \ 'ag %s --files-with-matches -g "" --ignore "*.min.js" --ignore "*.min.css" --ignore "node_modules" --ignore ".git"'
+  let g:ctrlp_use_caching = 1
+else
+  let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$|node\_modules$'
+  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
+endif
+let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
 
 " find syntax highlighting for the current text object
 nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -284,9 +247,6 @@ if filereadable(expand("~/.vimrc_background"))
   source ~/.vimrc_background
 endif
 
-au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-au InsertLeave * match ExtraWhitespace /\s\+$/
-
 " vue help
 autocmd FileType vue :syntax sync fromstart
 noremap <F9> <Esc>:syntax sync fromstart<CR>
@@ -297,5 +257,8 @@ augroup myvimrc
   au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,.vimrc_background so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
 
+" my preferred statusline -- just need the file
+set statusline=%t
+
 " vimrc refresh
-:nnoremap <leader><leader>r :so $MYVIMRC<CR>
+:nnoremap ,,r :so $MYVIMRC<CR>
