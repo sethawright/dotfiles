@@ -3,8 +3,9 @@ local step = 10
 local stepBig = 100
 
 -- No window animations
--- hs.window.animationDuration = 0
--- hs.hints.showTitleThresh = 0
+hs.window.animationDuration = 0
+hs.hints.titleMaxSize = -1
+hs.hints.showTitleThresh = 0
 
 local display_macbook = 'Color LCD'
 local display_asus = 'ASUS PB278'
@@ -57,7 +58,7 @@ layout2 = {
 
 -- A global variable for the Hyper Mode
 k = hs.hotkey.modal.new({'cmd'}, 'escape')
-function k:entered() f:exit(); u:exit(); w:exit(); e:exit(); d:exit() s:exit(); o:exit(); i:exit(); p:exit(); end
+function k:entered() s:exit(); d:exit(); w:exit(); e:exit(); o:exit() i:exit(); p:exit(); u:exit(); f:exit(); end
 
 -- used if you are ok pressing three triggers
 s = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 's', 'Size (From Bottom left)')
@@ -66,11 +67,11 @@ function s:entered() f:exit(); u:exit(); w:exit(); e:exit(); d:exit(); k:exit();
 d = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'd', 'Size (From Bottom right)')
 function d:entered() f:exit(); u:exit(); s:exit(); w:exit(); e:exit(); k:exit(); o:exit(); i:exit(); p:exit(); end
 
-w = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'd', 'Size (From top left)')
+w = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'w', 'Size (From top left)')
 function w:entered() f:exit(); u:exit(); s:exit(); e:exit(); d:exit(); k:exit(); o:exit(); i:exit(); p:exit(); end
 
-e = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'd', 'Size (From top right)')
-function s:entered() f:exit(); u:exit(); s:exit(); w:exit(); d:exit(); k:exit(); o:exit(); i:exit(); p:exit(); end
+e = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'e', 'Size (From top right)')
+function e:entered() f:exit(); u:exit(); s:exit(); w:exit(); d:exit(); k:exit(); o:exit(); i:exit(); p:exit(); end
 
 o = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'o', 'Open')
 function o:entered() f:exit(); u:exit(); w:exit(); e:exit(); d:exit(); k:exit(); s:exit(); i:exit(); p:exit(); end
@@ -87,71 +88,80 @@ function u:entered() f:exit(); p:exit(); w:exit(); e:exit(); d:exit(); k:exit();
 f = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'f', 'Focus')
 function f:entered() u:exit(); p:exit(); w:exit(); e:exit(); d:exit(); k:exit(); s:exit(); o:exit(); i:exit(); end
 
-quitAll = function()
-    f:exit(); u:exit(); d:exit(); i:exit(); o:exit(); s:exit(); p:exit(); k:exit(); e:exit(); w:exit();
+quitAll = function(omit)
+  f:exit(); u:exit(); d:exit(); i:exit(); o:exit(); s:exit(); p:exit(); e:exit(); w:exit();
+  if omit ~= true then
+    k:exit();
+  end
 end
 
+-- quick escape
+hs.hotkey.bind({"cmd", "ctrl", "shift"}, 'escape', function ()
+  quitAll();
+  hs.alert.show('Emergency Exit.');
+end)
+
 -- Bind the Hyper key
-f:bind('', 'escape', quitAll)
-k:bind('', 'escape', quitAll)
-o:bind('', 'escape', quitAll)
-s:bind('', 'escape', quitAll)
-i:bind('', 'escape', quitAll)
-p:bind('', 'escape', quitAll)
-d:bind('', 'escape', quitAll)
-e:bind('', 'escape', quitAll)
-w:bind('', 'escape', quitAll)
-u:bind('', 'escape', quitAll)
+k:bind({}, 'escape', quitAll)
+s:bind({}, 'escape', quitAll)
+d:bind({}, 'escape', quitAll)
+w:bind({}, 'escape', quitAll)
+e:bind({}, 'escape', quitAll)
+o:bind({}, 'escape', quitAll)
+i:bind({}, 'escape', quitAll)
+p:bind({}, 'escape', quitAll)
+u:bind({}, 'escape', quitAll)
+f:bind({}, 'escape', quitAll)
 
 -- used if you want multi key presses like vim/tmux
 k:bind({}, 'm', nil, function()
-  k:enter(); w:exit(); e:exit(); d:exit() s:exit(); o:exit(); i:exit(); p:exit();
+  quitAll(); k:enter();
 end, function() end)
 
 s = hs.hotkey.modal.new({})
-pressedS = function() s:enter(); d:exit(); e:exit(); w:exit(); end
+pressedS = function() quitAll(true); s:enter(); end
 releasedS = function() end
 k:bind({}, 's', nil, pressedS, releasedS)
 
 d = hs.hotkey.modal.new({})
-pressedD = function() d:enter(); s:exit(); e:exit(); w:exit(); end
+pressedD = function() quitAll(true); d:enter(); end
 releasedD = function() end
 k:bind({}, 'd', nil, pressedD, releasedD)
 
 e = hs.hotkey.modal.new({})
-pressedE = function() e:enter(); s:exit(); d:exit(); w:exit(); end
+pressedE = function() quitAll(true); e:enter(); end
 releasedE = function() end
 k:bind({}, 'e', nil, pressedE, releasedE)
 
 w = hs.hotkey.modal.new({})
-pressedW = function() w:enter(); s:exit(); d:exit(); e:exit(); end
+pressedW = function() quitAll(true); w:enter(); end
 releasedW = function() end
 k:bind({}, 'w', nil, pressedW, releasedW)
 
 p = hs.hotkey.modal.new({})
-pressedP = function() p:enter() end
+pressedP = function() quitAll(true); p:enter(); end
 releasedP = function() end
 k:bind({}, 'p', nil, pressedP, releasedP)
 
 i = hs.hotkey.modal.new({})
-pressedI = function() i:enter(); end
+pressedI = function() quitAll(true); i:enter(); end
 releasedI = function() end
 k:bind({}, 'i', nil, pressedI, releasedI)
 
 o = hs.hotkey.modal.new({})
-pressedA = function() o:enter() end
+pressedA = function() quitAll(true); o:enter(); end
 releasedA = function() end
-k:bind('', 'o', nil, pressedA, releasedA)
+k:bind({}, 'o', nil, pressedA, releasedA)
 
 u = hs.hotkey.modal.new({})
-pressedU = function() u:enter() end
+pressedU = function() quitAll(true); u:enter(); end
 releasedU = function() end
-k:bind('', 'u', nil, pressedU, releasedU)
+k:bind({}, 'u', nil, pressedU, releasedU)
 
 f = hs.hotkey.modal.new({})
-pressedF = function() f:enter() end
+pressedF = function() quitAll(true); f:enter(); end
 releasedF = function() end
-k:bind('', 'f', nil, pressedF, releasedF)
+k:bind({}, 'f', nil, pressedF, releasedF)
 
 launch = function(appname)
   hs.application.launchOrFocus(appname)
@@ -160,24 +170,24 @@ end
 
 -- Single keybinding for functions
 mainBindings= {
-  {'1', function() applyLayout(layout1); k:exit(); end},
-  {'2', function() applyLayout(layout2); k:exit(); end},
-  {'RETURN', function() hs.grid.maximizeWindow(); k:exit(); end},
+  {'1', function() quitAll(); applyLayout(layout1); end},
+  {'2', function() quitAll(); applyLayout(layout2); end},
+  {'RETURN', function() quitAll(); hs.grid.maximizeWindow(); end},
   {"'", function()
+      quitAll();
       local win = hs.window.focusedWindow()
       local f = win:frame()
       local screen = win:screen()
       hs.grid.set(win, {x = 1, y = 1, w = hs.grid.GRIDWIDTH - 2, h = hs.grid.GRIDHEIGHT - 2}, screen)
-      k:exit();
     end
   },
   {'a', function()
+    quitAll();
     launch('iTerm'); 
     launch('Messages');
     launch('Slack'); 
     launch('Google Chrome');
     applyLayout(layout1);
-    k:exit();
     end
   },
   {'J', hs.grid.pushWindowDown},
@@ -193,8 +203,8 @@ end
 sBindings = {
   {'J', hs.grid.resizeWindowTaller},
   {'H', function ()
-      hs.grid.resizeWindowWider();
       hs.grid.pushWindowLeft();
+      hs.grid.resizeWindowWider();
     end
   },
   {'K', hs.grid.resizeWindowShorter},
@@ -228,7 +238,7 @@ fBindings = {
 }
 
 for b, lay in ipairs(fBindings) do
-  f:bind({}, lay[1], function() lay[2](); f:exit(); k:exit(); end)
+  f:bind({}, lay[1], function() quitAll(); lay[2](); end)
 end
 
 eBindings = {
@@ -239,8 +249,8 @@ eBindings = {
   },
   {'H', hs.grid.resizeWindowThinner},
   {'K', function ()
-      hs.grid.resizeWindowTaller();
       hs.grid.pushWindowUp();
+      hs.grid.resizeWindowTaller();
     end
   },
   {'L', hs.grid.resizeWindowWider},
@@ -257,13 +267,13 @@ wBindings = {
     end
   },
   {'H', function ()
-      hs.grid.resizeWindowWider();
       hs.grid.pushWindowLeft();
+      hs.grid.resizeWindowWider();
     end
   },
   {'K', function ()
-      hs.grid.resizeWindowTaller();
       hs.grid.pushWindowUp();
+      hs.grid.resizeWindowTaller();
     end
   },
   {'L', function ()
@@ -317,7 +327,7 @@ pBindings = {
 }
 
 for b, lay in ipairs(pBindings) do
-  p:bind({}, lay[1], function() lay[2](); p:exit(); k:exit(); end)
+  p:bind({}, lay[1], function() lay[2](); quitAll(); end)
 end
 
 uBindings = {
@@ -360,7 +370,7 @@ uBindings = {
 }
 
 for b, lay in ipairs(uBindings) do
-  u:bind({}, lay[1], function() lay[2](); u:exit(); k:exit(); end)
+  u:bind({}, lay[1], function() lay[2](); quitAll(); end)
 end
 
 -- Small Positional Layouts
@@ -428,7 +438,7 @@ end
 rfun = function()
   hs.reload();
   hs.alert.show('Config loaded');
-  k:exit();
+  quitAll();
 end
 k:bind('', 'r', rfun)
 
