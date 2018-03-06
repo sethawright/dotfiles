@@ -122,6 +122,8 @@ unset color_foreground
 unset color_background
 unset color_cursor
 
+# it2setcolor tab 253238
+
 # add a dotfile that vim can read when loading up
 # will automatically set the color scheme to materitermdark
 echo "if !exists('g:colors_name') || g:colors_name != 'materitermdark'\ncolorscheme materitermdark\nendif" > ~/.vimrc_background

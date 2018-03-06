@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Materiterm: Material for iTerm
-# Material Light scheme by Seth Wright (https://github.com/asethwright)
+# Material Pale scheme by Seth Wright (https://github.com/asethwright)
 
 # Based on the base16-shell template
 # by Chris Kempson (https://github.com/chriskempson)
@@ -9,31 +9,31 @@
 # Colors by Mattia Astorino (https://github.com/equinusocio)
 # from the Sublime Text 3 Material Theme
 
-color00="b0/be/c5" # Base 00 - Black
-color01="e8/3b/3f" # Base 08 - Red
-color02="40/a3/3f" # Base 0B - Green
-color03="f6/98/1e" # Base 0A - Yellow
-color04="1e/80/f0" # Base 0D - Blue
-color05="99/2b/ae" # Base 0E - Magenta
-color06="16/af/ca" # Base 0C - Cyan
-color07="c4/cf/d4" # Base 05 - White
-color08="7e/93/9e" # Base 03 - Bright Black
+color00="4E/55/79" # Base 00 - Black
+color01="f0/71/78" # Base 08 - Red
+color02="c3/e8/8d" # Base 0B - Green
+color03="ff/cb/6b" # Base 0A - Yellow
+color04="82/aa/ff" # Base 0D - Blue
+color05="c7/92/ea" # Base 0E - Magenta
+color06="89/DD/FF" # Base 0C - Cyan
+color07="67/6E/95" # Base 05 - White
+color08="82/8E/D5" # Base 03 - Bright Black
 color09="f0/71/78" # Base 08 - Bright Red
 color10="f7/8c/6c" # Base 0B - Bright Green
-color11="f6/98/1e" # Base 0A - Bright Yellow
+color11="b2/cc/d6" # Base 0A - Bright Yellow
 color12="bb/80/b3" # Base 0D - Bright Blue
 color13="ab/79/67" # Base 0E - Bright Magenta
-color14="e5/e9/ea" # Base 0C - Bright Cyan
-color15="3c/4c/54" # Base 07 - Bright White
+color14="3F/44/64" # Base 0C - Bright Cyan
+color15="95/9D/CB" # Base 07 - Bright White
 color16="f0/71/78" # Base 09 (pink)
 color17="f7/8c/6c" # Base 0F (orange)
 color18="b2/cc/d6" # Base 01 (pale blue)
 color19="bb/80/b3" # Base 02 (violet)
 color20="ab/79/67" # Base 04 (brown)
-color21="e5/e9/ea" # Base 06
-color_foreground="1c/26/2a" # Base 00
-color_background="f7/f7/f7" # Base 05
-color_cursor="fc/74/53" # Base 05
+color21="2f/3f/47" # Base 06
+color_foreground="95/9D/CB" # Base 05
+color_background="29/2d/3e" # Base 00
+color_cursor="ff/cc/00" # Base 05
 
 if [ -n "$TMUX" ]; then
   # Tell tmux to pass the escape sequences through
@@ -80,14 +80,13 @@ printf $printf_template 21 $color21
 
 # foreground / background / cursor color
 if [ -n "$ITERM_SESSION_ID" ]; then
-  # iTerm2 proprietary escape codes
-  printf $printf_template_custom Pg 1c262a # forground
-  printf $printf_template_custom Ph f7f7f7 # background
-  printf $printf_template_custom Pi e83b3f # bold color
-  printf $printf_template_custom Pj cfd8dc # selection color
-  printf $printf_template_custom Pk 3c4c54 # selected text color
-  printf $printf_template_custom Pl fbc02d # cursor
-  printf $printf_template_custom Pm 364851 # cursor text
+  printf $printf_template_custom Pg 959DCB # forground
+  printf $printf_template_custom Ph 292d3e # background
+  printf $printf_template_custom Pi ee2b2a # bold color
+  printf $printf_template_custom Pj 717CB4 # selection color
+  printf $printf_template_custom Pk 536d7b # selected text color
+  printf $printf_template_custom Pl ffcc00 # cursor
+  printf $printf_template_custom Pm 263238 # cursor text
 else
   printf $printf_template_var 10 $color_foreground
   printf $printf_template_var 11 $color_background
@@ -123,8 +122,8 @@ unset color_foreground
 unset color_background
 unset color_cursor
 
-# it2setcolor tab f7f7f7
+# it2setcolor tab 292d3e
 
 # add a dotfile that vim can read when loading up
-# will automatically set the color scheme to materitermdark
-echo "if !exists('g:colors_name') || g:colors_name != 'materitermlight'\ncolorscheme materitermlight\nendif" > ~/.vimrc_background
+# will automatically set the color scheme to materitermpale
+echo "if !exists('g:colors_name') || g:colors_name != 'materitermpale'\ncolorscheme materitermpale\nendif" > ~/.vimrc_background

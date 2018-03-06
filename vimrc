@@ -2,20 +2,21 @@
 set nocp
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=/usr/local/bin/fzf
 
 " load plugins
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
-Plugin 'morhetz/gruvbox'
-Plugin 'arcticicestudio/nord-vim'
-Plugin 'vimwiki/vimwiki'
+Plugin 'rking/ag.vim'
+Plugin 'tpope/vim-rhubarb'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'scrooloose/nerdtree'
+Plugin 'ludovicchabant/vim-gutentags'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
+Plugin 'vimwiki/vimwiki'
 Plugin 'vim-ctrlspace/vim-ctrlspace'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'tacahiroy/ctrlp-funky'
-Plugin 'nixprime/cpsm'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'posva/vim-vue'
@@ -29,8 +30,9 @@ syntax on
 
 " leader to comma
 let mapleader=","
+set mouse=a
 
-set timeoutlen=250
+set timeoutlen=300
 set ttimeoutlen=0
 
 " various config
@@ -132,12 +134,10 @@ let g:netrw_banner = 0
 let NERDTreeMinimalUI = 1
 let g:NERDTreeQuitOnOpen = 1
 nnoremap ,n :NERDTreeToggle<CR>
+nnoremap ,,n :NERDTreeFind<CR>
 let g:NERDTreeMapOpenSplit = 's'
 let g:NERDTreeMapOpenVSplit = 'v'
 let NERDTreeShowHidden = 1
-
-" mouse support -- hardly used but nice occasionally
-set mouse=a
 
 " better copying
 vnoremap <silent> y y`]
@@ -193,11 +193,40 @@ nnoremap ,,fi ggVG>gv<<esc>
 " toggle search highlighting
 nnoremap ,hs :set hlsearch! hlsearch?<CR>
 
-" find functions
-nnoremap <C-o> :CtrlPFunky<Cr>
+" find files
+nnoremap <C-p> :Files<Cr>
 
-" show hidden files
-let g:ctrlp_show_hidden = 1
+" ctags
+nnoremap <C-o> :BTags<Cr>
+nnoremap ø :Tags<Cr>
+
+nnoremap <C-i> :Buffers<Cr>
+
+" buffers
+nnoremap <C-u> :Lines<Cr>
+
+let g:fzf_action = {
+  \ 'ctrl-d': 'bdelete',
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+let g:fzf_layout = { 'down': '10' }
+let g:fzf_buffers_jump = 1
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Visual'],
+  \ 'hl':      ['fg', 'Folded'],
+  \ 'fg+':     ['fg', 'Normal', 'StatusLine', 'Bold'],
+  \ 'bg+':     ['bg', 'TabLine', 'TabLine'],
+  \ 'hl+':     ['fg', 'Constant'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Keyword'],
+  \ 'pointer': ['fg', 'Keyword'],
+  \ 'marker':  ['fg', 'TabLine'],
+  \ 'spinner': ['fg', 'String'],
+  \ 'header':  ['fg', 'Tabline'] }
 
 " clean up tab display
 set showtabline=0
@@ -225,17 +254,6 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'javascript', 'p
 :nnoremap ,dp :VimwikiDiaryPrevDay<CR>
 :nnoremap ,dn :VimwikiDiaryNextDay<CR>
 
-" ag is much faster at finding files than ctrlp defaults
-if executable('ag')
-  let g:ctrlp_user_command =
-        \ 'ag %s --files-with-matches -g "" --ignore "*.min.js" --ignore "*.min.css" --ignore "node_modules" --ignore ".git"'
-  let g:ctrlp_use_caching = 1
-else
-  let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$|node\_modules$'
-  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
-endif
-let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
-
 " find syntax highlighting for the current text object
 nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
       \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
@@ -243,7 +261,6 @@ nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> 
 
 " set background based on terminal active theme
 if filereadable(expand("~/.vimrc_background"))
-  set t_Co=256
   source ~/.vimrc_background
 endif
 
@@ -259,6 +276,9 @@ augroup END
 
 " my preferred statusline -- just need the file
 set statusline=%t
+
+" some basic snippets i use
+runtime snippets.vim
 
 " vimrc refresh
 :nnoremap ,,r :so $MYVIMRC<CR>

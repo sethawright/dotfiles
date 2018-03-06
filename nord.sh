@@ -10,7 +10,7 @@ color03="eb/cb/8b" # Base 0A - Yellow
 color04="81/a1/c1" # Base 0D - Blue
 color05="b4/8e/ad" # Base 0E - Magenta
 color06="88/c0/d0" # Base 0C - Cyan
-color07="e5/e9/f0" # Base 05 - White
+color07="4c/56/6a" # Base 05 - White
 color08="4c/56/6a" # Base 03 - Bright Black
 color09="bf/61/6a" # Base 08 - Bright Red
 color10="93/b3/79" # Base 0B - Bright Green
@@ -125,6 +125,8 @@ unset color21
 unset color_foreground
 unset color_background
 
+it2setcolor tab 2e3440
+
 # add a dotfile that vim can read when loading up
 # will automatically set the color scheme to nord
-echo "if !exists('g:colors_name') || g:colors_name != 'nord'\ncolorscheme nord\nendif" > ~/.vimrc_background
+# echo "if !exists('g:colors_name') || g:colors_name != 'nord'\ncolorscheme nord\nendif" > ~/.vimrc_background

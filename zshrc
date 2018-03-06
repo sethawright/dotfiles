@@ -1,20 +1,13 @@
-stty -ixon
-
-export XDEBUG_CONFIG="idekey=VSCODE"
-
 KEYTIMEOUT=1
-source ~/.config/antigen/antigen.zsh
 
-antigen use oh-my-zsh
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle mafredri/zsh-async
-antigen bundle sindresorhus/pure
-antigen bundle sublime
-antigen bundle colorize
-# antigen bundle tmux
-# antigen bundle vi-mode
+export ZSH=/Users/seth/.oh-my-zsh
+plugins=(
+  colorize
+)
+source $ZSH/oh-my-zsh.sh
 
-antigen apply
+autoload -U promptinit; promptinit
+prompt pure
 
 alias todo='vim -c "set norelativenumber nonumber laststatus=0" -c "VimwikiIndex"'
 alias org='vim -c "set norelativenumber nonumber laststatus=0" -c "VimwikiIndex"'
@@ -51,15 +44,14 @@ alias e="vim"
 alias m="mvim"
 alias s="subl ."
 alias adbpic='adb shell screencap -p | perl -pe "s/\x0D\x0A/\x0A/g" > "/Users/seth/Downloads/firetvscreenshot_$(date +%Y%m%d-%H%M%S).png"'
-alias firetv='adb kill-server && adb start-server && adb connect 192.168.0.4'
-alias news="newsbeuter"
-alias work="mux start work"
-alias endwork="mux stop work"
+alias firetv='adb kill-server && adb start-server && adb connect 192.168.0.99'
+alias x96='adb kill-server && adb start-server && adb connect 192.168.0.98'
 
 # quick theme switching
-alias dark='ln -sf ~/dotfiles/materitermdark.sh ~/.zsh_theme  && . ~/.zsh_theme && it2setcolor tab 253238'
-alias light='ln -sf ~/dotfiles/materitermlight.sh ~/.zsh_theme  && . ~/.zsh_theme && it2setcolor tab f7f7f7'
-alias nord='ln -sf ~/dotfiles/nord.sh ~/.zsh_theme && . ~/.zsh_theme && it2setcolor tab 2e3440'
+alias dark='ln -sf ~/dotfiles/materitermdark.sh ~/.zsh_theme  && . ~/.zsh_theme'
+alias pale='ln -sf ~/dotfiles/materitermpale.sh ~/.zsh_theme  && . ~/.zsh_theme'
+alias light='ln -sf ~/dotfiles/materitermlight.sh ~/.zsh_theme  && . ~/.zsh_theme'
+alias nord='ln -sf ~/dotfiles/nord.sh ~/.zsh_theme && . ~/.zsh_theme'
 
 # git stuff
 alias ga="gg a"
@@ -72,6 +64,11 @@ alias gl="gg l"
 alias gp="gg p"
 alias gpl="gg pl"
 
+alias work="tmuxinator start work"
+alias endwork="tmuxinator stop work"
+alias maketags="find . -type f -iregex \".*\.js$\" -not -path \"./node_modules/*\" -exec jsctags {} -f \; | sed '/^$/d' | sort > tags"
+alias ctags="`brew --prefix`/bin/ctags"
+
 # set path
 export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:$PATH
 export PATH=$PATH:/users/seth/dropbox/swarm/web/script
@@ -82,13 +79,13 @@ export PATH=$PATH:$HOME/.yarn/bin
 export PATH=$PATH:$HOME/.composer/vendor/bin
 
 export EDITOR='vim'
-
-source ~/.config/tmuxinator.zsh
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 
 if [[ -f ~/.zsh_theme ]]; then
   . ~/.zsh_theme
 fi
 
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
