@@ -7,7 +7,7 @@ set rtp+=/usr/local/bin/fzf
 " load plugins
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
-Plugin 'rking/ag.vim'
+Plugin 'mattn/emmet-vim'
 Plugin 'tpope/vim-rhubarb'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-unimpaired'
@@ -20,9 +20,11 @@ Plugin 'vim-ctrlspace/vim-ctrlspace'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'posva/vim-vue'
-Plugin 'jwalton512/vim-blade'
 Plugin 'pangloss/vim-javascript'
+Plugin 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+Plugin 'jwalton512/vim-blade'
 Plugin 'StanAngeloff/php.vim'
+Plugin 'vimlab/split-term.vim'
 call vundle#end()
 
 filetype plugin indent on
@@ -42,6 +44,7 @@ set autoindent
 set ruler
 set hidden
 set nonumber
+set norelativenumber
 set display=lastline
 set tabstop=2
 set shiftwidth=2
@@ -105,8 +108,8 @@ set wildignore+=*.swp,*~,._*
 set clipboard=unnamed
 
 " change shift width quickly
-:noremap ,w2 :set tabstop=2 shiftwidth=2<CR>
-:noremap ,w4 :set tabstop=4 shiftwidth=4<CR>
+noremap ,w2 :set tabstop=2 shiftwidth=2<CR>
+noremap ,w4 :set tabstop=4 shiftwidth=4<CR>
 
 " search for visually selected text
 vnoremap // y/<C-R>"<CR>Nviw
@@ -123,6 +126,7 @@ nnoremap ,V :vert sfind <C-R>=expand('%:h').'/*'<CR>
 nnoremap ,T :tabfind <C-R>=expand('%:h').'/*'<CR>
 
 " buffer navigation
+nnoremap <C-n> :enew<CR>
 nnoremap gb :ls<CR>:buffer<Space>
 nnoremap gB :ls<CR>:vert sb<space>
 nnoremap ,b :buffer *
@@ -268,11 +272,47 @@ endif
 autocmd FileType vue :syntax sync fromstart
 noremap <F9> <Esc>:syntax sync fromstart<CR>
 
+" neovim, gui stuff
+if has('gui_running') || has('gui_vimr') || has('nvim')
+  :nnoremap « :100VTerm<CR>
+  :nnoremap ‘ :Term<CR>
+  :nnoremap ç :BTerm<CR>
+  let g:terminal_color_0 = '#3c4c54'
+  let g:terminal_color_1 = '#f07178'
+  let g:terminal_color_2 = '#c3e88d'
+  let g:terminal_color_3 = '#ffcb6b'
+  let g:terminal_color_4 = '#82aaff'
+  let g:terminal_color_5 = '#c792ea'
+  let g:terminal_color_6 = '#89ddff'
+  let g:terminal_color_7 = '#ff00ff'
+  let g:terminal_color_8 = '#566f7c'
+  let g:terminal_color_9 = '#f07178'
+  let g:terminal_color_10 = '#f78c6c'
+  let g:terminal_color_11 = '#b2ccd6'
+  let g:terminal_color_12 = '#bb80b3'
+  let g:terminal_color_13 = '#ab7967'
+  let g:terminal_color_14 = '#2f3f47'
+  let g:terminal_color_15 = '#eeffff'
+  let g:terminal_color_16 = '#f07178'
+  let g:terminal_color_17 = '#f78c6c'
+  let g:terminal_color_18 = '#b2ccd6'
+  let g:terminal_color_19 = '#bb80b3'
+  let g:terminal_color_20 = '#ab7967'
+  let g:terminal_color_21 = '#2f3f47'
+  nnoremap ≤ :file 
+  nnoremap Ô :res +10<CR>
+  nnoremap  :res -10<CR>
+  nnoremap Ò :vertical res +10<CR>
+  nnoremap Ó :vertical res -10<CR>
+endif
+
 " vimrc refresh automatically
 augroup myvimrc
   au!
   au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,.vimrc_background so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
+
+au BufNewFile,BufRead *.ejs set filetype=html
 
 " my preferred statusline -- just need the file
 set statusline=%t

@@ -2,5 +2,6 @@ set t_Co=256
 set showtabline=1
 set guioptions+=e
 set guioptions-=r
-set guifont=Fira\ Code:h12
-set linespace=7
+set guifont=Meslo\ LG\ L
+set linespace=5
+colorscheme materitermpale

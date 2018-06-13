@@ -1,6 +1,7 @@
 -- Layout configuration
 local step = 10
 local stepBig = 100
+local log = hs.logger.new('init','debug')
 
 -- No window animations
 hs.window.animationDuration = 0
@@ -11,8 +12,8 @@ local display_macbook = 'Color LCD'
 local display_asus = 'ASUS PB278'
 local lastNumberOfScreens = #hs.screen.allScreens()
 
-hs.grid.MARGINX = 10
-hs.grid.MARGINY = 10
+hs.grid.MARGINX = 0
+hs.grid.MARGINY = 0
 hs.grid.GRIDHEIGHT = 8
 hs.grid.GRIDWIDTH = 10
 
@@ -187,6 +188,7 @@ mainBindings= {
     launch('Messages');
     launch('Slack'); 
     launch('Google Chrome');
+    launch('Mail');
     applyLayout(layout1);
     end
   },
@@ -503,13 +505,44 @@ function applyLayout(layout)
 
 end
 
+function toggle_app(name)
+  log.d(name)
+  focused = hs.window.focusedWindow()
+  search = hs.application.find(name)
+  if focused and search then
+    app = focused:application()
+    log.d(app:title())
+    log.d(search:title())
+    if app:title() == search:title() then
+      log.d('Hide application')
+      search:hide()
+      return
+    end
+  end
+
+  log.d('launchOrFocus', name)
+  hs.application.launchOrFocus(name)
+end
+
 -- Change screens
 hs.hotkey.bind({"ctrl", "alt"}, 'LEFT', hs.grid.pushWindowNextScreen)
 hs.hotkey.bind({"ctrl", "alt"}, 'RIGHT', hs.grid.pushWindowPrevScreen, "Window Hints")
 
 -- window hints
-hs.hotkey.bind({"cmd", "shift"}, "return", function()
-  hs.hints.windowHints(nil);
+-- hs.hotkey.bind({"cmd", "shift"}, "return", function()
+--   hs.hints.windowHints(nil);
+-- end)
+
+hs.hotkey.bind({"ctrl"}, "return", function()
+  toggle_app('Google Chrome')
+end)
+
+hs.hotkey.bind({"shift", "alt"}, "return", function()
+  toggle_app('Visual Studio Code')
+end)
+
+hs.hotkey.bind({"alt"}, "return", function()
+  toggle_app('iTerm')
 end)
 
 screenWatcher = hs.screen.watcher.new(screensChangedCallback)
