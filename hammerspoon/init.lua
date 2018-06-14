@@ -12,8 +12,8 @@ local display_macbook = 'Color LCD'
 local display_asus = 'ASUS PB278'
 local lastNumberOfScreens = #hs.screen.allScreens()
 
-hs.grid.MARGINX = 0
-hs.grid.MARGINY = 0
+hs.grid.MARGINX = 10
+hs.grid.MARGINY = 10
 hs.grid.GRIDHEIGHT = 8
 hs.grid.GRIDWIDTH = 10
 
