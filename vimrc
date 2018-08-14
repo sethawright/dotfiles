@@ -8,22 +8,26 @@ set rtp+=/usr/local/bin/fzf
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'mattn/emmet-vim'
+Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-rhubarb'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'scrooloose/nerdtree'
 Plugin 'ludovicchabant/vim-gutentags'
+Plugin 'arcticicestudio/nord-vim'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
+Plugin 'mileszs/ack.vim'
 Plugin 'vimwiki/vimwiki'
 Plugin 'vim-ctrlspace/vim-ctrlspace'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'posva/vim-vue'
 Plugin 'pangloss/vim-javascript'
-Plugin 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 Plugin 'jwalton512/vim-blade'
 Plugin 'StanAngeloff/php.vim'
+" Plugin 'itchyny/lightline.vim'
+Plugin 'mxw/vim-jsx'
 Plugin 'vimlab/split-term.vim'
 call vundle#end()
 
@@ -43,7 +47,7 @@ set breakindent
 set autoindent
 set ruler
 set hidden
-set nonumber
+set number
 set norelativenumber
 set display=lastline
 set tabstop=2
@@ -60,6 +64,9 @@ set incsearch
 set ignorecase
 set foldmethod=manual
 
+nnoremap / /\v
+vnoremap / /\v
+
 " show hidden characters i usually dont want
 set listchars=""
 set listchars=tab:>-
@@ -75,7 +82,7 @@ set splitright
 set fillchars+=vert:│
 
 " status bar is hidden if only one split
-set laststatus=0
+set laststatus=1
 
 " helps for finding files
 set wildmode=longest:full,full
@@ -143,6 +150,9 @@ let g:NERDTreeMapOpenSplit = 's'
 let g:NERDTreeMapOpenVSplit = 'v'
 let NERDTreeShowHidden = 1
 
+" ack vim settings
+let g:ackhighlight = 1
+
 " better copying
 vnoremap <silent> y y`]
 vnoremap <silent> p p`]
@@ -196,6 +206,9 @@ nnoremap ,,fi ggVG>gv<<esc>
 
 " toggle search highlighting
 nnoremap ,hs :set hlsearch! hlsearch?<CR>
+
+" clear the previous search
+nnoremap ,cs :let @/ = ""<CR>
 
 " find files
 nnoremap <C-p> :Files<Cr>
@@ -267,6 +280,10 @@ nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> 
 if filereadable(expand("~/.vimrc_background"))
   source ~/.vimrc_background
 endif
+" colorscheme nord
+" let g:lightline = {
+"       \ 'colorscheme': 'nord',
+"       \ }
 
 " vue help
 autocmd FileType vue :syntax sync fromstart
@@ -319,6 +336,10 @@ set statusline=%t
 
 " some basic snippets i use
 runtime snippets.vim
+
+" get filename, file path
+nmap ,cs :let @*=expand("%")<CR>
+nmap ,cl :let @*=expand("%:p")<CR>
 
 " vimrc refresh
 :nnoremap ,,r :so $MYVIMRC<CR>

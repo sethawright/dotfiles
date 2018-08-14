@@ -125,8 +125,6 @@ unset color21
 unset color_foreground
 unset color_background
 
-it2setcolor tab 2e3440
-
 # add a dotfile that vim can read when loading up
 # will automatically set the color scheme to nord
-# echo "if !exists('g:colors_name') || g:colors_name != 'nord'\ncolorscheme nord\nendif" > ~/.vimrc_background
+echo "if !exists('g:colors_name') || g:colors_name != 'nord'\ncolorscheme nord\nendif" > ~/.vimrc_background
