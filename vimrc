@@ -83,7 +83,7 @@ set splitright
 set fillchars+=vert:│
 
 " status bar is hidden if only one split
-set laststatus=1
+set laststatus=0
 
 " helps for finding files
 set wildmode=longest:full,full
