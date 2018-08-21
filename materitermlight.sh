@@ -32,7 +32,7 @@ color19="bb/80/b3" # Base 02 (violet)
 color20="ab/79/67" # Base 04 (brown)
 color21="e5/e9/ea" # Base 06
 color_foreground="1c/26/2a" # Base 00
-color_background="f7/f7/f7" # Base 05
+color_background="ff/ff/ff" # Base 05
 color_cursor="fc/74/53" # Base 05
 
 if [ -n "$TMUX" ]; then
@@ -82,7 +82,7 @@ printf $printf_template 21 $color21
 if [ -n "$ITERM_SESSION_ID" ]; then
   # iTerm2 proprietary escape codes
   printf $printf_template_custom Pg 1c262a # forground
-  printf $printf_template_custom Ph f7f7f7 # background
+  printf $printf_template_custom Ph ffffff # background
   printf $printf_template_custom Pi e83b3f # bold color
   printf $printf_template_custom Pj cfd8dc # selection color
   printf $printf_template_custom Pk 3c4c54 # selected text color

@@ -14,6 +14,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'scrooloose/nerdtree'
 Plugin 'ludovicchabant/vim-gutentags'
+Plugin 'chriskempson/base16-vim'
 Plugin 'arcticicestudio/nord-vim'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
@@ -47,7 +48,7 @@ set breakindent
 set autoindent
 set ruler
 set hidden
-set number
+set nonumber
 set norelativenumber
 set display=lastline
 set tabstop=2
@@ -232,14 +233,14 @@ let g:fzf_layout = { 'down': '10' }
 let g:fzf_buffers_jump = 1
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Visual'],
-  \ 'hl':      ['fg', 'Folded'],
-  \ 'fg+':     ['fg', 'Normal', 'StatusLine', 'Bold'],
-  \ 'bg+':     ['bg', 'TabLine', 'TabLine'],
-  \ 'hl+':     ['fg', 'Constant'],
+  \ 'bg':      ['bg', 'CursorLineNr'],
+  \ 'hl':      ['fg', 'DiffText'],
+  \ 'fg+':     ['fg', 'Normal', 'DiffText', 'Bold'],
+  \ 'bg+':     ['bg', 'StatusLine', 'StatusLine'],
+  \ 'hl+':     ['fg', 'DiffDelete'],
   \ 'info':    ['fg', 'PreProc'],
   \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Keyword'],
+  \ 'prompt':  ['fg', 'DiffDelete'],
   \ 'pointer': ['fg', 'Keyword'],
   \ 'marker':  ['fg', 'TabLine'],
   \ 'spinner': ['fg', 'String'],
@@ -278,50 +279,15 @@ nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> 
 
 " set background based on terminal active theme
 if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
   source ~/.vimrc_background
+  hi LineNr ctermbg=NONE guibg=NONE
+  hi VertSplit ctermbg=NONE guibg=NONE
 endif
-" colorscheme nord
-" let g:lightline = {
-"       \ 'colorscheme': 'nord',
-"       \ }
 
 " vue help
 autocmd FileType vue :syntax sync fromstart
 noremap <F9> <Esc>:syntax sync fromstart<CR>
-
-" neovim, gui stuff
-if has('gui_running') || has('gui_vimr') || has('nvim')
-  :nnoremap « :100VTerm<CR>
-  :nnoremap ‘ :Term<CR>
-  :nnoremap ç :BTerm<CR>
-  let g:terminal_color_0 = '#3c4c54'
-  let g:terminal_color_1 = '#f07178'
-  let g:terminal_color_2 = '#c3e88d'
-  let g:terminal_color_3 = '#ffcb6b'
-  let g:terminal_color_4 = '#82aaff'
-  let g:terminal_color_5 = '#c792ea'
-  let g:terminal_color_6 = '#89ddff'
-  let g:terminal_color_7 = '#ff00ff'
-  let g:terminal_color_8 = '#566f7c'
-  let g:terminal_color_9 = '#f07178'
-  let g:terminal_color_10 = '#f78c6c'
-  let g:terminal_color_11 = '#b2ccd6'
-  let g:terminal_color_12 = '#bb80b3'
-  let g:terminal_color_13 = '#ab7967'
-  let g:terminal_color_14 = '#2f3f47'
-  let g:terminal_color_15 = '#eeffff'
-  let g:terminal_color_16 = '#f07178'
-  let g:terminal_color_17 = '#f78c6c'
-  let g:terminal_color_18 = '#b2ccd6'
-  let g:terminal_color_19 = '#bb80b3'
-  let g:terminal_color_20 = '#ab7967'
-  let g:terminal_color_21 = '#2f3f47'
-  nnoremap ≤ :file 
-  nnoremap Ô :res +10<CR>
-  nnoremap  :res -10<CR>
-  nnoremap Ò :vertical res +10<CR>
-  nnoremap Ó :vertical res -10<CR>
-endif
 
 " vimrc refresh automatically
 augroup myvimrc

@@ -53,10 +53,11 @@ alias firetv='adb kill-server && adb start-server && adb connect 192.168.0.99'
 alias x96='adb kill-server && adb start-server && adb connect 192.168.0.98'
 
 # quick theme switching
-alias dark='ln -sf ~/dotfiles/materitermdark.sh ~/.zsh_theme  && . ~/.zsh_theme'
-alias pale='ln -sf ~/dotfiles/materitermpale.sh ~/.zsh_theme  && . ~/.zsh_theme'
-alias light='ln -sf ~/dotfiles/materitermlight.sh ~/.zsh_theme  && . ~/.zsh_theme'
-alias nord='ln -sf ~/dotfiles/nord.sh ~/.zsh_theme && . ~/.zsh_theme'
+alias dark='ln -sf ~/dotfiles/materitermdark.sh ~/.base16_theme  && . ~/.base16_theme'
+alias espresso='ln -sf ~/dotfiles/espresso.sh ~/.base16_theme  && . ~/.base16_theme'
+alias pale='ln -sf ~/dotfiles/materitermpale.sh ~/.base16_theme  && . ~/.base16_theme'
+alias light='ln -sf ~/dotfiles/materitermlight.sh ~/.base16_theme  && . ~/.base16_theme'
+alias nord='ln -sf ~/dotfiles/nord.sh ~/.base16_theme && . ~/.base16_theme'
 
 # git stuff
 alias ga="gg a"
@@ -95,9 +96,10 @@ export EDITOR='vim'
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export WATSON_DIR=~/Dropbox/Watson/Seth/
 
-if [[ -f ~/.zsh_theme ]]; then
-  . ~/.zsh_theme
-fi
+BASE16_SHELL="$HOME/.config/base16-shell/"
+[ -n "$PS1" ] && \
+    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+        eval "$("$BASE16_SHELL/profile_helper.sh")"
 
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
