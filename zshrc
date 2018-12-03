@@ -6,9 +6,8 @@ plugins=(
 )
 source $ZSH/oh-my-zsh.sh
 
-autoload -U promptinit; promptinit
-prompt pure
-
+alias pu='phpunit'
+alias puf='phpunit --filter '
 alias todo='vim -c "set norelativenumber nonumber laststatus=0" -c "VimwikiIndex"'
 alias org='vim -c "set norelativenumber nonumber laststatus=0" -c "VimwikiIndex"'
 alias today='vim -c "set norelativenumber nonumber wrap textwidth=0 nocp linebreak nolist showbreak= laststatus=0" -c "VimwikiMakeDiaryNote"'
@@ -41,6 +40,7 @@ alias linux='ssh linux'
 alias timestamp='date +"%Y-%m-%d %H:%M:%S"'
 alias wstart="watson start"
 alias wstop="watson stop"
+alias wstatus="watson status | sed \"s/Project//\" | sed -e \"s/ (.*//\""
 alias v="vim"
 alias e="vim"
 alias m="mvim"
@@ -106,3 +106,6 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+autoload -U promptinit; promptinit
+prompt pure

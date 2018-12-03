@@ -230,6 +230,12 @@ call s:HL('phpFunctions', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
 call s:HL('phpParent', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
 call s:HL('phpThis', s:colors.gui.red, s:colors.cterm.red, '', '', '')
 
+" GitGutter
+call s:HL('GitGutterAdd', s:colors.gui.green, s:colors.cterm.green, '', '', '')
+call s:HL('GitGutterDelete', s:colors.gui.red, s:colors.cterm.red, '', '', '')
+call s:HL('GitGutterChange', s:colors.gui.yellow, s:colors.cterm.yellow, '', '', '')
+call s:HL('GitGutterChangeDelete', s:colors.gui.red, s:colors.cterm.red, '', '', '')
+
 " Ruby
 call s:HL('rubyInclude', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
 call s:HL('rubyFunction', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')

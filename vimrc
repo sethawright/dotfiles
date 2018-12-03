@@ -10,8 +10,13 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'mattn/emmet-vim'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-rhubarb'
+Plugin 'rizzatti/dash.vim'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'w0rp/ale'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-sleuth'
+Plugin 'easymotion/vim-easymotion'
 Plugin 'scrooloose/nerdtree'
 Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'chriskempson/base16-vim'
@@ -27,9 +32,7 @@ Plugin 'posva/vim-vue'
 Plugin 'pangloss/vim-javascript'
 Plugin 'jwalton512/vim-blade'
 Plugin 'StanAngeloff/php.vim'
-" Plugin 'itchyny/lightline.vim'
 Plugin 'mxw/vim-jsx'
-Plugin 'vimlab/split-term.vim'
 call vundle#end()
 
 filetype plugin indent on
@@ -44,11 +47,12 @@ set ttimeoutlen=0
 
 " various config
 set backspace=indent,eol,start
+set signcolumn=yes
 set breakindent
 set autoindent
 set ruler
 set hidden
-set nonumber
+set number
 set norelativenumber
 set display=lastline
 set tabstop=2
@@ -83,7 +87,7 @@ set splitright
 set fillchars+=vert:│
 
 " status bar is hidden if only one split
-set laststatus=0
+set laststatus=1
 
 " helps for finding files
 set wildmode=longest:full,full
@@ -252,18 +256,12 @@ set showtabline=0
 " select entire file
 nnoremap ,,a ggVG
 
-" change cursor to underscore on visual mode or insert mode.
-if exists('$TMUX')
-  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
-  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-else
-  let &t_SI = "\<Esc>]50;CursorShape=2\x7"
-  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-endif
-
+" custom mappings for tmux navigator
 let g:tmux_navigator_no_mappings = 1
 nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
 nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+
+set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 
 " Use markdown instead of wiki lang
 let g:vimwiki_list = [{'path': '$HOME/Dropbox/wiki', 'syntax': 'markdown'}]
@@ -281,9 +279,20 @@ nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> 
 if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
   source ~/.vimrc_background
+  hi SignColumn ctermbg=NONE guibg=NONE
+  hi gitGutterAdd ctermbg=NONE guibg=NONE
+  hi gitGutterDelete ctermbg=NONE guibg=NONE
+  hi gitGutterChange ctermbg=NONE guibg=NONE
+  hi gitGutterChangeDelete ctermbg=NONE guibg=NONE
   hi LineNr ctermbg=NONE guibg=NONE
   hi VertSplit ctermbg=NONE guibg=NONE
 endif
+
+if has('nvim')
+  let g:CtrlSpaceDefaultMappingKey = "<C-space> "
+end
+
+nnoremap ,js :%!python -m json.tool<CR>
 
 " vue help
 autocmd FileType vue :syntax sync fromstart

@@ -29,9 +29,9 @@ layout1 = {
   {'Firefox', display_macbook, lay_med, 'all'},
   {'Sublime Text', display_macbook, lay_big, 'all'},
   {'iTerm2', display_macbook, lay_big, 'all'},
-  {'Messages', display_macbook, {x=1, y=2, w=2, h=4}, "Messages"},
-  {'Messages', display_macbook, {x=0, y=2, w=1, h=4}, "Gmail"},
-  {'Messages', display_macbook, {x=0, y=2, w=1, h=4}, "Olark"},
+  {'Alacritty', display_macbook, lay_big, 'all'},
+  {'Messages', display_macbook, {x=0, y=2, w=2, h=4}, 'all'},
+  {'Adium', display_macbook, {x=0, y=2, w=2, h=4}, 'all'},
   {'Spotify', display_macbook, lay_med, "all"},
   {'Mail', display_macbook, lay_med, "all"},
   {'Spark', display_macbook, lay_med, "all"},
@@ -44,9 +44,8 @@ layout2 = {
   {'Google Chrome', display_macbook, lay_big, 'all'},
   {'Mail', display_macbook, lay_big, "all"},
   {'Spark', display_macbook, lay_big, "all"},
-  {'Messages', display_macbook, {x=1, y=2, w=2, h=4}, "Messages"},
-  {'Messages', display_macbook, {x=0, y=2, w=1, h=4}, "Gmail"},
-  {'Messages', display_macbook, {x=0, y=2, w=1, h=4}, "Olark"},
+  {'Messages', display_macbook, {x=0, y=2, w=2, h=4}, "all"},
+  {'Adium', display_macbook, {x=0, y=2, w=2, h=4}, 'all'},
   {'Spotify', display_macbook, lay_big, "all"},
   {'Safari', display_macbook, lay_big, 'all'},
   {'Firefox', display_macbook, lay_big, 'all'},
@@ -54,6 +53,7 @@ layout2 = {
   {'iTerm2', display_asus, lay_big, 'all'},
   {'Sequel Pro', display_asus, lay_med, "all"},
   {'MacVim', display_asus, lay_side_sm, "all"},
+  {'Alacritty', display_asus, lay_big, 'all'},
   {'Slack', display_macbook, lay_big, "all"}
 }
 
@@ -173,8 +173,21 @@ end
 mainBindings= {
   {'1', function() quitAll(); applyLayout(layout1); end},
   {'2', function() quitAll(); applyLayout(layout2); end},
-  {'RETURN', function() quitAll(); hs.grid.maximizeWindow(); end},
-  {"'", function()
+  {"'", function() quitAll(); hs.grid.maximizeWindow(); end},
+  {'RETURN', function()
+      quitAll();
+      local win = hs.window.focusedWindow()
+      local f = win:frame()
+      local screen = win:screen()
+      local frame = screen:fullFrame()
+      f.x = frame.x
+      f.y = frame.y
+      f.w = frame.w
+      f.h = frame.h
+      win:setFrame(f)
+    end
+  },
+  {";", function()
       quitAll();
       local win = hs.window.focusedWindow()
       local f = win:frame()
@@ -184,12 +197,12 @@ mainBindings= {
   },
   {'a', function()
     quitAll();
-    launch('iTerm'); 
+    launch('Alacritty'); 
     launch('Messages');
     launch('Slack'); 
     launch('Google Chrome');
     launch('Mail');
-    applyLayout(layout1);
+    launch('Adium');
     end
   },
   {'J', hs.grid.pushWindowDown},
@@ -522,11 +535,68 @@ function toggle_app(name)
 
   log.d('launchOrFocus', name)
   hs.application.launchOrFocus(name)
+
+  if name == 'Alacritty' then
+    hs.mouse.setAbsolutePosition({y=100000,x=100000})
+  end
 end
 
 -- Change screens
-hs.hotkey.bind({"ctrl", "alt"}, 'LEFT', hs.grid.pushWindowNextScreen)
-hs.hotkey.bind({"ctrl", "alt"}, 'RIGHT', hs.grid.pushWindowPrevScreen, "Window Hints")
+hs.hotkey.bind({"ctrl", "alt"}, 'LEFT', function()
+  focused = hs.window.focusedWindow()
+  screen = focused:screen()
+  if focused:isFullScreen() then
+    focused:setFullScreen(false)
+    focused:moveToScreen(screen:toWest())
+    hs.timer.doAfter(0.6, function()
+      focused:setFullScreen(true)
+    end)
+  else
+    focused:moveToScreen(screen:toWest())
+  end
+end)
+
+hs.hotkey.bind({"ctrl", "alt"}, 'UP', function()
+  focused = hs.window.focusedWindow()
+  screen = focused:screen()
+  if focused:isFullScreen() then
+    focused:setFullScreen(false)
+    focused:moveToScreen(screen:toNorth())
+    hs.timer.doAfter(0.6, function()
+      focused:setFullScreen(true)
+    end)
+  else
+    focused:moveToScreen(screen:toNorth())
+  end
+end)
+
+hs.hotkey.bind({"ctrl", "alt"}, 'RIGHT', function()
+  focused = hs.window.focusedWindow()
+  screen = focused:screen()
+  if focused:isFullScreen() then
+    focused:setFullScreen(false)
+    focused:moveToScreen(screen:toEast())
+    hs.timer.doAfter(0.6, function()
+      focused:setFullScreen(true)
+    end)
+  else
+    focused:moveToScreen(screen:toEast())
+  end
+end)
+
+hs.hotkey.bind({"ctrl", "alt"}, 'DOWN', function()
+  focused = hs.window.focusedWindow()
+  screen = focused:screen()
+  if focused:isFullScreen() then
+    focused:setFullScreen(false)
+    focused:moveToScreen(screen:toSouth())
+    hs.timer.doAfter(0.6, function()
+      focused:setFullScreen(true)
+    end)
+  else
+    focused:moveToScreen(screen:toSouth())
+  end
+end)
 
 -- window hints
 -- hs.hotkey.bind({"cmd", "shift"}, "return", function()
@@ -542,11 +612,11 @@ hs.hotkey.bind({"shift", "alt"}, "return", function()
 end)
 
 hs.hotkey.bind({"alt"}, "return", function()
-  toggle_app('iTerm')
+  toggle_app('Alacritty')
 end)
 
-screenWatcher = hs.screen.watcher.new(screensChangedCallback)
-screenWatcher:start()
+-- screenWatcher = hs.screen.watcher.new(screensChangedCallback)
+-- screenWatcher:start()
 
 -- Logging Utility
 function dump(o)
