@@ -316,5 +316,13 @@ runtime snippets.vim
 nmap ,cs :let @*=expand("%")<CR>
 nmap ,cl :let @*=expand("%:p")<CR>
 
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['eslint'],
+\   'vue': ['eslint'],
+\}
+
+let g:ale_fix_on_save = 1
+
 " vimrc refresh
 :nnoremap ,,r :so $MYVIMRC<CR>

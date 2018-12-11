@@ -202,7 +202,6 @@ mainBindings= {
     launch('Slack'); 
     launch('Google Chrome');
     launch('Mail');
-    launch('Adium');
     end
   },
   {'J', hs.grid.pushWindowDown},
