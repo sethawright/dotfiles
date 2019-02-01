@@ -4,5 +4,5 @@ function! Eatchar(pat)
   return (c =~ a:pat) ? '' : c
 endfunction
 
-iabbrev vuetmpl <template><CR><CR></template><CR><CR><script><CR>export default {<CR><CR>}<CR></script><CR><CR><style><CR></style><C-R>=Eatchar('\s')<CR><Esc>10ki
+iabbrev vuetmpl <template><CR><CR></template><CR><CR><script><CR>export default {<CR><CR>};<CR></script><CR><CR><style><CR></style><C-R>=Eatchar('\s')<CR><Esc>10ki
 iabbrev lipsum Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer diam augue, egestas quis, aliquam ut, venenatis ut, quam. Quisque ut augue. Integer non neque a lectus venenatis fermentum. Morbi quis eros nec elit molestie vehicula. Integer nunc lacus, sodales posuere, rutrum quis, blandit at, mi. Vivamus imperdiet wisi vel mauris. Morbi mattis ante non metus. Sed turpis dui, fermentum ut, aliquam eget, vulputate ullamcorper, pede. Nam non dolor. Etiam lobortis, urna id bibendum convallis, ligula augue auctor eros, a dictum sapien mi a tellus. Proin vel justo. Nunc malesuada turpis a sapien.<C-R>=Eatchar('\s')<CR>

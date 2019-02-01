@@ -222,6 +222,8 @@ call s:HL('VimwikiCode', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
 call s:HL('VimwikiCodeChar', s:colors.gui.gray1, s:colors.cterm.gray1, '', '', '')
 
 " PHP
+call s:HL('phpInclude', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
+call s:HL('phpUseClass', s:colors.gui.yellow, s:colors.cterm.yellow, '', '', '')
 call s:HL('phpRegion', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
 call s:HL('phpClass', s:colors.gui.yellow, s:colors.cterm.yellow, '', '', '')
 call s:HL('phpClassExtends', s:colors.gui.green, s:colors.cterm.green, '', '', '')

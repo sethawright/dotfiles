@@ -51,6 +51,8 @@ alias getlog="rsync -avz --stats --progress swarmint:/home/swarmint/www/storage/
 alias adbpic='adb shell screencap -p | perl -pe "s/\x0D\x0A/\x0A/g" > "/Users/seth/Downloads/firetvscreenshot_$(date +%Y%m%d-%H%M%S).png"'
 alias firetv='adb kill-server && adb start-server && adb connect 192.168.0.99'
 alias x96='adb kill-server && adb start-server && adb connect 192.168.0.98'
+alias env_old='valet stop && brew unlink php && brew link --force php@5.6 && sudo apachectl -k start && open https://swarm.test/vm/'
+alias env_new='sudo apachectl -k stop && brew unlink php@5.6 && brew link php && valet start && open https://swarm.test/'
 
 # quick theme switching
 alias dark='ln -sf ~/dotfiles/materitermdark.sh ~/.base16_theme  && . ~/.base16_theme'
@@ -109,3 +111,9 @@ export NVM_DIR="$HOME/.nvm"
 
 autoload -U promptinit; promptinit
 prompt pure
+
+###-tns-completion-start-###
+if [ -f /Users/seth/.tnsrc ]; then 
+    source /Users/seth/.tnsrc 
+fi
+###-tns-completion-end-###

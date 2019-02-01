@@ -20,7 +20,6 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'scrooloose/nerdtree'
 Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'chriskempson/base16-vim'
-Plugin 'arcticicestudio/nord-vim'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'mileszs/ack.vim'
@@ -250,6 +249,10 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'String'],
   \ 'header':  ['fg', 'Tabline'] }
 
+autocmd! FileType fzf
+autocmd  FileType fzf set laststatus=0 noshowmode noruler
+  \| autocmd BufLeave <buffer> set laststatus=1 showmode ruler
+
 " clean up tab display
 set showtabline=0
 
@@ -295,8 +298,7 @@ end
 nnoremap ,js :%!python -m json.tool<CR>
 
 " vue help
-autocmd FileType vue :syntax sync fromstart
-noremap <F9> <Esc>:syntax sync fromstart<CR>
+autocmd FileType vue syntax sync fromstart
 
 " vimrc refresh automatically
 augroup myvimrc
@@ -316,13 +318,12 @@ runtime snippets.vim
 nmap ,cs :let @*=expand("%")<CR>
 nmap ,cl :let @*=expand("%:p")<CR>
 
+let g:ale_set_highlights = 0
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint'],
 \   'vue': ['eslint'],
 \}
-
-let g:ale_fix_on_save = 1
 
 " vimrc refresh
 :nnoremap ,,r :so $MYVIMRC<CR>

@@ -10,10 +10,11 @@ hs.hints.showTitleThresh = 0
 
 local display_macbook = 'Color LCD'
 local display_asus = 'ASUS PB278'
+local display_asus_4k = 'ASUS MG28U'
 local lastNumberOfScreens = #hs.screen.allScreens()
 
-hs.grid.MARGINX = 10
-hs.grid.MARGINY = 10
+hs.grid.MARGINX = 0
+hs.grid.MARGINY = 0
 hs.grid.GRIDHEIGHT = 8
 hs.grid.GRIDWIDTH = 10
 
@@ -31,7 +32,7 @@ layout1 = {
   {'iTerm2', display_macbook, lay_big, 'all'},
   {'Alacritty', display_macbook, lay_big, 'all'},
   {'Messages', display_macbook, {x=0, y=2, w=2, h=4}, 'all'},
-  {'Adium', display_macbook, {x=0, y=2, w=2, h=4}, 'all'},
+  {'Adium', display_macbook, {x=0, y=1, w=2, h=4}, 'all'},
   {'Spotify', display_macbook, lay_med, "all"},
   {'Mail', display_macbook, lay_med, "all"},
   {'Spark', display_macbook, lay_med, "all"},
@@ -43,9 +44,8 @@ layout1 = {
 layout2 = {
   {'Google Chrome', display_macbook, lay_big, 'all'},
   {'Mail', display_macbook, lay_big, "all"},
-  {'Spark', display_macbook, lay_big, "all"},
   {'Messages', display_macbook, {x=0, y=2, w=2, h=4}, "all"},
-  {'Adium', display_macbook, {x=0, y=2, w=2, h=4}, 'all'},
+  {'Adium', display_macbook, {x=0, y=1, w=2, h=4}, 'all'},
   {'Spotify', display_macbook, lay_big, "all"},
   {'Safari', display_macbook, lay_big, 'all'},
   {'Firefox', display_macbook, lay_big, 'all'},
@@ -54,6 +54,22 @@ layout2 = {
   {'Sequel Pro', display_asus, lay_med, "all"},
   {'MacVim', display_asus, lay_side_sm, "all"},
   {'Alacritty', display_asus, lay_big, 'all'},
+  {'Slack', display_macbook, lay_big, "all"}
+}
+
+layout3 = {
+  {'Google Chrome', display_asus, lay_big, 'all'},
+  {'Mail', display_macbook, lay_big, "all"},
+  {'Messages', display_macbook, {x=0, y=2, w=2, h=4}, "all"},
+  {'Adium', display_macbook, {x=0, y=1, w=2, h=4}, 'all'},
+  {'Spotify', display_macbook, lay_big, "all"},
+  {'Safari', display_macbook, lay_big, 'all'},
+  {'Firefox', display_macbook, lay_big, 'all'},
+  {'Sublime Text', display_asus_4k, lay_big, 'all'},
+  {'iTerm2', display_asus_4k, lay_big, 'all'},
+  {'Sequel Pro', display_macbook, lay_med, "all"},
+  {'MacVim', display_asus_4k, lay_big, "all"},
+  {'Alacritty', display_asus_4k, lay_big, 'all'},
   {'Slack', display_macbook, lay_big, "all"}
 }
 
@@ -173,6 +189,7 @@ end
 mainBindings= {
   {'1', function() quitAll(); applyLayout(layout1); end},
   {'2', function() quitAll(); applyLayout(layout2); end},
+  {'3', function() quitAll(); applyLayout(layout3); end},
   {"'", function() quitAll(); hs.grid.maximizeWindow(); end},
   {'RETURN', function()
       quitAll();
@@ -198,6 +215,7 @@ mainBindings= {
   {'a', function()
     quitAll();
     launch('Alacritty'); 
+    launch('Adium'); 
     launch('Messages');
     launch('Slack'); 
     launch('Google Chrome');
