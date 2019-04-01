@@ -13,8 +13,8 @@ local display_asus = 'ASUS PB278'
 local display_asus_4k = 'ASUS MG28U'
 local lastNumberOfScreens = #hs.screen.allScreens()
 
-hs.grid.MARGINX = 0
-hs.grid.MARGINY = 0
+hs.grid.MARGINX = 20 
+hs.grid.MARGINY = 20
 hs.grid.GRIDHEIGHT = 8
 hs.grid.GRIDWIDTH = 10
 
@@ -552,10 +552,6 @@ function toggle_app(name)
 
   log.d('launchOrFocus', name)
   hs.application.launchOrFocus(name)
-
-  if name == 'Alacritty' then
-    hs.mouse.setAbsolutePosition({y=100000,x=100000})
-  end
 end
 
 -- Change screens
@@ -629,7 +625,7 @@ hs.hotkey.bind({"shift", "alt"}, "return", function()
 end)
 
 hs.hotkey.bind({"alt"}, "return", function()
-  toggle_app('Alacritty')
+  toggle_app('iTerm')
 end)
 
 -- screenWatcher = hs.screen.watcher.new(screensChangedCallback)

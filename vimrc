@@ -6,6 +6,8 @@ set rtp+=/usr/local/bin/fzf
 
 " load plugins
 call vundle#begin()
+Plugin 'dracula/vim'
+Plugin 'arcticicestudio/nord-vim'
 Plugin 'gmarik/Vundle.vim'
 Plugin 'mattn/emmet-vim'
 Plugin 'tpope/vim-surround'
@@ -31,7 +33,8 @@ Plugin 'posva/vim-vue'
 Plugin 'pangloss/vim-javascript'
 Plugin 'jwalton512/vim-blade'
 Plugin 'StanAngeloff/php.vim'
-Plugin 'mxw/vim-jsx'
+Plugin 'leafgarland/typescript-vim'
+" Plugin 'mxw/vim-jsx'
 call vundle#end()
 
 filetype plugin indent on
@@ -234,20 +237,6 @@ let g:fzf_action = {
 
 let g:fzf_layout = { 'down': '10' }
 let g:fzf_buffers_jump = 1
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'CursorLineNr'],
-  \ 'hl':      ['fg', 'DiffText'],
-  \ 'fg+':     ['fg', 'Normal', 'DiffText', 'Bold'],
-  \ 'bg+':     ['bg', 'StatusLine', 'StatusLine'],
-  \ 'hl+':     ['fg', 'DiffDelete'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'DiffDelete'],
-  \ 'pointer': ['fg', 'Keyword'],
-  \ 'marker':  ['fg', 'TabLine'],
-  \ 'spinner': ['fg', 'String'],
-  \ 'header':  ['fg', 'Tabline'] }
 
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
@@ -264,8 +253,6 @@ let g:tmux_navigator_no_mappings = 1
 nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
 nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 
-set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
-
 " Use markdown instead of wiki lang
 let g:vimwiki_list = [{'path': '$HOME/Dropbox/wiki', 'syntax': 'markdown'}]
 let g:vimwiki_table_mappings = 0
@@ -281,14 +268,17 @@ nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> 
 " set background based on terminal active theme
 if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
+  set termguicolors
   source ~/.vimrc_background
-  hi SignColumn ctermbg=NONE guibg=NONE
-  hi gitGutterAdd ctermbg=NONE guibg=NONE
-  hi gitGutterDelete ctermbg=NONE guibg=NONE
-  hi gitGutterChange ctermbg=NONE guibg=NONE
-  hi gitGutterChangeDelete ctermbg=NONE guibg=NONE
-  hi LineNr ctermbg=NONE guibg=NONE
-  hi VertSplit ctermbg=NONE guibg=NONE
+  if g:colors_name != 'dracula' && g:colors_name != 'nord'
+    hi SignColumn ctermbg=NONE guibg=NONE
+    hi gitGutterAdd ctermbg=NONE guibg=NONE
+    hi gitGutterDelete ctermbg=NONE guibg=NONE
+    hi gitGutterChange ctermbg=NONE guibg=NONE
+    hi gitGutterChangeDelete ctermbg=NONE guibg=NONE
+    hi LineNr ctermbg=NONE guibg=NONE
+    hi VertSplit ctermbg=NONE guibg=NONE
+  end
 endif
 
 if has('nvim')
@@ -318,12 +308,19 @@ runtime snippets.vim
 nmap ,cs :let @*=expand("%")<CR>
 nmap ,cl :let @*=expand("%:p")<CR>
 
+let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_save = 1
 let g:ale_set_highlights = 0
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint'],
 \   'vue': ['eslint'],
 \}
+
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#disable_auto_complete = 1
+inoremap <expr> <C-n>  deoplete#mappings#manual_complete()
 
 " vimrc refresh
 :nnoremap ,,r :so $MYVIMRC<CR>

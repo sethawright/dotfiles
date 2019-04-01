@@ -70,7 +70,7 @@ call s:HL('DiffChange', s:colors.gui.yellow, s:colors.cterm.yellow, s:colors.gui
 call s:HL('DiffDelete', s:colors.gui.red, s:colors.cterm.red, s:colors.gui.gray1, s:colors.cterm.gray1, '')
 call s:HL('DiffText', s:colors.gui.blue, s:colors.cterm.blue, s:colors.gui.gray1, s:colors.cterm.gray1, '')
 call s:HL('Directory', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
-call s:HL('ErrorMsg', s:colors.gui.red, s:colors.cterm.red, s:colors.gui.gray1, s:colors.cterm.gray1, '')
+call s:HL('ErrorMsg', s:colors.gui.red, s:colors.cterm.red, 'NONE', 'NONE', '')
 call s:HL('FoldColumn', s:colors.gui.orange, s:colors.cterm.orange, s:colors.gui.gray1, s:colors.cterm.gray1, '')
 call s:HL('Folded', s:colors.gui.orange, s:colors.cterm.orange, s:colors.gui.gray1, s:colors.cterm.gray1, '')
 call s:HL('IncSearch', s:colors.gui.yellow, s:colors.cterm.yellow, '', '', '')
@@ -120,7 +120,7 @@ call s:HL('Type', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
 call s:HL('Structure', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
 call s:HL('Special', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
 call s:HL('Underlined', s:colors.gui.blue, s:colors.cterm.blue, '', '', 'none')
-call s:HL('Error', s:colors.gui.red, s:colors.cterm.red, s:colors.gui.gray1, s:colors.cterm.gray1, 'bold')
+call s:HL('Error', s:colors.gui.red, s:colors.cterm.red, 'NONE', 'NONE', 'bold')
 call s:HL('Todo', s:colors.gui.orange, s:colors.cterm.red, s:colors.gui.gray1, s:colors.cterm.gray1, 'bold')
 call s:HL('ExtraWhitespace', '', '', s:colors.gui.orange, s:colors.cterm.orange, '')
 
@@ -195,7 +195,8 @@ call s:HL('jsExportDefault', s:colors.gui.purple, s:colors.cterm.purple, '', '',
 call s:HL('jsObjectFuncName', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
 call s:HL('jsObjectKey', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
 call s:HL('jsNull', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
-call s:HL('jsStorageClass', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
+call s:HL('jsStorageClass', s:colors.gui.purple, s:colors.cterm.purple, '', '', 'italic')
+call s:HL('jsExportDefault', s:colors.gui.purple, s:colors.cterm.purple, '', '', 'italic')
 call s:HL('jsFuncArgs', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
 call s:HL('jsThis', s:colors.gui.red, s:colors.cterm.red, '', '', '')
 call s:HL('jsUndefined', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
@@ -265,3 +266,18 @@ hi MatchParen cterm=bold ctermbg=NONE guibg=NONE gui=bold,underline guibg=NONE g
 hi link CtrlSpaceNormal Normal
 hi link CtrlSpaceSelected CursorLine
 hi link CtrlSpaceStatus Ctrlpdark
+
+let g:fzf_colors = {
+      \ 'fg':      ['fg', 'Normal'],
+      \ 'bg':      ['bg', 'Normal'],
+      \ 'hl':      ['fg', 'Search'],
+      \ 'fg+':     ['fg', 'Normal'],
+      \ 'bg+':     ['bg', 'Normal'],
+      \ 'hl+':     ['fg', 'Number'],
+      \ 'info':    ['fg', 'Number'],
+      \ 'border':  ['fg', 'Ignore'],
+      \ 'prompt':  ['fg', 'Title'],
+      \ 'pointer': ['fg', 'Exception'],
+      \ 'marker':  ['fg', 'Keyword'],
+      \ 'spinner': ['fg', 'Label'],
+      \ 'header':  ['fg', 'Comment'] }

@@ -3,30 +3,30 @@
 # Base16 Shell template by Chris Kempson (http://chriskempson.com)
 # Nord scheme by arcticicestudio
 
-color00="3b/42/53" # Base 00 - Black
-color01="bf/61/6a" # Base 08 - Red
-color02="a3/be/8c" # Base 0B - Green
-color03="eb/cb/8b" # Base 0A - Yellow
-color04="81/a1/c1" # Base 0D - Blue
-color05="b4/8e/ad" # Base 0E - Magenta
-color06="88/c0/d0" # Base 0C - Cyan
-color07="4c/56/6a" # Base 05 - White
-color08="4c/56/6a" # Base 03 - Bright Black
-color09="bf/61/6a" # Base 08 - Bright Red
-color10="93/b3/79" # Base 0B - Bright Green
-color11="e5/c1/79" # Base 0A - Bright Yellow
-color12="6f/8f/b4" # Base 0D - Bright Blue
-color13="a4/79/9d" # Base 0E - Bright Magenta
-color14="8f/bc/bb" # Base 0C - Bright Cyan
-color15="ec/ef/f4" # Base 07 - Bright White
+color00="00/00/00" # Base 00 - Black
+color01="ff/55/55" # Base 08 - Red
+color02="50/fa/7b" # Base 0B - Green
+color03="f1/fa/8c" # Base 0A - Yellow
+color04="bd/93/f9" # Base 0D - Blue
+color05="ff/79/c6" # Base 0E - Magenta
+color06="8b/e9/fd" # Base 0C - Cyan
+color07="bf/bf/bf" # Base 05 - White
+color08="4d/4d/4d" # Base 03 - Bright Black
+color09="ff/6e/67" # Base 08 - Bright Red
+color10="5a/f7/8e" # Base 0B - Bright Green
+color11="f4/f9/9d" # Base 0A - Bright Yellow
+color12="ca/a9/fa" # Base 0D - Bright Blue
+color13="ff/92/d0" # Base 0E - Bright Magenta
+color14="9a/ed/fe" # Base 0C - Bright Cyan
+color15="e6/e6/e6" # Base 07 - Bright White
 color16="81/A1/C1" # Base 09
 color17="B4/8E/AD" # Base 0F
 color18="3B/42/52" # Base 01
 color19="43/4C/5E" # Base 02
 color20="D8/DE/E9" # Base 04
 color21="EC/EF/F4" # Base 06
-color_foreground="cf/d6/e4" # Base 05
-color_background="23/27/31" # Base 00
+color_foreground="f8/f8/f2" # Base 05
+color_background="28/2a/36" # Base 00
 
 if [ -n "$TMUX" ]; then
   # Tell tmux to pass the escape sequences through
@@ -78,13 +78,13 @@ put_template 21 $color21
 # foreground / background / cursor color
 if [ -n "$ITERM_SESSION_ID" ]; then
   # iTerm2 proprietary escape codes
-  put_template_custom Pg E5E9F0 # foreground
-  put_template_custom Ph 2E3440 # background
+  put_template_custom Pg f8f8f2 # foreground
+  put_template_custom Ph 282a36 # background
   put_template_custom Pi E5E9F0 # bold color
-  put_template_custom Pj 434C5E # selection color
-  put_template_custom Pk E5E9F0 # selected text color
-  put_template_custom Pl E5E9F0 # cursor
-  put_template_custom Pm 2E3440 # cursor text
+  put_template_custom Pj 55596d # selection color
+  put_template_custom Pk feffff # selected text color
+  put_template_custom Pl c7c7c7 # cursor
+  put_template_custom Pm feffff # cursor text
 else
   put_template_var 10 $color_foreground
   if [ "$BASE16_SHELL_SET_BACKGROUND" != false ]; then
@@ -127,4 +127,4 @@ unset color_background
 
 # add a dotfile that vim can read when loading up
 # will automatically set the color scheme to nord
-echo "if !exists('g:colors_name') || g:colors_name != 'nord'\nset termguicolors\ncolorscheme nord\nendif" > ~/.vimrc_background
+echo "if !exists('g:colors_name') || g:colors_name != 'nord'\nset termguicolors\ncolorscheme dracula\nendif" > ~/.vimrc_background
