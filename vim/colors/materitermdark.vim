@@ -4,6 +4,10 @@ if exists('syntax_on')
   syntax reset
 endif
 
+let g:lightline = {
+      \ 'colorscheme': 'materialdark',
+      \ }
+
 let g:colors_name = 'materitermdark'
 let s:colors = {'gui' : {} , 'cterm' : {}}
 
@@ -124,7 +128,7 @@ call s:HL('Error', s:colors.gui.red, s:colors.cterm.red, 'NONE', 'NONE', 'bold')
 call s:HL('Todo', s:colors.gui.orange, s:colors.cterm.red, s:colors.gui.gray1, s:colors.cterm.gray1, 'bold')
 call s:HL('ExtraWhitespace', '', '', s:colors.gui.orange, s:colors.cterm.orange, '')
 
-" " CSS
+" CSS
 call s:HL('cssAttrComma', s:colors.gui.fg, s:colors.cterm.fg, '', '', '')
 call s:HL('cssAttributeSelector', s:colors.gui.red, s:colors.cterm.red, '', '', '')
 call s:HL('cssBraces', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
@@ -139,6 +143,11 @@ call s:HL('cssIncludeKeyword', s:colors.gui.purple, s:colors.cterm.purple, '', '
 call s:HL('cssProp', s:colors.gui.fg, s:colors.cterm.fg, '', '', '')
 call s:HL('cssSelectorOp', s:colors.gui.violet, s:colors.cterm.violet, '', '', '')
 call s:HL('cssSelectorOp2', s:colors.gui.violet, s:colors.cterm.violet, '', '', '')
+
+" SCSS
+call s:HL('scssSelectorChar', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
+call s:HL('scssSelectorName', s:colors.gui.yellow, s:colors.cterm.yellow, '', '', '')
+call s:HL('scssVariable', s:colors.gui.red, s:colors.cterm.red, '', '', '')
 
 " Git Commit
 call s:HL('gitcommitBranch', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
@@ -175,6 +184,7 @@ call s:HL('mailQuoted2', s:colors.gui.gray1, s:colors.cterm.gray1, '', '', '')
 call s:HL('mailQuoted3', s:colors.gui.gray1, s:colors.cterm.gray1, '', '', '')
 
 " Javascript
+call s:HL('javaScript', s:colors.gui.red, s:colors.cterm.red, '', '', '')
 call s:HL('javaScriptBraces', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
 call s:HL('javaScriptNull', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
 call s:HL('javaScriptIdentifier', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')

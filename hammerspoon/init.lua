@@ -214,12 +214,18 @@ mainBindings= {
   },
   {'a', function()
     quitAll();
-    launch('Alacritty'); 
+    launch('iTerm'); 
     launch('Adium'); 
     launch('Messages');
     launch('Slack'); 
     launch('Google Chrome');
     launch('Mail');
+    launch('Todoist');
+    end
+  },
+  {'t', function()
+    quitAll();
+    toggle_app('Todoist')
     end
   },
   {'J', hs.grid.pushWindowDown},
@@ -617,6 +623,21 @@ end)
 -- end)
 
 hs.hotkey.bind({"ctrl"}, "return", function()
+  local chrome = hs.application.find('Google Chrome')
+  local firefox = hs.application.find('Firefox')
+  local safari = hs.application.find('Safari')
+
+  if chrome ~= nil and chrome:isRunning() then
+    toggle_app('Google Chrome')
+    return
+  elseif firefox ~= nil and firefox:isRunning() then
+    toggle_app('Firefox')
+    return
+  elseif safari ~= nil and safari:isRunning() then
+    toggle_app('Safari')
+    return
+  end
+
   toggle_app('Google Chrome')
 end)
 
@@ -624,7 +645,22 @@ hs.hotkey.bind({"shift", "alt"}, "return", function()
   toggle_app('Visual Studio Code')
 end)
 
+hs.hotkey.bind({"cmd", "alt"}, "t", function()
+  toggle_app('Todoist')
+end)
+
 hs.hotkey.bind({"alt"}, "return", function()
+  local iterm = hs.application.find('iTerm')
+  local alacritty = hs.application.find('Alacritty')
+
+  if iterm ~= nil and iterm:isRunning() then
+    toggle_app('iTerm')
+    return
+  elseif alacritty ~= nil and alacritty:isRunning() then
+    toggle_app('Alacritty')
+    return
+  end
+
   toggle_app('iTerm')
 end)
 

@@ -6,35 +6,28 @@ set rtp+=/usr/local/bin/fzf
 
 " load plugins
 call vundle#begin()
-Plugin 'dracula/vim'
-Plugin 'arcticicestudio/nord-vim'
 Plugin 'gmarik/Vundle.vim'
-Plugin 'mattn/emmet-vim'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-rhubarb'
-Plugin 'rizzatti/dash.vim'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'w0rp/ale'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-sleuth'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'scrooloose/nerdtree'
-Plugin 'ludovicchabant/vim-gutentags'
+
+Plugin 'arcticicestudio/nord-vim'
 Plugin 'chriskempson/base16-vim'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'dracula/vim'
+Plugin 'itchyny/lightline.vim'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
+Plugin 'ludovicchabant/vim-gutentags'
+Plugin 'mattn/emmet-vim'
 Plugin 'mileszs/ack.vim'
-Plugin 'vimwiki/vimwiki'
-Plugin 'vim-ctrlspace/vim-ctrlspace'
-Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'scrooloose/nerdtree'
+Plugin 'sheerun/vim-polyglot'
 Plugin 'tomtom/tcomment_vim'
-Plugin 'posva/vim-vue'
-Plugin 'pangloss/vim-javascript'
-Plugin 'jwalton512/vim-blade'
-Plugin 'StanAngeloff/php.vim'
-Plugin 'leafgarland/typescript-vim'
-" Plugin 'mxw/vim-jsx'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-rhubarb'
+Plugin 'tpope/vim-sleuth'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'vim-ctrlspace/vim-ctrlspace'
+Plugin 'w0rp/ale'
 call vundle#end()
 
 filetype plugin indent on
@@ -54,8 +47,8 @@ set breakindent
 set autoindent
 set ruler
 set hidden
-set number
-set norelativenumber
+" set number
+" set relativenumber
 set display=lastline
 set tabstop=2
 set shiftwidth=2
@@ -66,6 +59,7 @@ set nolist
 set expandtab
 set noswapfile
 set nocursorline
+set number
 set hlsearch
 set incsearch
 set ignorecase
@@ -244,6 +238,7 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler
 
 " clean up tab display
 set showtabline=0
+set noshowmode
 
 " select entire file
 nnoremap ,,a ggVG
@@ -304,13 +299,9 @@ set statusline=%t
 " some basic snippets i use
 runtime snippets.vim
 
-" get filename, file path
-nmap ,cs :let @*=expand("%")<CR>
-nmap ,cl :let @*=expand("%:p")<CR>
-
-let g:ale_lint_on_text_changed = 0
-let g:ale_lint_on_enter = 0
-let g:ale_lint_on_save = 1
+let g:ale_fix_on_save = 1
+let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_on_insert_leave = 1
 let g:ale_set_highlights = 0
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
@@ -318,9 +309,8 @@ let g:ale_fixers = {
 \   'vue': ['eslint'],
 \}
 
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#disable_auto_complete = 1
-inoremap <expr> <C-n>  deoplete#mappings#manual_complete()
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
 
 " vimrc refresh
 :nnoremap ,,r :so $MYVIMRC<CR>

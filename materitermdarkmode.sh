@@ -32,7 +32,7 @@ color19="bb/80/b3" # Base 02 (violet)
 color20="ab/79/67" # Base 04 (brown)
 color21="2f/3f/47" # Base 06
 color_foreground="8F/93/A2" # Base 05
-color_background="0F/11/1A" # Base 00
+color_background="1E/1F/22" # Base 00
 color_cursor="FF/CB/6B" # Base 05
 
 if [ -n "$TMUX" ]; then
@@ -81,7 +81,7 @@ printf $printf_template 21 $color21
 # foreground / background / cursor color
 if [ -n "$ITERM_SESSION_ID" ]; then
   printf $printf_template_custom Pg 8f93a2 # forground
-  printf $printf_template_custom Ph 0f111a # background
+  printf $printf_template_custom Ph 1e1f22 # background
   printf $printf_template_custom Pi ee2b2a # bold color
   printf $printf_template_custom Pj 292B34 # selection color
   printf $printf_template_custom Pk 8f93a2 # selected text color
@@ -126,4 +126,4 @@ unset color_cursor
 
 # add a dotfile that vim can read when loading up
 # will automatically set the color scheme to materitermpale
-echo "if !exists('g:colors_name') || g:colors_name != 'materitermpale'\ncolorscheme materitermocean\nendif" > ~/.vimrc_background
+echo "if !exists('g:colors_name') || g:colors_name != 'materitermdarkmode'\ncolorscheme materitermdarkmode\nendif" > ~/.vimrc_background

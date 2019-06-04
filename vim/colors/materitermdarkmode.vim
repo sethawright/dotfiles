@@ -5,10 +5,10 @@ if exists('syntax_on')
 endif
 
 let g:lightline = {
-      \ 'colorscheme': 'materialpale',
+      \ 'colorscheme': 'materialdarkmode',
       \ }
 
-let g:colors_name = 'materitermpale'
+let g:colors_name = 'materitermdarkmode'
 let s:colors = {'gui' : {} , 'cterm' : {}}
 
 " Color Palette for CTERM
@@ -33,15 +33,15 @@ let s:colors.cterm.brown     = '13'
 
 " Color Palette for GUI
 let s:colors.gui.cursor      = '#ffcc00'
-let s:colors.gui.fg          = '#eeffff'
-let s:colors.gui.bg          = '#292d3e'
-let s:colors.gui.offwhite    = '#2f3f47'
-let s:colors.gui.gray1       = '#3c4c54'
-let s:colors.gui.gray2       = '#3c4c54'
-let s:colors.gui.gray3       = '#566f7c'
+let s:colors.gui.fg          = '#8f9da2'
+let s:colors.gui.bg          = '#1E1F22'
+let s:colors.gui.offwhite    = '#3f4464'
+let s:colors.gui.gray1       = '#777777'
+let s:colors.gui.gray2       = '#555555'
+let s:colors.gui.gray3       = '#333333'
 let s:colors.gui.red         = '#ff5370'
 let s:colors.gui.pink        = '#f07178'
-let s:colors.gui.orange      = '#f78c6c'
+let s:colors.gui.orange      = '#ff5370'
 let s:colors.gui.yellow      = '#ffcb6b'
 let s:colors.gui.green       = '#c3e88d'
 let s:colors.gui.pale_blue   = '#b2ccd6'
@@ -112,8 +112,8 @@ call s:HL('String', s:colors.gui.green, s:colors.cterm.green, '', '', '')
 call s:HL('Character', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
 call s:HL('Identifier', s:colors.gui.fg, s:colors.cterm.fg, '', '', 'none')
 call s:HL('Keyword', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
-call s:HL('Statement', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
-call s:HL('Operator', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
+call s:HL('Statement', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', 'italic')
+call s:HL('Operator', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
 call s:HL('PreProc', s:colors.gui.purple, s:colors.cterm.purple, '', '', 'bold')
 call s:HL('Include', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
 call s:HL('From', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
@@ -124,8 +124,8 @@ call s:HL('Type', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
 call s:HL('Structure', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
 call s:HL('Special', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
 call s:HL('Underlined', s:colors.gui.blue, s:colors.cterm.blue, '', '', 'none')
-call s:HL('Error', s:colors.gui.red, s:colors.cterm.red, 'NONE', 'NONE', 'bold')
-call s:HL('Todo', s:colors.gui.orange, s:colors.cterm.red, s:colors.gui.gray1, s:colors.cterm.gray1, 'bold')
+call s:HL('Error', s:colors.gui.red, s:colors.cterm.red, 'NONE', 'NONE', '')
+call s:HL('Todo', s:colors.gui.red, s:colors.cterm.red, 'NONE', 'NONE', 'bold')
 call s:HL('ExtraWhitespace', '', '', s:colors.gui.orange, s:colors.cterm.orange, '')
 
 " " CSS
@@ -194,6 +194,7 @@ call s:HL('javaScriptRequire', s:colors.gui.blue, s:colors.cterm.blue, '', '', '
 call s:HL('Noise', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
 call s:HL('jsArrowFunction', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
 call s:HL('jsClassDefinition', s:colors.gui.yellow, s:colors.cterm.yellow, '', '', '')
+call s:HL('jsDestructuringBlock', s:colors.gui.red, s:colors.cterm.red, '', '', '')
 call s:HL('jsClassKeyword', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
 call s:HL('jsFuncCall', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
 call s:HL('jsFunction', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
@@ -201,7 +202,8 @@ call s:HL('jsClassFuncName', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
 call s:HL('jsGlobalObjects', s:colors.gui.yellow, s:colors.cterm.yellow, '', '', '')
 call s:HL('jsGlobalNodeObjects', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
 call s:HL('jsObjectFuncName', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
-call s:HL('jsObjectKey', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
+call s:HL('jsObjectKey', s:colors.gui.fg, s:colors.cterm.fg, '', '', '')
+call s:HL('jsVariableDef', s:colors.gui.red, s:colors.cterm.red, '', '', '')
 call s:HL('jsNull', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
 call s:HL('jsStorageClass', s:colors.gui.purple, s:colors.cterm.purple, '', '', 'italic')
 call s:HL('jsExportDefault', s:colors.gui.purple, s:colors.cterm.purple, '', '', 'italic')
@@ -238,6 +240,8 @@ call s:HL('phpStaticClasses', s:colors.gui.yellow, s:colors.cterm.yellow, '', ''
 call s:HL('phpMethod', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
 call s:HL('phpFunctions', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
 call s:HL('phpParent', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
+call s:HL('phpOperator', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
+call s:HL('phpIdentifier', s:colors.gui.red, s:colors.cterm.red, '', '', '')
 call s:HL('phpThis', s:colors.gui.red, s:colors.cterm.red, '', '', '')
 
 " GitGutter

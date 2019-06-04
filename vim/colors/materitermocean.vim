@@ -4,6 +4,10 @@ if exists('syntax_on')
   syntax reset
 endif
 
+let g:lightline = {
+      \ 'colorscheme': 'materialocean',
+      \ }
+
 let g:colors_name = 'materitermocean'
 let s:colors = {'gui' : {} , 'cterm' : {}}
 
@@ -139,6 +143,11 @@ call s:HL('cssIncludeKeyword', s:colors.gui.purple, s:colors.cterm.purple, '', '
 call s:HL('cssProp', s:colors.gui.fg, s:colors.cterm.fg, '', '', '')
 call s:HL('cssSelectorOp', s:colors.gui.violet, s:colors.cterm.violet, '', '', '')
 call s:HL('cssSelectorOp2', s:colors.gui.violet, s:colors.cterm.violet, '', '', '')
+
+" SCSS
+call s:HL('scssSelectorChar', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
+call s:HL('scssSelectorName', s:colors.gui.yellow, s:colors.cterm.yellow, '', '', '')
+call s:HL('scssVariable', s:colors.gui.red, s:colors.cterm.red, '', '', '')
 
 " Git Commit
 call s:HL('gitcommitBranch', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
