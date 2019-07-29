@@ -169,6 +169,7 @@ hi link gitcommitUnmergedArrow  gitcommitUnmergedFile
 " " HTML
 call s:HL('htmlTag', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
 call s:HL('htmlEndTag', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
+call s:HL('vueSurroundingTag', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
 call s:HL('htmlTagName', s:colors.gui.red, s:colors.cterm.red, '', '', '')
 call s:HL('htmlTagN', s:colors.gui.red, s:colors.cterm.red, '', '', '')
 call s:HL('htmlArg', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
@@ -184,6 +185,8 @@ call s:HL('mailQuoted2', s:colors.gui.gray1, s:colors.cterm.gray1, '', '', '')
 call s:HL('mailQuoted3', s:colors.gui.gray1, s:colors.cterm.gray1, '', '', '')
 
 " Javascript
+call s:HL('javaScript', s:colors.gui.red, s:colors.cterm.red, '', '', '')
+call s:HL('jsOperator', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
 call s:HL('javaScriptBraces', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
 call s:HL('javaScriptNull', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
 call s:HL('javaScriptIdentifier', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')

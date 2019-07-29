@@ -8,12 +8,13 @@ hs.window.animationDuration = 0
 hs.hints.titleMaxSize = -1
 hs.hints.showTitleThresh = 0
 
+hs.application.enableSpotlightForNameSearches(true)
+
 local display_macbook = 'Color LCD'
-local display_asus = 'ASUS PB278'
-local display_asus_4k = 'ASUS MG28U'
+local display_asus = 'ASUS MG28U'
 local lastNumberOfScreens = #hs.screen.allScreens()
 
-hs.grid.MARGINX = 20 
+hs.grid.MARGINX = 20
 hs.grid.MARGINY = 20
 hs.grid.GRIDHEIGHT = 8
 hs.grid.GRIDWIDTH = 10
@@ -214,10 +215,10 @@ mainBindings= {
   },
   {'a', function()
     quitAll();
-    launch('iTerm'); 
-    launch('Adium'); 
+    launch('iTerm');
+    launch('Adium');
     launch('Messages');
-    launch('Slack'); 
+    launch('Slack');
     launch('Google Chrome');
     launch('Mail');
     launch('Todoist');
@@ -557,6 +558,9 @@ function toggle_app(name)
   end
 
   log.d('launchOrFocus', name)
+  if name == 'Code' then
+    name = 'Visual Studio Code'
+  end
   hs.application.launchOrFocus(name)
 end
 
@@ -622,7 +626,7 @@ end)
 --   hs.hints.windowHints(nil);
 -- end)
 
-hs.hotkey.bind({"ctrl"}, "return", function()
+hs.hotkey.bind({"cmd", "shift"}, "return", function()
   local chrome = hs.application.find('Google Chrome')
   local firefox = hs.application.find('Firefox')
   local safari = hs.application.find('Safari')
@@ -641,20 +645,20 @@ hs.hotkey.bind({"ctrl"}, "return", function()
   toggle_app('Google Chrome')
 end)
 
-hs.hotkey.bind({"shift", "alt"}, "return", function()
-  toggle_app('Visual Studio Code')
-end)
-
 hs.hotkey.bind({"cmd", "alt"}, "t", function()
   toggle_app('Todoist')
 end)
 
-hs.hotkey.bind({"alt"}, "return", function()
+hs.hotkey.bind({"alt", "shift"}, "return", function()
+  local vscode = hs.application.find('Code')
   local iterm = hs.application.find('iTerm')
   local alacritty = hs.application.find('Alacritty')
 
   if iterm ~= nil and iterm:isRunning() then
     toggle_app('iTerm')
+    return
+  elseif vscode ~= nil and vscode:isRunning() then
+    toggle_app('Code')
     return
   elseif alacritty ~= nil and alacritty:isRunning() then
     toggle_app('Alacritty')

@@ -10,7 +10,7 @@ alias pu='phpunit'
 alias puf='phpunit --filter '
 alias todo='vim -c "set norelativenumber nonumber laststatus=0" -c "VimwikiIndex"'
 alias org='vim -c "set norelativenumber nonumber laststatus=0" -c "VimwikiIndex"'
-alias today='vim -c "set norelativenumber nonumber wrap textwidth=0 nocp linebreak nolist showbreak= laststatus=0" -c "VimwikiMakeDiaryNote"'
+alias today='vim -c "set norelativenumber nonumber wrap textwidth=0 nocp linebreak nolist showbreak= laststatus=0" -c "VimwikiDiaryIndex"'
 alias espresso='open -a Espresso'
 alias firefox='open -a firefox'
 alias preview='open -a Preview'
@@ -39,13 +39,14 @@ alias timestamp='date +"%Y-%m-%d %H:%M:%S"'
 alias wstart="watson start"
 alias wstop="watson stop"
 alias wstatus="watson status | sed \"s/Project//\" | sed -e \"s/ (.*//\""
-alias v="vim"
-alias e="vim"
-alias m="vim"
+alias c="code ."
+alias v="nvim"
+alias e="nvim"
+alias m="nvim"
 alias s="subl ."
-alias getdb="rsync -avz --stats --progress swarmint:/home/swarmint/backup/swarmint_vm-$(date -v-1d +%Y-%m-%d).sql.gz ~/Documents/backup/dbs/"
-alias getjoomdb="rsync -avz --stats --progress swarmint:/home/swarmint/backup/swarmint_joom3-$(date -v-1d +%Y-%m-%d).sql.gz ~/Documents/backup/"
-alias getlog="rsync -avz --stats --progress swarmint:/home/swarmint/www/storage/logs/$(date +%Y-%m-%d).log ~/Documents/backup/logs/ && vim ~/Documents/backup/logs/$(date +%Y-%m-%d).log"
+alias getdb="rsync -avz --stats --progress swarmint:/home/swarmint/backup/swarmint_vm-$(date -v-1d +%Y-%m-%d).sql.gz ~/Sites/work/backup/dbs/"
+alias getjoomdb="rsync -avz --stats --progress swarmint:/home/swarmint/backup/swarmint_joom3-$(date -v-1d +%Y-%m-%d).sql.gz ~/Sites/work/backup/dbs/"
+alias getlog="rsync -avz --stats --progress swarmint:/home/swarmint/www/storage/logs/$(date +%Y-%m-%d).log ~/Sites/work/backup/logs/ && vim ~/Sites/work/backup/logs/$(date +%Y-%m-%d).log"
 alias adbpic='adb shell screencap -p | perl -pe "s/\x0D\x0A/\x0A/g" > "/Users/seth/Downloads/firetvscreenshot_$(date +%Y%m%d-%H%M%S).png"'
 alias firetv='adb kill-server && adb start-server && adb connect 192.168.0.99'
 alias x96='adb kill-server && adb start-server && adb connect 192.168.0.98'
@@ -98,7 +99,7 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # set path
-export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/opt/ruby/bin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:$PATH
+export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/opt/ruby/bin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/lib/ruby/gems/2.6.0/bin:$PATH
 export PATH=$PATH:/users/seth/dropbox/swarm/web/script
 export PATH=$PATH:/Users/seth/Scripts
 export PATH=$PATH:/Users/seth/Library/Android/sdk
@@ -107,9 +108,25 @@ export PATH=$PATH:/Users/seth/Library/Android/sdk/tools
 export PATH=$PATH:$HOME/.yarn/bin
 export PATH=$PATH:$HOME/.composer/vendor/bin
 
+export ANDROID_HOME=/Users/seth/Library/Android/sdk
+export ANDROID_SDK_ROOT=/Users/seth/Library/Android/sdk
+export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 autoload -U promptinit; promptinit
 prompt pure
+
+###-tns-completion-start-###
+if [ -f /Users/seth/.tnsrc ]; then
+    source /Users/seth/.tnsrc
+fi
+###-tns-completion-end-###
+
+###-tns-completion-start-###
+if [ -f /Users/seth/.tnsrc ]; then
+    source /Users/seth/.tnsrc
+fi
+###-tns-completion-end-###

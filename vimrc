@@ -8,26 +8,37 @@ set rtp+=/usr/local/bin/fzf
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
-Plugin 'arcticicestudio/nord-vim'
-Plugin 'chriskempson/base16-vim'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'dracula/vim'
-Plugin 'itchyny/lightline.vim'
+Plugin 'mileszs/ack.vim'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
+Plugin 'vim-ctrlspace/vim-ctrlspace'
+Plugin 'vimwiki/vimwiki'
+
+Plugin 'w0rp/ale'
 Plugin 'ludovicchabant/vim-gutentags'
-Plugin 'mattn/emmet-vim'
-Plugin 'mileszs/ack.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'sheerun/vim-polyglot'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rhubarb'
 Plugin 'tpope/vim-sleuth'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
-Plugin 'vim-ctrlspace/vim-ctrlspace'
-Plugin 'w0rp/ale'
+Plugin 'mattn/emmet-vim'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-fugitive'
+
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'junegunn/goyo.vim'
+Plugin 'itchyny/lightline.vim'
+
+Plugin 'posva/vim-vue'
+Plugin 'pangloss/vim-javascript'
+Plugin 'jwalton512/vim-blade'
+Plugin 'StanAngeloff/php.vim'
+Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'burner/vim-svelte'
+
+Plugin 'arcticicestudio/nord-vim'
+Plugin 'dracula/vim'
+Plugin 'chriskempson/base16-vim'
 call vundle#end()
 
 filetype plugin indent on
@@ -249,7 +260,7 @@ nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
 nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 
 " Use markdown instead of wiki lang
-let g:vimwiki_list = [{'path': '$HOME/Dropbox/wiki', 'syntax': 'markdown'}]
+let g:vimwiki_list = [{'path': '$HOME/Documents/wiki', 'syntax': 'markdown', 'ext': '.txt'}]
 let g:vimwiki_table_mappings = 0
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'javascript', 'php', 'ruby', 'shell=sh', 'js=javascript', 'c', 'vim']
 :nnoremap ,dp :VimwikiDiaryPrevDay<CR>
@@ -259,22 +270,6 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'javascript', 'p
 nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
       \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
       \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
-" set background based on terminal active theme
-if filereadable(expand("~/.vimrc_background"))
-  let base16colorspace=256
-  set termguicolors
-  source ~/.vimrc_background
-  if g:colors_name != 'dracula' && g:colors_name != 'nord'
-    hi SignColumn ctermbg=NONE guibg=NONE
-    hi gitGutterAdd ctermbg=NONE guibg=NONE
-    hi gitGutterDelete ctermbg=NONE guibg=NONE
-    hi gitGutterChange ctermbg=NONE guibg=NONE
-    hi gitGutterChangeDelete ctermbg=NONE guibg=NONE
-    hi LineNr ctermbg=NONE guibg=NONE
-    hi VertSplit ctermbg=NONE guibg=NONE
-  end
-endif
 
 if has('nvim')
   let g:CtrlSpaceDefaultMappingKey = "<C-space> "
@@ -303,14 +298,37 @@ let g:ale_fix_on_save = 1
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
 let g:ale_set_highlights = 0
+let g:ale_sign_error = '•'
+let g:ale_sign_warning = '•'
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'html': ['prettier'],
 \   'javascript': ['eslint'],
 \   'vue': ['eslint'],
+\   'css': ['prettier']
 \}
+
+let g:goyo_width = '50%'
 
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
-
 " vimrc refresh
 :nnoremap ,,r :so $MYVIMRC<CR>
+
+" set background based on terminal active theme
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  set termguicolors
+  source ~/.vimrc_background
+  if g:colors_name != 'dracula' && g:colors_name != 'nord'
+    hi link ALEWarningSign gitGutterChange
+    hi link ALEErrorSign gitGutterDelete
+    hi SignColumn ctermbg=NONE guibg=NONE
+    hi gitGutterAdd ctermbg=NONE guibg=NONE
+    hi gitGutterDelete ctermbg=NONE guibg=NONE
+    hi gitGutterChange ctermbg=NONE guibg=NONE
+    hi gitGutterChangeDelete ctermbg=NONE guibg=NONE
+    hi LineNr ctermbg=NONE guibg=NONE
+    hi VertSplit ctermbg=NONE guibg=NONE
+  end
+endif
