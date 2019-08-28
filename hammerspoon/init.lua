@@ -32,8 +32,8 @@ layout1 = {
   {'Sublime Text', display_macbook, lay_big, 'all'},
   {'iTerm2', display_macbook, lay_big, 'all'},
   {'Alacritty', display_macbook, lay_big, 'all'},
-  {'Messages', display_macbook, {x=0, y=2, w=2, h=4}, 'all'},
-  {'Adium', display_macbook, {x=0, y=1, w=2, h=4}, 'all'},
+  {'Messages', display_macbook, {x=0, y=0, w=2, h=4}, 'all'},
+  {'Adium', display_macbook, {x=0, y=0, w=1, h=1}, 'all'},
   {'Spotify', display_macbook, lay_med, "all"},
   {'Mail', display_macbook, lay_med, "all"},
   {'Spark', display_macbook, lay_med, "all"},
@@ -45,8 +45,8 @@ layout1 = {
 layout2 = {
   {'Google Chrome', display_macbook, lay_big, 'all'},
   {'Mail', display_macbook, lay_big, "all"},
-  {'Messages', display_macbook, {x=0, y=2, w=2, h=4}, "all"},
-  {'Adium', display_macbook, {x=0, y=1, w=2, h=4}, 'all'},
+  {'Messages', display_macbook, {x=0, y=0, w=2, h=4}, "all"},
+  {'Adium', display_macbook, {x=0, y=0, w=1, h=1}, 'all'},
   {'Spotify', display_macbook, lay_big, "all"},
   {'Safari', display_macbook, lay_big, 'all'},
   {'Firefox', display_macbook, lay_big, 'all'},
@@ -217,7 +217,6 @@ mainBindings= {
     quitAll();
     launch('iTerm');
     launch('Adium');
-    launch('Messages');
     launch('Slack');
     launch('Google Chrome');
     launch('Mail');

@@ -63,6 +63,7 @@ alias light='ln -sf ~/dotfiles/materitermlight.sh ~/.base16_theme  && . ~/.base1
 alias nord='ln -sf ~/dotfiles/nord.sh ~/.base16_theme && . ~/.base16_theme'
 alias dracula='ln -sf ~/dotfiles/dracula.sh ~/.base16_theme && . ~/.base16_theme'
 alias oceanic='ln -sf ~/dotfiles/oceanic.sh ~/.base16_theme && . ~/.base16_theme'
+alias github='ln -sf ~/dotfiles/github.sh ~/.base16_theme && . ~/.base16_theme'
 
 # git stuff
 alias ga="gg a"

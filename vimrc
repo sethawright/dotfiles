@@ -27,7 +27,7 @@ Plugin 'tpope/vim-fugitive'
 
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'junegunn/goyo.vim'
-Plugin 'itchyny/lightline.vim'
+" Plugin 'itchyny/lightline.vim'
 
 Plugin 'posva/vim-vue'
 Plugin 'pangloss/vim-javascript'
@@ -36,6 +36,7 @@ Plugin 'StanAngeloff/php.vim'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'burner/vim-svelte'
 
+Plugin 'cormacrelf/vim-colors-github'
 Plugin 'arcticicestudio/nord-vim'
 Plugin 'dracula/vim'
 Plugin 'chriskempson/base16-vim'
@@ -53,15 +54,16 @@ set ttimeoutlen=0
 
 " various config
 set backspace=indent,eol,start
-set signcolumn=yes
 set breakindent
 set autoindent
 set ruler
 set hidden
 " set number
 " set relativenumber
+set nocursorline
 set display=lastline
 set tabstop=2
+set signcolumn=yes
 set shiftwidth=2
 set nowrap
 set textwidth=0
@@ -69,7 +71,6 @@ set linebreak
 set nolist
 set expandtab
 set noswapfile
-set nocursorline
 set number
 set hlsearch
 set incsearch
@@ -145,11 +146,13 @@ nnoremap ,V :vert sfind <C-R>=expand('%:h').'/*'<CR>
 nnoremap ,T :tabfind <C-R>=expand('%:h').'/*'<CR>
 
 " buffer navigation
-nnoremap <C-n> :enew<CR>
 nnoremap gb :ls<CR>:buffer<Space>
 nnoremap gB :ls<CR>:vert sb<space>
 nnoremap ,b :buffer *
 nnoremap ,,b :buffer *
+
+" previous buffer
+nnoremap <C-n> <C-^>
 
 " netrw/nt settings
 let g:netrw_liststyle = 3
@@ -231,9 +234,6 @@ nnoremap ø :Tags<Cr>
 
 nnoremap <C-i> :Buffers<Cr>
 
-" buffers
-nnoremap <C-u> :Lines<Cr>
-
 let g:fzf_action = {
   \ 'ctrl-d': 'bdelete',
   \ 'ctrl-t': 'tab split',
@@ -289,7 +289,7 @@ augroup END
 au BufNewFile,BufRead *.ejs set filetype=html
 
 " my preferred statusline -- just need the file
-set statusline=%t
+set statusline=%{expand('%:~:.')}
 
 " some basic snippets i use
 runtime snippets.vim
@@ -310,8 +310,6 @@ let g:ale_fixers = {
 
 let g:goyo_width = '50%'
 
-let &t_SI = "\e[6 q"
-let &t_EI = "\e[2 q"
 " vimrc refresh
 :nnoremap ,,r :so $MYVIMRC<CR>
 
@@ -321,6 +319,7 @@ if filereadable(expand("~/.vimrc_background"))
   set termguicolors
   source ~/.vimrc_background
   if g:colors_name != 'dracula' && g:colors_name != 'nord'
+    hi LineNr ctermbg=NONE guibg=NONE
     hi link ALEWarningSign gitGutterChange
     hi link ALEErrorSign gitGutterDelete
     hi SignColumn ctermbg=NONE guibg=NONE
@@ -328,7 +327,6 @@ if filereadable(expand("~/.vimrc_background"))
     hi gitGutterDelete ctermbg=NONE guibg=NONE
     hi gitGutterChange ctermbg=NONE guibg=NONE
     hi gitGutterChangeDelete ctermbg=NONE guibg=NONE
-    hi LineNr ctermbg=NONE guibg=NONE
     hi VertSplit ctermbg=NONE guibg=NONE
   end
 endif

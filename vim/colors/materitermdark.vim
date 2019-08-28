@@ -69,6 +69,12 @@ endfun
 
 " Vim Editor
 call s:HL('Cursor', '', '', s:colors.gui.cursor, s:colors.cterm.cursor, '')
+call s:HL('matFg', '', '', s:colors.gui.fg, s:colors.cterm.fg, '')
+call s:HL('matBg', '', '', s:colors.gui.bg, s:colors.cterm.bg, '')
+call s:HL('matGray1', '', '', s:colors.gui.gray1, s:colors.cterm.gray1, '')
+call s:HL('matGray2', '', '', s:colors.gui.gray2, s:colors.cterm.gray2, '')
+call s:HL('matGray3', '', '', s:colors.gui.gray3, s:colors.cterm.gray3, '')
+
 call s:HL('DiffAdd', s:colors.gui.green, s:colors.cterm.green, s:colors.gui.gray1, s:colors.cterm.gray1, '')
 call s:HL('DiffChange', s:colors.gui.yellow, s:colors.cterm.yellow, s:colors.gui.gray1, s:colors.cterm.gray1, '')
 call s:HL('DiffDelete', s:colors.gui.red, s:colors.cterm.red, s:colors.gui.gray1, s:colors.cterm.gray1, '')
@@ -273,17 +279,14 @@ call s:HL('sassVariable', s:colors.gui.orange, s:colors.cterm.orange, '', '', ''
 call s:HL('CursorLineNr', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
 call s:HL('CtrlPMatch', '', '', '', '', 'bold')
 hi MatchParen cterm=bold ctermbg=NONE guibg=NONE gui=bold,underline guibg=NONE guifg=NONE
-hi link CtrlSpaceNormal Normal
-hi link CtrlSpaceSelected CursorLine
-hi link CtrlSpaceStatus Ctrlpdark
 
 let g:fzf_colors = {
       \ 'fg':      ['fg', 'Normal'],
-      \ 'bg':      ['bg', 'Normal'],
-      \ 'hl':      ['fg', 'Search'],
+      \ 'bg':      ['bg', 'matGray1'],
+      \ 'hl':      ['fg', 'Pmenu'],
       \ 'fg+':     ['fg', 'Normal'],
-      \ 'bg+':     ['bg', 'Normal'],
-      \ 'hl+':     ['fg', 'Number'],
+      \ 'bg+':     ['bg', 'Visual'],
+      \ 'hl+':     ['fg', 'Question'],
       \ 'info':    ['fg', 'Number'],
       \ 'border':  ['fg', 'Ignore'],
       \ 'prompt':  ['fg', 'Title'],
