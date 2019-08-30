@@ -36,9 +36,10 @@ let s:colors.gui.cursor      = '#ffcc00'
 let s:colors.gui.fg          = '#eeffff'
 let s:colors.gui.bg          = '#292d3e'
 let s:colors.gui.offwhite    = '#2f3f47'
-let s:colors.gui.gray1       = '#3c4c54'
-let s:colors.gui.gray2       = '#3c4c54'
-let s:colors.gui.gray3       = '#566f7c'
+let s:colors.gui.gray4       = '#33384d'
+let s:colors.gui.gray3       = '#474e6c'
+let s:colors.gui.gray2       = '#5b648b'
+let s:colors.gui.gray1       = '#7e818b'
 let s:colors.gui.red         = '#ff5370'
 let s:colors.gui.pink        = '#f07178'
 let s:colors.gui.orange      = '#f78c6c'
@@ -83,9 +84,9 @@ call s:HL('ModeMsg', s:colors.gui.green, s:colors.cterm.green, '', '', 'bold')
 call s:HL('MoreMsg', s:colors.gui.green, s:colors.cterm.green, '', '', 'bold')
 call s:HL('NonText', s:colors.gui.gray3, s:colors.cterm.gray3, '', '', '')
 call s:HL('Normal', s:colors.gui.fg, s:colors.cterm.fg, s:colors.gui.bg, 'NONE', '')
-call s:HL('Pmenu', s:colors.gui.pale_blue, s:colors.cterm.pale_blue, s:colors.gui.gray3, s:colors.cterm.gray3, '')
+call s:HL('Pmenu', s:colors.gui.fg, s:colors.cterm.fg, s:colors.gui.gray3, s:colors.cterm.gray3, '')
 call s:HL('PmenuSbar', '', '', s:colors.gui.pale_blue, s:colors.cterm.pale_blue, '')
-call s:HL('PmenuSel', s:colors.gui.fg, s:colors.cterm.fg, s:colors.gui.orange, s:colors.cterm.orange, '')
+call s:HL('PmenuSel', s:colors.gui.fg, s:colors.cterm.fg, s:colors.gui.gray2, s:colors.cterm.gray2, '')
 call s:HL('PmenuThumb', '', '', s:colors.gui.orange, s:colors.cterm.orange, '')
 call s:HL('Question', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
 call s:HL('Search', '', '', s:colors.gui.purple, s:colors.cterm.purple, '')
@@ -93,14 +94,14 @@ call s:HL('SignColumn', '', '', 'NONE', 'NONE', 'none')
 call s:HL('SpecialKey', s:colors.gui.gray3, s:colors.cterm.gray3, '', '', '')
 call s:HL('SpellBad', s:colors.gui.red, s:colors.cterm.red, s:colors.gui.gray1, s:colors.cterm.gray1, 'undercurl')
 call s:HL('SpellCap', s:colors.gui.blue, s:colors.cterm.blue, '', '', 'undercurl')
-call s:HL('StatusLine', s:colors.gui.gray1, s:colors.cterm.gray1, s:colors.gui.pale_blue, s:colors.cterm.pale_blue, 'none')
-call s:HL('StatusLineNC', s:colors.gui.gray3, s:colors.cterm.gray3, s:colors.gui.gray1, s:colors.cterm.gray1, 'none')
+call s:HL('StatusLine', s:colors.gui.gray1, s:colors.cterm.gray1, s:colors.gui.gray3, s:colors.cterm.gray3, 'none')
+call s:HL('StatusLineNC', s:colors.gui.gray1, s:colors.cterm.gray1, s:colors.gui.gray4, s:colors.cterm.bg, 'none')
 call s:HL('CursorLine', s:colors.gui.fg, s:colors.cterm.fg, s:colors.gui.gray1, s:colors.cterm.gray1, 'none')
 call s:HL('TabLine', s:colors.gui.gray3, s:colors.cterm.gray3, s:colors.gui.gray1, s:colors.cterm.gray1, '')
 call s:HL('TabLineFill', '', '', s:colors.gui.gray1, s:colors.cterm.gray1, 'NONE')
 call s:HL('TabLineSel', s:colors.gui.orange, s:colors.cterm.orange, s:colors.gui.gray3, s:colors.cterm.gray3, 'NONE')
 call s:HL('Title', s:colors.gui.green, s:colors.cterm.green, '', '', 'none')
-call s:HL('VertSplit', s:colors.gui.gray1, s:colors.cterm.gray1, 'NONE', 'NONE', 'NONE')
+call s:HL('VertSplit', s:colors.gui.gray3, s:colors.cterm.gray3, 'NONE', 'NONE', 'NONE')
 call s:HL('Visual', '', '', s:colors.gui.offwhite, s:colors.cterm.offwhite, '')
 call s:HL('WarningMsg', s:colors.gui.red, s:colors.cterm.red, '', '', '')
 call s:HL('WildMenu', s:colors.gui.fg, s:colors.cterm.fg, s:colors.gui.gray1, s:colors.cterm.gray1, '')
@@ -270,21 +271,21 @@ call s:HL('sassVariable', s:colors.gui.orange, s:colors.cterm.orange, '', '', ''
 call s:HL('CursorLineNr', s:colors.gui.orange, s:colors.cterm.orange, '', '', '')
 call s:HL('CtrlPMatch', '', '', '', '', 'bold')
 hi MatchParen cterm=bold ctermbg=NONE guibg=NONE gui=bold,underline guibg=NONE guifg=NONE
-hi link CtrlSpaceNormal Normal
-hi link CtrlSpaceSelected CursorLine
-hi link CtrlSpaceStatus Ctrlpdark
+" hi link CtrlSpaceNormal Normal
+" hi link CtrlSpaceSelected CursorLine
+" hi link CtrlSpaceStatus Ctrlpdark
 
 let g:fzf_colors = {
-      \ 'fg':      ['fg', 'Normal'],
-      \ 'bg':      ['bg', 'Normal'],
-      \ 'hl':      ['fg', 'Search'],
-      \ 'fg+':     ['fg', 'Normal'],
-      \ 'bg+':     ['bg', 'Normal'],
-      \ 'hl+':     ['fg', 'Number'],
+      \ 'fg':      ['fg', 'Pmenu'],
+      \ 'bg':      ['bg', 'Pmenu'],
+      \ 'hl':      ['fg', 'Comment'],
+      \ 'fg+':     ['fg', 'PmenuSel'],
+      \ 'bg+':     ['bg', 'PmenuSel'],
+      \ 'hl+':     ['fg', 'Special'],
       \ 'info':    ['fg', 'Number'],
       \ 'border':  ['fg', 'Ignore'],
-      \ 'prompt':  ['fg', 'Title'],
-      \ 'pointer': ['fg', 'Exception'],
+      \ 'prompt':  ['fg', 'Error'],
+      \ 'pointer': ['fg', 'Special'],
       \ 'marker':  ['fg', 'Keyword'],
       \ 'spinner': ['fg', 'Label'],
       \ 'header':  ['fg', 'Comment'] }

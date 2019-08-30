@@ -9,7 +9,7 @@
 # Colors by Mattia Astorino (https://github.com/equinusocio)
 # from the Sublime Text 3 Material Theme
 
-color00="29/2D/3E" # Base 00 - Black
+color00="35/35/35" # Base 00 - Black
 color01="FF/53/70" # Base 08 - Red
 color02="C3/E8/8D" # Base 0B - Green
 color03="FF/CB/6B" # Base 0A - Yellow
@@ -17,14 +17,14 @@ color04="82/AA/FF" # Base 0D - Blue
 color05="C7/92/EA" # Base 0E - Magenta
 color06="89/DD/FF" # Base 0C - Cyan
 color07="46/4B/5D" # Base 05 - White
-color08="82/8E/D5" # Base 03 - Bright Black
+color08="51/54/57" # Base 03 - Bright Black
 color09="f0/71/78" # Base 08 - Bright Red
 color10="FF/53/70" # Base 0B - Bright Green
 color11="b2/cc/d6" # Base 0A - Bright Yellow
 color12="bb/80/b3" # Base 0D - Bright Blue
 color13="ab/79/67" # Base 0E - Bright Magenta
 color14="3F/44/64" # Base 0C - Bright Cyan
-color15="8F/93/A2" # Base 07 - Bright White
+color15="88/88/88" # Base 07 - Bright White
 color16="f0/71/78" # Base 09 (pink)
 color17="FF/53/70" # Base 0F (orange)
 color18="b2/cc/d6" # Base 01 (pale blue)
@@ -33,7 +33,7 @@ color20="ab/79/67" # Base 04 (brown)
 color21="2f/3f/47" # Base 06
 color_foreground="8F/93/A2" # Base 05
 color_background="1E/1F/22" # Base 00
-color_cursor="FF/CB/6B" # Base 05
+color_cursor="7a7a7a" # Base 05
 
 if [ -n "$TMUX" ]; then
   # Tell tmux to pass the escape sequences through
@@ -85,8 +85,8 @@ if [ -n "$ITERM_SESSION_ID" ]; then
   printf $printf_template_custom Pi ee2b2a # bold color
   printf $printf_template_custom Pj 292B34 # selection color
   printf $printf_template_custom Pk 8f93a2 # selected text color
-  printf $printf_template_custom Pl ffcb6b # cursor
-  printf $printf_template_custom Pm 8f93a2 # cursor text
+  printf $printf_template_custom Pl 7a7a7a # cursor
+  printf $printf_template_custom Pm eeffff # cursor text
 else
   printf $printf_template_var 10 $color_foreground
   printf $printf_template_var 11 $color_background

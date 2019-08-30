@@ -11,7 +11,6 @@ alias puf='phpunit --filter '
 alias todo='vim -c "set norelativenumber nonumber laststatus=0" -c "VimwikiIndex"'
 alias org='vim -c "set norelativenumber nonumber laststatus=0" -c "VimwikiIndex"'
 alias today='vim -c "set norelativenumber nonumber wrap textwidth=0 nocp linebreak nolist showbreak= laststatus=0" -c "VimwikiDiaryIndex"'
-alias espresso='open -a Espresso'
 alias firefox='open -a firefox'
 alias preview='open -a Preview'
 alias chrome='open -a Google\ Chrome'
@@ -54,9 +53,8 @@ alias env_old='valet stop && brew unlink php && brew link --overwrite --force ph
 alias env_new='sudo apachectl -k stop && brew unlink php@5.6 && brew link --force php && valet start && open https://swarm.test/'
 
 # quick theme switching
-alias darkmode='ln -sf ~/dotfiles/materitermdarkmode.sh ~/.base16_theme  && . ~/.base16_theme'
+alias darker='ln -sf ~/dotfiles/materitermdarkmode.sh ~/.base16_theme  && . ~/.base16_theme'
 alias dark='ln -sf ~/dotfiles/materitermdark.sh ~/.base16_theme  && . ~/.base16_theme'
-alias espresso='ln -sf ~/dotfiles/espresso.sh ~/.base16_theme  && . ~/.base16_theme'
 alias pale='ln -sf ~/dotfiles/materitermpale.sh ~/.base16_theme  && . ~/.base16_theme'
 alias ocean='ln -sf ~/dotfiles/materitermocean.sh ~/.base16_theme  && . ~/.base16_theme'
 alias light='ln -sf ~/dotfiles/materitermlight.sh ~/.base16_theme  && . ~/.base16_theme'
