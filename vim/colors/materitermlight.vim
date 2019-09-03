@@ -242,6 +242,7 @@ call s:HL('phpMethod', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
 call s:HL('phpFunctions', s:colors.gui.blue, s:colors.cterm.blue, '', '', '')
 call s:HL('phpParent', s:colors.gui.cyan, s:colors.cterm.cyan, '', '', '')
 call s:HL('phpThis', s:colors.gui.red, s:colors.cterm.red, '', '', 'italic')
+call s:HL('phpType', s:colors.gui.purple, s:colors.cterm.purple, '', '', '')
 
 " GitGutter
 call s:HL('GitGutterAdd', s:colors.gui.green, s:colors.cterm.green, '', '', '')
