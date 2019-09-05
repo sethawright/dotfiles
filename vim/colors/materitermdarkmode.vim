@@ -34,7 +34,7 @@ let s:colors.cterm.brown     = '13'
 " Color Palette for GUI
 let s:colors.gui.cursor      = '#ffcc00'
 let s:colors.gui.fg          = '#eeffff'
-let s:colors.gui.bg          = '#1E1F22'
+let s:colors.gui.bg          = '#212121'
 let s:colors.gui.offwhite    = '#36383d'
 let s:colors.gui.gray4       = '#222326'
 let s:colors.gui.gray3       = '#353535'
