@@ -11,7 +11,7 @@ hs.hints.showTitleThresh = 0
 hs.application.enableSpotlightForNameSearches(true)
 
 local display_macbook = 'Color LCD'
-local display_asus = 'ASUS MG28U'
+local display_asus = 'LG UltraFine'
 local lastNumberOfScreens = #hs.screen.allScreens()
 
 hs.grid.MARGINX = 20
@@ -35,8 +35,9 @@ layout1 = {
   {'Messages', display_macbook, {x=0, y=0, w=2, h=4}, 'all'},
   {'Adium', display_macbook, {x=0, y=0, w=1, h=1}, 'all'},
   {'Spotify', display_macbook, lay_med, "all"},
-  {'Mail', display_macbook, lay_med, "all"},
   {'Spark', display_macbook, lay_med, "all"},
+  {'Mail', display_macbook, lay_med, "all"},
+  {'Todoist', display_macbook, lay_med, "all"},
   {'Sequel Pro', display_macbook, lay_med, "all"},
   {'MacVim', display_macbook, lay_side_big, "all"},
   {'Slack', display_macbook, lay_med, "all"}
@@ -44,6 +45,7 @@ layout1 = {
 
 layout2 = {
   {'Google Chrome', display_macbook, lay_big, 'all'},
+  {'Spark', display_macbook, lay_big, "all"},
   {'Mail', display_macbook, lay_big, "all"},
   {'Messages', display_macbook, {x=0, y=0, w=2, h=4}, "all"},
   {'Adium', display_macbook, {x=0, y=0, w=1, h=1}, 'all'},
@@ -52,6 +54,7 @@ layout2 = {
   {'Firefox', display_macbook, lay_big, 'all'},
   {'Sublime Text', display_asus, lay_big, 'all'},
   {'iTerm2', display_asus, lay_big, 'all'},
+  {'Todoist', display_macbook, lay_med, "all"},
   {'Sequel Pro', display_asus, lay_med, "all"},
   {'MacVim', display_asus, lay_side_sm, "all"},
   {'Alacritty', display_asus, lay_big, 'all'},
@@ -60,6 +63,7 @@ layout2 = {
 
 layout3 = {
   {'Google Chrome', display_asus, lay_big, 'all'},
+  {'Spark', display_macbook, lay_big, "all"},
   {'Mail', display_macbook, lay_big, "all"},
   {'Messages', display_macbook, {x=0, y=2, w=2, h=4}, "all"},
   {'Adium', display_macbook, {x=0, y=1, w=2, h=4}, 'all'},

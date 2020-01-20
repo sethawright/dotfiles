@@ -33,6 +33,8 @@ alias scott='ssh Scott@192.168.1.17'
 alias randall='ssh relmo@192.168.1.15'
 alias intern='ssh render@192.168.1.19'
 alias render='ssh render@192.168.1.20'
+alias compress="ffmpeg -filter_complex 'scale=-1:720' -vcodec libx264 -preset medium -crf 26 -acodec libfdk_aac -b:a 96k -pix_fmt yuv420p -y output.mp4 -i"
+alias thumbnail="ffmpeg -pix_fmt yuvj422p -ss 1 -vframes 1 -q:v 2 -y output.jpg -i"
 alias linux='ssh linux'
 alias timestamp='date +"%Y-%m-%d %H:%M:%S"'
 alias wstart="watson start"
@@ -53,6 +55,7 @@ alias env_old='valet stop && brew unlink php && brew link --overwrite --force ph
 alias env_new='sudo apachectl -k stop && brew unlink php@5.6 && brew link --force php && valet start && open https://swarm.test/'
 
 # quick theme switching
+alias digim='viewmedica-content-packager -C 7802 --video --thumbnails --vtt --csv --srt --language es ~/Desktop/digim'
 alias darker='ln -sf ~/dotfiles/materitermdarkmode.sh ~/.base16_theme  && . ~/.base16_theme'
 alias dark='ln -sf ~/dotfiles/materitermdark.sh ~/.base16_theme  && . ~/.base16_theme'
 alias pale='ln -sf ~/dotfiles/materitermpale.sh ~/.base16_theme  && . ~/.base16_theme'
@@ -60,6 +63,10 @@ alias ocean='ln -sf ~/dotfiles/materitermocean.sh ~/.base16_theme  && . ~/.base1
 alias lighter='ln -sf ~/dotfiles/materitermlighter.sh ~/.base16_theme  && . ~/.base16_theme'
 alias light='ln -sf ~/dotfiles/materitermlight.sh ~/.base16_theme  && . ~/.base16_theme'
 alias nord='ln -sf ~/dotfiles/nord.sh ~/.base16_theme && . ~/.base16_theme'
+alias paperlight='ln -sf ~/dotfiles/papercolor-light.sh ~/.base16_theme && . ~/.base16_theme'
+alias paperdark='ln -sf ~/dotfiles/papercolor-dark.sh ~/.base16_theme && . ~/.base16_theme'
+alias onedark='ln -sf ~/dotfiles/onedark.sh ~/.base16_theme && . ~/.base16_theme'
+alias onelight='ln -sf ~/dotfiles/onelight.sh ~/.base16_theme && . ~/.base16_theme'
 alias dracula='ln -sf ~/dotfiles/dracula.sh ~/.base16_theme && . ~/.base16_theme'
 alias oceanic='ln -sf ~/dotfiles/oceanic.sh ~/.base16_theme && . ~/.base16_theme'
 alias github='ln -sf ~/dotfiles/github.sh ~/.base16_theme && . ~/.base16_theme'

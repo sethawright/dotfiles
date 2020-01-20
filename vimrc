@@ -8,11 +8,9 @@ set rtp+=/usr/local/bin/fzf
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
-Plugin 'mileszs/ack.vim'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'vim-ctrlspace/vim-ctrlspace'
-Plugin 'vimwiki/vimwiki'
 
 Plugin 'w0rp/ale'
 Plugin 'ludovicchabant/vim-gutentags'
@@ -27,39 +25,38 @@ Plugin 'tpope/vim-fugitive'
 
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'junegunn/goyo.vim'
-" Plugin 'itchyny/lightline.vim'
 
 Plugin 'posva/vim-vue'
 Plugin 'pangloss/vim-javascript'
 Plugin 'jwalton512/vim-blade'
 Plugin 'StanAngeloff/php.vim'
 Plugin 'cakebaker/scss-syntax.vim'
-Plugin 'burner/vim-svelte'
 
-Plugin 'cormacrelf/vim-colors-github'
-Plugin 'arcticicestudio/nord-vim'
 Plugin 'dracula/vim'
 Plugin 'chriskempson/base16-vim'
 call vundle#end()
 
 filetype plugin indent on
-syntax on
+syntax enable
 
 " leader to comma
 let mapleader=","
 set mouse=a
 
-set timeoutlen=300
-set ttimeoutlen=0
+if !has('nvim') && &ttimeoutlen == -1
+  set ttimeout
+  set ttimeoutlen=100
+endif
 
 " various config
 set backspace=indent,eol,start
 set breakindent
 set autoindent
-set ruler
+set autoread
 set hidden
-" set number
-" set relativenumber
+set number
+set smarttab
+set noruler
 set nocursorline
 set display=lastline
 set tabstop=2
@@ -71,11 +68,12 @@ set linebreak
 set nolist
 set expandtab
 set noswapfile
-set number
 set hlsearch
 set incsearch
 set ignorecase
 set foldmethod=manual
+set showtabline=0
+set noshowmode
 
 nnoremap / /\v
 vnoremap / /\v
@@ -136,45 +134,17 @@ vnoremap // y/<C-R>"<CR>Nviw
 
 " find files
 set path=.,**
-nnoremap ,f :find *
-nnoremap ,s :sfind *
-nnoremap ,v :vert sfind *
-nnoremap ,t :tabfind *
-nnoremap ,F :find <C-R>=expand('%:h').'/*'<CR>
-nnoremap ,S :sfind <C-R>=expand('%:h').'/*'<CR>
-nnoremap ,V :vert sfind <C-R>=expand('%:h').'/*'<CR>
-nnoremap ,T :tabfind <C-R>=expand('%:h').'/*'<CR>
 
-" buffer navigation
-nnoremap gb :ls<CR>:buffer<Space>
-nnoremap gB :ls<CR>:vert sb<space>
-nnoremap ,b :buffer *
-nnoremap ,,b :buffer *
-
-" previous buffer
-nnoremap <C-n> <C-^>
-
-" netrw/nt settings
-let g:netrw_liststyle = 3
-let g:netrw_banner = 0
-let NERDTreeMinimalUI = 1
-let g:NERDTreeQuitOnOpen = 1
-nnoremap ,n :NERDTreeToggle<CR>
-nnoremap ,,n :NERDTreeFind<CR>
-let g:NERDTreeMapOpenSplit = 's'
-let g:NERDTreeMapOpenVSplit = 'v'
-let NERDTreeShowHidden = 1
-
-" ack vim settings
-let g:ackhighlight = 1
-
-" better copying
+" preferred copying/pasting
 vnoremap <silent> y y`]
 vnoremap <silent> p p`]
 nnoremap <silent> p p`]
 noremap gV `[v`]
 nnoremap <silent> p p`]
 nnoremap <silent> p p`]
+
+" my preferred statusline -- just need the file
+set statusline=%{expand('%:~:.')}
 
 " vertical resize
 nnoremap = :res +10<CR>
@@ -184,19 +154,8 @@ nnoremap - :res -10<CR>
 nnoremap + :vertical res +10<CR>
 nnoremap _ :vertical res -10<CR>
 
-" file saving
-noremap ,w :update<CR>
-noremap ,wq :wq!<CR>
-noremap ,q :wincmd q<CR>
-
-" format the entire file
-nnoremap ,,fef :normal! gg=G``<CR>
-
 " text wrapping toggles
 nnoremap <silent> ,,tw :set invwrap<CR>:set wrap?<CR>:set linebreak<CR>
-
-" find merge conflict markers
-nnoremap <silent> ,,fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
 
 " map the arrow keys to be based on display lines, not physical lines
 noremap <Down> gj
@@ -213,12 +172,6 @@ vmap <C-S-j> ]egv
 " size all splits equally
 nnoremap <silent> ≠ :wincmd =<cr>
 
-" remove trailing whitespaces
-nnoremap ,,fws :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>:update<CR>
-
-" fix indentation to spaces
-nnoremap ,,fi ggVG>gv<<esc>
-
 " toggle search highlighting
 nnoremap ,hs :set hlsearch! hlsearch?<CR>
 
@@ -232,52 +185,15 @@ nnoremap <C-p> :Files<Cr>
 nnoremap <C-o> :BTags<Cr>
 nnoremap ø :Tags<Cr>
 
-nnoremap <C-i> :Buffers<Cr>
-
-let g:fzf_action = {
-  \ 'ctrl-d': 'bdelete',
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-s': 'split',
-  \ 'ctrl-v': 'vsplit' }
-
-let g:fzf_layout = { 'down': '10' }
-let g:fzf_buffers_jump = 1
-
-autocmd! FileType fzf
-autocmd  FileType fzf set laststatus=0 noshowmode noruler
-  \| autocmd BufLeave <buffer> set laststatus=1 showmode ruler
-
-" clean up tab display
-set showtabline=0
-set noshowmode
-
 " select entire file
 nnoremap ,,a ggVG
-
-" custom mappings for tmux navigator
-let g:tmux_navigator_no_mappings = 1
-nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
-
-" Use markdown instead of wiki lang
-let g:vimwiki_list = [{'path': '$HOME/Documents/wiki', 'syntax': 'markdown', 'ext': '.txt'}]
-let g:vimwiki_table_mappings = 0
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'javascript', 'php', 'ruby', 'shell=sh', 'js=javascript', 'c', 'vim']
-:nnoremap ,dp :VimwikiDiaryPrevDay<CR>
-:nnoremap ,dn :VimwikiDiaryNextDay<CR>
 
 " find syntax highlighting for the current text object
 nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
       \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
       \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
-if has('nvim')
-  let g:CtrlSpaceDefaultMappingKey = "<C-space> "
-end
-
-nnoremap ,js :%!python -m json.tool<CR>
-
-" vue help
+" better vue syntax highlighting
 autocmd FileType vue syntax sync fromstart
 
 " vimrc refresh automatically
@@ -286,14 +202,61 @@ augroup myvimrc
   au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,.vimrc_background so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
 
-au BufNewFile,BufRead *.ejs set filetype=html
+" force vimrc refresh
+:nnoremap ,,r :so $MYVIMRC<CR>
 
-" my preferred statusline -- just need the file
-set statusline=%{expand('%:~:.')}
+" pretty format json
+nnoremap ,js :%!python -m json.tool<CR>
+
+" NERDTree
+let NERDTreeMinimalUI = 1
+let g:NERDTreeQuitOnOpen = 1
+nnoremap ,n :NERDTreeToggle<CR>
+nnoremap ,,n :NERDTreeFind<CR>
+let g:NERDTreeMapOpenSplit = 's'
+let g:NERDTreeMapOpenVSplit = 'v'
+let NERDTreeShowHidden = 1
+
+" FZF
+let g:fzf_action = {
+  \ 'ctrl-d': 'bdelete',
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-v': 'vsplit' }
+let g:fzf_layout = { 'down': '10' }
+let g:fzf_buffers_jump = 1
+autocmd! FileType fzf
+autocmd  FileType fzf set laststatus=0 noshowmode noruler
+  \| autocmd BufLeave <buffer> set laststatus=1 showmode noruler
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Pmenu'],
+  \ 'bg':      ['bg', 'Pmenu'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+" Tmux Navigator
+let g:tmux_navigator_no_mappings = 1
+nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+
+" Ctrl-Space
+if has('nvim')
+  let g:CtrlSpaceDefaultMappingKey = "<C-space> "
+end
 
 " some basic snippets i use
 runtime snippets.vim
 
+" ALE customizations
 let g:ale_fix_on_save = 1
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
@@ -308,17 +271,19 @@ let g:ale_fixers = {
 \   'css': ['prettier']
 \}
 
+" Goyo.vim
 let g:goyo_width = '50%'
 
-" vimrc refresh
-:nnoremap ,,r :so $MYVIMRC<CR>
+" Markdown no folding
+let g:vim_markdown_folding_disabled = 1
 
 " set background based on terminal active theme
 if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
   set termguicolors
   source ~/.vimrc_background
-  if g:colors_name != 'dracula' && g:colors_name != 'nord'
+  hi MatchParen term=bold,underline cterm=bold,underline gui=bold,underline guibg=NONE ctermbg=NONE
+  if g:colors_name != 'dracula'
     hi LineNr ctermbg=NONE guibg=NONE
     hi link ALEWarningSign gitGutterChange
     hi link ALEErrorSign gitGutterDelete

@@ -1,12 +1,4 @@
-highlight clear
-
-if exists('syntax_on')
-  syntax reset
-endif
-
-let g:colors_name = 'materitermlight'
-let g:colors = {'gui' : {} , 'cterm' : {}}
-
+" Color Palette for CTERM
 let g:colors.cterm.cursor    = 'NONE'
 let g:colors.cterm.bg        = 'NONE'
 let g:colors.cterm.fg        = '15'
@@ -26,26 +18,29 @@ let g:colors.cterm.purple    = '5'
 let g:colors.cterm.violet    = '12'
 let g:colors.cterm.brown     = '13'
 
-let g:colors.gui.cursor      = '#ffcc00'
-let g:colors.gui.fg          = '#1c262a'
-let g:colors.gui.bg          = '#ffffff'
-let g:colors.gui.offwhite    = '#e5e9ea'
-let g:colors.gui.inverse     = '#eff1f2'
-let g:colors.gui.gray4       = '#eff1f2'
-let g:colors.gui.gray3       = '#b0bec5'
-let g:colors.gui.gray2       = '#c4cfd4'
-let g:colors.gui.gray1       = '#7e939e'
-let g:colors.gui.red         = '#e83b3f'
-let g:colors.gui.pink        = '#f07178'
-let g:colors.gui.orange      = '#f78c6c'
-let g:colors.gui.yellow      = '#f6981e'
-let g:colors.gui.green       = '#40a33f'
-let g:colors.gui.pale_blue   = '#b2ccd6'
-let g:colors.gui.blue        = '#1e80f0'
-let g:colors.gui.cyan        = '#16afca'
-let g:colors.gui.purple      = '#992bae'
-let g:colors.gui.violet      = '#bb80b3'
-let g:colors.gui.brown       = '#ab7967'
+" let g:colors.gui.red         = '#FF5370'
+" let g:colors.gui.pink        = '#f07178'
+" let g:colors.gui.orange      = '#FF8563'
+" let g:colors.gui.yellow      = '#FFCA56'
+" let g:colors.gui.green       = '#B9EB80'
+" let g:colors.gui.pale_blue   = '#b2ccd6'
+" let g:colors.gui.blue        = '#79A9FF'
+" let g:colors.gui.cyan        = '#89DDFF'
+" let g:colors.gui.purple      = '#D18CF0'
+" let g:colors.gui.violet      = '#bb80b3'
+" let g:colors.gui.brown       = '#ab7967'
+"
+let g:colors.gui.red         = '#FF5370'
+let g:colors.gui.pink        = '#F07178'
+let g:colors.gui.orange      = '#F78C6C'
+let g:colors.gui.yellow      = '#FFCB6B'
+let g:colors.gui.green       = '#C3E88D'
+let g:colors.gui.pale_blue   = '#B2CCD6'
+let g:colors.gui.blue        = '#82AAFF'
+let g:colors.gui.cyan        = '#89DDFF'
+let g:colors.gui.purple      = '#C792EA'
+let g:colors.gui.violet      = '#BB80B3'
+let g:colors.gui.brown       = '#C17E70'
 
 function! g:HL(group, guifg, ctermfg, guibg, ctermbg, attr)
   let l:attr = a:attr
