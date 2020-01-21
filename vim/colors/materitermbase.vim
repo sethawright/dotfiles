@@ -18,18 +18,6 @@ let g:colors.cterm.purple    = '5'
 let g:colors.cterm.violet    = '12'
 let g:colors.cterm.brown     = '13'
 
-" let g:colors.gui.red         = '#FF5370'
-" let g:colors.gui.pink        = '#f07178'
-" let g:colors.gui.orange      = '#FF8563'
-" let g:colors.gui.yellow      = '#FFCA56'
-" let g:colors.gui.green       = '#B9EB80'
-" let g:colors.gui.pale_blue   = '#b2ccd6'
-" let g:colors.gui.blue        = '#79A9FF'
-" let g:colors.gui.cyan        = '#89DDFF'
-" let g:colors.gui.purple      = '#D18CF0'
-" let g:colors.gui.violet      = '#bb80b3'
-" let g:colors.gui.brown       = '#ab7967'
-"
 let g:colors.gui.red         = '#FF5370'
 let g:colors.gui.pink        = '#F07178'
 let g:colors.gui.orange      = '#F78C6C'
@@ -41,6 +29,23 @@ let g:colors.gui.cyan        = '#89DDFF'
 let g:colors.gui.purple      = '#C792EA'
 let g:colors.gui.violet      = '#BB80B3'
 let g:colors.gui.brown       = '#C17E70'
+
+let g:terminal_color_0  = g:colors.gui.bg
+let g:terminal_color_1  = g:colors.gui.red
+let g:terminal_color_2  = g:colors.gui.green
+let g:terminal_color_3  = g:colors.gui.yellow
+let g:terminal_color_4  = g:colors.gui.blue
+let g:terminal_color_5  = g:colors.gui.purple
+let g:terminal_color_6  = g:colors.gui.cyan
+let g:terminal_color_7  = g:colors.gui.offwhite
+let g:terminal_color_8  = g:colors.gui.gray3
+let g:terminal_color_9  = g:colors.gui.red
+let g:terminal_color_10 = g:colors.gui.green
+let g:terminal_color_11 = g:colors.gui.blue
+let g:terminal_color_12 = g:colors.gui.purple
+let g:terminal_color_13 = g:colors.gui.cyan
+let g:terminal_color_14 = g:colors.gui.fg
+let g:terminal_color_15 = g:colors.gui.gray4
 
 function! g:HL(group, guifg, ctermfg, guibg, ctermbg, attr)
   let l:attr = a:attr

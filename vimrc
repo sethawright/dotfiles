@@ -22,6 +22,7 @@ Plugin 'mattn/emmet-vim'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-fugitive'
+Plugin 'kassio/neoterm'
 
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'junegunn/goyo.vim'
@@ -72,11 +73,35 @@ set hlsearch
 set incsearch
 set ignorecase
 set foldmethod=manual
-set showtabline=0
 set noshowmode
+set showtabline=0
 
 nnoremap / /\v
 vnoremap / /\v
+
+" quick saves and quits
+nnoremap ,w :w<CR>
+nnoremap ,q :q<CR>
+tnoremap ,q <C-\><C-n>:q!<CR>
+
+" quickly toggle the terminal pane
+nnoremap ,t :TtoggleAll<CR>
+tnoremap ,t <C-\><C-n>:TtoggleAll<CR>
+
+" tmux style moving between windows
+nnoremap ç :tabnew<CR>
+nnoremap ¬ :tabp<CR>
+nnoremap ˙ :tabn<CR>
+tnoremap ç <C-\><C-n>:tabnew<CR>
+tnoremap ¬ <C-\><C-n>:tabp<CR>
+tnoremap ˙ <C-\><C-n>:tabn<CR>
+
+" quicker exiting terminal insert mode
+tnoremap <C-l> <C-\><C-n><C-w>l
+tnoremap <C-h> <C-\><C-n><C-w>k
+if has('nvim')
+    autocmd BufEnter,BufNew term://* startinsert
+endif
 
 " show hidden characters i usually dont want
 set listchars=""
@@ -126,8 +151,8 @@ set wildignore+=*.swp,*~,._*
 set clipboard=unnamed
 
 " change shift width quickly
-noremap ,w2 :set tabstop=2 shiftwidth=2<CR>
-noremap ,w4 :set tabstop=4 shiftwidth=4<CR>
+noremap ,,w2 :set tabstop=2 shiftwidth=2<CR>
+noremap ,,w4 :set tabstop=4 shiftwidth=4<CR>
 
 " search for visually selected text
 vnoremap // y/<C-R>"<CR>Nviw
@@ -276,6 +301,14 @@ let g:goyo_width = '50%'
 
 " Markdown no folding
 let g:vim_markdown_folding_disabled = 1
+
+" Terminal customizations
+let g:neoterm_autoinsert = 1
+let g:neoterm_default_mod = 'botright'
+nnoremap « :vert Tnew<CR>
+nnoremap ‘ :botright Tnew<CR>
+tnoremap « <C-\><C-n>:vert Tnew<CR>
+tnoremap ‘ <C-\><C-n>:belowright Tnew<CR>
 
 " set background based on terminal active theme
 if filereadable(expand("~/.vimrc_background"))
