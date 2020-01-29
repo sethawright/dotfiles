@@ -1,0 +1,28 @@
+{
+  "coc.preferences.formatOnSaveFiletypes": ["vue", "json", "javascript", "css", "scss"],
+  "diagnostic.errorSign": "•",
+  "diagnostic.warningSign": "•",
+  "diagnostic.infoSign": "•",
+  "diagnostic.hintSign": "•",
+  "prettier.eslintIntegration": true,
+  "prettier.disableLanguages": [],
+  "prettier.singleQuote": true,
+  "prettier.printWidth": 100,
+  "suggest.noselect": false,
+  "javascript.validate.enable": false,
+  "vetur.format.defaultFormatter.html": "prettier",
+  "vetur.format.defaultFormatter.scss": "prettier",
+  "vetur.format.defaultFormatter.js": "prettier-eslint",
+  "git.addedSign.hlGroup": "GitGutterAdd",
+  "git.changedSign.hlGroup": "GitGutterChange",
+  "git.removedSign.hlGroup": "GitGutterDelete",
+  "git.topRemovedSign.hlGroup": "GitGutterDelete",
+  "git.changeRemovedSign.hlGroup": "GitGutterChangeDelete",
+  "eslint.filetypes": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue"
+  ]
+}
