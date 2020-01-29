@@ -1,41 +1,40 @@
 " vundle start
 set nocp
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
 set rtp+=/usr/local/bin/fzf
 
 " load plugins
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
+call plug#begin('~/.vim/plugged')
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'vim-ctrlspace/vim-ctrlspace'
 
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
-Plugin 'vim-ctrlspace/vim-ctrlspace'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'w0rp/ale'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'tomtom/tcomment_vim'
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeFind', 'NERDTreeToggle'] }
+Plug 'tpope/vim-fugitive'
+Plug 'kassio/neoterm'
 
-Plugin 'w0rp/ale'
-Plugin 'ludovicchabant/vim-gutentags'
-Plugin 'tpope/vim-rhubarb'
-Plugin 'tpope/vim-sleuth'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'mattn/emmet-vim'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'tpope/vim-fugitive'
-Plugin 'kassio/neoterm'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'junegunn/goyo.vim'
+Plug 'posva/vim-vue', { 'for': 'vue' }
+Plug 'pangloss/vim-javascript', { 'for': ['vue', 'javascript', 'json'] }
+Plug 'jwalton512/vim-blade', { 'for': ['php', 'blade'] }
+Plug 'StanAngeloff/php.vim', { 'for': ['php'] }
+Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss', 'vue'] }
 
-Plugin 'posva/vim-vue'
-Plugin 'pangloss/vim-javascript'
-Plugin 'jwalton512/vim-blade'
-Plugin 'StanAngeloff/php.vim'
-Plugin 'cakebaker/scss-syntax.vim'
-
-Plugin 'dracula/vim'
-Plugin 'chriskempson/base16-vim'
-call vundle#end()
+Plug 'cormacrelf/vim-colors-github', { 'for': 'scheme' }
+Plug 'morhetz/gruvbox', { 'for': 'scheme' }
+Plug 'dracula/vim', { 'for': 'scheme' }
+Plug 'chriskempson/base16-vim', { 'for': 'scheme' }
+call plug#end()
 
 filetype plugin indent on
 syntax enable
@@ -55,6 +54,11 @@ set breakindent
 set autoindent
 set autoread
 set hidden
+set nobackup
+set nowritebackup
+set cmdheight=2
+set updatetime=300
+set shortmess+=c
 set number
 set smarttab
 set noruler
@@ -95,6 +99,7 @@ nnoremap ˙ :tabn<CR>
 tnoremap ç <C-\><C-n>:tabnew<CR>
 tnoremap ¬ <C-\><C-n>:tabp<CR>
 tnoremap ˙ <C-\><C-n>:tabn<CR>
+tnoremap <C-n> <C-\><C-n>
 
 " quicker exiting terminal insert mode
 tnoremap <C-l> <C-\><C-n><C-w>l
@@ -302,6 +307,29 @@ let g:goyo_width = '50%'
 " Markdown no folding
 let g:vim_markdown_folding_disabled = 1
 
+" Coc stuff
+"" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Or use `complete_info` if your vim support it, like:
+" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
 " Terminal customizations
 let g:neoterm_autoinsert = 1
 let g:neoterm_default_mod = 'botright'
@@ -314,6 +342,7 @@ tnoremap ‘ <C-\><C-n>:belowright Tnew<CR>
 if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
   set termguicolors
+  let g:gruvbox_italic=1
   source ~/.vimrc_background
   hi MatchParen term=bold,underline cterm=bold,underline gui=bold,underline guibg=NONE ctermbg=NONE
   if g:colors_name != 'dracula'

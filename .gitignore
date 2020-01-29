@@ -1,5 +1,4 @@
-vim/bundle/*
-!vim/bundle/Vundle.vim
+vim/plugged/*
 vim/.netrwhist
 bash_history
 twitvim.token

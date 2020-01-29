@@ -6,8 +6,8 @@ plugins=(
 )
 source $ZSH/oh-my-zsh.sh
 
-alias pu='phpunit'
-alias puf='phpunit --filter '
+alias pu='vendor/bin/phpunit'
+alias puf='vendor/bin/phpunit --filter '
 alias todo='vim -c "set norelativenumber nonumber laststatus=0" -c "VimwikiIndex"'
 alias org='vim -c "set norelativenumber nonumber laststatus=0" -c "VimwikiIndex"'
 alias today='vim -c "set norelativenumber nonumber wrap textwidth=0 nocp linebreak nolist showbreak= laststatus=0" -c "VimwikiDiaryIndex"'
@@ -57,19 +57,14 @@ alias env_new='sudo apachectl -k stop && brew unlink php@5.6 && brew link --forc
 # quick theme switching
 alias digim='viewmedica-content-packager -C 7802 --video --thumbnails --vtt --csv --srt --language es ~/Desktop/digim'
 alias darker='ln -sf ~/dotfiles/materitermdarkmode.sh ~/.base16_theme  && . ~/.base16_theme'
-alias dark='ln -sf ~/dotfiles/materitermdark.sh ~/.base16_theme  && . ~/.base16_theme'
+alias material='ln -sf ~/dotfiles/materitermdark.sh ~/.base16_theme  && . ~/.base16_theme'
 alias pale='ln -sf ~/dotfiles/materitermpale.sh ~/.base16_theme  && . ~/.base16_theme'
 alias ocean='ln -sf ~/dotfiles/materitermocean.sh ~/.base16_theme  && . ~/.base16_theme'
 alias lighter='ln -sf ~/dotfiles/materitermlighter.sh ~/.base16_theme  && . ~/.base16_theme'
 alias light='ln -sf ~/dotfiles/materitermlight.sh ~/.base16_theme  && . ~/.base16_theme'
-alias nord='ln -sf ~/dotfiles/nord.sh ~/.base16_theme && . ~/.base16_theme'
-alias paperlight='ln -sf ~/dotfiles/papercolor-light.sh ~/.base16_theme && . ~/.base16_theme'
-alias paperdark='ln -sf ~/dotfiles/papercolor-dark.sh ~/.base16_theme && . ~/.base16_theme'
-alias onedark='ln -sf ~/dotfiles/onedark.sh ~/.base16_theme && . ~/.base16_theme'
-alias onelight='ln -sf ~/dotfiles/onelight.sh ~/.base16_theme && . ~/.base16_theme'
 alias dracula='ln -sf ~/dotfiles/dracula.sh ~/.base16_theme && . ~/.base16_theme'
-alias oceanic='ln -sf ~/dotfiles/oceanic.sh ~/.base16_theme && . ~/.base16_theme'
-alias github='ln -sf ~/dotfiles/github.sh ~/.base16_theme && . ~/.base16_theme'
+alias gruvbox='ln -sf ~/dotfiles/gruvbox.sh ~/.base16_theme && . ~/.base16_theme'
+alias gruvbox-light='ln -sf ~/dotfiles/gruvbox-light.sh ~/.base16_theme && . ~/.base16_theme'
 
 # git stuff
 alias ga="gg a"
@@ -114,6 +109,8 @@ export PATH=$PATH:/Users/seth/Library/Android/sdk/platform-tools
 export PATH=$PATH:/Users/seth/Library/Android/sdk/tools
 export PATH=$PATH:$HOME/.yarn/bin
 export PATH=$PATH:$HOME/.composer/vendor/bin
+export PATH=$PATH:vendor/bin
+export PATH=$PATH:node_modules/.bin
 
 export ANDROID_HOME=/Users/seth/Library/Android/sdk
 export ANDROID_SDK_ROOT=/Users/seth/Library/Android/sdk

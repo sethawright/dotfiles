@@ -1,31 +1,38 @@
 #!/bin/sh
 # base16-shell (https://github.com/chriskempson/base16-shell)
 # Base16 Shell template by Chris Kempson (http://chriskempson.com)
+# Nord scheme by arcticicestudio
 
-color00="24/29/2e" # Base 00 - Black
-color01="d7/3a/49" # Base 08 - Red
-color02="22/86/3a" # Base 0B - Green
-color03="e3/62/09" # Base 0A - Yellow
-color04="00/5c/c5" # Base 0D - Blue
-color05="6f/42/c1" # Base 0E - Magenta
-color06="00/5c/c5" # Base 0C - Cyan
-color07="6a/73/7d" # Base 05 - White
-color08="$color00" # Base 03 - Bright Black
-color09="$color01" # Base 08 - Bright Red
-color10="$color02" # Base 0B - Bright Green
-color11="$color03" # Base 0A - Bright Yellow
-color12="$color04" # Base 0D - Bright Blue
-color13="$color05" # Base 0E - Bright Magenta
-color14="$color06" # Base 0C - Bright Cyan
-color15="$color07" # Base 07 - Bright White
+color00="fb/f1/c7" # Base 00 - Black
+color01="cc/23/1c" # Base 08 - Red
+color02="98/97/1a" # Base 0B - Green
+color03="d7/99/21" # Base 0A - Yellow
+color04="45/85/88" # Base 0D - Blue
+color05="b1/62/86" # Base 0E - Magenta
+color06="68/9d/6a" # Base 0C - Cyan
+color07="7b/6e/64" # Base 05 - White
+color08="92/83/73" # Base 03 - Bright Black
+color09="fb/49/34" # Base 08 - Bright Red
+color10="b8/bb/26" # Base 0B - Bright Green
+color11="fa/bd/2f" # Base 0A - Bright Yellow
+color12="83/a5/98" # Base 0D - Bright Blue
+color13="d3/86/9b" # Base 0E - Bright Magenta
+color14="8e/c0/7c" # Base 0C - Bright Cyan
+color15="3c/37/35" # Base 07 - Bright White
 color16="81/A1/C1" # Base 09
 color17="B4/8E/AD" # Base 0F
 color18="3B/42/52" # Base 01
 color19="43/4C/5E" # Base 02
 color20="D8/DE/E9" # Base 04
 color21="EC/EF/F4" # Base 06
-color_foreground="24/29/2e" # Base 05
-color_background="ff/ff/ff" # Base 00
+
+if [ "$1" = "--hard" ]; then
+  color_foreground="1d/20/21" # Base 05
+elif [ "$1" = "--soft" ]; then
+  color_background="32/30/2f" # Base 00
+else
+  color_background="28/28/28" # Base 00
+fi
 
 if [ -n "$TMUX" ]; then
   # Tell tmux to pass the escape sequences through
@@ -76,14 +83,21 @@ put_template 21 $color21
 
 # foreground / background / cursor color
 if [ -n "$ITERM_SESSION_ID" ]; then
+
+  if [ "$1" = "--hard" ]; then
+    put_template_custom Ph f9f5d7 # background
+  elif [ "$1" = "--soft" ]; then
+    put_template_custom Ph f2e5bc # background
+  else
+    put_template_custom Ph fbf1c7 # background
+  fi
   # iTerm2 proprietary escape codes
-  put_template_custom Pg 24292e # foreground
-  put_template_custom Ph ffffff # background
+  put_template_custom Pg 3c3735 # foreground
   put_template_custom Pi E5E9F0 # bold color
-  put_template_custom Pj e4effb # selection color
-  put_template_custom Pk 24292e # selected text color
-  put_template_custom Pl 669cc2 # cursor
-  put_template_custom Pm 24292e # cursor text
+  put_template_custom Pj 3c3735 # selection color
+  put_template_custom Pk bdad93 # selected text color
+  put_template_custom Pl 3c3735 # cursor
+  put_template_custom Pm fbf1c7 # cursor text
 else
   put_template_var 10 $color_foreground
   if [ "$BASE16_SHELL_SET_BACKGROUND" != false ]; then
@@ -126,4 +140,10 @@ unset color_background
 
 # add a dotfile that vim can read when loading up
 # will automatically set the color scheme to nord
-echo "if !exists('g:colors_name') || g:colors_name != 'github'\nset termguicolors\ncolorscheme github\nendif" > ~/.vimrc_background
+if [ "$1" = "--hard" ]; then
+  echo "if !exists('g:colors_name') || g:colors_name != 'gruvbox'\nset termguicolors\nset background=light\nlet g:gruvbox_contrast_light = 'hard'\ncolorscheme gruvbox\nendif" > ~/.vimrc_background
+elif [ "$1" = "--soft" ]; then
+  echo "if !exists('g:colors_name') || g:colors_name != 'gruvbox'\nset termguicolors\nset background=light\nlet g:gruvbox_contrast_light = 'soft'\ncolorscheme gruvbox\nendif" > ~/.vimrc_background
+else
+  echo "if !exists('g:colors_name') || g:colors_name != 'gruvbox'\nset termguicolors\nset background=light\nlet g:gruvbox_contrast_light = 'medium'\ncolorscheme gruvbox\nendif" > ~/.vimrc_background
+fi
