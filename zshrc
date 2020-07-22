@@ -1,11 +1,10 @@
 KEYTIMEOUT=1
 
 export ZSH=/Users/seth/.oh-my-zsh
-plugins=(
-  colorize
-)
+plugins=( colorize tmux )
 source $ZSH/oh-my-zsh.sh
 
+alias puf='vendor/bin/phpunit --filter '
 alias pu='vendor/bin/phpunit'
 alias puf='vendor/bin/phpunit --filter '
 alias todo='vim -c "set norelativenumber nonumber laststatus=0" -c "VimwikiIndex"'
@@ -51,8 +50,8 @@ alias getlog="rsync -avz --stats --progress swarmint:/home/swarmint/www/storage/
 alias adbpic='adb shell screencap -p | perl -pe "s/\x0D\x0A/\x0A/g" > "/Users/seth/Downloads/firetvscreenshot_$(date +%Y%m%d-%H%M%S).png"'
 alias firetv='adb kill-server && adb start-server && adb connect 192.168.0.99'
 alias x96='adb kill-server && adb start-server && adb connect 192.168.0.98'
-alias env_old='valet stop && brew unlink php && brew link --overwrite --force php@5.6 && sudo apachectl -k start && open https://swarm.test/vm/'
-alias env_new='sudo apachectl -k stop && brew unlink php@5.6 && brew link --force php && valet start && open https://swarm.test/'
+alias env_old='valet stop && cd ~/sites/work/web && vagrant up && open https://old.swarm.test/vm/'
+alias env_new='cd ~/sites/work/web && vagrant halt && valet start && open https://swarm.test/'
 
 # quick theme switching
 alias digim='viewmedica-content-packager -C 7802 --video --thumbnails --vtt --csv --srt --language es ~/Desktop/digim'
@@ -62,9 +61,20 @@ alias pale='ln -sf ~/dotfiles/materitermpale.sh ~/.base16_theme  && . ~/.base16_
 alias ocean='ln -sf ~/dotfiles/materitermocean.sh ~/.base16_theme  && . ~/.base16_theme'
 alias lighter='ln -sf ~/dotfiles/materitermlighter.sh ~/.base16_theme  && . ~/.base16_theme'
 alias light='ln -sf ~/dotfiles/materitermlight.sh ~/.base16_theme  && . ~/.base16_theme'
+alias minlight='ln -sf ~/dotfiles/minlight.sh ~/.base16_theme  && . ~/.base16_theme'
+alias mindark='ln -sf ~/dotfiles/mindark.sh ~/.base16_theme  && . ~/.base16_theme'
+alias monokaipro='ln -sf ~/dotfiles/monokaipro.sh ~/.base16_theme  && . ~/.base16_theme'
+alias monokaioctagon='ln -sf ~/dotfiles/monokaioctagon.sh ~/.base16_theme  && . ~/.base16_theme'
+alias monokaimachine='ln -sf ~/dotfiles/monokaimachine.sh ~/.base16_theme  && . ~/.base16_theme'
+alias monokairistretto='ln -sf ~/dotfiles/monokairistretto.sh ~/.base16_theme  && . ~/.base16_theme'
+alias monokaispectrum='ln -sf ~/dotfiles/monokaispectrum.sh ~/.base16_theme  && . ~/.base16_theme'
 alias dracula='ln -sf ~/dotfiles/dracula.sh ~/.base16_theme && . ~/.base16_theme'
 alias gruvbox='ln -sf ~/dotfiles/gruvbox.sh ~/.base16_theme && . ~/.base16_theme'
 alias gruvbox-light='ln -sf ~/dotfiles/gruvbox-light.sh ~/.base16_theme && . ~/.base16_theme'
+alias github='ln -sf ~/dotfiles/github.sh ~/.base16_theme && . ~/.base16_theme'
+
+# tmux
+alias td="tmux detach"
 
 # git stuff
 alias ga="gg a"
@@ -72,7 +82,7 @@ alias gac="gg c"
 alias gc="gg cn"
 alias gco="git checkout"
 alias gd="git difftool"
-alias gs="gg s"
+alias gs="git status"
 alias gl="gg l"
 alias gp="gg p"
 alias gpl="gg pl"

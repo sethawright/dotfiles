@@ -2,7 +2,7 @@
 	name = Seth Wright
 	email = asethwright@gmail.com
 [core]
-	editor = vim
+	editor = nvim
 	excludesfile = /Users/seth/.gitignore_global
 	quotepath = false
 [color]

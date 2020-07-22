@@ -10,7 +10,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'w0rp/ale'
+Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-sleuth'
@@ -20,20 +20,20 @@ Plug 'tomtom/tcomment_vim'
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeFind', 'NERDTreeToggle'] }
 Plug 'tpope/vim-fugitive'
 Plug 'kassio/neoterm'
+Plug 'mattn/emmet-vim'
 
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
-
 Plug 'posva/vim-vue', { 'for': 'vue' }
 Plug 'pangloss/vim-javascript', { 'for': ['vue', 'javascript', 'json'] }
 Plug 'jwalton512/vim-blade', { 'for': ['php', 'blade'] }
 Plug 'StanAngeloff/php.vim', { 'for': ['php'] }
 Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss', 'vue'] }
 
-Plug 'cormacrelf/vim-colors-github', { 'for': 'scheme' }
-Plug 'morhetz/gruvbox', { 'for': 'scheme' }
-Plug 'dracula/vim', { 'for': 'scheme' }
-Plug 'chriskempson/base16-vim', { 'for': 'scheme' }
+Plug 'cormacrelf/vim-colors-github'
+Plug 'morhetz/gruvbox'
+Plug 'dracula/vim'
+Plug 'chriskempson/base16-vim'
 call plug#end()
 
 filetype plugin indent on
@@ -41,7 +41,7 @@ syntax enable
 
 " leader to comma
 let mapleader=","
-set mouse=a
+set mouse=
 
 if !has('nvim') && &ttimeoutlen == -1
   set ttimeout
@@ -326,9 +326,8 @@ inoremap <silent><expr> <c-space> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " Or use `complete_info` if your vim support it, like:
-" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Terminal customizations
 let g:neoterm_autoinsert = 1

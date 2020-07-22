@@ -1,28 +1,17 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["vue", "json", "javascript", "css", "scss"],
+  "coc.preferences.formatOnSaveFiletypes": ["php", "json", "css", "scss"],
+  "coc.preferences.colorSupport": false,
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",
   "diagnostic.hintSign": "•",
-  "prettier.eslintIntegration": true,
   "prettier.disableLanguages": [],
-  "prettier.singleQuote": true,
-  "prettier.printWidth": 100,
-  "suggest.noselect": false,
-  "javascript.validate.enable": false,
-  "vetur.format.defaultFormatter.html": "prettier",
-  "vetur.format.defaultFormatter.scss": "prettier",
-  "vetur.format.defaultFormatter.js": "prettier-eslint",
+  "intelephense.format.enable": true,
+  "eslint.autoFixOnSave": true,
+  "eslint.filetypes": ["javascript", "vue"],
   "git.addedSign.hlGroup": "GitGutterAdd",
   "git.changedSign.hlGroup": "GitGutterChange",
   "git.removedSign.hlGroup": "GitGutterDelete",
   "git.topRemovedSign.hlGroup": "GitGutterDelete",
-  "git.changeRemovedSign.hlGroup": "GitGutterChangeDelete",
-  "eslint.filetypes": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "vue"
-  ]
+  "git.changeRemovedSign.hlGroup": "GitGutterChangeDelete"
 }

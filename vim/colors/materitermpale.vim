@@ -17,4 +17,4 @@ let g:colors.gui.gray3       = '#474e6c'
 let g:colors.gui.gray2       = '#5b648b'
 let g:colors.gui.gray1       = '#7e818b'
 
-source ~/.vim/colors//materitermbase.vim
+source ~/.vim/colors/materitermbase.vim
