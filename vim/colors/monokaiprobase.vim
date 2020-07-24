@@ -63,7 +63,7 @@ call g:HL('ErrorMsg', g:colors.gui.red, g:colors.cterm.red, 'NONE', 'NONE', '')
 call g:HL('FoldColumn', g:colors.gui.red, g:colors.cterm.red, g:colors.gui.gray1, g:colors.cterm.gray1, '')
 call g:HL('Folded', g:colors.gui.red, g:colors.cterm.red, g:colors.gui.gray1, g:colors.cterm.gray1, '')
 call g:HL('IncSearch', g:colors.gui.purple, g:colors.cterm.purple, '', '', '')
-call g:HL('LineNr', g:colors.gui.gray3, g:colors.cterm.gray3, '', '', '')
+call g:HL('LineNr', g:colors.gui.gray2, g:colors.cterm.gray2, '', '', '')
 call g:HL('ModeMsg', g:colors.gui.green, g:colors.cterm.green, '', '', 'bold')
 call g:HL('MoreMsg', g:colors.gui.green, g:colors.cterm.green, '', '', 'bold')
 call g:HL('NonText', g:colors.gui.gray3, g:colors.cterm.gray3, '', '', '')
@@ -91,7 +91,7 @@ call g:HL('WildMenu', g:colors.gui.fg, g:colors.cterm.fg, g:colors.gui.red, g:co
 call g:HL('Noise', g:colors.gui.gray1, g:colors.cterm.gray1, '', '', '')
 
 " Standard Syntax
-call g:HL('Comment', g:colors.gui.gray3, g:colors.cterm.gray3, '', '', 'italic')
+call g:HL('Comment', g:colors.gui.gray1, g:colors.cterm.gray1, '', '', 'italic')
 call g:HL('Constant', g:colors.gui.purple, g:colors.cterm.purple, '', '', '')
 call g:HL('String', g:colors.gui.yellow, g:colors.cterm.yellow, '', '', '')
 call g:HL('Character', g:colors.gui.blue, g:colors.cterm.blue, '', '', '')
@@ -170,6 +170,34 @@ call g:HL('cssSelectorOp2', g:colors.gui.fg, g:colors.cterm.fg, '', '', '')
 " SCSS
 call g:HL('scssVariable', g:colors.gui.blue, g:colors.cterm.blue, '', '', '')
 call g:HL('scssAttribute', g:colors.gui.red, g:colors.cterm.red, '', '', '')
+
+" GitGutter
+call g:HL('GitGutterAdd', g:colors.gui.green, g:colors.cterm.green, '', '', '')
+call g:HL('GitGutterDelete', g:colors.gui.red, g:colors.cterm.red, '', '', '')
+call g:HL('GitGutterChange', g:colors.gui.purple, g:colors.cterm.purple, '', '', '')
+call g:HL('GitGutterChangeDelete', g:colors.gui.red, g:colors.cterm.red, '', '', '')
+
+" Git Commit
+call g:HL('gitcommitBranch', g:colors.gui.blue, g:colors.cterm.blue, '', '', '')
+call g:HL('gitcommitUnmerged', g:colors.gui.green, g:colors.cterm.green, '', '', '')
+call g:HL('gitcommitUntrackedFile', g:colors.gui.blue, g:colors.cterm.blue, '', '', '')
+call g:HL('gitcommitSelectedFile', g:colors.gui.green, g:colors.cterm.green, '', '', '')
+call g:HL('gitcommitDiscardedFile', g:colors.gui.red, g:colors.cterm.red, '', '', '')
+call g:HL('gitcommitUnmergedFile', g:colors.gui.purple, g:colors.cterm.purple, '', '', '')
+call g:HL('gitcommitSelectedType', g:colors.gui.green, g:colors.cterm.green, '', '', '')
+call g:HL('gitcommitDiscardedType', g:colors.gui.red, g:colors.cterm.red, '', '', '')
+
+hi link gitcommitNoBranch       gitcommitBranch
+hi link gitcommitUntracked      gitcommitComment
+hi link gitcommitDiscarded      gitcommitComment
+hi link gitcommitSelected       gitcommitComment
+hi link gitcommitDiscardedArrow gitcommitDiscardedFile
+hi link gitcommitSelectedArrow  gitcommitSelectedFile
+hi link gitcommitUnmergedArrow  gitcommitUnmergedFile
+
+" Vim-Fugitive
+call g:HL('diffAdded', g:colors.gui.green, g:colors.cterm.green, '', '', '')
+call g:HL('diffRemoved', g:colors.gui.red, g:colors.cterm.red, '', '', '')
 
 " Other stuff
 call g:HL('CursorLineNR', g:colors.gui.gray1, g:colors.cterm.gray1, g:colors.gui.inverse, g:colors.cterm.gray3, 'none')
