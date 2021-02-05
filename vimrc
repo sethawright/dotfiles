@@ -162,8 +162,8 @@ set wildignore+=*.swp,*~,._*
 set clipboard=unnamed
 
 " change shift width quickly
-noremap <leader>w2 :set tabstop=2 shiftwidth=2<CR>
-noremap <leader>w4 :set tabstop=4 shiftwidth=4<CR>
+noremap ,w2 :set tabstop=2 shiftwidth=2<CR>
+noremap ,w4 :set tabstop=4 shiftwidth=4<CR>
 
 " search for visually selected text
 vnoremap // y/<C-R>"<CR>Nviw
@@ -189,7 +189,7 @@ nnoremap + :vertical res +10<CR>
 nnoremap _ :vertical res -10<CR>
 
 " text wrapping toggles
-nnoremap <silent> <leader>tw :set invwrap<CR>:set wrap?<CR>:set linebreak<CR>
+nnoremap <silent> ,tw :set invwrap<CR>:set wrap?<CR>:set linebreak<CR>
 
 " map the arrow keys to be based on display lines, not physical lines
 noremap <Down> gj
@@ -207,16 +207,16 @@ vmap <C-S-j> ]egv
 nnoremap <silent> ≠ :wincmd =<cr>
 
 " toggle search highlighting
-nnoremap <silent> <leader>hs :set hlsearch! hlsearch?<CR>
+nnoremap <silent> ,hs :set hlsearch! hlsearch?<CR>
 
 " clear the previous search
-nnoremap <silent> <leader>cs :let @/ = ""<CR>
+nnoremap <silent> ,cs :let @/ = ""<CR>
 
 " gutentags
 " let g:gutentags_file_list_command = 'rg --files --hidden --follow --glob "!{node_modules/*,vendor/*,.git/*}"'
 
 " select entire file
-nnoremap <silent> <leader>a ggVG
+nnoremap <silent> ,,a ggVG
 
 " find syntax highlighting for the current text object
 nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
