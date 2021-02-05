@@ -149,7 +149,7 @@ call g:HL('jsObjectStringKey', g:colors.gui.gray1, g:colors.cterm.gray1, '', '',
 call g:HL('jsReturn', g:colors.gui.red, g:colors.cterm.red, '', '', 'none')
 call g:HL('jsFuncArgs', g:colors.gui.blue, g:colors.cterm.blue, '', '', 'none')
 call g:HL('jsNull', g:colors.gui.purple, g:colors.cterm.purple, '', '', 'none')
-call g:HL('jsThis', g:colors.gui.gray1, g:colors.cterm.gray1, '', '', 'none')
+call g:HL('jsThis', g:colors.gui.fg, g:colors.cterm.fg, '', '', 'none')
 call g:HL('jsConditional', g:colors.gui.red, g:colors.cterm.red, '', '', 'none')
 
 " CSS

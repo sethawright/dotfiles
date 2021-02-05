@@ -10,8 +10,6 @@ Plug 'junegunn/fzf.vim'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'MaxMEllon/vim-jsx-pretty'
-Plug 'ludovicchabant/vim-gutentags'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
@@ -19,33 +17,38 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tomtom/tcomment_vim'
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeFind', 'NERDTreeToggle'] }
 Plug 'tpope/vim-fugitive'
-Plug 'kassio/neoterm'
 Plug 'mattn/emmet-vim'
-
 Plug 'christoomey/vim-tmux-navigator'
+
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'posva/vim-vue', { 'for': 'vue' }
+Plug 'dag/vim-fish', { 'for': ['fish'] }
 Plug 'pangloss/vim-javascript', { 'for': ['vue', 'javascript', 'json'] }
 Plug 'jwalton512/vim-blade', { 'for': ['php', 'blade'] }
 Plug 'StanAngeloff/php.vim', { 'for': ['php'] }
 Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss', 'vue'] }
+Plug 'MaxMEllon/vim-jsx-pretty'
 
-Plug 'cormacrelf/vim-colors-github'
-Plug 'morhetz/gruvbox'
-Plug 'dracula/vim'
-Plug 'chriskempson/base16-vim'
+" Plug 'cormacrelf/vim-colors-github'
+" Plug 'morhetz/gruvbox'
+" Plug 'dracula/vim'
+" Plug 'chriskempson/base16-vim'
 call plug#end()
 
 filetype plugin indent on
 syntax enable
 
-" leader to comma
-let mapleader=","
+" leader to space
+let g:mapleader="\<space>"
 set mouse=
 
 if !has('nvim') && &ttimeoutlen == -1
   set ttimeout
   set ttimeoutlen=100
+endif
+
+if has('nvim')
+  let g:CtrlSpaceDefaultMappingKey = "<C-space> "
 endif
 
 " various config
@@ -84,6 +87,9 @@ nnoremap / /\v
 vnoremap / /\v
 
 " quick saves and quits
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+tnoremap <leader>q <C-\><C-n>:q!<CR>
 nnoremap ,w :w<CR>
 nnoremap ,q :q<CR>
 tnoremap ,q <C-\><C-n>:q!<CR>
@@ -156,8 +162,8 @@ set wildignore+=*.swp,*~,._*
 set clipboard=unnamed
 
 " change shift width quickly
-noremap ,,w2 :set tabstop=2 shiftwidth=2<CR>
-noremap ,,w4 :set tabstop=4 shiftwidth=4<CR>
+noremap <leader>w2 :set tabstop=2 shiftwidth=2<CR>
+noremap <leader>w4 :set tabstop=4 shiftwidth=4<CR>
 
 " search for visually selected text
 vnoremap // y/<C-R>"<CR>Nviw
@@ -173,8 +179,6 @@ noremap gV `[v`]
 nnoremap <silent> p p`]
 nnoremap <silent> p p`]
 
-" my preferred statusline -- just need the file
-set statusline=%{expand('%:~:.')}
 
 " vertical resize
 nnoremap = :res +10<CR>
@@ -185,7 +189,7 @@ nnoremap + :vertical res +10<CR>
 nnoremap _ :vertical res -10<CR>
 
 " text wrapping toggles
-nnoremap <silent> ,,tw :set invwrap<CR>:set wrap?<CR>:set linebreak<CR>
+nnoremap <silent> <leader>tw :set invwrap<CR>:set wrap?<CR>:set linebreak<CR>
 
 " map the arrow keys to be based on display lines, not physical lines
 noremap <Down> gj
@@ -203,20 +207,16 @@ vmap <C-S-j> ]egv
 nnoremap <silent> ≠ :wincmd =<cr>
 
 " toggle search highlighting
-nnoremap ,hs :set hlsearch! hlsearch?<CR>
+nnoremap <silent> <leader>hs :set hlsearch! hlsearch?<CR>
 
 " clear the previous search
-nnoremap ,cs :let @/ = ""<CR>
+nnoremap <silent> <leader>cs :let @/ = ""<CR>
 
-" find files
-nnoremap <C-p> :Files<Cr>
-
-" ctags
-nnoremap <C-o> :BTags<Cr>
-nnoremap ø :Tags<Cr>
+" gutentags
+" let g:gutentags_file_list_command = 'rg --files --hidden --follow --glob "!{node_modules/*,vendor/*,.git/*}"'
 
 " select entire file
-nnoremap ,,a ggVG
+nnoremap <silent> <leader>a ggVG
 
 " find syntax highlighting for the current text object
 nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -233,7 +233,7 @@ augroup myvimrc
 augroup END
 
 " force vimrc refresh
-:nnoremap ,,r :so $MYVIMRC<CR>
+nnoremap ,,r :so $MYVIMRC<CR>
 
 " pretty format json
 nnoremap ,js :%!python -m json.tool<CR>
@@ -241,23 +241,22 @@ nnoremap ,js :%!python -m json.tool<CR>
 " NERDTree
 let NERDTreeMinimalUI = 1
 let g:NERDTreeQuitOnOpen = 1
-nnoremap ,n :NERDTreeToggle<CR>
-nnoremap ,,n :NERDTreeFind<CR>
+nnoremap <silent> ,n :NERDTreeToggle<CR>
+nnoremap <silent> ,,n :NERDTreeFind<CR>
 let g:NERDTreeMapOpenSplit = 's'
 let g:NERDTreeMapOpenVSplit = 'v'
 let NERDTreeShowHidden = 1
 
 " FZF
 let g:fzf_action = {
-  \ 'ctrl-d': 'bdelete',
+  \ 'ctrl-d': 'bwipeout',
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-s': 'split',
-  \ 'ctrl-v': 'vsplit' }
+  \ 'ctrl-v': 'vsplit',
+  \ 'ctrl-o': '!open' }
 let g:fzf_layout = { 'down': '10' }
 let g:fzf_buffers_jump = 1
-autocmd! FileType fzf
-autocmd  FileType fzf set laststatus=0 noshowmode noruler
-  \| autocmd BufLeave <buffer> set laststatus=1 showmode noruler
+let g:fzf_nvim_statusline = 0
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Pmenu'],
   \ 'bg':      ['bg', 'Pmenu'],
@@ -272,16 +271,80 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
+autocmd! FileType fzf
+autocmd  FileType fzf set laststatus=0 noshowmode noruler
+  \| autocmd BufLeave <buffer> set laststatus=1 showmode noruler
+
+nnoremap <silent> <leader><space> :Files<cr>
+nnoremap <silent> <leader>p :Files<cr>
+nnoremap <silent> <leader>o :BTags<cr>
+nnoremap <silent> <leader>; :BLines<cr>
+nnoremap <silent> <leader>gl :Commits<cr>
+nnoremap <silent> <leader>gh :BCommits<cr>
+nnoremap <silent> <leader>? :History<cr>
+nnoremap <silent> <leader>d :DelBuffers<cr>
+nnoremap <leader>/ :Rg<space>
+
+function! s:list_buffers()
+  redir => list
+  silent ls
+  redir END
+  return split(list, "\n")
+endfunction
+
+function! s:format_buffer(b)
+  let l:name = bufname(a:b)
+  let l:name = empty(l:name) ? '[No Name]' : fnamemodify(l:name, ":p:~:.")
+  let l:flag = a:b == bufnr('')  ? '%' :
+          \ (a:b == bufnr('#') ? '#' : ' ')
+  let l:modified = getbufvar(a:b, '&modified') ? ' [+]' : ''
+  let l:readonly = getbufvar(a:b, '&modifiable') ? '' : ' [RO]'
+  let l:extra = join(filter([l:modified, l:readonly], '!empty(v:val)'), '')
+  return substitute(printf("[%s] %s\t%s\t%s", a:b, l:flag, l:name, l:extra), '^\s*\|\s*$', '', 'g')
+endfunction
+
+function! s:delete_buffers()
+  let l:preview_window = get(g:, 'fzf_preview_window', &columns >= 120 ? 'right': '')
+  let l:options = [
+  \   '-m',
+  \   '--tiebreak=index',
+  \   '-d', '\t',
+  \   '--prompt', 'Delete> '
+  \ ]
+  if len(l:preview_window)
+    let l:options = extend(l:options, get(fzf#vim#with_preview(
+          \   {"placeholder": "{2}"},
+          \   l:preview_window
+          \ ), 'options', []))
+  endif
+
+  return fzf#run(fzf#wrap({
+  \ 'source':  map(
+  \   filter(
+  \     range(1, bufnr('$')),
+  \     {_, nr -> buflisted(nr) && !getbufvar(nr, "&modified")}
+  \   ),
+  \   {_, nr -> s:format_buffer(nr)}
+  \ ),
+  \ 'sink*': {
+  \   lines -> execute('bdelete ' . join(map(lines, {
+  \     _, line -> substitute(split(line)[0], '^\[\|\]$', '', 'g')
+  \   })), 'silent!')
+  \ },
+  \ 'options': l:options,
+  \}))
+endfunction
+
+command! DelBuffers call s:delete_buffers()
+
+" Trying not to use these anymore and save my left pinky
+nnoremap <C-p> :Files<Cr>
+nnoremap <C-o> :BTags<Cr>
 
 " Tmux Navigator
 let g:tmux_navigator_no_mappings = 1
 nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
 nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
-
-" Ctrl-Space
-if has('nvim')
-  let g:CtrlSpaceDefaultMappingKey = "<C-space> "
-end
 
 " some basic snippets i use
 runtime snippets.vim
@@ -356,3 +419,5 @@ if filereadable(expand("~/.vimrc_background"))
     hi VertSplit ctermbg=NONE guibg=NONE
   end
 endif
+
+set statusline=%{expand('%:~:.')}

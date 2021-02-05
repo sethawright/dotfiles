@@ -145,6 +145,7 @@ call g:HL('phpVarSelector', g:colors.gui.blue, g:colors.cterm.blue, '', '', 'non
 
 " javascript
 call g:HL('jsExportDefault', g:colors.gui.red, g:colors.cterm.red, '', '', '')
+call g:HL('jsObjectColon', g:colors.gui.red, g:colors.cterm.red, '', '', '')
 call g:HL('jsReturn', g:colors.gui.red, g:colors.cterm.red, '', '', 'none')
 call g:HL('jsNull', g:colors.gui.blue, g:colors.cterm.blue, '', '', 'none')
 call g:HL('jsConditional', g:colors.gui.red, g:colors.cterm.red, '', '', 'none')

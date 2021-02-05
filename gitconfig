@@ -18,13 +18,17 @@
 	trustExitCode = true
 [alias] tree = log --graph --decorate --pretty=oneline --abbrev-commit
 [diff]
-	tool = vimdiff
+	tool = vscode
 [merge]
-	tool = fugitive
+	tool = vscode
 [difftool]
 	prompt = false
 [mergetool "fugitive"]
 	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+[difftool "vscode"]
+    cmd = code --wait --diff $LOCAL $REMOTE
+[mergetool "vscode"]
+    cmd = code --wait $MERGED
 [filter "media"]
 	required = true
 	clean = git media clean %f
@@ -36,3 +40,5 @@
 	process = git-lfs filter-process
 [credential]
 	helper = osxkeychain
+[pull]
+	rebase = false

@@ -220,9 +220,9 @@ mainBindings= {
   {'a', function()
     quitAll();
     launch('iTerm');
-    launch('Adium');
     launch('Slack');
     launch('Google Chrome');
+    -- launch('Adium');
     launch('Mail');
     launch('Todoist');
     end
@@ -629,7 +629,7 @@ end)
 --   hs.hints.windowHints(nil);
 -- end)
 
-hs.hotkey.bind({"cmd", "shift"}, "return", function()
+hs.hotkey.bind({"cmd", "alt"}, "return", function()
   local chrome = hs.application.find('Google Chrome')
   local firefox = hs.application.find('Firefox')
   local safari = hs.application.find('Safari')
@@ -652,7 +652,7 @@ hs.hotkey.bind({"cmd", "alt"}, "t", function()
   toggle_app('Todoist')
 end)
 
-hs.hotkey.bind({"alt", "shift"}, "return", function()
+hs.hotkey.bind({"alt"}, "return", function()
   local vscode = hs.application.find('Code')
   local iterm = hs.application.find('iTerm')
   local alacritty = hs.application.find('Alacritty')

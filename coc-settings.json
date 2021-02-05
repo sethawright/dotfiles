@@ -6,7 +6,7 @@
   "diagnostic.infoSign": "•",
   "diagnostic.hintSign": "•",
   "prettier.disableLanguages": [],
-  "intelephense.format.enable": true,
+  "intelephense.format.enable": false,
   "eslint.autoFixOnSave": true,
   "eslint.filetypes": ["javascript", "vue"],
   "git.addedSign.hlGroup": "GitGutterAdd",

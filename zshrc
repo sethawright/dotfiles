@@ -1,4 +1,5 @@
 KEYTIMEOUT=1
+ZSH_DISABLE_COMPFIX="true"
 
 export ZSH=/Users/seth/.oh-my-zsh
 plugins=( colorize tmux )
@@ -86,7 +87,6 @@ alias gs="git status"
 alias gl="gg l"
 alias gp="gg p"
 alias gpl="gg pl"
-alias fireclear="adb shell pm clear com.viewmedica.firetv.dev"
 
 alias work="tmux new-session -A -s work"
 alias endwork="tmux kill-session -t work"
@@ -101,7 +101,6 @@ alias andrew_report="WATSON_DIR=~/Dropbox/Watson/Andrew watson report"
 
 export EDITOR='vim'
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
-export WATSON_DIR=~/Dropbox/Watson/Seth/
 
 BASE16_SHELL="$HOME/.config/base16-shell/"
 [ -n "$PS1" ] && \
@@ -113,7 +112,7 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # set path
 export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/opt/ruby/bin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/lib/ruby/gems/2.6.0/bin:$PATH
 export PATH=$PATH:/users/seth/dropbox/swarm/web/script
-export PATH=$PATH:/Users/seth/Scripts
+export PATH=$PATH:/Users/seth/Documents/Scripts
 export PATH=$PATH:/Users/seth/Library/Android/sdk
 export PATH=$PATH:/Users/seth/Library/Android/sdk/platform-tools
 export PATH=$PATH:/Users/seth/Library/Android/sdk/tools
@@ -124,7 +123,6 @@ export PATH=$PATH:node_modules/.bin
 
 export ANDROID_HOME=/Users/seth/Library/Android/sdk
 export ANDROID_SDK_ROOT=/Users/seth/Library/Android/sdk
-export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
