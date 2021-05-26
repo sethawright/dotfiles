@@ -71,10 +71,10 @@ call g:HL('matGray1', '', '', g:colors.gui.gray1, g:colors.cterm.gray1, '')
 call g:HL('matGray2', '', '', g:colors.gui.gray2, g:colors.cterm.gray2, '')
 call g:HL('matGray3', '', '', g:colors.gui.gray3, g:colors.cterm.gray3, '')
 
-call g:HL('DiffAdd', g:colors.gui.green, g:colors.cterm.green, g:colors.gui.gray1, g:colors.cterm.gray1, '')
-call g:HL('DiffChange', g:colors.gui.yellow, g:colors.cterm.yellow, g:colors.gui.gray1, g:colors.cterm.gray1, '')
-call g:HL('DiffDelete', g:colors.gui.red, g:colors.cterm.red, g:colors.gui.gray1, g:colors.cterm.gray1, '')
-call g:HL('DiffText', g:colors.gui.blue, g:colors.cterm.blue, g:colors.gui.gray1, g:colors.cterm.gray1, '')
+call g:HL('DiffAdd', g:colors.gui.green, g:colors.cterm.green, g:colors.gui.bg, g:colors.cterm.bg, '')
+call g:HL('DiffChange', g:colors.gui.yellow, g:colors.cterm.yellow, g:colors.gui.bg, g:colors.cterm.bg, '')
+call g:HL('DiffDelete', g:colors.gui.red, g:colors.cterm.red, g:colors.gui.bg, g:colors.cterm.bg, '')
+call g:HL('DiffText', g:colors.gui.blue, g:colors.cterm.blue, g:colors.gui.bg, g:colors.cterm.bg, '')
 call g:HL('Directory', g:colors.gui.blue, g:colors.cterm.blue, '', '', '')
 call g:HL('ErrorMsg', g:colors.gui.red, g:colors.cterm.red, 'NONE', 'NONE', '')
 call g:HL('FoldColumn', g:colors.gui.orange, g:colors.cterm.orange, g:colors.gui.gray1, g:colors.cterm.gray1, '')
@@ -281,6 +281,9 @@ call g:HL('sassVariable', g:colors.gui.orange, g:colors.cterm.orange, '', '', ''
 
 " Vue
 call g:HL('vueSurroundingTag', g:colors.gui.cyan, g:colors.cterm.cyan, '', '', '')
+call g:HL('vueObjectFuncName', g:colors.gui.blue, g:colors.cterm.blue, '', '', '')
+call g:HL('vueObjectKey', g:colors.gui.blue, g:colors.cterm.blue, '', '', '')
+call g:HL('VueKey', g:colors.gui.cyan, g:colors.cterm.cyan, '', '', '')
 
 " Other stuff
 call g:HL('CursorLineNR', g:colors.gui.gray1, g:colors.cterm.gray1, g:colors.gui.inverse, g:colors.cterm.gray3, 'none')
@@ -302,3 +305,5 @@ let g:fzf_colors = {
       \ 'marker':  ['fg', 'Keyword'],
       \ 'spinner': ['fg', 'Label'],
       \ 'header':  ['fg', 'Comment'] }
+
+let g:indentLine_color_gui = g:colors.gui.gray4

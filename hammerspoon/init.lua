@@ -196,6 +196,21 @@ mainBindings= {
   {'2', function() quitAll(); applyLayout(layout2); end},
   {'3', function() quitAll(); applyLayout(layout3); end},
   {"'", function() quitAll(); hs.grid.maximizeWindow(); end},
+  {'=', function()
+      quitAll();
+      local windows = hs.window.allWindows()
+      for i, win in ipairs(windows) do
+        local f = win:frame()
+        local screen = win:screen()
+        local frame = screen:fullFrame()
+        f.x = frame.x
+        f.y = frame.y
+        f.w = frame.w
+        f.h = frame.h
+        win:setFrame(f)
+      end
+    end
+  },
   {'RETURN', function()
       quitAll();
       local win = hs.window.focusedWindow()
@@ -221,15 +236,14 @@ mainBindings= {
     quitAll();
     launch('iTerm');
     launch('Slack');
-    launch('Google Chrome');
-    -- launch('Adium');
+    launch('Google Chrome'); -- launch('Adium');
     launch('Mail');
-    launch('Todoist');
+    launch('Reminders');
     end
   },
   {'t', function()
     quitAll();
-    toggle_app('Todoist')
+    toggle_app('Reminders')
     end
   },
   {'J', hs.grid.pushWindowDown},
@@ -586,7 +600,7 @@ hs.hotkey.bind({"ctrl", "alt"}, 'UP', function()
   focused = hs.window.focusedWindow()
   screen = focused:screen()
   if focused:isFullScreen() then
-    focused:setFullScreen(false)
+    focsed:setFullScreen(false)
     focused:moveToScreen(screen:toNorth())
     hs.timer.doAfter(0.6, function()
       focused:setFullScreen(true)

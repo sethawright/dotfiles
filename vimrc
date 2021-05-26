@@ -1,4 +1,3 @@
-" vundle start
 set nocp
 filetype off
 set rtp+=/usr/local/bin/fzf
@@ -14,25 +13,21 @@ Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-commentary'
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeFind', 'NERDTreeToggle'] }
 Plug 'tpope/vim-fugitive'
 Plug 'mattn/emmet-vim'
 Plug 'christoomey/vim-tmux-navigator'
 
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
-Plug 'posva/vim-vue', { 'for': 'vue' }
+Plug 'posva/vim-vue', { 'for': ['vue'] }
 Plug 'dag/vim-fish', { 'for': ['fish'] }
-Plug 'pangloss/vim-javascript', { 'for': ['vue', 'javascript', 'json'] }
+Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 Plug 'jwalton512/vim-blade', { 'for': ['php', 'blade'] }
 Plug 'StanAngeloff/php.vim', { 'for': ['php'] }
-Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss', 'vue'] }
+Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss'] }
 Plug 'MaxMEllon/vim-jsx-pretty'
-
-" Plug 'cormacrelf/vim-colors-github'
-" Plug 'morhetz/gruvbox'
-" Plug 'dracula/vim'
-" Plug 'chriskempson/base16-vim'
+Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
 call plug#end()
 
 filetype plugin indent on
@@ -42,14 +37,10 @@ syntax enable
 let g:mapleader="\<space>"
 set mouse=
 
-if !has('nvim') && &ttimeoutlen == -1
-  set ttimeout
-  set ttimeoutlen=100
-endif
-
-if has('nvim')
-  let g:CtrlSpaceDefaultMappingKey = "<C-space> "
-endif
+set timeout
+set timeoutlen=300
+set ttimeout
+set ttimeoutlen=300
 
 " various config
 set backspace=indent,eol,start
@@ -241,6 +232,8 @@ nnoremap ,js :%!python -m json.tool<CR>
 " NERDTree
 let NERDTreeMinimalUI = 1
 let g:NERDTreeQuitOnOpen = 1
+nnoremap <silent> <leader>b :NERDTreeToggle<CR>
+nnoremap <silent> <leader>fb :NERDTreeFind<CR>
 nnoremap <silent> ,n :NERDTreeToggle<CR>
 nnoremap <silent> ,,n :NERDTreeFind<CR>
 let g:NERDTreeMapOpenSplit = 's'
@@ -279,8 +272,10 @@ nnoremap <silent> <leader><space> :Files<cr>
 nnoremap <silent> <leader>p :Files<cr>
 nnoremap <silent> <leader>o :BTags<cr>
 nnoremap <silent> <leader>; :BLines<cr>
+nnoremap <silent> <leader>f :GFiles?<cr>
 nnoremap <silent> <leader>gl :Commits<cr>
 nnoremap <silent> <leader>gh :BCommits<cr>
+nnoremap <silent> <leader>gd :Gdiff HEAD<cr>
 nnoremap <silent> <leader>? :History<cr>
 nnoremap <silent> <leader>d :DelBuffers<cr>
 nnoremap <leader>/ :Rg<space>
@@ -391,6 +386,10 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " Coc only does snippet and additional edit on confirm.
 " Or use `complete_info` if your vim support it, like:
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+if has('nvim')
+  let g:CtrlSpaceDefaultMappingKey = "<C-space> "
+endif
 
 " Terminal customizations
 let g:neoterm_autoinsert = 1

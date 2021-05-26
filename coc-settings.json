@@ -5,13 +5,14 @@
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",
   "diagnostic.hintSign": "•",
-  "prettier.disableLanguages": [],
+  "git.removedSign.text": "|",
+  "git.addedSign.text": "|",
+  "git.topRemovedSign.text": "|",
+  "git.changeRemovedSign.text": "|",
+  "git.changedSign.text": "|",
   "intelephense.format.enable": false,
   "eslint.autoFixOnSave": true,
-  "eslint.filetypes": ["javascript", "vue"],
-  "git.addedSign.hlGroup": "GitGutterAdd",
-  "git.changedSign.hlGroup": "GitGutterChange",
-  "git.removedSign.hlGroup": "GitGutterDelete",
-  "git.topRemovedSign.hlGroup": "GitGutterDelete",
-  "git.changeRemovedSign.hlGroup": "GitGutterChangeDelete"
+  "vetur.ignoreProjectWarning": true,
+  "vetur.format.enable": false,
+  "tailwindCSS.headwind.runOnSave": false
 }

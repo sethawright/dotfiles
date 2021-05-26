@@ -126,4 +126,4 @@ unset color_background
 
 # add a dotfile that vim can read when loading up
 # will automatically set the color scheme to nord
-echo "if !exists('g:colors_name') || g:colors_name != 'github'\nset termguicolors\ncolorscheme github\nendif" > ~/.vimrc_background
+echo "if !exists('g:colors_name') || g:colors_name != 'github'\nset termguicolors\ncolorscheme github\nset background=light\nendif" > ~/.vimrc_background
