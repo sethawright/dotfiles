@@ -3,27 +3,29 @@ filetype off
 set rtp+=/usr/local/bin/fzf
 
 " load plugins
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'lewis6991/gitsigns.nvim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'nvim-treesitter/nvim-treesitter', { 'do': 'TSUpdate' }
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'lewis6991/gitsigns.nvim'
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'tpope/vim-fugitive'
 Plug 'mattn/emmet-vim'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'windwp/nvim-autopairs'
 Plug 'jesseleite/vim-noh'
 Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+Plug 'vim-ctrlspace/vim-ctrlspace'
+" Plug 'romgrk/barbar.nvim'
 Plug 'posva/vim-vue', { 'for': ['vue'] }
 Plug 'dag/vim-fish', { 'for': ['fish'] }
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
@@ -43,6 +45,8 @@ let g:mapleader="\<space>"
 " various config
 set termguicolors
 set backspace=indent,eol,start
+set mouse=a
+set switchbuf=useopen,usetab
 set breakindent
 set autoindent
 set autoread
@@ -75,34 +79,60 @@ set showtabline=0
 
 nnoremap / /\v
 vnoremap / /\v
+nnoremap <A-,> :e $MYVIMRC<cr>
 
 " quick saves and quits
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
-tnoremap <leader>q <C-\><C-n>:q!<CR>
 nnoremap ,w :w<CR>
 nnoremap ,q :q<CR>
 tnoremap ,q <C-\><C-n>:q!<CR>
 
-" quickly toggle the terminal pane
-nnoremap ,t :TtoggleAll<CR>
-tnoremap ,t <C-\><C-n>:TtoggleAll<CR>
+" moving between windows
+nnoremap <silent> <A-t> :tabnew<CR>
+nnoremap <silent> <A-j> :tabn<CR>
+nnoremap <silent> <A-k> :tabp<CR>
+nnoremap <silent> <A-c> :bd<CR>
+nnoremap <silent> <A-n> :enew<cr>
+nnoremap <silent> <A-h> :bp<CR>
+nnoremap <silent> <A-l> :bn<CR>
 
-" tmux style moving between windows
-nnoremap ç :tabnew<CR>
-nnoremap ¬ :tabp<CR>
-nnoremap ˙ :tabn<CR>
-tnoremap ç <C-\><C-n>:tabnew<CR>
-tnoremap ¬ <C-\><C-n>:tabp<CR>
-tnoremap ˙ <C-\><C-n>:tabn<CR>
-tnoremap <C-n> <C-\><C-n>
+" buffer/tab navigation
+nnoremap <silent> <C-space> :CtrlSpace<CR>
+nnoremap <silent> <leader><space> :Buffers<CR>
+" nnoremap <silent> <leader><space> :ls<cr>:b<space>
+nnoremap <silent> <leader>v :buffers<cr>:vsp #
+nnoremap <silent> <leader>s :buffers<cr>:sp #
+nnoremap <leader>c :bd!<CR>
+nnoremap <leader>d :ls<CR>:bd!<space>
 
-" quicker exiting terminal insert mode
-tnoremap <C-l> <C-\><C-n><C-w>l
-tnoremap <C-h> <C-\><C-n><C-w>k
-if has('nvim')
-    autocmd BufEnter,BufNew term://* startinsert
-endif
+" find files
+nnoremap <leader>b :NvimTreeToggle<CR>
+nnoremap <leader>r :NvimTreeRefresh<CR>
+nnoremap <leader>e :NvimTreeFindFile<CR>
+nnoremap <silent> <leader>p :Files<cr>
+nnoremap <silent> <leader>o :BTags<cr>
+nnoremap <silent> <leader>; :BLines<cr>
+nnoremap <silent> <leader>f :GFiles?<cr>
+nnoremap <silent> <leader>gl :Commits<cr>
+nnoremap <silent> <leader>gh :BCommits<cr>
+nnoremap <silent> <leader>gd :Gdiff HEAD<cr>
+nnoremap <silent> <leader>? :History<cr>
+nnoremap <leader>/ :Rg<space>
+
+" terminal navigation
+nnoremap <silent> <leader>' :call seth#terminal#toggle()<cr>
+tnoremap <silent> <C-space> <C-\><C-n>:CtrlSpace<CR>
+tnoremap <silent> <A-n> <C-\><C-n>:call seth#terminal#create()<cr>
+tnoremap <silent> <leader>t <C-\><C-n>:call seth#terminal#create()<cr>
+tnoremap <silent> <A-c> <C-\><C-n>:bd!<cr>
+tnoremap <silent> <A-l> <C-\><C-n>:bn<cr>
+tnoremap <silent> <A-h> <C-\><C-n>:bp<cr>
+tnoremap <expr> <Esc> (&filetype == "fzf") ? "<Esc>" : "<c-\><c-n>"
+
+" Trying not to use these anymore and save my left pinky
+nnoremap <C-p> :Files<Cr>
+nnoremap <C-o> :BTags<Cr>
 
 " show hidden characters i usually dont want
 set listchars=""
@@ -190,11 +220,11 @@ nmap <C-k> [e
 nmap <C-j> ]e
 
 " flip multiple lines
-vnoremap <C-S-k> [egv
-vnoremap <C-S-j> ]egv
+vmap <C-k> [egv
+vmap <C-j> ]egv
 
 " size all splits equally
-nnoremap <silent> ≠ :wincmd =<cr>
+nnoremap <silent> <A-=> :wincmd =<cr>
 
 " toggle search highlighting
 nnoremap <silent> ,hs :set hlsearch! hlsearch?<CR>
@@ -251,26 +281,7 @@ let g:fzf_colors =
   \ 'header':  ['fg', 'Comment'] }
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
-  \| autocmd BufLeave <buffer> set laststatus=1 showmode noruler
-
-nnoremap <leader>b :NvimTreeToggle<CR>
-nnoremap <leader>r :NvimTreeRefresh<CR>
-nnoremap <leader>e :NvimTreeFindFile<CR>
-nnoremap <silent> <leader><space> :Buffers<cr>
-nnoremap <silent> <c-space> :Buffers<cr>
-nnoremap <silent> <leader>p :Files<cr>
-nnoremap <silent> <leader>o :BTags<cr>
-nnoremap <silent> <leader>; :BLines<cr>
-nnoremap <silent> <leader>f :GFiles?<cr>
-nnoremap <silent> <leader>gl :Commits<cr>
-nnoremap <silent> <leader>gh :BCommits<cr>
-nnoremap <silent> <leader>gd :Gdiff HEAD<cr>
-nnoremap <silent> <leader>? :History<cr>
-nnoremap <leader>/ :Rg<space>
-
-" Trying not to use these anymore and save my left pinky
-nnoremap <C-p> :Files<Cr>
-nnoremap <C-o> :BTags<Cr>
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode noruler
 
 " Tmux Navigator
 let g:tmux_navigator_no_mappings = 1
@@ -308,17 +319,9 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " Or use `complete_info` if your vim support it, like:
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-" Terminal customizations
-let g:neoterm_autoinsert = 1
-let g:neoterm_default_mod = 'botright'
-nnoremap « :vert Tnew<CR>
-nnoremap ‘ :botright Tnew<CR>
-tnoremap « <C-\><C-n>:vert Tnew<CR>
-tnoremap ‘ <C-\><C-n>:belowright Tnew<CR>
-
 " set background based on terminal active theme
 if filereadable(expand("~/.vimrc_background"))
   source ~/.vimrc_background
 endif
 
-lua require("sw.init")
+lua require("sw")

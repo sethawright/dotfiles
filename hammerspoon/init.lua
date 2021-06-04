@@ -593,6 +593,7 @@ hs.hotkey.bind({"ctrl", "alt"}, 'LEFT', function()
     end)
   else
     focused:moveToScreen(screen:toWest())
+    hs.grid.snap(focused);
   end
 end)
 
@@ -607,6 +608,7 @@ hs.hotkey.bind({"ctrl", "alt"}, 'UP', function()
     end)
   else
     focused:moveToScreen(screen:toNorth())
+    hs.grid.snap(focused);
   end
 end)
 
@@ -621,6 +623,7 @@ hs.hotkey.bind({"ctrl", "alt"}, 'RIGHT', function()
     end)
   else
     focused:moveToScreen(screen:toEast())
+    hs.grid.snap(focused);
   end
 end)
 
@@ -635,6 +638,7 @@ hs.hotkey.bind({"ctrl", "alt"}, 'DOWN', function()
     end)
   else
     focused:moveToScreen(screen:toSouth())
+    hs.grid.snap(focused);
   end
 end)
 
