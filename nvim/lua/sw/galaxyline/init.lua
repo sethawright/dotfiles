@@ -246,41 +246,41 @@ table.insert(gls.right, {
     }
 })
 
-table.insert(gls.right, {
-    CurProject = {
-        provider = function()
-          return "  " .. project().project
-        end,
-        condition = condition.hide_in_width,
-        separator = ' ',
-        separator_highlight = {'NONE', colors.bg},
-        highlight = {colors.green, colors.bg}
-    }
-})
+-- table.insert(gls.right, {
+--     CurProject = {
+--         provider = function()
+--           return "  " .. project().project
+--         end,
+--         condition = condition.hide_in_width,
+--         separator = ' ',
+--         separator_highlight = {'NONE', colors.bg},
+--         highlight = {colors.green, colors.bg}
+--     }
+-- })
 
-table.insert(gls.right, {
-    CurDate = {
-        provider = function()
-          return '  ' .. project().date
-        end,
-        condition = condition.hide_in_width,
-        separator = ' ',
-        separator_highlight = {'NONE', colors.bg},
-        highlight = {colors.blue, colors.bg}
-    }
-})
+-- table.insert(gls.right, {
+--     CurDate = {
+--         provider = function()
+--           return '  ' .. project().date
+--         end,
+--         condition = condition.hide_in_width,
+--         separator = ' ',
+--         separator_highlight = {'NONE', colors.bg},
+--         highlight = {colors.blue, colors.bg}
+--     }
+-- })
 
-table.insert(gls.right, {
-    CurTime = {
-        provider = function()
-          return '  ' .. project().time
-        end,
-        condition = condition.hide_in_width,
-        separator = ' ',
-        separator_highlight = {'NONE', colors.bg},
-        highlight = {colors.purple, colors.bg}
-    }
-})
+-- table.insert(gls.right, {
+--     CurTime = {
+--         provider = function()
+--           return '  ' .. project().time
+--         end,
+--         condition = condition.hide_in_width,
+--         separator = ' ',
+--         separator_highlight = {'NONE', colors.bg},
+--         highlight = {colors.purple, colors.bg}
+--     }
+-- })
 
 table.insert(gls.right, {
     ViModeEnd = {

@@ -18,13 +18,13 @@
 	trustExitCode = true
 [alias] tree = log --graph --decorate --pretty=oneline --abbrev-commit
 [diff]
-	tool = vscode
+	tool = fugitive
 [merge]
-	tool = vscode
+	tool = fugitive
 [difftool]
 	prompt = false
 [mergetool "fugitive"]
-	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+	cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
 [difftool "vscode"]
     cmd = code --wait --diff $LOCAL $REMOTE
 [mergetool "vscode"]
@@ -42,3 +42,5 @@
 	helper = osxkeychain
 [pull]
 	rebase = false
+[submodule]
+	recurse = true

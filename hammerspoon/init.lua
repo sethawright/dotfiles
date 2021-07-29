@@ -80,38 +80,26 @@ layout3 = {
 
 -- A global variable for the Hyper Mode
 k = hs.hotkey.modal.new({'cmd'}, 'escape')
-function k:entered() s:exit(); d:exit(); w:exit(); e:exit(); o:exit() i:exit(); p:exit(); u:exit(); f:exit(); end
+function k:entered() d:exit(); o:exit() i:exit(); p:exit(); u:exit(); f:exit(); end
 
 -- used if you are ok pressing three triggers
-s = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 's', 'Size (From Bottom left)')
-function s:entered() f:exit(); u:exit(); w:exit(); e:exit(); d:exit(); k:exit(); o:exit(); i:exit(); p:exit(); end
-
-d = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'd', 'Size (From Bottom right)')
-function d:entered() f:exit(); u:exit(); s:exit(); w:exit(); e:exit(); k:exit(); o:exit(); i:exit(); p:exit(); end
-
-w = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'w', 'Size (From top left)')
-function w:entered() f:exit(); u:exit(); s:exit(); e:exit(); d:exit(); k:exit(); o:exit(); i:exit(); p:exit(); end
-
-e = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'e', 'Size (From top right)')
-function e:entered() f:exit(); u:exit(); s:exit(); w:exit(); d:exit(); k:exit(); o:exit(); i:exit(); p:exit(); end
-
 o = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'o', 'Open')
-function o:entered() f:exit(); u:exit(); w:exit(); e:exit(); d:exit(); k:exit(); s:exit(); i:exit(); p:exit(); end
+function o:entered() f:exit(); u:exit(); d:exit(); k:exit(); i:exit(); p:exit(); end
 
 i = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'i', 'Small')
-function i:entered() f:exit(); u:exit(); w:exit(); e:exit(); d:exit(); k:exit(); s:exit(); o:exit(); p:exit(); end
+function i:entered() f:exit(); u:exit(); d:exit(); k:exit(); o:exit(); p:exit(); end
 
 p = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'p', 'Large')
-function p:entered() f:exit(); u:exit(); w:exit(); e:exit(); d:exit(); k:exit(); s:exit(); o:exit(); i:exit(); end
+function p:entered() f:exit(); u:exit(); d:exit(); k:exit(); o:exit(); i:exit(); end
 
 u = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'u', 'Half')
-function u:entered() f:exit(); p:exit(); w:exit(); e:exit(); d:exit(); k:exit(); s:exit(); o:exit(); i:exit(); end
+function u:entered() f:exit(); p:exit(); d:exit(); k:exit(); o:exit(); i:exit(); end
 
 f = hs.hotkey.modal.new({'cmd', 'option', 'shift'}, 'f', 'Focus')
-function f:entered() u:exit(); p:exit(); w:exit(); e:exit(); d:exit(); k:exit(); s:exit(); o:exit(); i:exit(); end
+function f:entered() u:exit(); p:exit(); d:exit(); k:exit(); o:exit(); i:exit(); end
 
 quitAll = function(omit)
-  f:exit(); u:exit(); d:exit(); i:exit(); o:exit(); s:exit(); p:exit(); e:exit(); w:exit();
+  f:exit(); u:exit(); d:exit(); i:exit(); o:exit(); p:exit();
   if omit ~= true then
     k:exit();
   end
@@ -125,10 +113,6 @@ end)
 
 -- Bind the Hyper key
 k:bind({}, 'escape', quitAll)
-s:bind({}, 'escape', quitAll)
-d:bind({}, 'escape', quitAll)
-w:bind({}, 'escape', quitAll)
-e:bind({}, 'escape', quitAll)
 o:bind({}, 'escape', quitAll)
 i:bind({}, 'escape', quitAll)
 p:bind({}, 'escape', quitAll)
@@ -139,11 +123,6 @@ f:bind({}, 'escape', quitAll)
 k:bind({}, 'm', nil, function()
   quitAll(); k:enter();
 end, function() end)
-
-s = hs.hotkey.modal.new({})
-pressedS = function() quitAll(true); s:enter(); end
-releasedS = function() end
-k:bind({}, 's', nil, pressedS, releasedS)
 
 d = hs.hotkey.modal.new({})
 pressedD = function() quitAll(true); d:enter(); end
@@ -239,11 +218,7 @@ mainBindings= {
     launch('Google Chrome'); -- launch('Adium');
     launch('Mail');
     launch('Reminders');
-    end
-  },
-  {'t', function()
-    quitAll();
-    toggle_app('Reminders')
+    launch('Notes');
     end
   },
   {'J', hs.grid.pushWindowDown},
@@ -270,10 +245,6 @@ sBindings = {
     end
   },
 }
-
-for b, lay in ipairs(sBindings) do
-  s:bind({}, lay[1], function() lay[2](); end)
-end
 
 dBindings = {
   {'J', hs.grid.resizeWindowTaller},
@@ -338,10 +309,6 @@ wBindings = {
     end
   },
 }
-
-for b, lay in ipairs(wBindings) do
-  w:bind({}, lay[1], function() lay[2](); end)
-end
 
 pBindings = {
   {'H', function()
@@ -475,16 +442,15 @@ end
 
 -- Open applications
 apps = {
+  {'a', 'Alacritty'},
+  {'g', 'Google Chrome'},
   {'c', 'Google Chrome'},
   {'e', 'Mail'},
-  {'t', 'Alacritty'},
-  {'i', 'Alacritty'},
+  {'m', 'Mail'},
+  {'t', 'iTerm'},
   {'f', 'Finder'},
   {'s', 'Slack'},
-  {'m', 'Messages'},
-  {'q', 'Sequel Pro'},
-  {'p', 'Spotify'},
-  {'v', 'MacVim'},
+  {'v', 'Visual Studio Code'},
 }
 for f, app in ipairs(apps) do
   o:bind({}, app[1], function() launch(app[2]); o:exit(); k:exit(); end)

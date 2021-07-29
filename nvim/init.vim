@@ -7,26 +7,28 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/playground'
+" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" Plug 'nvim-treesitter/playground'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-commentary'
+Plug 'tomtom/tcomment_vim'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'lewis6991/gitsigns.nvim'
+Plug 'lewis6991/gitsigns.nvim', {'branch': 'main'}
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-speeddating'
 Plug 'mattn/emmet-vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jesseleite/vim-noh'
-Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
+Plug 'glepnir/galaxyline.nvim', {'branch': 'main'}
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'vim-ctrlspace/vim-ctrlspace'
 " Plug 'romgrk/barbar.nvim'
 Plug 'posva/vim-vue', { 'for': ['vue'] }
+Plug 'leafOfTree/vim-vue-plugin', { 'for': ['vue'] }
 Plug 'dag/vim-fish', { 'for': ['fish'] }
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 Plug 'jwalton512/vim-blade', { 'for': ['php', 'blade'] }
@@ -80,13 +82,14 @@ set showtabline=0
 nnoremap / /\v
 vnoremap / /\v
 nnoremap <A-,> :e $MYVIMRC<cr>
+nnoremap ≤ :e $MYVIMRC<cr>
 
 " quick saves and quits
-nnoremap <leader>w :w<CR>
-nnoremap <leader>q :q<CR>
-nnoremap ,w :w<CR>
-nnoremap ,q :q<CR>
-tnoremap ,q <C-\><C-n>:q!<CR>
+nnoremap <silent> <leader>w :w<CR>
+nnoremap <silent> <leader>q :q<CR>
+nnoremap <silent> ,w :w<CR>
+nnoremap <silent> ,q :q<CR>
+tnoremap <silent> ,q <C-\><C-n>:q!<CR>
 
 " moving between windows
 nnoremap <silent> <A-t> :tabnew<CR>
@@ -123,6 +126,7 @@ nnoremap <leader>/ :Rg<space>
 " terminal navigation
 nnoremap <silent> <leader>' :call seth#terminal#toggle()<cr>
 tnoremap <silent> <C-space> <C-\><C-n>:CtrlSpace<CR>
+tnoremap <silent> <leader>' <C-\><C-n>:call seth#terminal#toggle()<cr>
 tnoremap <silent> <A-n> <C-\><C-n>:call seth#terminal#create()<cr>
 tnoremap <silent> <leader>t <C-\><C-n>:call seth#terminal#create()<cr>
 tnoremap <silent> <A-c> <C-\><C-n>:bd!<cr>
@@ -225,6 +229,7 @@ vmap <C-j> ]egv
 
 " size all splits equally
 nnoremap <silent> <A-=> :wincmd =<cr>
+nnoremap <silent> ≠ :wincmd =<cr>
 
 " toggle search highlighting
 nnoremap <silent> ,hs :set hlsearch! hlsearch?<CR>
@@ -246,7 +251,7 @@ autocmd FileType vue syntax sync fromstart
 " vimrc refresh automatically
 augroup myvimrc
   au!
-  au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,.vimrc_background so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+  au BufWritePost init.vim,.vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,.vimrc_background so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
 
 " force vimrc refresh
