@@ -4,7 +4,7 @@ if exists('syntax_on')
   syntax reset
 endif
 
-let g:colors_name = 'minlight'
+let g:colors_name = 'mindark'
 let g:colors = {'gui' : {} , 'cterm' : {}}
 
 let g:colors.cterm.cursor    = 'NONE'
@@ -20,18 +20,18 @@ let g:colors.cterm.blue      = '4'
 let g:colors.cterm.purple    = '5'
 
 let g:colors.gui.cursor      = '#E7F3FF'
-let g:colors.gui.fg          = '#000000'
-let g:colors.gui.bg          = '#ffffff'
+let g:colors.gui.fg          = '#bbbbbb'
+let g:colors.gui.bg          = '#1f1f1f'
 let g:colors.gui.offwhite    = '#c7c7c7'
-let g:colors.gui.inverse     = '#eff1f2'
-let g:colors.gui.gray4       = '#eff1f2'
-let g:colors.gui.gray3       = '#b0bec5'
-let g:colors.gui.gray2       = '#c4cfd4'
-let g:colors.gui.gray1       = '#7e939e'
-let g:colors.gui.red         = '#d32f2f'
-let g:colors.gui.green       = '#22863a'
-let g:colors.gui.blue        = '#1976d2'
-let g:colors.gui.purple      = '#6f42c1'
+let g:colors.gui.inverse     = '#303030'
+let g:colors.gui.gray4       = '#292929'
+let g:colors.gui.gray3       = '#6b737c'
+let g:colors.gui.gray2       = '#6b737c'
+let g:colors.gui.gray1       = '#bbbbbb'
+let g:colors.gui.red         = '#FF7A84'
+let g:colors.gui.green       = '#FFAB70'
+let g:colors.gui.blue        = '#79b8ff'
+let g:colors.gui.purple      = '#b392f0'
 
 function! g:HL(group, guifg, ctermfg, guibg, ctermbg, attr)
   let l:attr = a:attr

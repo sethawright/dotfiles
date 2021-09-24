@@ -6,23 +6,15 @@ set rtp+=/usr/local/bin/fzf
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'lewis6991/gitsigns.nvim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'nvim-treesitter/nvim-treesitter', { 'do': 'TSUpdate' }
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
-Plug 'kyazdani42/nvim-web-devicons' " for file icons
-Plug 'kyazdani42/nvim-tree.lua'
 Plug 'tpope/vim-fugitive'
 Plug 'mattn/emmet-vim'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'windwp/nvim-autopairs'
 Plug 'jesseleite/vim-noh'
-Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'posva/vim-vue', { 'for': ['vue'] }
 Plug 'dag/vim-fish', { 'for': ['fish'] }
@@ -119,7 +111,7 @@ set splitright
 set fillchars+=vert:│
 
 " status bar is hidden if only one split
-set laststatus=2
+set laststatus=1
 
 " helps for finding files
 set wildmode=longest:full,full
@@ -286,39 +278,8 @@ let g:goyo_width = '50%'
 " Markdown no folding
 let g:vim_markdown_folding_disabled = 1
 
-" Coc stuff
-"" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-" Or use `complete_info` if your vim support it, like:
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-" Terminal customizations
-let g:neoterm_autoinsert = 1
-let g:neoterm_default_mod = 'botright'
-nnoremap « :vert Tnew<CR>
-nnoremap ‘ :botright Tnew<CR>
-tnoremap « <C-\><C-n>:vert Tnew<CR>
-tnoremap ‘ <C-\><C-n>:belowright Tnew<CR>
-
 " set background based on terminal active theme
 if filereadable(expand("~/.vimrc_background"))
+  set termguicolors
   source ~/.vimrc_background
 endif
-
-lua require("sw.init")

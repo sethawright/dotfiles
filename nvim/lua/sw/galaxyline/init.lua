@@ -1,27 +1,27 @@
 local gl = require('galaxyline')
--- get my theme in galaxyline repo
--- local colors = require('galaxyline.theme').default
+-- local colors = require('nightfox.colors').load()
 
-local vimcolors = vim.g.colors.gui;
+-- get my theme in galaxyline repo
+local colors = vim.g.colors.gui
 
 local colors = {
-  bg = vimcolors.gray4,
-  lg = vimcolors.gray3,
-  yellow = vimcolors.yellow,
-  dark_yellow = vimcolors.yellow,
-  cyan = vimcolors.cyan,
-  green = vimcolors.green,
-  light_green = vimcolors.green,
-  orange = vimcolors.orange,
-  string_orange = vimcolors.orange,
-  purple = vimcolors.purple,
-  magenta = vimcolors.purple,
-  light_blue = vimcolors.blue,
-  blue = vimcolors.blue,
-  vivid_blue = vimcolors.blue,
-  red = vimcolors.red,
-  error_red = vimcolors.red,
-  info_yellow = vimcolors.yellow,
+  bg = colors.gray3,
+  lg = colors.gray2,
+  yellow = colors.yellow,
+  dark_yellow = colors.yellow,
+  cyan = colors.cyan,
+  green = colors.green,
+  light_green = colors.green,
+  orange = colors.orange,
+  string_orange = colors.orange,
+  purple = colors.purple,
+  magenta = colors.purple,
+  light_blue = colors.blue,
+  blue = colors.blue,
+  vivid_blue = colors.blue,
+  red = colors.red,
+  error_red = colors.red,
+  info_yellow = colors.yellow,
 }
 
 local condition = require('galaxyline.condition')

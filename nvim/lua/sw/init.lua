@@ -2,5 +2,5 @@
 -- require('sw.barbar')
 require('sw.galaxyline')
 require('sw.gitsigns')
--- require('sw.treesitter')
+require('sw.treesitter')
 require('sw.nvimtree')

@@ -215,10 +215,7 @@ mainBindings= {
     quitAll();
     launch('iTerm');
     launch('Slack');
-    launch('Google Chrome'); -- launch('Adium');
-    launch('Mail');
-    launch('Reminders');
-    launch('Notes');
+    launch('Google Chrome');
     end
   },
   {'J', hs.grid.pushWindowDown},

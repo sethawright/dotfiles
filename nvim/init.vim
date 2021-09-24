@@ -7,8 +7,8 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-" Plug 'nvim-treesitter/playground'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
@@ -26,16 +26,16 @@ Plug 'jesseleite/vim-noh'
 Plug 'glepnir/galaxyline.nvim', {'branch': 'main'}
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'vim-ctrlspace/vim-ctrlspace'
+Plug 'EdenEast/nightfox.nvim'
 " Plug 'romgrk/barbar.nvim'
-Plug 'posva/vim-vue', { 'for': ['vue'] }
-Plug 'leafOfTree/vim-vue-plugin', { 'for': ['vue'] }
-Plug 'dag/vim-fish', { 'for': ['fish'] }
-Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
-Plug 'jwalton512/vim-blade', { 'for': ['php', 'blade'] }
-Plug 'StanAngeloff/php.vim', { 'for': ['php'] }
-Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss'] }
-Plug 'MaxMEllon/vim-jsx-pretty'
-Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
+" Plug 'leafOfTree/vim-vue-plugin'
+" Plug 'dag/vim-fish'
+" Plug 'pangloss/vim-javascript'
+" Plug 'jwalton512/vim-blade'
+" Plug 'StanAngeloff/php.vim'
+" Plug 'cakebaker/scss-syntax.vim'
+" Plug 'MaxMEllon/vim-jsx-pretty'
+" Plug 'leafgarland/typescript-vim'
 call plug#end()
 
 filetype plugin indent on
