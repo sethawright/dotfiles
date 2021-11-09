@@ -6,7 +6,7 @@ set rtp+=/usr/local/bin/fzf
 call plug#begin('~/.config/nvim/plugged')
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
 Plug 'tpope/vim-rhubarb'
@@ -26,16 +26,8 @@ Plug 'jesseleite/vim-noh'
 Plug 'glepnir/galaxyline.nvim', {'branch': 'main'}
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'vim-ctrlspace/vim-ctrlspace'
-Plug 'EdenEast/nightfox.nvim'
-" Plug 'romgrk/barbar.nvim'
-" Plug 'leafOfTree/vim-vue-plugin'
-" Plug 'dag/vim-fish'
-" Plug 'pangloss/vim-javascript'
-" Plug 'jwalton512/vim-blade'
-" Plug 'StanAngeloff/php.vim'
-" Plug 'cakebaker/scss-syntax.vim'
-" Plug 'MaxMEllon/vim-jsx-pretty'
-" Plug 'leafgarland/typescript-vim'
+Plug 'windwp/nvim-autopairs'
+" Plug 'sheerun/vim-polyglot'
 call plug#end()
 
 filetype plugin indent on

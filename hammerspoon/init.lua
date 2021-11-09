@@ -216,6 +216,7 @@ mainBindings= {
     launch('iTerm');
     launch('Slack');
     launch('Google Chrome');
+    launch('Mail');
     end
   },
   {'J', hs.grid.pushWindowDown},
