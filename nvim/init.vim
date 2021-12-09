@@ -6,7 +6,7 @@ set rtp+=/usr/local/bin/fzf
 call plug#begin('~/.config/nvim/plugged')
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
 Plug 'tpope/vim-rhubarb'
@@ -26,8 +26,6 @@ Plug 'jesseleite/vim-noh'
 Plug 'glepnir/galaxyline.nvim', {'branch': 'main'}
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'vim-ctrlspace/vim-ctrlspace'
-Plug 'windwp/nvim-autopairs'
-" Plug 'sheerun/vim-polyglot'
 call plug#end()
 
 filetype plugin indent on
@@ -311,10 +309,10 @@ endfunction
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-" Or use `complete_info` if your vim support it, like:
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " set background based on terminal active theme
 if filereadable(expand("~/.vimrc_background"))
