@@ -1,10 +1,10 @@
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
-vim.keymap.set("n", "<C-h>", "<C-w>h")
-vim.keymap.set("n", "<C-j>", "<C-w>j")
-vim.keymap.set("n", "<C-k>", "<C-w>k")
-vim.keymap.set("n", "<C-l>", "<C-w>l")
+-- vim.keymap.set("n", "<C-h>", "<C-w>h")
+-- vim.keymap.set("n", "<C-j>", "<C-w>j")
+-- vim.keymap.set("n", "<C-k>", "<C-w>k")
+-- vim.keymap.set("n", "<C-l>", "<C-w>l")
 
 vim.keymap.set("n", "<A-j>", ":m .+1<cr>==")
 vim.keymap.set("v", "<A-j>", ":m '>+1<cr>gv=gv")
@@ -30,8 +30,8 @@ vim.keymap.set("n", "<leader>gc", "<cmd>Telescope git_commits<cr>", { desc = "Go
 vim.keymap.set("n", "<leader>gb", "<cmd>Telescope git_branches<cr>", { desc = "Goto branch" })
 vim.keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<cr>", { desc = "Goto branch" })
 vim.keymap.set("n", "<leader>o", function()
-	local util = require("plugins.telescope")
-	util.symbols()
+  local util = require("plugins.telescope")
+  util.symbols()
 end, { desc = "Goto symbol" })
 
 vim.keymap.set("n", "<leader>b", "<cmd>Neotree toggle<cr>", { desc = "Show file explorer" })

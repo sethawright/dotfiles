@@ -5,6 +5,8 @@ local gitsigns = require("plugins.gitsigns")
 local illuminate = require("plugins.illuminate")
 local trouble = require("plugins.trouble")
 local github = require("plugins.github")
+local tmux = require("plugins.tmux")
+local comment = require("plugins.comment")
 
 local plugins = {
   { "nvim-lua/plenary.nvim", lazy = true },
@@ -14,12 +16,14 @@ local plugins = {
   { "github/copilot.vim" },
 
   lsp,
+  comment,
   telescope,
   neotree,
   gitsigns,
   illuminate,
   trouble,
   github,
+  tmux,
 }
 
 return plugins
