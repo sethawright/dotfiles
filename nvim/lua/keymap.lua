@@ -34,6 +34,9 @@ vim.keymap.set("n", "<leader>o", function()
   util.symbols()
 end, { desc = "Goto symbol" })
 
+vim.keymap.set("n", "<leader>w", "<cmd>:w<cr>")
+vim.keymap.set("n", ",w", "<cmd>:w<cr>")
+
 vim.keymap.set("n", "<leader>b", "<cmd>Neotree toggle<cr>", { desc = "Show file explorer" })
 vim.keymap.set("n", "<leader>e", "<cmd>Neotree toggle<cr>", { desc = "Show file explorer" })
 
