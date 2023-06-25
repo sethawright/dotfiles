@@ -8,8 +8,8 @@ return {
       end,
     },
     keys = {
-      { "<leader><space>", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
       { "<C-space>", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
+      { "<leader><space>", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
       { "<leader>p", "<cmd>Telescope find_files<cr>", desc = "Find Files (root dir)" },
       { "<leader>su", "<cmd>Telescope undo<cr>", desc = "Undo history" },
       {
@@ -46,6 +46,12 @@ return {
               end,
             },
             n = {
+              ["v"] = function(...)
+                require("telescope.actions").file_vsplit(...)
+              end,
+              ["s"] = function(...)
+                require("telescope.actions").file_split(...)
+              end,
               ["d"] = function(...)
                 require("telescope.actions").delete_buffer(...)
               end,
@@ -85,6 +91,12 @@ return {
             end,
           },
           n = {
+            ["v"] = function(...)
+              require("telescope.actions").file_vsplit(...)
+            end,
+            ["s"] = function(...)
+              require("telescope.actions").file_split(...)
+            end,
             ["<C-n>"] = function(...)
               return require("telescope.actions").preview_scrolling_down(...)
             end,

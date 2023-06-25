@@ -14,6 +14,10 @@ alias e="nvim"
 alias vim="nvim"
 alias m="nvim"
 alias s="subl ."
+alias cleanup_branches="git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | grep -v '\*' | xargs -r git branch -D"
+
+bind -s -k nul ~/dotfiles/scripts/tmux-sessionizer
+alias tms="~/dotfiles/scripts/tmux-sessionizer"
 
 # quick theme switching
 alias darker='ln -sf ~/dotfiles/materitermdarkmode.sh ~/.base16_theme  && eval sh '"'(realpath ~/.base16_theme)'"''
@@ -57,14 +61,27 @@ alias endwork="tmux kill-session -t work"
 
 set -gx EDITOR nvim
 set -gx FZF_DEFAULT_COMMAND 'rg --files --hidden --follow --glob "!{node_modules/*,vendor/*,.git/*}"'
-set VAGRANT_DEFAULT_PROVIDER "parallels"
+
+set VAGRANT_DEFAULT_PROVIDER parallels
+set ANDROID_HOME ~/Library/Android/sdk
 
 # set path
 set PATH /usr/local/bin /opt/homebrew/bin /usr/local/sbin /usr/local/opt/ruby/bin /usr/bin /usr/bin /bin /usr/sbin /sbin /opt/X11/bin $PATH
+set PATH $PATH:/Users/sethwright/.cargo/bin
 set PATH $PATH vendor/bin
 set PATH $PATH node_modules/.bin
+set PATH $PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
 
 status --is-interactive; and rbenv init - fish | source
 
-set -gx PNPM_HOME "/Users/sethwright/Library/pnpm"
+set -gx PNPM_HOME /Users/sethwright/Library/pnpm
 set -gx PATH "$PNPM_HOME" $PATH
+
+if status is-interactive
+    and not set -q TMUX
+    if tmux has-session -t home
+        exec tmux attach-session -t home
+    else
+        tmux new-session -s home
+    end
+end

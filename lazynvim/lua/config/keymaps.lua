@@ -9,9 +9,6 @@ vim.keymap.set("n", "<leader>q", "<cmd>:q<cr>", { desc = "Quit" })
 vim.keymap.set("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
 vim.keymap.set("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
 
-vim.keymap.set("n", "<leader>b", "<cmd>Neotree toggle<cr>", { desc = "Show file explorer" })
-vim.keymap.set("n", "<leader>e", "<cmd>Neotree toggle<cr>", { desc = "Show file explorer" })
-
 vim.keymap.set("n", "+", "<cmd>wincmd =<cr>", { silent = true })
 vim.keymap.set("n", "=", "<cmd>vertical resize +10<cr>", { silent = true })
 vim.keymap.set("n", "-", "<cmd>vertical resize -10<cr>", { silent = true })
@@ -20,3 +17,6 @@ vim.keymap.set("n", ",tw", "<cmd>set invwrap<CR><cmd>set wrap?<CR><cmd>set lineb
 vim.keymap.set("n", ",,a", "ggVG", { desc = "Select entire file" })
 vim.keymap.del("v", "<")
 vim.keymap.del("v", ">")
+
+vim.keymap.set({ "n", "v" }, "<PageUp>", "<C-u>", { silent = true })
+vim.keymap.set({ "n", "v" }, "<PageDown>", "<C-d>", { silent = true })

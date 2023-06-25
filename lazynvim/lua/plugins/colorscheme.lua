@@ -1,13 +1,14 @@
 return {
-  -- add gruvbox
+  -- add github
   {
     "projekt0n/github-nvim-theme",
-    tag = "v0.0.7",
     config = function()
       require("github-theme").setup({})
       require("util").setColorScheme()
     end,
   },
+
+  { "catppuccin/nvim", name = "catppuccin" },
 
   -- Configure LazyVim to load gruvbox
   {
