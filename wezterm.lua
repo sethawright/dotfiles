@@ -27,12 +27,75 @@ end
 
 config.color_scheme = "AdventureTime"
 config.enable_tab_bar = false
-
 config.font = wezterm.font("SFMono Nerd Font", { weight = "Regular", stretch = "Normal", style = "Normal" }) -- (AKA: SF Mono) /Users/sethwright/Library/Fonts/SFMono Regular Nerd Font Complete.otf, CoreText
-config.font_size = 12.0
-config.line_height = 1.2
+config.font_size = 13.0
+config.line_height = 1.1
 config.color_scheme_dirs = { "/Users/sethwright/dotfiles/wezterm-themes/" }
 config.color_scheme = scheme_for_appearance(get_appearance())
 config.window_close_confirmation = "NeverPrompt"
+config.window_decorations = "RESIZE"
+config.keys = {
+	{
+		key = "]",
+		mods = "SUPER",
+		action = wezterm.action({
+			SendString = "¬",
+		}),
+	},
+	{
+		key = "[",
+		mods = "SUPER",
+		action = wezterm.action({
+			SendString = "˙",
+		}),
+	},
+	{
+		key = "z",
+		mods = "SUPER",
+		action = wezterm.action({
+			SendString = "⌟",
+		}),
+	},
+	{
+		key = "n",
+		mods = "SUPER",
+		action = wezterm.action({
+			SendString = "ç",
+		}),
+	},
+	{
+		key = "t",
+		mods = "SUPER",
+		action = wezterm.action({
+			SendString = "ç",
+		}),
+	},
+	{
+		key = "w",
+		mods = "SUPER",
+		action = wezterm.action({
+			SendString = "≈",
+		}),
+	},
+	{
+		key = "r",
+		mods = "SUPER",
+		action = wezterm.action({
+			SendString = "÷",
+		}),
+	},
+	{
+		key = "\\",
+		mods = "CMD",
+		action = wezterm.action({
+			SendString = "«",
+		}),
+	},
+	{
+		key = "F",
+		mods = "CMD|SHIFT",
+		action = wezterm.action.ToggleFullScreen,
+	},
+}
 
 return config
