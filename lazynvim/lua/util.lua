@@ -37,6 +37,7 @@ end
 M.getScheme = function()
   local j = Job:new({ command = "defaults", args = { "read", "-g", "AppleInterfaceStyle" } })
   j:sync()
+  -- return j:result()[1] == "Dark" and "catppuccin" or "catppuccin-latte"
   return j:result()[1] == "Dark" and "github_dark" or "github_light"
 end
 

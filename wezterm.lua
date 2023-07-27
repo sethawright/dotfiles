@@ -19,13 +19,12 @@ end
 
 function scheme_for_appearance(appearance)
 	if appearance:find("Dark") then
-		return "github_dark"
+		return "catppuccin-mocha"
 	else
-		return "github_light"
+		return "catppuccin-latte"
 	end
 end
 
-config.color_scheme = "AdventureTime"
 config.enable_tab_bar = false
 config.font = wezterm.font("SFMono Nerd Font", { weight = "Regular", stretch = "Normal", style = "Normal" }) -- (AKA: SF Mono) /Users/sethwright/Library/Fonts/SFMono Regular Nerd Font Complete.otf, CoreText
 config.font_size = 13.0

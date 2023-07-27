@@ -68,6 +68,7 @@ set ANDROID_HOME ~/Library/Android/sdk
 # set path
 set PATH /usr/local/bin /opt/homebrew/bin /usr/local/sbin /usr/local/opt/ruby/bin /usr/bin /usr/bin /bin /usr/sbin /sbin /opt/X11/bin $PATH
 set PATH $PATH:/Users/sethwright/.cargo/bin
+set PATH $PATH:$(brew --prefix python)/libexec/bin
 set PATH $PATH vendor/bin
 set PATH $PATH node_modules/.bin
 set PATH $PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
