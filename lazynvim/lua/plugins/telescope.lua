@@ -11,6 +11,7 @@ return {
       { "<C-space>", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
       { "<leader><space>", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
       { "<leader>p", "<cmd>Telescope find_files<cr>", desc = "Find Files (root dir)" },
+      { "<leader>;", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Find in buffer" },
       { "<leader>su", "<cmd>Telescope undo<cr>", desc = "Undo history" },
       {
         "<leader>o",
@@ -20,6 +21,7 @@ return {
               "Class",
               "Function",
               "Method",
+              "Constant",
               "Constructor",
               "Interface",
               "Module",

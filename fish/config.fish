@@ -73,16 +73,18 @@ set PATH $PATH vendor/bin
 set PATH $PATH node_modules/.bin
 set PATH $PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
 
-status --is-interactive; and rbenv init - fish | source
-
 set -gx PNPM_HOME /Users/sethwright/Library/pnpm
 set -gx PATH "$PNPM_HOME" $PATH
 
-if status is-interactive
-    and not set -q TMUX
-    if tmux has-session -t home
-        exec tmux attach-session -t home
-    else
-        tmux new-session -s home
+if not string match -q "$TERM_PROGRAM" vscode
+    if status is-interactive; and not set -q TMUX
+        if tmux has-session -t home
+            exec tmux attach-session -t home
+        else
+            tmux new-session -s home
+        end
     end
+    status --is-interactive; and rbenv init - fish | source
+else
+    . (code --locate-shell-integration-path fish)
 end

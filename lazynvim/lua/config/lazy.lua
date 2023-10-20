@@ -19,6 +19,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.formatting.prettier" },
     { import = "lazyvim.plugins.extras.lang.docker" },
     { import = "lazyvim.plugins.extras.lang.json" },
+    { import = "lazyvim.plugins.extras.lang.python" },
     { import = "lazyvim.plugins.extras.lang.rust" },
     { import = "lazyvim.plugins.extras.lang.tailwind" },
     { import = "lazyvim.plugins.extras.lang.terraform" },
@@ -55,3 +56,11 @@ require("lazy").setup({
     },
   },
 })
+
+if vim.g.neovide then
+  vim.o.guifont = "SFMono Nerd Font:h13"
+  vim.g.neovide_padding_top = 20
+  vim.g.neovide_padding_bottom = 0
+  vim.g.neovide_padding_right = 20
+  vim.g.neovide_padding_left = 20
+end
