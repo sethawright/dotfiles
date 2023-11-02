@@ -1,91 +1,113 @@
-local M = {}
-
-M.symbols = function ()
-  local telescope = require("telescope.builtin")
-  telescope.lsp_document_symbols({
-    symbols = {
-      "Class",
-      "Function",
-      "Method",
-      "Constructor",
-      "Interface",
-      "Module",
-      "Struct",
-      "Trait",
-      "Field",
-      "Property",
-    }
-  })
-end
-
-M.deps = {
+return {
   {
     "nvim-telescope/telescope.nvim",
-    version = false,
-    config = function()
-      M.setup()
-    end,
     dependencies = {
-      "telescope-fzf-native.nvim", "nvim-lua/plenary.nvim"
+      "debugloop/telescope-undo.nvim",
+      config = function()
+        require("telescope").load_extension("undo")
+      end,
     },
-    lazy = true,
-    cmd = "Telescope",
-  },
-  { "nvim-telescope/telescope-fzf-native.nvim", build = "make", lazy = true},
-}
-
-M.setup = function()
-  local telescope = require("telescope")
-  local actions = require("telescope.actions")
-
-  telescope.load_extension("fzf")
-  telescope.setup({
-    defaults = {
-      color_devicons = false,
-      mappings = {
-        i = {
-          ["<C-n>"] = actions.move_selection_next,
-          ["<C-p>"] = actions.move_selection_previous,
-          ["<C-c>"] = actions.close,
-          ["<C-j>"] = actions.move_selection_next,
-          ["<C-k>"] = actions.move_selection_previous,
-          ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-          ["<CR>"] = actions.select_default,
-        },
-        n = {
-          ["<C-n>"] = actions.move_selection_next,
-          ["<C-p>"] = actions.move_selection_previous,
-          ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-        }
-      }
-    },
-    pickers = {
-      find_files = {
-        hidden = true
+    keys = {
+      { "<C-space>", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
+      { "<leader><space>", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
+      { "<leader>p", "<cmd>Telescope find_files<cr>", desc = "Find Files (root dir)" },
+      { "<leader>;", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Find in buffer" },
+      { "<leader>su", "<cmd>Telescope undo<cr>", desc = "Undo history" },
+      {
+        "<leader>o",
+        function()
+          require("telescope.builtin").lsp_document_symbols({
+            symbols = {
+              "Class",
+              "Function",
+              "Method",
+              "Constant",
+              "Constructor",
+              "Interface",
+              "Module",
+              "Struct",
+              "Trait",
+              "Field",
+              "Property",
+            },
+          })
+        end,
+        { desc = "Goto symbol" },
       },
-      buffers = {
-        initial_mode = "normal",
-        show_all_buffers = true,
-        sort_mru = true,
+    },
+    opts = {
+      pickers = {
+        buffers = {
+          initial_mode = "normal",
+          show_all_buffers = true,
+          sort_mru = true,
+          mappings = {
+            i = {
+              ["<C-d>"] = function(...)
+                require("telescope.actions").delete_buffer(...)
+              end,
+            },
+            n = {
+              ["v"] = function(...)
+                require("telescope.actions").file_vsplit(...)
+              end,
+              ["s"] = function(...)
+                require("telescope.actions").file_split(...)
+              end,
+              ["d"] = function(...)
+                require("telescope.actions").delete_buffer(...)
+              end,
+              ["c"] = function(...)
+                require("telescope.actions").delete_buffer(...)
+              end,
+              ["<C-j>"] = function(...)
+                require("telescope.actions").move_selection_next(...)
+              end,
+              ["<C-k>"] = function(...)
+                require("telescope.actions").move_selection_previous(...)
+              end,
+            },
+          },
+        },
+      },
+      defaults = {
         mappings = {
           i = {
-            ["<C-d>"] = actions.delete_buffer,
+            ["<C-n>"] = function(...)
+              require("telescope.actions").move_selection_next(...)
+            end,
+            ["<C-j>"] = function(...)
+              require("telescope.actions").move_selection_next(...)
+            end,
+            ["<C-p>"] = function(...)
+              require("telescope.actions").move_selection_previous(...)
+            end,
+            ["<C-k>"] = function(...)
+              require("telescope.actions").move_selection_previous(...)
+            end,
+            ["<C-n>"] = function(...)
+              return require("telescope.actions").preview_scrolling_down(...)
+            end,
+            ["<C-p>"] = function(...)
+              return require("telescope.actions").preview_scrolling_up(...)
+            end,
           },
           n = {
-            ["d"] = actions.delete_buffer,
+            ["v"] = function(...)
+              require("telescope.actions").file_vsplit(...)
+            end,
+            ["s"] = function(...)
+              require("telescope.actions").file_split(...)
+            end,
+            ["<C-n>"] = function(...)
+              return require("telescope.actions").preview_scrolling_down(...)
+            end,
+            ["<C-p>"] = function(...)
+              return require("telescope.actions").preview_scrolling_up(...)
+            end,
           },
         },
       },
     },
-    extensions = {
-      fzf = {
-        fuzzy = true,
-        override_generic_sorter = true,
-        override_file_sorter = true,
-        case_mode = "smart_case",
-      },
-    },
-  })
-end
-
-return M
+  },
+}

@@ -1,13 +1,10 @@
 return {
   {
     "nvim-neo-tree/neo-tree.nvim",
+    enabled = false,
     cmd = "Neotree",
+    keys = {},
     opts = {
-      close_if_last_window = true,
-      enable_git_status = true,
-      filesystem = {
-        follow_current_file = true,
-      },
       window = {
         mappings = {
           ["v"] = "open_vsplit",
@@ -19,16 +16,9 @@ return {
           event = "file_opened",
           handler = function()
             require("neo-tree").close_all()
-          end
+          end,
         },
       },
     },
-    dependencies = {
-      "nvim-web-devicons",
-      "MunifTanjim/nui.nvim",
-    },
-    lazy = true
   },
-  { "nvim-tree/nvim-web-devicons", lazy = true },
-  { "MunifTanjim/nui.nvim", lazy = true }
 }
