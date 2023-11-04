@@ -1,9 +1,7 @@
 return {
   {
     "nvim-neo-tree/neo-tree.nvim",
-    enabled = false,
     cmd = "Neotree",
-    keys = {},
     opts = {
       window = {
         mappings = {
