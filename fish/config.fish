@@ -64,6 +64,8 @@ set -gx FZF_DEFAULT_COMMAND 'rg --files --hidden --follow --glob "!{node_modules
 
 set VAGRANT_DEFAULT_PROVIDER parallels
 set ANDROID_HOME ~/Library/Android/sdk
+set DARK_MODE (defaults read -g AppleInterfaceStyle 2> /dev/null)
+set ALACRITTY_CONFIG_PATH (realpath ~/.config/alacritty/alacritty.yml)
 
 # set path
 set PATH /usr/local/bin /opt/homebrew/bin /usr/local/sbin /usr/local/opt/ruby/bin /usr/bin /usr/bin /bin /usr/sbin /sbin /opt/X11/bin $PATH
@@ -75,3 +77,19 @@ set PATH $PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platfor
 
 set -gx PNPM_HOME /Users/sethwright/Library/pnpm
 set -gx PATH "$PNPM_HOME" $PATH
+
+if not string match -q "$TERM_PROGRAM" vscode
+    if status is-interactive; and not set -q TMUX
+        if tmux has-session -t home
+            exec tmux attach-session -t home
+        else
+            tmux new-session -s home
+        end
+    end
+
+    if string match -q "$DARK_MODE" Dark
+        sed -i "" -e s/tokyonight_day/tokyonight_night/g $ALACRITTY_CONFIG_PATH
+    else
+        sed -i "" -e s/tokyonight_night/tokyonight_day/g $ALACRITTY_CONFIG_PATH
+    end
+end

@@ -1,12 +1,14 @@
 # Live config reload (changes require restart)
 live_config_reload: true
+env:
+  TERM: xterm-256color
 
 window:
   padding:
     x: 14
-    y: 20
+    y: 10
   dynamic_padding: true
-  decorations: transparent
+  decorations: buttonless
 
 font:
   normal:
@@ -26,40 +28,14 @@ font:
 mouse:
   hide_when_typing: true
 
-# github Alacritty Colors
-colors:
-  # Default colors
-  primary:
-    background: "0x0d1117"
-    foreground: "0xe6edf3"
-
-  # Normal colors
-  normal:
-    black: "0x484f58"
-    red: "0xff7b72"
-    green: "0x3fb950"
-    yellow: "0xd29922"
-    blue: "0x58a6ff"
-    magenta: "0xbc8cff"
-    cyan: "0x39c5cf"
-    white: "0xb1bac4"
-
-  # Bright colors
-  bright:
-    black: "0x6e7681"
-    red: "0xffa198"
-    green: "0x56d364"
-    yellow: "0xe3b341"
-    blue: "0x79c0ff"
-    magenta: "0xd2a8ff"
-    cyan: "0x56d4dd"
-    white: "0xf0f6fc"
-
-  indexed_colors:
-    - { index: 16, color: "0xd18616" }
-    - { index: 17, color: "0xffa198" }
+import:
+  - ~/.config/alacritty/themes/tokyonight_night.yml
 
 key_bindings:
+  - { key: J, mods: Alt, chars: "\x1bj" }
+  - { key: K, mods: Alt, chars: "\x1bk" }
+  - { key: H, mods: Alt, chars: "\x1bh" }
+  - { key: L, mods: Alt, chars: "\x1bl" }
   - { key: RBracket, mods: Command|Shift, chars: "¬" }
   - { key: LBracket, mods: Command|Shift, chars: "˙" }
   - { key: N, mods: Command, chars: "ç" }
@@ -68,4 +44,4 @@ key_bindings:
   - { key: Backslash, mods: Command, chars: "«" }
   - { key: RBracket, mods: Command, chars: "‘" }
   - { key: R, mods: Command, chars: "÷" }
-  - { key: Return, mods: Command, action: ToggleSimpleFullscreen }
+  - { key: Return, mods: Command, action: ToggleFullscreen }
