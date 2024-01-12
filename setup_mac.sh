@@ -4,6 +4,11 @@ echo "Running mac setup! Grab a coffee."
 if test ! "$(command -v brew)"; then
 	echo "Installing Homebrew"
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	(
+		echo
+		echo 'eval "$(/opt/homebrew/bin/brew shellenv)"'
+	) >>/Users/sethwright/.zprofile
+	eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 brew update
@@ -36,8 +41,10 @@ brew install wget
 brew install yarn
 
 # apps
+brew install --cask 1password
 brew install --cask 1password-cli
 brew install --cask alacritty
+brew install --cask arc
 brew install --cask docker
 brew install --cask firefox
 brew install --cask font-sf-mono-nerd-font
@@ -48,11 +55,15 @@ brew install --cask jetbrains-toolbox
 brew install --cask postman
 brew install --cask proxyman
 brew install --cask raycast
+brew install --cask slack
 brew install --cask sf-symbols
 brew install --cask tableplus
 brew install --cask topnotch
 brew install --cask visual-studio-code
 brew install --cask zoom
+
+# git goodies
+curl -fsSL git.io/gg.sh | bash
 
 # pause for github login
 git clone https://github.com/sethawright/dotfiles.git
@@ -74,32 +85,6 @@ ln -s ~/dotfiles/gitignore_global ./.gitignore_global
 mkdir -p ~/.ssh && cd ~/.ssh
 touch config
 chmod 600 config
-
-# macos preferences
-defaults write NSGlobalDomain KeyRepeat -int 1
-defaults write NSGlobalDomain InitialKeyRepeat -int 12
-defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
-defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
-defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
-defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-chflags nohidden ~/Library
-defaults write com.apple.dock static-only -bool true
-defaults write com.apple.dock showhidden -bool true
-defaults write com.apple.dock show-recents -bool false
-defaults write com.apple.dock show-process-indicators -bool false
-defaults write com.apple.dock autohide -bool true
-defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
-defaults write com.apple.Safari IncludeDevelopMenu -bool true
-defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
-defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
-defaults write com.apple.Safari AutoFillFromAddressBook -bool false
-defaults write com.apple.Safari AutoFillPasswords -bool false
-defaults write com.apple.Safari AutoFillCreditCardData -bool false
-defaults write com.apple.Safari AutoFillMiscellaneousForms -bool false
 
 brew cleanup
 
