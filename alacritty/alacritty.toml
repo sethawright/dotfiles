@@ -1,4 +1,4 @@
-import = ["/Users/sethwright/.config/alacritty/themes/tokyonight_night.toml"]
+import = ["/Users/sethwright/.config/alacritty/themes/github_dark_default.toml"]
 live_config_reload = true
 
 [env]
@@ -94,6 +94,10 @@ hide_when_typing = true
 [window]
 decorations = "buttonless"
 dynamic_padding = true
+
+[shell]
+program = "/opt/homebrew/bin/fish"
+args = ["-l", "-c", "tmux attach -t home || tmux new-session -s home"]
 
 [window.padding]
 x = 14
