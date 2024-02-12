@@ -17,11 +17,15 @@ set PATH $PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platfor
 set -gx PNPM_HOME /Users/sethwright/Library/pnpm
 set -gx PATH "$PNPM_HOME" $PATH
 
-# if string match -q $DARK_MODE Dark
-#     sed -i "" -e s/tokyonight_day/tokyonight_night/g $ALACRITTY_CONFIG_PATH
-# else
-#     sed -i "" -e s/tokyonight_night/tokyonight_day/g $ALACRITTY_CONFIG_PATH
-# end
+pyenv init - | source
+
+if string match -q $DARK_MODE Dark
+    # sed -i "" -e s/tokyonight_day/tokyonight_night/g $ALACRITTY_CONFIG_PATH
+    sed -i "" -e s/github_light/github_dark/g $ALACRITTY_CONFIG_PATH
+else
+    # sed -i "" -e s/tokyonight_night/tokyonight_day/g $ALACRITTY_CONFIG_PATH
+    sed -i "" -e s/github_dark/github_light/g $ALACRITTY_CONFIG_PATH
+end
 
 alias l="ls -lah"
 alias puf='vendor/bin/phpunit --filter '

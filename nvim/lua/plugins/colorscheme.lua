@@ -10,26 +10,26 @@ return {
   -- { "catppuccin/nvim", name = "catppuccin" },
 
   -- Configure LazyVim to load gruvbox
-  -- {
-  --   "f-person/auto-dark-mode.nvim",
-  --   opts = {
-  --     update_interval = 3000,
-  --     set_dark_mode = function()
-  --       vim.api.nvim_set_option("background", "dark")
-  --       vim.cmd("colorscheme tokyonight-night")
-  --     end,
-  --     set_light_mode = function()
-  --       vim.api.nvim_set_option("background", "light")
-  --       vim.cmd("colorscheme tokyonight-day")
-  --     end,
-  --   },
-  -- },
+  {
+    "f-person/auto-dark-mode.nvim",
+    opts = {
+      update_interval = 5000,
+      set_dark_mode = function()
+        vim.api.nvim_set_option("background", "dark")
+        vim.cmd("colorscheme github_dark")
+      end,
+      set_light_mode = function()
+        vim.api.nvim_set_option("background", "light")
+        vim.cmd("colorscheme github_light")
+      end,
+    },
+  },
 
   {
     "LazyVim/LazyVim",
     opts = function(_, opts)
       -- opts.colorscheme = "tokyonight-night"
-      opts.colorscheme = "github_dark_default"
+      opts.colorscheme = "github_dark"
     end,
   },
 }

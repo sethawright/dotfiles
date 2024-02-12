@@ -1,11 +1,11 @@
-import = ["/Users/sethwright/.config/alacritty/themes/github_dark_default.toml"]
+import = ["/Users/sethwright/.config/alacritty/themes/github_dark.toml"]
 live_config_reload = true
 
 [env]
 TERM = "xterm-256color"
 
 [font]
-size = 12.0
+size = 13.0
 
 [font.bold]
 family = "SFMono Nerd Font"
@@ -45,12 +45,12 @@ mods = "Alt"
 
 [[keyboard.bindings]]
 chars = "¬"
-key = "RBracket"
+key = "}"
 mods = "Command|Shift"
 
 [[keyboard.bindings]]
 chars = "˙"
-key = "LBracket"
+key = "{"
 mods = "Command|Shift"
 
 [[keyboard.bindings]]
