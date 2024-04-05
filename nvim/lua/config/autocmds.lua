@@ -2,7 +2,14 @@ local function augroup(name)
   return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
 end
 
--- wrap and check for spell in text filetypes
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup("terraform"),
+  pattern = { "terraform-vars" },
+  callback = function()
+    vim.cmd("set filetype=terraform")
+  end,
+})
+
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup("wrap_spell"),
   pattern = { "gitcommit", "markdown" },

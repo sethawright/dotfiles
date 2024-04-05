@@ -87,3 +87,6 @@ alias gcl="gh browse -n -c | sed 's/https:\/\/github\.com\///' | sed 's/\/tree\/
 
 alias work="tmux new-session -A -s work"
 alias endwork="tmux kill-session -t work"
+
+# sst
+fish_add_path /Users/sethwright/.sst/bin
