@@ -52,6 +52,7 @@ brew install --cask font-sf-mono-nerd-font-ligaturized
 brew install --cask github
 brew install --cask google-chrome
 brew install --cask jetbrains-toolbox
+brew install --cask ollama
 brew install --cask postman
 brew install --cask proxyman
 brew install --cask raycast
@@ -60,6 +61,7 @@ brew install --cask sf-symbols
 brew install --cask tableplus
 brew install --cask topnotch
 brew install --cask visual-studio-code
+brew install --cask warp
 brew install --cask zoom
 
 # git goodies
@@ -81,6 +83,9 @@ ln -s ~/dotfiles/tmux/ ./tmux
 cd ~
 ln -s ~/dotfiles/gitconfig ./.gitconfig
 ln -s ~/dotfiles/gitignore_global ./.gitignore_global
+
+# allow key repeat for vim input
+defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
 
 mkdir -p ~/.ssh && cd ~/.ssh
 touch config
