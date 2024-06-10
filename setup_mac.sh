@@ -27,6 +27,7 @@ brew install go
 brew install gh
 brew install neovim
 brew install node
+brew install pipx
 brew install php
 brew install pnpm
 brew install postgresql
@@ -63,6 +64,10 @@ brew install --cask topnotch
 brew install --cask visual-studio-code
 brew install --cask warp
 brew install --cask zoom
+
+pipx install poetry
+npm install -g pnpm
+npm install -g n
 
 # git goodies
 curl -fsSL git.io/gg.sh | bash

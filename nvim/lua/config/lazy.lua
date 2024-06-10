@@ -11,22 +11,6 @@ require("lazy").setup({
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
 
-    -- lazy extras
-    { import = "lazyvim.plugins.extras.coding.copilot" },
-    { import = "lazyvim.plugins.extras.dap.core" },
-    { import = "lazyvim.plugins.extras.dap.nlua" },
-    { import = "lazyvim.plugins.extras.editor.leap" },
-    { import = "lazyvim.plugins.extras.editor.mini-files" },
-    { import = "lazyvim.plugins.extras.formatting.prettier" },
-    { import = "lazyvim.plugins.extras.lang.docker" },
-    { import = "lazyvim.plugins.extras.lang.json" },
-    { import = "lazyvim.plugins.extras.lang.python" },
-    { import = "lazyvim.plugins.extras.lang.tailwind" },
-    { import = "lazyvim.plugins.extras.lang.typescript" },
-    { import = "lazyvim.plugins.extras.linting.eslint" },
-    { import = "lazyvim.plugins.extras.test.core" },
-    { import = "lazyvim.plugins.extras.ui.edgy" },
-
     -- import/override with your plugins
     { import = "plugins" },
   },
@@ -39,7 +23,7 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  install = { colorscheme = { "catppuccin", "github", "tokyonight", "habamax" } },
+  install = { colorscheme = { "catppuccin", "github", "tokyonight", "habamax", "rose-pine" } },
   checker = { enabled = true }, -- automatically check for plugin updates
   performance = {
     rtp = {
@@ -57,11 +41,3 @@ require("lazy").setup({
     },
   },
 })
-
-if vim.g.neovide then
-  vim.o.guifont = "SFMono Nerd Font:h13"
-  vim.g.neovide_padding_top = 20
-  vim.g.neovide_padding_bottom = 0
-  vim.g.neovide_padding_right = 20
-  vim.g.neovide_padding_left = 20
-end

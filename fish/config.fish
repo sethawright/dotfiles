@@ -1,31 +1,53 @@
 set -gx EDITOR nvim
 set -gx FZF_DEFAULT_COMMAND 'rg --files --hidden --follow --glob "!{node_modules/*,vendor/*,.git/*}"'
 
-set VAGRANT_DEFAULT_PROVIDER parallels
 set ANDROID_HOME ~/Library/Android/sdk
-set DARK_MODE (defaults read -g AppleInterfaceStyle 2> /dev/null)
-set ALACRITTY_CONFIG_PATH (realpath ~/.config/alacritty/alacritty.toml)
 
 # set path
 set PATH /usr/local/bin /opt/homebrew/bin /usr/local/sbin /usr/local/opt/ruby/bin /usr/bin /usr/bin /bin /usr/sbin /sbin /opt/X11/bin $PATH
-set PATH $PATH:/Users/sethwright/.cargo/bin
-set PATH $PATH:$(brew --prefix python)/libexec/bin
+set PATH $PATH /Users/sethwright/.cargo/bin
+set PATH $PATH $(brew --prefix python)/libexec/bin
+set PATH $PATH /Users/sethwright/.local/bin
 set PATH $PATH vendor/bin
 set PATH $PATH node_modules/.bin
-set PATH $PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
+set PATH $PATH $ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
 
 set -gx PNPM_HOME /Users/sethwright/Library/pnpm
 set -gx PATH "$PNPM_HOME" $PATH
+set -gx QHOME /Users/sethwright/q
 
-pyenv init - | source
+# theming
+set DARK_MODE (defaults read -g AppleInterfaceStyle 2> /dev/null)
+set LIGHT_THEME rose-dawn
+set DARK_THEME rose-pine
+set ALACRITTY_CONFIG_PATH (realpath ~/.config/alacritty/alacritty.toml)
 
-if string match -q $DARK_MODE Dark
-    # sed -i "" -e s/tokyonight_day/tokyonight_night/g $ALACRITTY_CONFIG_PATH
-    sed -i "" -e s/github_light/github_dark/g $ALACRITTY_CONFIG_PATH
-else
-    # sed -i "" -e s/tokyonight_night/tokyonight_day/g $ALACRITTY_CONFIG_PATH
-    sed -i "" -e s/github_dark/github_light/g $ALACRITTY_CONFIG_PATH
+function update_theme
+    sed -i '' "s|import = \[.*\]|import = [\"~/.config/alacritty/themes/$argv[1].toml\"]|" $ALACRITTY_CONFIG_PATH
 end
+
+function set_theme
+    if not set -q AUTO_DARK_MODE
+        set -g AUTO_DARK_MODE 1
+    end
+
+    if test "$AUTO_DARK_MODE" = 1
+        if string match -q $DARK_MODE Dark
+            update_theme $DARK_THEME
+        else
+            update_theme $LIGHT_THEME
+        end
+    else
+        update_theme $argv[1]
+    end
+end
+
+function theme
+    set -g AUTO_DARK_MODE 0
+    set_theme $argv[1]
+end
+
+set_theme
 
 alias l="ls -lah"
 alias puf='vendor/bin/phpunit --filter '
@@ -42,32 +64,14 @@ alias v="nvim"
 alias e="nvim"
 alias vim="nvim"
 alias m="nvim"
-alias s="subl ."
 alias cleanup_branches="git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | grep -v '\*' | xargs -r git branch -D"
 
 bind -s -k nul ~/dotfiles/scripts/tmux-sessionizer
 alias tms="~/dotfiles/scripts/tmux-sessionizer"
 
-# quick theme switching
-alias darker='ln -sf ~/dotfiles/materitermdarkmode.sh ~/.base16_theme  && eval sh '"'(realpath ~/.base16_theme)'"''
-alias material='ln -sf ~/dotfiles/materitermdark.sh ~/.base16_theme && eval sh '"'(realpath ~/.base16_theme)'"''
-alias pale='ln -sf ~/dotfiles/materitermpale.sh ~/.base16_theme  && eval sh '"'(realpath ~/.base16_theme)'"''
-alias ocean='ln -sf ~/dotfiles/materitermocean.sh ~/.base16_theme  && eval sh '"'(realpath ~/.base16_theme)'"''
-alias lighter='ln -sf ~/dotfiles/materitermlighter.sh ~/.base16_theme  && eval sh '"'(realpath ~/.base16_theme)'"''
-alias light='ln -sf ~/dotfiles/materitermlight.sh ~/.base16_theme  && eval sh '"'(realpath ~/.base16_theme)'"''
-alias minlight='ln -sf ~/dotfiles/minlight.sh ~/.base16_theme  && eval sh '"'(realpath ~/.base16_theme)'"''
-alias mindark='ln -sf ~/dotfiles/mindark.sh ~/.base16_theme  && eval sh '"'(realpath ~/.base16_theme)'"''
-alias nord='ln -sf ~/dotfiles/nord.sh ~/.base16_theme  && eval sh '"'(realpath ~/.base16_theme)'"''
-alias monokaipro='ln -sf ~/dotfiles/monokaipro.sh ~/.base16_theme  && eval sh '"'(realpath ~/.base16_theme)'"''
-alias monokaioctagon='ln -sf ~/dotfiles/monokaioctagon.sh ~/.base16_theme  && eval sh '"'(realpath ~/.base16_theme)'"''
-alias monokaimachine='ln -sf ~/dotfiles/monokaimachine.sh ~/.base16_theme  && eval sh '"'(realpath ~/.base16_theme)'"''
-alias monokairistretto='ln -sf ~/dotfiles/monokairistretto.sh ~/.base16_theme  && eval sh '"'(realpath ~/.base16_theme)'"''
-alias monokaispectrum='ln -sf ~/dotfiles/monokaispectrum.sh ~/.base16_theme  && eval sh '"'(realpath ~/.base16_theme)'"''
-alias dracula='ln -sf ~/dotfiles/dracula.sh ~/.base16_theme && eval sh '"'(realpath ~/.base16_theme)'"''
-alias gruvbox='ln -sf ~/dotfiles/gruvbox.sh ~/.base16_theme && eval sh '"'(realpath ~/.base16_theme)'"''
-alias gruvbox-light='ln -sf ~/dotfiles/gruvbox-light.sh ~/.base16_theme && eval sh '"'(realpath ~/.base16_theme)'"''
-alias github='ln -sf ~/dotfiles/github.sh ~/.base16_theme && eval sh '"'(realpath ~/.base16_theme)'"''
-alias githubdark='ln -sf ~/dotfiles/githubdark.sh ~/.base16_theme && eval sh '"'(realpath ~/.base16_theme)'"''
+# git
+alias lg="lazygit"
+alias ld="lazydocker"
 
 # tmux
 alias td="tmux detach"
@@ -83,10 +87,4 @@ alias gl="gg l"
 alias gp="gg p"
 alias gpl="gg pl"
 alias gph="git push -u origin HEAD"
-alias gcl="gh browse -n -c | sed 's/https:\/\/github\.com\///' | sed 's/\/tree\//@/' | sed 's/.\$//' | pbcopy"
-
-alias work="tmux new-session -A -s work"
-alias endwork="tmux kill-session -t work"
-
-# sst
-fish_add_path /Users/sethwright/.sst/bin
+alias q="/Users/sethwright/q/m64/q"

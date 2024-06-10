@@ -1,5 +1,5 @@
 return {
-  -- { "tmillr/github-nvim-theme", branch = "fix-298" },
+  { "rose-pine/neovim", name = "rose-pine" },
   { "projekt0n/github-nvim-theme" },
   -- {
   --   "folke/tokyonight.nvim",
@@ -15,12 +15,10 @@ return {
     opts = {
       update_interval = 5000,
       set_dark_mode = function()
-        vim.api.nvim_set_option("background", "dark")
-        vim.cmd("colorscheme github_dark")
+        vim.cmd("colorscheme rose-pine-main")
       end,
       set_light_mode = function()
-        vim.api.nvim_set_option("background", "light")
-        vim.cmd("colorscheme github_light")
+        vim.cmd("colorscheme rose-pine-dawn")
       end,
     },
   },
@@ -29,7 +27,7 @@ return {
     "LazyVim/LazyVim",
     opts = function(_, opts)
       -- opts.colorscheme = "tokyonight-night"
-      opts.colorscheme = "github_dark"
+      opts.colorscheme = "rose-pine"
     end,
   },
 }
