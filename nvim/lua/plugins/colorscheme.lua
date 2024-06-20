@@ -16,12 +16,12 @@ return {
       update_interval = 5000,
       set_dark_mode = function()
         -- vim.cmd("colorscheme rose-pine-main")
-        vim.api.nvim_set_option("background", "dark")
+        vim.opt.background = "dark"
         vim.cmd("colorscheme github_dark")
       end,
       set_light_mode = function()
         -- vim.cmd("colorscheme rose-pine-dawn")
-        vim.api.nvim_set_option("background", "light")
+        vim.opt.background = "light"
         vim.cmd("colorscheme github_light")
       end,
     },

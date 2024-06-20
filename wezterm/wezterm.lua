@@ -19,22 +19,23 @@ end
 
 function scheme_for_appearance(appearance)
 	if appearance:find("Dark") then
-		-- return "github_dark"
-		return "catppuccin-mocha"
+		return "github_dark"
+		-- return "catppuccin-mocha"
 	else
-		-- return "github_light"
-		return "catppuccin-latte"
+		return "github_light"
+		-- return "catppuccin-latte"
 	end
 end
 
 config.enable_tab_bar = false
 config.font = wezterm.font("SFMono Nerd Font", { weight = "Regular", stretch = "Normal", style = "Normal" }) -- (AKA: SF Mono) /Users/sethwright/Library/Fonts/SFMono Regular Nerd Font Complete.otf, CoreText
-config.font_size = 13.0
+config.font_size = 12.0
 config.line_height = 1.1
-config.color_scheme_dirs = { "/Users/sethwright/dotfiles/wezterm-themes/" }
+config.color_scheme_dirs = { "/Users/sethwright/.config/wezterm/themes/" }
 config.color_scheme = scheme_for_appearance(get_appearance())
 config.window_close_confirmation = "NeverPrompt"
 config.window_decorations = "RESIZE"
+config.default_prog = { "/opt/homebrew/bin/fish", "-l", "-c tmux attach -t home || tmux new-session -s home" }
 config.keys = {
 	{
 		key = "]",
@@ -93,8 +94,8 @@ config.keys = {
 		}),
 	},
 	{
-		key = "F",
-		mods = "CMD|SHIFT",
+		key = "Enter",
+		mods = "CMD",
 		action = wezterm.action.ToggleFullScreen,
 	},
 }
