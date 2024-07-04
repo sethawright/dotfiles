@@ -1,11 +1,16 @@
+# (Github Dark Default) Colors for Wezterm
+
 [colors]
 background = '#0d1117'
-cursor_bg = '#73b7f2'
-cursor_border = '#73b7f2'
+foreground = '#e6edf3'
+
+cursor_bg = '#e6edf3'
+cursor_border = '#e6edf3'
 cursor_fg = '#0d1117'
-foreground = '#b3b1ad'
-selection_bg = '#163356'
-selection_fg = '#b3b1ad'
+
+selection_bg = '#1e4273'
+selection_fg = '#e6edf3'
+
 ansi = [
     '#484f58',
     '#ff7b72',
@@ -24,9 +29,5 @@ brights = [
     '#79c0ff',
     '#d2a8ff',
     '#56d4dd',
-    '#f0f6fc',
+    '#ffffff',
 ]
-
-[colors.indexed]
-16 = '#e3b341'
-17 = '#ffa198'

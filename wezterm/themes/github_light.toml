@@ -1,32 +1,49 @@
+# (Github Light) Colors for Wezterm
+
 [colors]
 background = '#ffffff'
-cursor_bg = '#044289'
-cursor_border = '#044289'
+foreground = '#1F2328'
+
+cursor_bg = '#1F2328'
+cursor_border = '#1F2328'
 cursor_fg = '#ffffff'
-foreground = '#24292f'
-selection_bg = '#dbe9f9'
-selection_fg = '#24292f'
+
+selection_bg = '#bbdfff'
+selection_fg = '#1F2328'
+
 ansi = [
-    '#24292e',
-    '#d73a49',
-    '#28a745',
-    '#dbab09',
-    '#0366d6',
-    '#5a32a3',
-    '#0598bc',
-    '#6a737d',
+  '#24292f',
+  '#cf222e',
+  '#116329',
+  '#4d2d00',
+  '#0969da',
+  '#8250df',
+  '#1b7c83',
+  '#6e7781',
 ]
 brights = [
-    '#959da5',
-    '#cb2431',
-    '#22863a',
-    '#b08800',
-    '#005cc5',
-    '#5a32a3',
-    '#3192aa',
-    '#d1d5da',
+  '#57606a',
+  '#a40e26',
+  '#1a7f37',
+  '#633c01',
+  '#218bff',
+  '#a475f9',
+  '#3192aa',
+  '#8c959f',
 ]
 
-[colors.indexed]
-16 = '#b08800'
-17 = '#cb2431'
+[colors.tab_bar]
+background = '#ffffff'
+
+[colors.tab_bar.active_tab]
+bg_color = '#0969da'
+fg_color = '#ffffff'
+
+[colors.tab_bar.inactive_tab]
+bg_color = '#f1f1f1'
+fg_color = '#b1bac4'
+
+[colors.tab_bar.new_tab]
+bg_color = '#efefef'
+fg_color = '#b1bac4'
+
