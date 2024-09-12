@@ -1,0 +1,75 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "bindings": {
+      "cmd-k": "menu::SelectPrev",
+      "cmd-j": "menu::SelectNext"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-;": "workspace::ToggleLeftDock",
+      "cmd-'": "workspace::ToggleRightDock",
+      "ctrl-'": "workspace::ToggleBottomDock"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "cmd-;": "workspace::ToggleLeftDock",
+      "cmd-'": "workspace::ToggleRightDock",
+      "ctrl-'": "workspace::ToggleBottomDock",
+      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
+      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
+      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
+      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
+      "alt-k": "editor::MoveLineUp",
+      "alt-j": "editor::MoveLineDown",
+      "ctrl-.": "editor::ShowCompletions",
+      "ctrl-w q": "pane::CloseAllItems"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      "space p": "file_finder::Toggle",
+      "space o": "outline::Toggle",
+      "space space": "tab_switcher::Toggle",
+      "shift shift": "tab_switcher::Toggle",
+      "space b": "tab_switcher::Toggle",
+      "ctrl-v": "pane::SplitRight",
+      "] space": "editor::NewlineBelow",
+      "[ space": "editor::NewlineAbove",
+      "ctrl-p": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "FileFinder",
+    "bindings": {
+      "ctrl-v": "menu::SecondaryConfirm",
+      "cmd-k": "file_finder::SelectPrev",
+      "cmd-j": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "TabSwitcher",
+    "bindings": {
+      "k": "menu::SelectPrev",
+      "j": "menu::SelectNext",
+      "l": "tab_switcher::CloseSelectedItem"
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "cmd-n": "workspace::NewTerminal"
+    }
+  }
+]
