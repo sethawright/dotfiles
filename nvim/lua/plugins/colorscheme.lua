@@ -15,10 +15,10 @@ return {
     opts = {
       update_interval = 5000,
       set_dark_mode = function()
-        vim.cmd("colorscheme tokyonight-night")
+        -- vim.cmd("colorscheme tokyonight-night")
         -- vim.cmd("colorscheme rose-pine-main")
+        vim.cmd("colorscheme github_dark")
         vim.opt.background = "dark"
-        -- vim.cmd("colorscheme github_dark")
       end,
       set_light_mode = function()
         -- vim.cmd("colorscheme rose-pine-dawn")
@@ -31,7 +31,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = function(_, opts)
-      opts.colorscheme = "tokyonight-night"
+      opts.colorscheme = "github_dark"
       -- opts.colorscheme = "rose-pine"
     end,
   },
