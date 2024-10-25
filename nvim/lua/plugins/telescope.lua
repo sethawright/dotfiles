@@ -29,6 +29,7 @@ return {
               "Trait",
               "Field",
               "Property",
+              "Variable",
             },
           })
         end,
