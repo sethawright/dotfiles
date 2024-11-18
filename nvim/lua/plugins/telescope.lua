@@ -29,11 +29,17 @@ return {
               "Trait",
               "Field",
               "Property",
-              "Variable",
             },
           })
         end,
         { desc = "Goto symbol" },
+      },
+      {
+        "<leader>gb",
+        function()
+          require("telescope.builtin").git_branches()
+        end,
+        desc = "Git Branches (with Diff)",
       },
     },
     opts = {
@@ -74,14 +80,8 @@ return {
       defaults = {
         mappings = {
           i = {
-            ["<C-n>"] = function(...)
-              require("telescope.actions").move_selection_next(...)
-            end,
             ["<C-j>"] = function(...)
               require("telescope.actions").move_selection_next(...)
-            end,
-            ["<C-p>"] = function(...)
-              require("telescope.actions").move_selection_previous(...)
             end,
             ["<C-k>"] = function(...)
               require("telescope.actions").move_selection_previous(...)

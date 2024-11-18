@@ -18,12 +18,12 @@ set -gx QHOME /Users/sethwright/q
 
 # theming
 set DARK_MODE (defaults read -g AppleInterfaceStyle 2> /dev/null)
-set LIGHT_THEME tokyonight-day
-set DARK_THEME tokyonight-night
+# set LIGHT_THEME tokyonight-day
+# set DARK_THEME tokyonight-night
 # set LIGHT_THEME rose-pine-dawn
 # set DARK_THEME rose-pine
-# set LIGHT_THEME github-light
-# set DARK_THEME github-dark
+set LIGHT_THEME github-light
+set DARK_THEME github-dark-default
 set ALACRITTY_CONFIG_PATH (realpath ~/.config/alacritty/alacritty.toml)
 
 function update_theme

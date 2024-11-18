@@ -4,9 +4,9 @@
 background = '#ffffff'
 foreground = '#1F2328'
 
-cursor_bg = '#1F2328'
+cursor_bg = '#bbdfff'
 cursor_border = '#1F2328'
-cursor_fg = '#ffffff'
+cursor_fg = '#1F2328'
 
 selection_bg = '#bbdfff'
 selection_fg = '#1F2328'
@@ -46,4 +46,3 @@ fg_color = '#b1bac4'
 [colors.tab_bar.new_tab]
 bg_color = '#efefef'
 fg_color = '#b1bac4'
-

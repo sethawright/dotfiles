@@ -1,4 +1,4 @@
-import = ["~/.config/alacritty/themes/tokyonight-day.toml"]
+import = ["~/.config/alacritty/themes/github-light.toml"]
 live_config_reload = true
 
 [env]
@@ -8,24 +8,24 @@ TERM = "xterm-256color"
 size = 12.5
 
 [font.bold]
-family = "SFMono Nerd Font"
+family = "JetBrainsMono Nerd Font Mono"
 style = "Bold"
 
 [font.italic]
-family = "SFMono Nerd Font"
+family = "JetBrainsMono Nerd Font Mono"
 style = "Italic"
 
 [font.normal]
-family = "SFMono Nerd Font"
+family = "JetBrainsMono Nerd Font Mono"
 style = "Regular"
 
 [font.offset]
 x = 0
-y = 15
+y = 20
 
 [font.glyph_offset]
 x = 0
-y = 7
+y = 10
 
 [[keyboard.bindings]]
 chars = "\u001Bj"
@@ -88,7 +88,7 @@ key = "R"
 mods = "Command"
 
 [[keyboard.bindings]]
-action = "ToggleFullscreen"
+action = "ToggleSimpleFullscreen"
 key = "Return"
 mods = "Command"
 
