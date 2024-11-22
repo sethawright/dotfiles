@@ -2,13 +2,13 @@ echo "Running mac setup! Grab a coffee."
 
 # brew
 if test ! "$(command -v brew)"; then
-	echo "Installing Homebrew"
-	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-	(
-		echo
-		echo 'eval "$(/opt/homebrew/bin/brew shellenv)"'
-	) >>/Users/sethwright/.zprofile
-	eval "$(/opt/homebrew/bin/brew shellenv)"
+  echo "Installing Homebrew"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  (
+    echo
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"'
+  ) >>/Users/sethwright/.zprofile
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 brew update
@@ -48,8 +48,6 @@ brew install --cask alacritty
 brew install --cask arc
 brew install --cask docker
 brew install --cask firefox
-brew install --cask font-sf-mono-nerd-font
-brew install --cask font-sf-mono-nerd-font-ligaturized
 brew install --cask github
 brew install --cask google-chrome
 brew install --cask jetbrains-toolbox
@@ -88,13 +86,14 @@ ln -s ~/dotfiles/tmux/ ./tmux
 cd ~
 ln -s ~/dotfiles/gitconfig ./.gitconfig
 ln -s ~/dotfiles/gitignore_global ./.gitignore_global
-
 # allow key repeat for vim input
 defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
 
 mkdir -p ~/.ssh && cd ~/.ssh
 touch config
 chmod 600 config
+
+. ~/dotfiles/install_fonts.sh
 
 brew cleanup
 

@@ -45,8 +45,8 @@ local direction_keys = {
 config.use_fancy_tab_bar = false
 config.font = wezterm.font("SFMono Nerd Font", { weight = "Regular", stretch = "Normal", style = "Normal" }) -- (AKA: SF Mono) /Users/sethwright/Library/Fonts/SFMono Regular Nerd Font Complete.otf, CoreText
 config.default_prog = { "/opt/homebrew/bin/fish", "-l", "-c", "tmux attach -t home || tmux new-session -s home" }
-config.font_size = 14.0
-config.line_height = 1.7
+config.font_size = 13.0
+config.line_height = 1.5
 -- config.leader = { key = "f", mods = "CTRL", timeout_milliseconds = 1000 }
 config.color_scheme_dirs = { "/Users/sethwright/.config/wezterm/themes/" }
 config.color_scheme = scheme_for_appearance(get_appearance())
