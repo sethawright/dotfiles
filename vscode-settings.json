@@ -200,16 +200,6 @@
   ],
   "whichkey.bindings": [
     {
-      "key": "/",
-      "name": "Search in workspace",
-      "command": "search.action.openNewEditorToSide"
-    },
-    {
-      "key": "e",
-      "name": "Explorer",
-      "command": "workbench.view.explorer"
-    },
-    {
       "key": "f",
       "name": "File...",
       "type": "bindings",
@@ -291,7 +281,7 @@
           "command": "workbench.action.splitEditorRight"
         },
         {
-          "key": "h",
+          "key": "s",
           "name": "Split horizontal",
           "command": "workbench.action.splitEditorDown"
         }
@@ -432,6 +422,21 @@
       "key": "o",
       "name": "Quick Symbols",
       "command": "workbench.action.gotoSymbol"
+    },
+    {
+      "key": "/",
+      "name": "Search in workspace",
+      "command": "search.action.openNewEditorToSide"
+    },
+    {
+      "key": " ",
+      "name": "Buffers",
+      "command": "workbench.action.showAllEditorsByMostRecentlyUsed"
+    },
+    {
+      "key": "e",
+      "name": "Explorer",
+      "command": "workbench.view.explorer"
     }
   ],
   "workbench.statusBar.visible": false

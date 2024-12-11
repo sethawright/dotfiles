@@ -1,15 +1,22 @@
 [
   {
-    "key": "ctrl+'",
+    "key": "ctrl+\\",
     "command": "workbench.action.terminal.toggleTerminal"
   },
   {
     "key": "ctrl+j",
-    "command": "workbench.action.quickOpenNavigateNext"
+    "command": "workbench.action.quickOpenNavigateNext",
+    "when": "inQuickOpen"
   },
   {
     "key": "ctrl+k",
-    "command": "workbench.action.quickOpenNavigatePrevious"
+    "command": "workbench.action.quickOpenNavigatePrevious",
+    "when": "inQuickOpen"
+  },
+  {
+    "key": "enter",
+    "command": "search.focus.nextInputBox",
+    "when": "inSearchEditor && searchInputBoxFocus"
   },
   {
     "key": "cmd+w",
@@ -56,11 +63,23 @@
   },
   {
     "key": "ctrl+h",
-    "command": "workbench.action.focusPreviousGroup"
+    "command": "workbench.action.focusLeftGroup",
+    "when": "editorFocus"
   },
   {
     "key": "ctrl+l",
-    "command": "workbench.action.focusNextGroup"
+    "command": "workbench.action.focusRightGroup",
+    "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.focusBelowGroup",
+    "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.focusAboveGroup",
+    "when": "editorFocus"
   },
   {
     "key": "ctrl+h",
@@ -184,11 +203,19 @@
     "command": "workbench.action.toggleAuxiliaryBar"
   },
   {
+    "key": "ctrl+;",
+    "command": "workbench.action.toggleAuxiliaryBar"
+  },
+  {
     "key": "alt+cmd+b",
     "command": "-workbench.action.toggleAuxiliaryBar"
   },
   {
     "key": "cmd+'",
+    "command": "workbench.action.toggleSidebarVisibility"
+  },
+  {
+    "key": "ctrl+'",
     "command": "workbench.action.toggleSidebarVisibility"
   },
   {
