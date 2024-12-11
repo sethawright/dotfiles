@@ -73,19 +73,10 @@ curl -fsSL git.io/gg.sh | bash
 # pause for github login
 git clone https://github.com/sethawright/dotfiles.git
 
-mkdir -p ~/.config && cd ~/.config
-unlink alacritty
-ln -s ~/dotfiles/alacritty/ ./alacritty
-unlink fish
-ln -s ~/dotfiles/fish/ ./fish
-unlink nvim
-ln -s ~/dotfiles/nvim/ ./nvim
-unlink tmux
-ln -s ~/dotfiles/tmux/ ./tmux
-
 cd ~
 ln -s ~/dotfiles/gitconfig ./.gitconfig
 ln -s ~/dotfiles/gitignore_global ./.gitignore_global
+
 # allow key repeat for vim input
 defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
 
@@ -94,6 +85,7 @@ touch config
 chmod 600 config
 
 . ~/dotfiles/install_fonts.sh
+. ~/dotfiles/setup_dotfiles.sh
 
 brew cleanup
 

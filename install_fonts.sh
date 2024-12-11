@@ -58,4 +58,6 @@ for font in "${fonts_list[@]}"; do
   brew install "$font"
 done
 
+cp ~/dotfiles/sf-mono-patched/* ~/Library/Fonts
+
 exit
