@@ -1,5 +1,9 @@
 [
   {
+    "key": "ctrl+enter",
+    "command": "workbench.action.focusFirstEditorGroup"
+  },
+  {
     "key": "ctrl+\\",
     "command": "workbench.action.terminal.toggleTerminal"
   },

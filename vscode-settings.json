@@ -180,14 +180,6 @@
       "commands": ["editor.action.showDefinitionPreviewHover"]
     },
     {
-      "before": ["g", "d"],
-      "commands": ["editor.action.peekTypeDefinition"]
-    },
-    {
-      "before": ["g", "D"],
-      "commands": ["editor.action.revealDefinition"]
-    },
-    {
       "before": ["g", "i"],
       "commands": ["editor.action.goToImplementation"]
     }
@@ -257,6 +249,11 @@
           "key": "d",
           "name": "Close buffer",
           "command": "workbench.action.closeActiveEditor"
+        },
+        {
+          "key": "x",
+          "name": "Close all buffers",
+          "command": "workbench.action.closeAllEditors"
         }
       ]
     },
@@ -284,6 +281,11 @@
           "key": "s",
           "name": "Split horizontal",
           "command": "workbench.action.splitEditorDown"
+        },
+        {
+          "key": "q",
+          "name": "Close window",
+          "command": "workbench.action.closeEditorsInGroup"
         }
       ]
     },
