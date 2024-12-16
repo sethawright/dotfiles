@@ -1,13 +1,14 @@
 return {
   { "rose-pine/neovim", name = "rose-pine" },
   { "projekt0n/github-nvim-theme" },
-  -- {
-  --   "folke/tokyonight.nvim",
-  --   lazy = false,
-  --   priority = 1000,
-  --   opts = {},
-  -- },
-  -- { "catppuccin/nvim", name = "catppuccin" },
+  { "navarasu/onedark.nvim" },
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
+  { "catppuccin/nvim", name = "catppuccin" },
 
   -- Configure LazyVim to load gruvbox
   {
@@ -17,22 +18,18 @@ return {
       set_dark_mode = function()
         -- vim.cmd("colorscheme tokyonight-night")
         -- vim.cmd("colorscheme rose-pine-main")
-        vim.cmd("colorscheme github_dark_tritanopia")
-        vim.opt.background = "dark"
-        vim.api.nvim_set_hl(0, "StatusLine", {
-          bg = "None",
-          link = "Normal",
-        })
+        vim.cmd("colorscheme github_dark")
+        -- vim.opt.background = "dark"
+        vim.api.nvim_set_hl(0, "SnacksIndentScope", { link = "DiagnosticSignInfo" })
+        vim.api.nvim_set_hl(0, "SnacksIndent", { link = "IndentBlanklineChar" })
       end,
       set_light_mode = function()
         -- vim.cmd("colorscheme tokyonight-day")
         -- vim.cmd("colorscheme rose-pine-dawn")
         vim.cmd("colorscheme github_light")
-        vim.opt.background = "light"
-        vim.api.nvim_set_hl(0, "StatusLine", {
-          bg = "None",
-          link = "Normal",
-        })
+        -- vim.opt.background = "light"
+        vim.api.nvim_set_hl(0, "SnacksIndentScope", { link = "DiagnosticSignInfo" })
+        vim.api.nvim_set_hl(0, "SnacksIndent", { fg = "#f4f4f4" })
       end,
     },
   },
