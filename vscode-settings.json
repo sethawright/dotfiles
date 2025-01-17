@@ -54,7 +54,7 @@
   "workbench.editor.tabSizing": "shrink",
   "workbench.iconTheme": "eq-material-theme-icons",
   "workbench.preferredDarkColorTheme": "GitHub Dark",
-  "workbench.preferredLightColorTheme": "GitHub Light",
+  "workbench.preferredLightColorTheme": "GitHub Dark",
   "workbench.startupEditor": "newUntitledFile",
   "[dart]": {
     "editor.formatOnSave": true,
@@ -446,5 +446,7 @@
       "command": "workbench.view.explorer"
     }
   ],
-  "workbench.statusBar.visible": false
+  "workbench.statusBar.visible": false,
+  "database-client.autoSync": true,
+  "workbench.activityBar.location": "hidden"
 }

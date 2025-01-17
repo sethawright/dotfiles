@@ -15,6 +15,16 @@ return {
         disabled_filetypes = { statusline = { "dashboard", "alpha" } },
         component_separators = { left = "", right = "" },
         section_separators = { left = "", right = "" },
+        theme = {
+          normal = {
+            a = { bg = "NONE" },
+            b = { bg = "NONE" },
+            c = { bg = "NONE" },
+            x = { bg = "NONE" },
+            y = { bg = "NONE" },
+            z = { bg = "NONE" },
+          },
+        },
       }
       opts.sections.lualine_a = {}
       opts.sections.lualine_b = {}

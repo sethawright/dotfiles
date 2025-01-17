@@ -23,7 +23,7 @@ set DARK_MODE (defaults read -g AppleInterfaceStyle 2> /dev/null)
 # set LIGHT_THEME rose-pine-dawn
 # set DARK_THEME rose-pine
 set LIGHT_THEME github-light
-set DARK_THEME github-dark
+set DARK_THEME github-dark-dimmed
 set ALACRITTY_CONFIG_PATH (realpath ~/.config/alacritty/alacritty.toml)
 
 function update_theme

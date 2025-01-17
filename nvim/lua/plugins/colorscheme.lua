@@ -1,6 +1,14 @@
 return {
   { "rose-pine/neovim", name = "rose-pine" },
-  { "projekt0n/github-nvim-theme" },
+  {
+    "projekt0n/github-nvim-theme",
+    name = "github-theme",
+    opts = {
+      options = {
+        transparent = true,
+      },
+    },
+  },
   { "navarasu/onedark.nvim" },
   {
     "folke/tokyonight.nvim",
