@@ -16,6 +16,13 @@ return {
       desc = "Files",
     },
     {
+      "<leader>;",
+      function()
+        Snacks.picker.lines()
+      end,
+      desc = "Lines",
+    },
+    {
       "<leader>o",
       function()
         Snacks.picker.lsp_symbols({ filter = LazyVim.config.kind_filter })

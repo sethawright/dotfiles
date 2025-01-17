@@ -19,7 +19,7 @@ end
 
 local function scheme_for_appearance(appearance)
 	if appearance:find("Dark") then
-		return "github_dark_tritanopia"
+		return "github_dark_dimmed"
 	else
 		return "github_light"
 	end
@@ -46,7 +46,7 @@ config.use_fancy_tab_bar = false
 config.font = wezterm.font("SFMono Nerd Font", { weight = "Regular", stretch = "Normal", style = "Normal" }) -- (AKA: SF Mono) /Users/sethwright/Library/Fonts/SFMono Regular Nerd Font Complete.otf, CoreText
 config.default_prog = { "/opt/homebrew/bin/fish", "-l", "-c", "tmux attach -t home || tmux new-session -s home" }
 config.font_size = 13.0
-config.line_height = 1.5
+config.line_height = 1.4
 -- config.leader = { key = "f", mods = "CTRL", timeout_milliseconds = 1000 }
 config.color_scheme_dirs = { "/Users/sethwright/.config/wezterm/themes/" }
 config.color_scheme = scheme_for_appearance(get_appearance())
@@ -55,10 +55,8 @@ config.window_decorations = "RESIZE"
 config.tab_bar_at_bottom = false
 config.hide_tab_bar_if_only_one_tab = true
 config.window_padding = {
-	left = 20,
-	right = 20,
-	top = 20,
-	bottom = 5,
+	left = 40,
+	right = 40,
 }
 config.keys = {
 	{
