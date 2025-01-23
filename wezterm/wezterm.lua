@@ -1,5 +1,6 @@
 -- Pull in the wezterm API
 local wezterm = require("wezterm")
+local act = wezterm.action
 
 -- This table will hold the configuration.
 local config = {}
@@ -54,6 +55,7 @@ config.window_close_confirmation = "NeverPrompt"
 config.window_decorations = "RESIZE"
 config.tab_bar_at_bottom = false
 config.hide_tab_bar_if_only_one_tab = true
+config.disable_default_key_bindings = true
 config.window_padding = {
 	left = 40,
 	right = 40,
@@ -64,22 +66,62 @@ config.keys = {
 		mods = "CMD",
 		action = wezterm.action.ToggleFullScreen,
 	},
+	{ key = "Copy", mods = "NONE", action = wezterm.action.CopyTo("Clipboard") },
+	{ key = "Paste", mods = "NONE", action = wezterm.action.PasteFrom("Clipboard") },
+	{ key = "c", mods = "SUPER", action = wezterm.action.CopyTo("Clipboard") },
+	{ key = "v", mods = "SUPER", action = wezterm.action.PasteFrom("Clipboard") },
+	{ key = "h", mods = "SHIFT|CTRL", action = act.HideApplication },
+	{ key = "h", mods = "SUPER", action = act.HideApplication },
+	{ key = "l", mods = "SHIFT|CTRL", action = act.ShowDebugOverlay },
+	{ key = "+", mods = "SHIFT|CTRL", action = act.IncreaseFontSize },
+	{ key = "+", mods = "SUPER", action = act.IncreaseFontSize },
+	{ key = "-", mods = "SHIFT|CTRL", action = act.DecreaseFontSize },
+	{ key = "-", mods = "SUPER", action = act.DecreaseFontSize },
+	{ key = "0", mods = "SUPER", action = act.ResetFontSize },
+	{ key = "q", mods = "SUPER", action = act.QuitApplication },
+	{ key = "r", mods = "SHIFT|CTRL", action = act.ReloadConfiguration },
+	{ key = "p", mods = "SHIFT|CTRL", action = act.ActivateCommandPalette },
 
 	-- manage splits
 	{
 		mods = "SUPER",
-		key = "]",
-		action = wezterm.action.SendKey({ key = "¬" }),
+		key = "}",
+		action = wezterm.action.Multiple({
+			wezterm.action.SendKey({ key = "f", mods = "CTRL" }),
+			wezterm.action.SendKey({ key = "n" }),
+		}),
+	},
+	{
+		mods = "SHIFT|SUPER",
+		key = "}",
+		action = wezterm.action.Multiple({
+			wezterm.action.SendKey({ key = "f", mods = "CTRL" }),
+			wezterm.action.SendKey({ key = "n" }),
+		}),
 	},
 	{
 		mods = "SUPER",
-		key = "[",
-		action = wezterm.action.SendKey({ key = "˙" }),
+		key = "{",
+		action = wezterm.action.Multiple({
+			wezterm.action.SendKey({ key = "f", mods = "CTRL" }),
+			wezterm.action.SendKey({ key = "p" }),
+		}),
+	},
+	{
+		mods = "SHIFT|SUPER",
+		key = "{",
+		action = wezterm.action.Multiple({
+			wezterm.action.SendKey({ key = "f", mods = "CTRL" }),
+			wezterm.action.SendKey({ key = "p" }),
+		}),
 	},
 	{
 		mods = "SUPER",
 		key = "n",
-		action = wezterm.action.SendKey({ key = "ç" }),
+		action = wezterm.action.Multiple({
+			wezterm.action.SendKey({ key = "f", mods = "CTRL" }),
+			wezterm.action.SendKey({ key = "c" }),
+		}),
 	},
 	{
 		mods = "SUPER",
@@ -96,7 +138,10 @@ config.keys = {
 	{
 		mods = "SUPER",
 		key = "z",
-		action = wezterm.action.SendKey({ key = "⌟" }),
+		action = wezterm.action.Multiple({
+			wezterm.action.SendKey({ key = "f", mods = "CTRL" }),
+			wezterm.action.SendKey({ key = "z" }),
+		}),
 	},
 }
 
