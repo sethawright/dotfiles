@@ -69,6 +69,7 @@ alias e="nvim"
 alias vim="nvim"
 alias m="nvim"
 alias cleanup_branches="git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | grep -v '\*' | xargs -r git branch -D"
+alias venv="source ./.venv/bin/activate.fish"
 
 bind -s -k nul ~/dotfiles/scripts/tmux-sessionizer
 alias tms="~/dotfiles/scripts/tmux-sessionizer"

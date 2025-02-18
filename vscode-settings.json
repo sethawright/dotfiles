@@ -448,5 +448,6 @@
   ],
   "workbench.statusBar.visible": false,
   "database-client.autoSync": true,
-  "workbench.activityBar.location": "hidden"
+  "workbench.activityBar.location": "top",
+  "markdown.preview.fontFamily": "'SF Mono','Monaspace Neon',monospace"
 }

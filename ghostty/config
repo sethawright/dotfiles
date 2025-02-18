@@ -1,0 +1,21 @@
+adjust-cell-height = 30%
+clipboard-read = allow
+clipboard-write = allow
+command =  /opt/homebrew/bin/fish -l-c "tmux attach -t home || tmux new-session -s home"
+font-family = SF Mono Regular
+font-family-bold = SF Mono Bold
+font-family-italic = SF Mono Italic
+font-size = 13
+keybind = super+n=text:ç
+keybind = super+r=text:÷
+keybind = super+shift+[=text:˙
+keybind = super+shift+]=text:¬
+keybind = super+w=text:≈
+keybind = super+z=text:⌟
+macos-titlebar-style = hidden
+resize-overlay = never
+theme = dark:Github-Dark-Dimmed,light:Github-Light-Default
+mouse-hide-while-typing = true
+window-padding-balance = true
+window-padding-x = 10
+window-padding-y = 4,10 

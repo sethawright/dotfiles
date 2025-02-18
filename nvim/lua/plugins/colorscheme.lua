@@ -17,6 +17,7 @@ return {
     opts = {},
   },
   { "catppuccin/nvim", name = "catppuccin" },
+  { "EdenEast/nightfox.nvim", name = "nightfox" },
 
   -- Configure LazyVim to load gruvbox
   {
@@ -28,6 +29,7 @@ return {
         -- vim.cmd("colorscheme rose-pine-main")
         vim.cmd("colorscheme github_dark")
         -- vim.opt.background = "dark"
+        -- vim.cmd("colorscheme nightfox")
         vim.api.nvim_set_hl(0, "SnacksIndentScope", { link = "DiagnosticSignInfo" })
         vim.api.nvim_set_hl(0, "SnacksIndent", { link = "IndentBlanklineChar" })
       end,
@@ -36,6 +38,7 @@ return {
         -- vim.cmd("colorscheme rose-pine-dawn")
         vim.cmd("colorscheme github_light")
         -- vim.opt.background = "light"
+        -- vim.cmd("colorscheme dayfox")
         vim.api.nvim_set_hl(0, "SnacksIndentScope", { link = "DiagnosticSignInfo" })
         vim.api.nvim_set_hl(0, "SnacksIndent", { fg = "#f4f4f4" })
       end,
@@ -45,7 +48,8 @@ return {
   {
     "LazyVim/LazyVim",
     opts = function(_, opts)
-      opts.colorscheme = "github_dark_tritanopia"
+      opts.colorscheme = "github_dark"
+      -- opts.colorscheme = "nightfox"
       -- opts.colorscheme = "rose-pine"
     end,
   },
