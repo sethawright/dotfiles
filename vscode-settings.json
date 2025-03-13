@@ -1,499 +1,451 @@
 {
-    "breadcrumbs.enabled": false,
-    "debug.javascript.autoAttachFilter": "onlyWithFlag",
-    "editor.autoClosingQuotes": "never",
-    "editor.codeActionsOnSave": {
-        "source.fixAll": "explicit"
-    },
-    "editor.fontFamily": "'SF Mono','Monaspace Neon',monospace",
-    "editor.fontSize": 13,
-    "editor.formatOnPaste": true,
+  "breadcrumbs.enabled": false,
+  "editor.autoClosingQuotes": "never",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "editor.fontFamily": "'BlexMono Nerd Font Mono','SF Mono','Monaspace Neon',monospace",
+  "editor.fontSize": 13,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "editor.inlineSuggest.enabled": true,
+  "editor.minimap.enabled": false,
+  "editor.suggestSelection": "first",
+  "editor.tabSize": 2,
+  "explorer.confirmDelete": false,
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  "files.associations": {
+    "*.env.development": "env",
+    "*.env.production": "env"
+  },
+  "files.exclude": {
+    "**/.classpath": true,
+    "**/.factorypath": true,
+    "**/.project": true,
+    "**/.settings": true
+  },
+  "git.autofetch": true,
+  "githubPullRequests.defaultMergeMethod": "squash",
+  "githubPullRequests.fileListLayout": "flat",
+  "githubPullRequests.pullBranch": "never",
+  "gitlens.codeLens.enabled": false,
+  "gitlens.currentLine.enabled": false,
+  "gitlens.hovers.currentLine.over": "line",
+  "gitlens.remotes": [
+    {
+      "domain": "github.mheducation.com",
+      "type": "GitHub"
+    }
+  ],
+  "gitlens.statusBar.enabled": false,
+  "redhat.telemetry.enabled": false,
+  "search.quickOpen.includeHistory": false,
+  "search.smartCase": true,
+  "security.workspace.trust.untrustedFiles": "newWindow",
+  "terminal.integrated.fontFamily": "\"SF Mono\", \"Input Mono\", \"Fira Code\", monospace",
+  "window.autoDetectColorScheme": true,
+  "workbench.colorTheme": "GitHub Light",
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.highlightModifiedTabs": true,
+  "workbench.editor.tabSizing": "shrink",
+  "workbench.iconTheme": "eq-material-theme-icons",
+  "workbench.preferredDarkColorTheme": "GitHub Dark",
+  "workbench.preferredLightColorTheme": "GitHub Light",
+  "workbench.startupEditor": "newUntitledFile",
+  "[dart]": {
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
-    "editor.inlineSuggest.enabled": true,
-    "editor.minimap.enabled": false,
+    "editor.rulers": [80],
+    "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
     "editor.suggestSelection": "first",
-    "editor.tabSize": 2,
-    "explorer.confirmDelete": false,
-    "extensions.experimental.affinity": {
-        "asvetliakov.vscode-neovim": 1
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "gitlens.autolinks": [
+    {
+      "prefix": "MGH-",
+      "url": "https://willowtree.atlassian.net/browse/MGH-<num>"
     },
-    "files.associations": {
-        "*.env.development": "env",
-        "*.env.production": "env"
+    {
+      "prefix": "MGH ",
+      "url": "https://willowtree.atlassian.net/browse/MGH-<num>",
+      "ignoreCase": false
     },
-    "files.exclude": {
-        "**/.classpath": true,
-        "**/.factorypath": true,
-        "**/.project": true,
-        "**/.settings": true
+    {
+      "prefix": "[MGH ",
+      "url": "https://willowtree.atlassian.net/browse/MGH-<num>",
+      "ignoreCase": false
     },
-    "git.autofetch": true,
-    "githubPullRequests.defaultMergeMethod": "squash",
-    "githubPullRequests.fileListLayout": "flat",
-    "githubPullRequests.pullBranch": "never",
-    "gitlens.codeLens.enabled": false,
-    "gitlens.currentLine.enabled": false,
-    "gitlens.hovers.currentLine.over": "line",
-    "gitlens.remotes": [
+    {
+      "prefix": "[MGH-",
+      "ignoreCase": false,
+      "url": "https://willowtree.atlassian.net/browse/MGH-<num>"
+    }
+  ],
+  "vim.useSystemClipboard": true,
+  "gitlens.views.branches.branches.layout": "list",
+  "terminal.integrated.shellIntegration.decorationsEnabled": "never",
+  "lldb.library": "/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Versions/A/LLDB",
+  "lldb.launch.expressions": "native",
+  "diffEditor.codeLens": true,
+  "jupyter.askForKernelRestart": false,
+  "editor.accessibilitySupport": "off",
+  "vim.smartRelativeLine": true,
+  "workbench.editor.showTabs": "none",
+  "breadcrumbs.showNamespaces": false,
+  "explorer.openEditors.visible": 3,
+  "files.autoSave": "onFocusChange",
+  "notebook.formatOnSave.enabled": true,
+  "notebook.formatOnCellExecution": true,
+  "yaml.schemas": {
+    "file:///Users/a503022951/.vscode/extensions/atlassian.atlascode-3.0.10/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "notebook.output.wordWrap": true,
+  "window.commandCenter": false,
+  "projectManager.git.baseFolders": ["~/Code/x", "~/Code/seth"],
+  "editor.lightbulb.enabled": "off",
+  "terminal.integrated.env.osx": {},
+  "console-ninja.featureSet": "Community",
+  "cursor.cpp.disabledLanguages": ["plaintext", "markdown", "scminput"],
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
+  "workbench.sideBar.location": "right",
+  "vim.leader": "<space>",
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<space>"],
+      "commands": ["whichkey.show"]
+    },
+    {
+      "before": ["]", "c"],
+      "commands": [
+        "workbench.action.compareEditor.nextChange",
+        "merge-conflict.next"
+      ]
+    },
+    {
+      "after": ["ma", "o", "<esc>", "k", "'a"],
+      "before": ["]", "<space>"]
+    },
+    {
+      "after": ["ma", "O", "<esc>", "j", "'a"],
+      "before": ["[", "<space>"]
+    },
+    {
+      "before": ["[", "c"],
+      "commands": [
+        "workbench.action.compareEditor.previousChange",
+        "merge-conflict.previous"
+      ]
+    },
+    {
+      "before": ["K"],
+      "commands": ["editor.action.showDefinitionPreviewHover"]
+    },
+    {
+      "before": ["g", "i"],
+      "commands": ["editor.action.goToImplementation"]
+    }
+  ],
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<space>"],
+      "commands": ["whichkey.show"]
+    }
+  ],
+  "whichkey.bindings": [
+    {
+      "key": "f",
+      "name": "File...",
+      "type": "bindings",
+      "bindings": [
         {
-            "domain": "github.mheducation.com",
-            "type": "GitHub"
+          "key": "f",
+          "name": "Find file",
+          "command": "workbench.action.quickOpen"
+        },
+        {
+          "key": "r",
+          "name": "Recent files",
+          "command": "workbench.action.openRecent"
+        },
+        {
+          "key": "t",
+          "name": "Find text",
+          "command": "workbench.action.findInFiles"
         }
-    ],
-    "gitlens.statusBar.enabled": false,
-    "redhat.telemetry.enabled": false,
-    "search.quickOpen.includeHistory": false,
-    "search.smartCase": true,
-    "security.workspace.trust.untrustedFiles": "newWindow",
-    "terminal.integrated.fontFamily": "\"SF Mono\", \"Input Mono\", \"Fira Code\", monospace",
-    "window.autoDetectColorScheme": true,
-    "workbench.colorTheme": "GitHub Light",
-    "workbench.editor.enablePreview": false,
-    "workbench.editor.highlightModifiedTabs": true,
-    "workbench.editor.tabSizing": "shrink",
-    "workbench.iconTheme": "eq-material-theme-icons",
-    "workbench.preferredDarkColorTheme": "GitHub Dark",
-    "workbench.preferredLightColorTheme": "GitHub Dark",
-    "workbench.startupEditor": "newUntitledFile",
-    "[dart]": {
-        "editor.formatOnSave": true,
-        "editor.formatOnType": true,
-        "editor.rulers": [
-            80
-        ],
-        "editor.selectionHighlight": false,
-        "editor.suggest.snippetsPreventQuickSuggestions": false,
-        "editor.suggestSelection": "first",
-        "editor.tabCompletion": "onlySnippets",
-        "editor.wordBasedSuggestions": "off"
+      ]
     },
-    "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter"
-    },
-    "[javascriptreact]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[json]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[yaml]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[jsonc]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[html]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "typescript.updateImportsOnFileMove.enabled": "always",
-    "[typescript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[css]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[typescriptreact]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "gitlens.autolinks": [
+    {
+      "key": "g",
+      "name": "Git...",
+      "type": "bindings",
+      "bindings": [
         {
-            "prefix": "MGH-",
-            "url": "https://willowtree.atlassian.net/browse/MGH-<num>"
+          "key": "g",
+          "name": "Source Control",
+          "command": "workbench.view.scm"
         },
         {
-            "prefix": "MGH ",
-            "url": "https://willowtree.atlassian.net/browse/MGH-<num>",
-            "ignoreCase": false
-        },
-        {
-            "prefix": "[MGH ",
-            "url": "https://willowtree.atlassian.net/browse/MGH-<num>",
-            "ignoreCase": false
-        },
-        {
-            "prefix": "[MGH-",
-            "ignoreCase": false,
-            "url": "https://willowtree.atlassian.net/browse/MGH-<num>"
+          "key": "b",
+          "name": "Blame",
+          "command": "gitlens.toggleFileBlame"
         }
-    ],
-    "vim.useSystemClipboard": true,
-    "gitlens.views.branches.branches.layout": "list",
-    "terminal.integrated.shellIntegration.decorationsEnabled": "never",
-    "lldb.library": "/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Versions/A/LLDB",
-    "lldb.launch.expressions": "native",
-    "diffEditor.codeLens": true,
-    "jupyter.askForKernelRestart": false,
-    "editor.accessibilitySupport": "off",
-    "vim.smartRelativeLine": true,
-    "workbench.editor.showTabs": "none",
-    "breadcrumbs.showNamespaces": false,
-    "explorer.openEditors.visible": 3,
-    "files.autoSave": "onFocusChange",
-    "notebook.formatOnSave.enabled": true,
-    "notebook.formatOnCellExecution": true,
-    "yaml.schemas": {
-        "file:///Users/a503022951/.vscode/extensions/atlassian.atlascode-3.0.10/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+      ]
     },
-    "[javascript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    {
+      "key": "b",
+      "name": "Buffer...",
+      "type": "bindings",
+      "bindings": [
+        {
+          "key": "o",
+          "name": "Close other buffers",
+          "command": "workbench.action.closeOtherEditors"
+        },
+        {
+          "key": "b",
+          "name": "List buffers",
+          "command": "workbench.action.showAllEditorsByMostRecentlyUsed"
+        },
+        {
+          "key": "d",
+          "name": "Close buffer",
+          "command": "workbench.action.closeActiveEditor"
+        },
+        {
+          "key": "x",
+          "name": "Close all buffers",
+          "command": "workbench.action.closeAllEditors"
+        }
+      ]
     },
-    "notebook.output.wordWrap": true,
-    "window.commandCenter": false,
-    "projectManager.git.baseFolders": [
-        "~/Code/x",
-        "~/Code/seth"
-    ],
-    "editor.lightbulb.enabled": "off",
-    "terminal.integrated.env.osx": {},
-    "console-ninja.featureSet": "Community",
-    "cursor.cpp.disabledLanguages": [
-        "plaintext",
-        "markdown",
-        "scminput"
-    ],
-    "[svelte]": {
-        "editor.defaultFormatter": "svelte.svelte-vscode"
+    {
+      "key": "w",
+      "name": "Window...",
+      "type": "bindings",
+      "bindings": [
+        {
+          "key": "m",
+          "name": "Maximize editor",
+          "command": "workbench.action.toggleEditorWidths"
+        },
+        {
+          "key": "d",
+          "name": "Close window",
+          "command": "workbench.action.closeEditorsInGroup"
+        },
+        {
+          "key": "v",
+          "name": "Split vertical",
+          "command": "workbench.action.splitEditorRight"
+        },
+        {
+          "key": "s",
+          "name": "Split horizontal",
+          "command": "workbench.action.splitEditorDown"
+        },
+        {
+          "key": "q",
+          "name": "Close window",
+          "command": "workbench.action.closeEditorsInGroup"
+        }
+      ]
     },
-    "workbench.sideBar.location": "right",
-    "vim.leader": "<space>",
-    "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "key": "s",
+      "name": "Symbol...",
+      "type": "bindings",
+      "bindings": [
         {
-            "before": [
-                "<space>"
-            ],
-            "commands": [
-                "whichkey.show"
-            ]
+          "key": "s",
+          "name": "Search Symbols",
+          "command": "workbench.action.gotoSymbol"
         },
         {
-            "before": [
-                "]",
-                "c"
-            ],
-            "commands": [
-                "workbench.action.compareEditor.nextChange",
-                "merge-conflict.next"
-            ]
-        },
-        {
-            "after": [
-                "ma",
-                "o",
-                "<esc>",
-                "k",
-                "'a"
-            ],
-            "before": [
-                "]",
-                "<space>"
-            ]
-        },
-        {
-            "after": [
-                "ma",
-                "O",
-                "<esc>",
-                "j",
-                "'a"
-            ],
-            "before": [
-                "[",
-                "<space>"
-            ]
-        },
-        {
-            "before": [
-                "[",
-                "c"
-            ],
-            "commands": [
-                "workbench.action.compareEditor.previousChange",
-                "merge-conflict.previous"
-            ]
-        },
-        {
-            "before": [
-                "K"
-            ],
-            "commands": [
-                "editor.action.showDefinitionPreviewHover"
-            ]
-        },
-        {
-            "before": [
-                "g",
-                "i"
-            ],
-            "commands": [
-                "editor.action.goToImplementation"
-            ]
+          "key": "p",
+          "name": "Project Symbols",
+          "command": "workbench.action.showAllSymbols"
         }
-    ],
-    "vim.visualModeKeyBindingsNonRecursive": [
+      ]
+    },
+    {
+      "key": "d",
+      "name": "Debug/Database...",
+      "type": "bindings",
+      "bindings": [
         {
-            "before": [
-                "<space>"
-            ],
-            "commands": [
-                "whichkey.show"
-            ]
+          "key": "a",
+          "name": "Start Debugging",
+          "command": "workbench.action.debug.start"
+        },
+        {
+          "key": "b",
+          "name": "Toggle Breakpoint",
+          "command": "editor.debug.action.toggleBreakpoint"
+        },
+        {
+          "key": "d",
+          "name": "Open Database Client",
+          "command": "github.cweijan.mysql.focus"
+        },
+        {
+          "key": "s",
+          "name": "Stop Debugging",
+          "command": "workbench.action.debug.stop"
+        },
+        {
+          "key": "r",
+          "name": "Run Without Debugging",
+          "command": "workbench.action.debug.run"
+        },
+        {
+          "key": "u",
+          "name": "Open Debug View",
+          "command": "workbench.view.debug"
         }
-    ],
-    "whichkey.bindings": [
+      ]
+    },
+    {
+      "key": "u",
+      "name": "UI...",
+      "type": "bindings",
+      "bindings": [
         {
-            "key": "f",
-            "name": "File...",
-            "type": "bindings",
-            "bindings": [
-                {
-                    "key": "f",
-                    "name": "Find file",
-                    "command": "workbench.action.quickOpen"
-                },
-                {
-                    "key": "r",
-                    "name": "Recent files",
-                    "command": "workbench.action.openRecent"
-                },
-                {
-                    "key": "t",
-                    "name": "Find text",
-                    "command": "workbench.action.findInFiles"
-                }
-            ]
+          "key": "s",
+          "name": "Toggle Status Bar",
+          "command": "workbench.action.toggleStatusbarVisibility"
         },
         {
-            "key": "g",
-            "name": "Git...",
-            "type": "bindings",
-            "bindings": [
-                {
-                    "key": "g",
-                    "name": "Source Control",
-                    "command": "workbench.view.scm"
-                },
-                {
-                    "key": "b",
-                    "name": "Blame",
-                    "command": "gitlens.toggleFileBlame"
-                }
-            ]
+          "key": "z",
+          "name": "Toggle Zen Mode",
+          "command": "workbench.action.toggleZenMode"
         },
         {
-            "key": "b",
-            "name": "Buffer...",
-            "type": "bindings",
-            "bindings": [
-                {
-                    "key": "o",
-                    "name": "Close other buffers",
-                    "command": "workbench.action.closeOtherEditors"
-                },
-                {
-                    "key": "b",
-                    "name": "List buffers",
-                    "command": "workbench.action.showAllEditorsByMostRecentlyUsed"
-                },
-                {
-                    "key": "d",
-                    "name": "Close buffer",
-                    "command": "workbench.action.closeActiveEditor"
-                },
-                {
-                    "key": "x",
-                    "name": "Close all buffers",
-                    "command": "workbench.action.closeAllEditors"
-                }
-            ]
-        },
-        {
-            "key": "w",
-            "name": "Window...",
-            "type": "bindings",
-            "bindings": [
-                {
-                    "key": "m",
-                    "name": "Maximize editor",
-                    "command": "workbench.action.toggleEditorWidths"
-                },
-                {
-                    "key": "d",
-                    "name": "Close window",
-                    "command": "workbench.action.closeEditorsInGroup"
-                },
-                {
-                    "key": "v",
-                    "name": "Split vertical",
-                    "command": "workbench.action.splitEditorRight"
-                },
-                {
-                    "key": "s",
-                    "name": "Split horizontal",
-                    "command": "workbench.action.splitEditorDown"
-                },
-                {
-                    "key": "q",
-                    "name": "Close window",
-                    "command": "workbench.action.closeEditorsInGroup"
-                }
-            ]
-        },
-        {
-            "key": "s",
-            "name": "Symbol...",
-            "type": "bindings",
-            "bindings": [
-                {
-                    "key": "s",
-                    "name": "Search Symbols",
-                    "command": "workbench.action.gotoSymbol"
-                },
-                {
-                    "key": "p",
-                    "name": "Project Symbols",
-                    "command": "workbench.action.showAllSymbols"
-                }
-            ]
-        },
-        {
-            "key": "d",
-            "name": "Debug/Database...",
-            "type": "bindings",
-            "bindings": [
-                {
-                    "key": "a",
-                    "name": "Start Debugging",
-                    "command": "workbench.action.debug.start"
-                },
-                {
-                    "key": "b",
-                    "name": "Toggle Breakpoint",
-                    "command": "editor.debug.action.toggleBreakpoint"
-                },
-                {
-                    "key": "d",
-                    "name": "Open Database Client",
-                    "command": "github.cweijan.mysql.focus"
-                },
-                {
-                    "key": "s",
-                    "name": "Stop Debugging",
-                    "command": "workbench.action.debug.stop"
-                },
-                {
-                    "key": "r",
-                    "name": "Run Without Debugging",
-                    "command": "workbench.action.debug.run"
-                },
-                {
-                    "key": "u",
-                    "name": "Open Debug View",
-                    "command": "workbench.view.debug"
-                }
-            ]
-        },
-        {
-            "key": "u",
-            "name": "UI...",
-            "type": "bindings",
-            "bindings": [
-                {
-                    "key": "s",
-                    "name": "Toggle Status Bar",
-                    "command": "workbench.action.toggleStatusbarVisibility"
-                },
-                {
-                    "key": "z",
-                    "name": "Toggle Zen Mode",
-                    "command": "workbench.action.toggleZenMode"
-                },
-                {
-                    "key": "t",
-                    "name": "Toggle Terminal",
-                    "command": "workbench.action.terminal.toggleTerminal"
-                }
-            ]
-        },
-        {
-            "key": "t",
-            "name": "Test...",
-            "command": "workbench.view.testing.focus"
-        },
-        {
-            "key": "a",
-            "name": "AI...",
-            "type": "bindings",
-            "bindings": [
-                {
-                    "key": "a",
-                    "name": "Focus Chat",
-                    "command": "aichat.newchataction"
-                },
-                {
-                    "key": "m",
-                    "name": "Inline Modify",
-                    "command": "aipopup.action.modal.generate"
-                },
-                {
-                    "key": "d",
-                    "name": "Close Chat",
-                    "command": "aichat.close"
-                }
-            ]
-        },
-        {
-            "key": "x",
-            "name": "Problems...",
-            "type": "bindings",
-            "bindings": [
-                {
-                    "key": "x",
-                    "name": "Show All Problems",
-                    "command": "workbench.actions.view.problems"
-                }
-            ]
-        },
-        {
-            "key": "p",
-            "name": "Quick Open",
-            "type": "bindings",
-            "command": "workbench.action.quickOpen"
-        },
-        {
-            "key": "q",
-            "name": "Close Split",
-            "type": "bindings",
-            "command": "workbench.action.closeEditorsInGroup"
-        },
-        {
-            "key": "e",
-            "name": "Explorer",
-            "type": "bindings",
-            "command": "workbench.files.action.showActiveFileInExplorer"
-        },
-        {
-            "key": "o",
-            "name": "Quick Symbols",
-            "command": "workbench.action.gotoSymbol"
-        },
-        {
-            "key": "/",
-            "name": "Search in workspace",
-            "command": "search.action.openNewEditorToSide"
-        },
-        {
-            "key": " ",
-            "name": "Buffers",
-            "command": "workbench.action.showAllEditorsByMostRecentlyUsed"
-        },
-        {
-            "key": "e",
-            "name": "Explorer",
-            "command": "workbench.view.explorer"
+          "key": "t",
+          "name": "Toggle Terminal",
+          "command": "workbench.action.terminal.toggleTerminal"
         }
-    ],
-    "workbench.statusBar.visible": false,
-    "database-client.autoSync": true,
-    "markdown.preview.fontFamily": "'SF Mono','Monaspace Neon',monospace"
+      ]
+    },
+    {
+      "key": "t",
+      "name": "Test...",
+      "command": "workbench.view.testing.focus"
+    },
+    {
+      "key": "a",
+      "name": "AI...",
+      "type": "bindings",
+      "bindings": [
+        {
+          "key": "a",
+          "name": "Focus Chat",
+          "command": "aichat.newchataction"
+        },
+        {
+          "key": "m",
+          "name": "Inline Modify",
+          "command": "aipopup.action.modal.generate"
+        },
+        {
+          "key": "d",
+          "name": "Close Chat",
+          "command": "aichat.close"
+        }
+      ]
+    },
+    {
+      "key": "x",
+      "name": "Problems...",
+      "type": "bindings",
+      "bindings": [
+        {
+          "key": "x",
+          "name": "Show All Problems",
+          "command": "workbench.actions.view.problems"
+        }
+      ]
+    },
+    {
+      "key": "p",
+      "name": "Quick Open",
+      "type": "bindings",
+      "command": "workbench.action.quickOpen"
+    },
+    {
+      "key": "q",
+      "name": "Close Split",
+      "type": "bindings",
+      "command": "workbench.action.closeEditorsInGroup"
+    },
+    {
+      "key": "e",
+      "name": "Explorer",
+      "type": "bindings",
+      "command": "workbench.files.action.showActiveFileInExplorer"
+    },
+    {
+      "key": "o",
+      "name": "Quick Symbols",
+      "command": "workbench.action.gotoSymbol"
+    },
+    {
+      "key": "/",
+      "name": "Search in workspace",
+      "command": "search.action.openNewEditorToSide"
+    },
+    {
+      "key": " ",
+      "name": "Buffers",
+      "command": "workbench.action.showAllEditorsByMostRecentlyUsed"
+    },
+    {
+      "key": "e",
+      "name": "Explorer",
+      "command": "workbench.view.explorer"
+    }
+  ],
+  "workbench.statusBar.visible": false,
+  "database-client.autoSync": true,
+  "workbench.activityBar.location": "top",
+  "markdown.preview.fontFamily": "'SF Mono','Monaspace Neon',monospace",
+  "workbench.layoutControl.enabled": false,
+  "workbench.editor.editorActionsLocation": "hidden"
 }
