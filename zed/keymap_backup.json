@@ -8,25 +8,28 @@
 [
   {
     "bindings": {
-      "cmd-k": "menu::SelectPrevious",
+      "cmd-k": "menu::SelectPrev",
       "cmd-j": "menu::SelectNext"
     }
   },
   {
     "context": "Workspace",
     "bindings": {
-      "ctrl-;": "workspace::ToggleLeftDock",
-      "ctrl-'": "workspace::ToggleRightDock",
-      "ctrl-\\": "workspace::ToggleBottomDock"
+      "cmd-;": "workspace::ToggleLeftDock",
+      "cmd-'": "workspace::ToggleRightDock",
+      "ctrl-'": "workspace::ToggleBottomDock"
     }
   },
   {
     "context": "Editor",
     "bindings": {
-      "ctrl-h": "workspace::ActivatePaneLeft",
-      "ctrl-l": "workspace::ActivatePaneRight",
-      "ctrl-k": "workspace::ActivatePaneUp",
-      "ctrl-j": "workspace::ActivatePaneDown",
+      "cmd-;": "workspace::ToggleLeftDock",
+      "cmd-'": "workspace::ToggleRightDock",
+      "ctrl-'": "workspace::ToggleBottomDock",
+      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
+      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
+      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
+      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
       "alt-k": "editor::MoveLineUp",
       "alt-j": "editor::MoveLineDown",
       "ctrl-.": "editor::ShowCompletions",
@@ -51,14 +54,14 @@
     "context": "FileFinder",
     "bindings": {
       "ctrl-v": "menu::SecondaryConfirm",
-      "cmd-k": "file_finder::SelectPrevious",
+      "cmd-k": "file_finder::SelectPrev",
       "cmd-j": "file_finder::Toggle"
     }
   },
   {
     "context": "TabSwitcher",
     "bindings": {
-      "k": "menu::SelectPrevious",
+      "k": "menu::SelectPrev",
       "j": "menu::SelectNext",
       "l": "tab_switcher::CloseSelectedItem"
     }

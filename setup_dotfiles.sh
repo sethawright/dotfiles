@@ -6,7 +6,9 @@ dirs=(
   "fish"
   "nvim"
   "tmux"
+  "ghostty"
   "wezterm"
+  "zed"
 )
 
 # Create ~/.config if it doesn't exist

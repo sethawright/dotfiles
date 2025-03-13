@@ -14,44 +14,6 @@ set PATH $PATH $ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platfor
 
 set -gx PNPM_HOME /Users/sethwright/Library/pnpm
 set -gx PATH "$PNPM_HOME" $PATH
-set -gx QHOME /Users/sethwright/q
-
-# theming
-set DARK_MODE (defaults read -g AppleInterfaceStyle 2> /dev/null)
-# set LIGHT_THEME tokyonight-day
-# set DARK_THEME tokyonight-night
-# set LIGHT_THEME rose-pine-dawn
-# set DARK_THEME rose-pine
-set LIGHT_THEME github-light
-set DARK_THEME github-dark-dimmed
-set ALACRITTY_CONFIG_PATH (realpath ~/.config/alacritty/alacritty.toml)
-
-function update_theme
-    sed -i '' "s|import = \[.*\]|import = [\"~/.config/alacritty/themes/$argv[1].toml\"]|" $ALACRITTY_CONFIG_PATH
-end
-
-function set_theme
-    if not set -q AUTO_DARK_MODE
-        set -g AUTO_DARK_MODE 1
-    end
-
-    if test "$AUTO_DARK_MODE" = 1
-        if string match -q $DARK_MODE Dark
-            update_theme $DARK_THEME
-        else
-            update_theme $LIGHT_THEME
-        end
-    else
-        update_theme $argv[1]
-    end
-end
-
-function theme
-    set -g AUTO_DARK_MODE 0
-    set_theme $argv[1]
-end
-
-set_theme
 
 alias l="ls -lah"
 alias puf='vendor/bin/phpunit --filter '

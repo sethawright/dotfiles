@@ -1,7 +1,7 @@
 adjust-cell-height = 30%
 clipboard-read = allow
 clipboard-write = allow
-command =  /opt/homebrew/bin/fish -l-c "tmux attach -t home || tmux new-session -s home"
+command =  /opt/homebrew/bin/fish -l -c "tmux attach -t home || tmux new-session -s home"
 font-family = SF Mono Regular
 font-family-bold = SF Mono Bold
 font-family-italic = SF Mono Italic
