@@ -51,7 +51,7 @@
   "workbench.editor.enablePreview": false,
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.tabSizing": "shrink",
-  "workbench.iconTheme": "eq-material-theme-icons",
+  "workbench.iconTheme": "catppuccin-latte",
   "workbench.preferredDarkColorTheme": "GitHub Dark",
   "workbench.preferredLightColorTheme": "GitHub Light",
   "workbench.startupEditor": "newUntitledFile",
