@@ -37,7 +37,7 @@
   "buffer_font_size": 13,
   "theme": {
     "mode": "system",
-    "light": "Min Dark (Solid)",
+    "light": "Min Light (Solid)",
     "dark": "Min Dark (Solid)"
   }
 }
