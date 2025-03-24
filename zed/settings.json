@@ -7,14 +7,22 @@
 // custom settings, run `zed: open default settings` from the
 // command palette
 {
-  "icon_theme": "Catppuccin Frappé",
+  "telemetry": {
+    "metrics": false
+  },
+  "features": {
+    "edit_prediction_provider": "zed"
+  },
+  "icon_theme": "Bearded Icon Theme",
   "relative_line_numbers": true,
   "git": {
     "inline_blame": {
       "enabled": false
     }
   },
-  "show_edit_predictions": false,
+  "edit_predictions": {
+    "mode": "subtle"
+  },
   "assistant": {
     "default_model": {
       "provider": "anthropic",
@@ -29,7 +37,7 @@
   "buffer_font_size": 13,
   "theme": {
     "mode": "system",
-    "light": "Github Light",
-    "dark": "Github Dark"
+    "light": "Min Dark (Solid)",
+    "dark": "Min Dark (Solid)"
   }
 }

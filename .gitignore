@@ -8,3 +8,5 @@ offlineimaprc
 mutt/*
 vim/sessions
 vim/bin
+zed/conversations
+zed/prompts

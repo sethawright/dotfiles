@@ -7,14 +7,21 @@
 // from the command palette.
 [
   {
+    "use_key_equivalents": true,
     "bindings": {
-      "cmd-k": "menu::SelectPrevious",
-      "cmd-j": "menu::SelectNext"
+      "ctrl-k": "menu::SelectPrevious",
+      "ctrl-j": "menu::SelectNext"
     }
   },
   {
     "context": "Workspace",
     "bindings": {
+      "ctrl-space": "tab_switcher::Toggle",
+      "cmd-shift-a": "assistant::ToggleFocus",
+      "cmd-shift-e": "project_panel::ToggleFocus",
+      "cmd-shift-g": "git_panel::ToggleFocus",
+      "cmd-shift-o": "outline_panel::ToggleFocus",
+      "cmd-shift-c": "collab_panel::ToggleFocus",
       "ctrl-;": "workspace::ToggleLeftDock",
       "ctrl-'": "workspace::ToggleRightDock",
       "ctrl-\\": "workspace::ToggleBottomDock"
@@ -23,12 +30,20 @@
   {
     "context": "Editor",
     "bindings": {
+      "ctrl-space": "tab_switcher::Toggle",
+      "cmd-shift-a": "assistant::ToggleFocus",
+      "cmd-shift-e": "project_panel::ToggleFocus",
+      "cmd-shift-g": "git_panel::ToggleFocus",
+      "cmd-shift-o": "outline_panel::ToggleFocus",
+      "cmd-shift-c": "collab_panel::ToggleFocus",
       "ctrl-h": "workspace::ActivatePaneLeft",
       "ctrl-l": "workspace::ActivatePaneRight",
-      "ctrl-k": "workspace::ActivatePaneUp",
-      "ctrl-j": "workspace::ActivatePaneDown",
+      // "ctrl-k": "workspace::ActivatePaneUp",
+      // "ctrl-j": "workspace::ActivatePaneDown",
       "alt-k": "editor::MoveLineUp",
       "alt-j": "editor::MoveLineDown",
+      "ctrl-j": "menu::SelectNext",
+      "ctrl-k": "menu::SelectPrevious",
       "ctrl-.": "editor::ShowCompletions",
       "ctrl-w q": "pane::CloseAllItems"
     }
@@ -36,9 +51,14 @@
   {
     "context": "Editor && vim_mode == normal",
     "bindings": {
+      "space e": "project_panel::ToggleFocus",
+      "space g g": "pane::CloseActiveItem",
+      "space w d": "pane::CloseActiveItem",
+      "space x x": "diagnostics::Deploy",
       "space p": "file_finder::Toggle",
       "space o": "outline::Toggle",
       "space space": "tab_switcher::Toggle",
+      "space /": "workspace::NewSearch",
       "shift shift": "tab_switcher::Toggle",
       "space b": "tab_switcher::Toggle",
       "ctrl-v": "pane::SplitRight",

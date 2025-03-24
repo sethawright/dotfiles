@@ -55,3 +55,7 @@ alias gp="gg p"
 alias gpl="gg pl"
 alias gph="git push -u origin HEAD"
 alias q="/Users/sethwright/q/m64/q"
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH
