@@ -51,7 +51,7 @@
   "workbench.editor.enablePreview": false,
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.tabSizing": "shrink",
-  "workbench.iconTheme": "catppuccin-latte",
+  "workbench.iconTheme": "bearded-icons",
   "workbench.preferredDarkColorTheme": "GitHub Dark",
   "workbench.preferredLightColorTheme": "GitHub Light",
   "workbench.startupEditor": "newUntitledFile",
@@ -145,7 +145,6 @@
   "[svelte]": {
     "editor.defaultFormatter": "svelte.svelte-vscode"
   },
-  "workbench.sideBar.location": "right",
   "vim.leader": "<space>",
   "vim.normalModeKeyBindingsNonRecursive": [
     {

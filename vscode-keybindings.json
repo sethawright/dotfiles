@@ -32,10 +32,6 @@
     "command": "-workbench.action.zoomReset"
   },
   {
-    "key": "ctrl+;",
-    "command": "workbench.debug.action.toggleRepl"
-  },
-  {
     "key": "cmd+=",
     "command": "editor.action.fontZoomIn"
   },
@@ -193,11 +189,11 @@
     "command": "workbench.action.toggleStatusbarVisibility"
   },
   {
-    "key": "cmd+;",
+    "key": "cmd+'",
     "command": "workbench.action.toggleAuxiliaryBar"
   },
   {
-    "key": "ctrl+;",
+    "key": "ctrl+'",
     "command": "workbench.action.toggleAuxiliaryBar"
   },
   {
@@ -205,11 +201,11 @@
     "command": "-workbench.action.toggleAuxiliaryBar"
   },
   {
-    "key": "cmd+'",
+    "key": "cmd+;",
     "command": "workbench.action.toggleSidebarVisibility"
   },
   {
-    "key": "ctrl+'",
+    "key": "ctrl+;",
     "command": "workbench.action.toggleSidebarVisibility"
   },
   {
@@ -265,5 +261,9 @@
     "key": "ctrl+; c",
     "command": "-jupyter.changeCellToCode",
     "when": "editorTextFocus && jupyter.hascodecells && !jupyter.webExtension && !notebookEditorFocused"
+  },
+  {
+    "key": "cmd+i",
+    "command": "composerMode.agent"
   }
 ]
