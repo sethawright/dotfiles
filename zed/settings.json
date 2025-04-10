@@ -7,6 +7,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette
 {
+  "autosave": "on_focus_change",
   "telemetry": {
     "metrics": false
   },
@@ -24,6 +25,7 @@
     "mode": "subtle"
   },
   "assistant": {
+    "default_profile": "write",
     "default_model": {
       "provider": "anthropic",
       "model": "claude-3-7-sonnet-latest"
