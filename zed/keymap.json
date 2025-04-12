@@ -63,8 +63,11 @@
   {
     "context": "TabSwitcher",
     "bindings": {
+      "ctrl-k": "menu::SelectPrevious",
       "k": "menu::SelectPrevious",
+      "ctrl-j": "menu::SelectNext",
       "j": "menu::SelectNext",
+      "ctrl-d": "tab_switcher::CloseSelectedItem",
       "d": "tab_switcher::CloseSelectedItem"
     }
   },
@@ -112,6 +115,8 @@
     "bindings": {
       "space p": "file_finder::Toggle",
       "space o": "outline::Toggle",
+      "space e": "project_panel::ToggleFocus",
+      "space g": "git_panel::ToggleFocus",
       // New file
       "space f n": "workspace::NewFile",
       // Open recent project
