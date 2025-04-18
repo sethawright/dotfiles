@@ -2,13 +2,6 @@ return {
   "folke/snacks.nvim",
   keys = {
     {
-      "<C-space>",
-      function()
-        Snacks.picker.buffers()
-      end,
-      desc = "Buffers",
-    },
-    {
       "<leader>p",
       function()
         Snacks.picker.files()

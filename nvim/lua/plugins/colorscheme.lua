@@ -9,6 +9,7 @@ return {
       },
     },
   },
+  { "datsfilipe/min-theme.nvim" },
   { "navarasu/onedark.nvim" },
   {
     "folke/tokyonight.nvim",
@@ -27,6 +28,7 @@ return {
       set_dark_mode = function()
         -- vim.cmd("colorscheme tokyonight-night")
         -- vim.cmd("colorscheme rose-pine-main")
+        -- vim.cmd("colorscheme github_dark")
         vim.cmd("colorscheme github_dark")
         -- vim.opt.background = "dark"
         -- vim.cmd("colorscheme nightfox")
