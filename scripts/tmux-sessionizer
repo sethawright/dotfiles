@@ -15,7 +15,7 @@ tmux_running=$(pgrep tmux)
 
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
   # Create new session with first window named "editor" and start nvim
-  tmux new-session -s $selected_name -c $selected -n editor "nvim; fish"
+  tmux new-session -s $selected_name -c $selected -n editor "nvim; exec fish"
   # Create second window named "server"
   tmux new-window -t $selected_name: -c $selected -n server
   # Create third window named "shell"
@@ -27,7 +27,7 @@ fi
 
 if ! tmux has-session -t=$selected_name 2>/dev/null; then
   # Create new detached session with first window named "editor" and start nvim
-  tmux new-session -ds $selected_name -c $selected -n editor "nvim; bash"
+  tmux new-session -ds $selected_name -c $selected -n editor "nvim; exec fish"
   # Create second window named "server"
   tmux new-window -t $selected_name: -c $selected -n server
   # Create third window named "shell"
