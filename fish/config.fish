@@ -56,27 +56,6 @@ alias gpl="gg pl"
 alias gph="git push -u origin HEAD"
 alias q="/Users/sethwright/q/m64/q"
 
-function op_set_env --argument-names var_name op_item op_field
-    if set -q $var_name
-        return
-    end
-
-    if test -z "$var_name" -o -z "$op_item" -o -z "$op_field"
-        echo "Usage: op_set_env ENV_VAR_NAME OP_ITEM_NAME FIELD_NAME"
-        return 1
-    end
-
-    if not command -sq op
-        echo "Error: 1Password CLI (op) not found. Please install it first."
-        return 1
-    end
-
-    set -gx $var_name (op item get "$op_item" --fields "$op_field")
-end
-
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
-
-op_set_env OPENAI_API_KEY "OpenAI Key" notesPlain
-op_set_env ANTHROPIC_API_KEY "Anthropic Key" notesPlain

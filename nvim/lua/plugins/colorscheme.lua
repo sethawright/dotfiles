@@ -34,6 +34,7 @@ return {
         -- vim.cmd("colorscheme nightfox")
         vim.api.nvim_set_hl(0, "SnacksIndentScope", { link = "DiagnosticSignInfo" })
         vim.api.nvim_set_hl(0, "SnacksIndent", { link = "IndentBlanklineChar" })
+        vim.api.nvim_set_hl(0, "StatusLine", { bg = "None" })
       end,
       set_light_mode = function()
         -- vim.cmd("colorscheme tokyonight-day")
@@ -43,6 +44,7 @@ return {
         -- vim.cmd("colorscheme dayfox")
         vim.api.nvim_set_hl(0, "SnacksIndentScope", { link = "DiagnosticSignInfo" })
         vim.api.nvim_set_hl(0, "SnacksIndent", { fg = "#f4f4f4" })
+        vim.api.nvim_set_hl(0, "StatusLine", { bg = "None" })
       end,
     },
   },

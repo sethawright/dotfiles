@@ -1,5 +1,6 @@
 return {
   "echasnovski/mini.files",
+  enabled = false,
   opts = function(_, opts)
     opts.windows.preview = true
     local map_split = function(buf_id, lhs, direction)
