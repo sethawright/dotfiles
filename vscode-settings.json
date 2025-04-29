@@ -418,7 +418,7 @@
       "key": "e",
       "name": "Explorer",
       "type": "bindings",
-      "command": "workbench.files.action.showActiveFileInExplorer"
+      "command": "workbench.view.explorer"
     },
     {
       "key": "o",
@@ -431,18 +431,12 @@
       "command": "search.action.openNewEditorToSide"
     },
     {
-      "key": " ",
+      "key": ",",
       "name": "Buffers",
       "command": "workbench.action.showAllEditorsByMostRecentlyUsed"
-    },
-    {
-      "key": "e",
-      "name": "Explorer",
-      "command": "workbench.view.explorer"
     }
   ],
   "workbench.statusBar.visible": false,
-  "database-client.autoSync": true,
   "workbench.activityBar.location": "top",
   "markdown.preview.fontFamily": "'SF Mono','Monaspace Neon',monospace",
   "workbench.layoutControl.enabled": false,

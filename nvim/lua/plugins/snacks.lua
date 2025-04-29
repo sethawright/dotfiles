@@ -22,5 +22,12 @@ return {
       end,
       desc = "Symbols",
     },
+    {
+      "<leader>o",
+      function()
+        Snacks.picker.lsp_symbols({ filter = LazyVim.config.kind_filter })
+      end,
+      desc = "Symbols",
+    },
   },
 }

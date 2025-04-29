@@ -82,10 +82,6 @@
     "when": "terminalFocus && terminalProcessSupported"
   },
   {
-    "key": "ctrl+space",
-    "command": "workbench.action.showAllEditorsByMostRecentlyUsed"
-  },
-  {
     "key": "cmd+down",
     "command": "editor.action.revealDefinition",
     "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
@@ -94,11 +90,6 @@
     "key": "cmd+t",
     "command": "workbench.action.terminal.new",
     "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
-  },
-  {
-    "key": "ctrl+.",
-    "command": "editor.action.triggerSuggest",
-    "when": "editorHasCompletionItemProvider && textInputFocus && !editorReadonly"
   },
   {
     "key": "cmd+n",

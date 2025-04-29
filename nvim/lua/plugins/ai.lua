@@ -6,6 +6,22 @@ return {
       "nvim-treesitter/nvim-treesitter",
     },
     opts = {
+      adapters = {
+        anthropic = function()
+          return require("codecompanion.adapters").extend("anthropic", {
+            env = {
+              api_key = 'cmd:op item get "Anthropic Key" --fields "notesPlain"',
+            },
+          })
+        end,
+        openai = function()
+          return require("codecompanion.adapters").extend("anthropic", {
+            env = {
+              api_key = 'cmd:op item get "OpenAI Key" --fields "notesPlain"',
+            },
+          })
+        end,
+      },
       display = {
         chat = {
           window = {
