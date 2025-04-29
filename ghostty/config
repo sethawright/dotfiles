@@ -6,7 +6,7 @@ font-family = BlexMono Nerd Font Mono
 font-family-bold = BlexMono Nerd Font Mono Bold
 font-family-italic = BlexMono Nerd Font Mono Italic
 font-family-bold-italic = BlexMono Nerd Font Mono Bold Italic
-font-size = 13
+font-size = 14
 font-thicken = true
 font-thicken-strength = 80
 keybind = super+n=text:ç
