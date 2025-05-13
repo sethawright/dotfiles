@@ -16,6 +16,24 @@ end
 
 return {
   "folke/snacks.nvim",
+  opts = {
+    picker = {
+      win = {
+        input = {
+          keys = {
+            ["<c-u>"] = {
+              "preview_scroll_up",
+              mode = { "n", "i" },
+            },
+            ["<c-d>"] = {
+              "preview_scroll_down",
+              mode = { "n", "i" },
+            },
+          },
+        },
+      },
+    },
+  },
   keys = {
     {
       "<leader>gm",
@@ -25,7 +43,6 @@ return {
           finder = function()
             local items = {}
             local files = get_modified_to_main()
-            local git = require("snacks.picker.source.git")
             for i, item in ipairs(files) do
               local preview_text = ""
               local handle = io.popen("git diff " .. get_main_branch() .. " -- " .. item)

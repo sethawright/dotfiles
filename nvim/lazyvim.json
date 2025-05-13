@@ -1,6 +1,7 @@
 {
   "extras": [
-    "lazyvim.plugins.extras.editor.mini-diff"
+    "lazyvim.plugins.extras.editor.mini-diff",
+    "lazyvim.plugins.extras.util.octo"
   ],
   "news": {
     "NEWS.md": "10960"
