@@ -29,9 +29,9 @@ return {
         -- vim.cmd("colorscheme tokyonight-night")
         -- vim.cmd("colorscheme rose-pine-main")
         -- vim.cmd("colorscheme github_dark")
-        vim.cmd("colorscheme github_dark")
+        -- vim.cmd("colorscheme github_dark")
         -- vim.opt.background = "dark"
-        -- vim.cmd("colorscheme nightfox")
+        vim.cmd("colorscheme nightfox")
         vim.api.nvim_set_hl(0, "SnacksIndentScope", { link = "DiagnosticSignInfo" })
         vim.api.nvim_set_hl(0, "SnacksIndent", { link = "IndentBlanklineChar" })
         vim.api.nvim_set_hl(0, "StatusLine", { bg = "None" })
@@ -39,11 +39,11 @@ return {
       set_light_mode = function()
         -- vim.cmd("colorscheme tokyonight-day")
         -- vim.cmd("colorscheme rose-pine-dawn")
-        vim.cmd("colorscheme github_light")
+        -- vim.cmd("colorscheme github_light")
         -- vim.opt.background = "light"
-        -- vim.cmd("colorscheme dayfox")
+        vim.cmd("colorscheme dayfox")
         vim.api.nvim_set_hl(0, "SnacksIndentScope", { link = "DiagnosticSignInfo" })
-        vim.api.nvim_set_hl(0, "SnacksIndent", { fg = "#f4f4f4" })
+        -- vim.api.nvim_set_hl(0, "SnacksIndent", { fg = "#f4f4f4" })
         vim.api.nvim_set_hl(0, "StatusLine", { bg = "None" })
       end,
     },
