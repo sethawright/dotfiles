@@ -6,9 +6,9 @@ font-family = BlexMono Nerd Font Mono
 font-family-bold = BlexMono Nerd Font Mono Bold
 font-family-italic = BlexMono Nerd Font Mono Italic
 font-family-bold-italic = BlexMono Nerd Font Mono Bold Italic
-font-size = 14
+font-size = 13
 font-thicken = true
-font-thicken-strength = 80
+font-thicken-strength = 90
 keybind = super+n=text:ç
 keybind = super+r=text:÷
 keybind = super+shift+[=text:˙
@@ -18,8 +18,8 @@ keybind = super+z=text:⌟
 macos-titlebar-style = hidden
 resize-overlay = never
 # theme = dark:nightfox,light:dayfox
-theme = dark:Github-Dark-Dimmed,light:Github-Light-Default
-# theme = dark:catppuccin-frappe,light:catppuccin-latte
+# theme = dark:Github-Dark-Dimmed,light:Github-Light-Default
+theme = dark:catppuccin-macchiato,light:catppuccin-latte
 mouse-hide-while-typing = true
 window-padding-balance = true
 window-padding-x = 10

@@ -440,5 +440,6 @@
   "workbench.activityBar.location": "top",
   "markdown.preview.fontFamily": "'SF Mono','Monaspace Neon',monospace",
   "workbench.layoutControl.enabled": false,
-  "workbench.editor.editorActionsLocation": "hidden"
+  "workbench.editor.editorActionsLocation": "hidden",
+  "javascript.updateImportsOnFileMove.enabled": "always"
 }
