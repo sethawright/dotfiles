@@ -32,8 +32,10 @@ return {
         -- vim.cmd("colorscheme github_dark")
         -- vim.opt.background = "dark"
         -- vim.cmd("colorscheme nightfox")
-        -- vim.api.nvim_set_hl(0, "SnacksIndentScope", { link = "DiagnosticSignInfo" })
-        -- vim.api.nvim_set_hl(0, "SnacksIndent", { link = "IndentBlanklineChar" })
+        vim.cmd("colorscheme catppuccin-macchiato")
+        -- Hack to fix failure to set appropriate indentation colors on theme switch
+        vim.api.nvim_set_hl(0, "SnacksIndentScope", { link = "IblScope" })
+        vim.api.nvim_set_hl(0, "SnacksIndent", { link = "IblIndent" })
         vim.api.nvim_set_hl(0, "StatusLine", { bg = "None" })
       end,
       set_light_mode = function()
@@ -42,8 +44,10 @@ return {
         -- vim.cmd("colorscheme github_light")
         -- vim.opt.background = "light"
         -- vim.cmd("colorscheme dayfox")
-        -- vim.api.nvim_set_hl(0, "SnacksIndentScope", { link = "DiagnosticSignInfo" })
-        -- vim.api.nvim_set_hl(0, "SnacksIndent", { fg = "#f4f4f4" })
+        vim.cmd("colorscheme catppuccin-latte")
+        -- Hack to fix failure to set appropriate indentation colors on theme switch
+        vim.api.nvim_set_hl(0, "SnacksIndentScope", { link = "IblScope" })
+        vim.api.nvim_set_hl(0, "SnacksIndent", { link = "IblIndent" })
         vim.api.nvim_set_hl(0, "StatusLine", { bg = "None" })
       end,
     },
