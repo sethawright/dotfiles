@@ -18,8 +18,8 @@ keybind = super+z=text:⌟
 macos-titlebar-style = hidden
 resize-overlay = never
 # theme = dark:nightfox,light:dayfox
-# theme = dark:Github-Dark-Dimmed,light:Github-Light-Default
-theme = dark:catppuccin-macchiato,light:catppuccin-latte
+theme = dark:Github-Dark-Dimmed,light:Github-Light-Default
+# theme = dark:catppuccin-macchiato,light:catppuccin-latte
 mouse-hide-while-typing = true
 window-padding-balance = true
 window-padding-x = 10

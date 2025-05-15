@@ -9,7 +9,9 @@ return {
       },
     },
   },
+  { "nyoom-engineering/oxocarbon.nvim" },
   { "datsfilipe/min-theme.nvim" },
+  { "Mofiqul/vscode.nvim" },
   { "navarasu/onedark.nvim" },
   {
     "folke/tokyonight.nvim",
@@ -24,30 +26,40 @@ return {
   {
     "f-person/auto-dark-mode.nvim",
     opts = {
-      update_interval = 5000,
       set_dark_mode = function()
         -- vim.cmd("colorscheme tokyonight-night")
         -- vim.cmd("colorscheme rose-pine-main")
-        -- vim.cmd("colorscheme github_dark")
-        -- vim.cmd("colorscheme github_dark")
-        -- vim.opt.background = "dark"
+
+        -- github
+        vim.cmd("colorscheme github_dark")
+        vim.api.nvim_set_hl(0, "SnacksIndentScope", { link = "IndentBlanklineContextChar" })
+        vim.api.nvim_set_hl(0, "SnacksIndent", { link = "IndentBlanklineChar" })
+
         -- vim.cmd("colorscheme nightfox")
-        vim.cmd("colorscheme catppuccin-macchiato")
-        -- Hack to fix failure to set appropriate indentation colors on theme switch
-        vim.api.nvim_set_hl(0, "SnacksIndentScope", { link = "IblScope" })
-        vim.api.nvim_set_hl(0, "SnacksIndent", { link = "IblIndent" })
+
+        -- catppuccin
+        -- vim.cmd("colorscheme catppuccin-macchiato")
+        -- vim.api.nvim_set_hl(0, "SnacksIndentScope", { link = "IblScope" })
+        -- vim.api.nvim_set_hl(0, "SnacksIndent", { link = "IblIndent" })
+
         vim.api.nvim_set_hl(0, "StatusLine", { bg = "None" })
       end,
       set_light_mode = function()
         -- vim.cmd("colorscheme tokyonight-day")
         -- vim.cmd("colorscheme rose-pine-dawn")
-        -- vim.cmd("colorscheme github_light")
-        -- vim.opt.background = "light"
+
+        -- github
+        vim.cmd("colorscheme github_light")
+        vim.api.nvim_set_hl(0, "SnacksIndentScope", { link = "IndentBlanklineContextChar" })
+        vim.api.nvim_set_hl(0, "SnacksIndent", { link = "IndentBlanklineChar" })
+
         -- vim.cmd("colorscheme dayfox")
-        vim.cmd("colorscheme catppuccin-latte")
-        -- Hack to fix failure to set appropriate indentation colors on theme switch
-        vim.api.nvim_set_hl(0, "SnacksIndentScope", { link = "IblScope" })
-        vim.api.nvim_set_hl(0, "SnacksIndent", { link = "IblIndent" })
+
+        -- catppuccin
+        -- vim.cmd("colorscheme catppuccin-latte")
+        -- vim.api.nvim_set_hl(0, "SnacksIndentScope", { link = "IblScope" })
+        -- vim.api.nvim_set_hl(0, "SnacksIndent", { link = "IblIndent" })
+
         vim.api.nvim_set_hl(0, "StatusLine", { bg = "None" })
       end,
     },
