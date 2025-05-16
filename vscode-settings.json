@@ -52,7 +52,7 @@
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.tabSizing": "shrink",
   "workbench.iconTheme": "bearded-icons",
-  "workbench.preferredDarkColorTheme": "Min Light",
+  "workbench.preferredDarkColorTheme": "GitHub Dark",
   "workbench.preferredLightColorTheme": "GitHub Light",
   "workbench.startupEditor": "newUntitledFile",
   "[dart]": {

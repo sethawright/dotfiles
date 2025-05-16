@@ -6,6 +6,36 @@ return {
     opts = {
       options = {
         transparent = true,
+        styles = {
+          comments = "italic",
+        },
+      },
+      palettes = {
+        github_light = {
+          orange = "#e36209",
+        },
+        github_dark = {
+          orange = "#ffab70",
+        },
+      },
+      groups = {
+        all = {
+          SnacksIndentScope = { link = "IndentBlanklineContextChar" },
+          SnacksIndent = { link = "IndentBlanklineChar" },
+          LineNr = { link = "IndentBlanklineChar" },
+          Type = { fg = "palette.magenta" },
+          ["@type"] = { fg = "palette.magenta" },
+          ["@type.builtin"] = { fg = "palette.blue" },
+          ["@variable"] = { fg = "palette.blue" },
+          ["@variable.parameter"] = { fg = "palette.orange" },
+          ["@punctuation.bracket"] = { fg = "palette.blue" },
+        },
+        github_light = {
+          ["@variable.member"] = { fg = "palette.black" },
+        },
+        github_dark = {
+          ["@variable.member"] = { fg = "#ffffff" },
+        },
       },
     },
   },
@@ -32,8 +62,6 @@ return {
 
         -- github
         vim.cmd("colorscheme github_dark")
-        vim.api.nvim_set_hl(0, "SnacksIndentScope", { link = "IndentBlanklineContextChar" })
-        vim.api.nvim_set_hl(0, "SnacksIndent", { link = "IndentBlanklineChar" })
 
         -- vim.cmd("colorscheme nightfox")
 
@@ -50,8 +78,6 @@ return {
 
         -- github
         vim.cmd("colorscheme github_light")
-        vim.api.nvim_set_hl(0, "SnacksIndentScope", { link = "IndentBlanklineContextChar" })
-        vim.api.nvim_set_hl(0, "SnacksIndent", { link = "IndentBlanklineChar" })
 
         -- vim.cmd("colorscheme dayfox")
 
@@ -80,14 +106,16 @@ return {
 
       -- Example usage
       if is_dark_mode() then
-        opts.colorscheme = "catppuccin-macchiato"
+        opts.colorscheme = "github_dark"
+        -- opts.colorscheme = "catppuccin-macchiato"
+        -- opts.colorscheme = "nightfox"
+        -- opts.colorscheme = "rose-pine"
       else
-        opts.colorscheme = "catppuccin-latte"
+        opts.colorscheme = "github_light"
+        -- opts.colorscheme = "catppuccin-latte"
+        -- opts.colorscheme = "dawnfox"
+        -- opts.colorscheme = "rose-pine-dawn"
       end
-
-      -- opts.colorscheme = "github_dark"
-      -- opts.colorscheme = "nightfox"
-      -- opts.colorscheme = "rose-pine"
     end,
   },
 }
