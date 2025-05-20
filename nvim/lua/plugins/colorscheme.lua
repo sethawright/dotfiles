@@ -26,14 +26,15 @@ return {
           Type = { fg = "palette.magenta" },
           ["@type"] = { fg = "palette.magenta" },
           ["@type.builtin"] = { fg = "palette.blue" },
-          ["@variable"] = { fg = "palette.blue" },
           ["@variable.parameter"] = { fg = "palette.orange" },
           ["@punctuation.bracket"] = { fg = "palette.blue" },
         },
         github_light = {
+          ["@variable"] = { fg = "palette.blue" },
           ["@variable.member"] = { fg = "palette.black" },
         },
         github_dark = {
+          ["@variable"] = { fg = "palette.blue.bright" },
           ["@variable.member"] = { fg = "#ffffff" },
         },
       },

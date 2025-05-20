@@ -10,6 +10,7 @@ return {
     opts = {
       -- your configuration comes here
       global_keymaps = true,
+      request_timeout = 5000,
     },
   },
 }

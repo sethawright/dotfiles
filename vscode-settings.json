@@ -441,5 +441,6 @@
   "markdown.preview.fontFamily": "'SF Mono','Monaspace Neon',monospace",
   "workbench.layoutControl.enabled": false,
   "workbench.editor.editorActionsLocation": "hidden",
-  "javascript.updateImportsOnFileMove.enabled": "always"
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "database-client.autoSync": true
 }
