@@ -35,6 +35,8 @@ alias venv="source ./.venv/bin/activate.fish"
 
 bind -s -k nul ~/dotfiles/scripts/tmux-sessionizer
 alias tms="~/dotfiles/scripts/tmux-sessionizer"
+alias tms="~/dotfiles/scripts/tmux-sessionizer"
+alias gid="~/dotfiles/scripts/gh-issue-develop"
 
 # git
 alias lg="lazygit"

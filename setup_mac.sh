@@ -73,6 +73,9 @@ curl -fsSL git.io/gg.sh | bash
 # pause for github login
 git clone https://github.com/sethawright/dotfiles.git
 
+# tmux plugin manager
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 cd ~
 ln -s ~/dotfiles/gitconfig ./.gitconfig
 ln -s ~/dotfiles/gitignore_global ./.gitignore_global

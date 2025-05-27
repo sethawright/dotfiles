@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Get the selected issue using fzf
+selected_issue=$(gh issue list --limit 1000 | fzf)
+
+# Extract just the issue number using sed
+issue_number=$(echo "$selected_issue" | awk '{print $1}')
+
+# Display the extracted issue number
+gh issue develop "$issue_number" --checkout
+
+# Assume we're using the ShiftEngineering board
+project_id="PVT_kwDOCWzCQc4AwC6V"
+
+project_status_field_id=$(gh project field-list 11 --owner ShiftEngineering --format json --jq '.fields[] | select(.name == "Status") | .id')
+project_item_id=$(gh project item-list 11 --owner ShiftEngineering --limit 10000 --format json --jq ".items[] | select(.content.number == $issue_number) | .id")
+
+# Get the status field identifier for the project
+in_progress_single_select_id=$(gh project field-list 11 --owner ShiftEngineering --format json -q '.fields[] | select(.name == "Status") | .options[] | select(.name == "In Progress") | .id')
+in_review_single_select_id=$(gh project field-list 11 --owner ShiftEngineering --format json -q '.fields[] | select(.name == "Status") | .options[] | select(.name == "In Review") | .id')
+
+echo "project_id: $project_id"
+echo "project_item_id: $project_item_id"
+echo "project_status_field_id: $project_status_field_id"
+
+# Now you can use $issue_number in other commands
+# For example:
+# gh issue view "$issue_number"
+# or
+# gh issue comment "$issue_number"
