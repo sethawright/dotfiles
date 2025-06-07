@@ -15,7 +15,7 @@
   "features": {
     "edit_prediction_provider": "zed"
   },
-  "icon_theme": "Catppuccin Macchiato",
+  "icon_theme": "Bearded Icon Theme",
   "relative_line_numbers": true,
   "git": {
     "inline_blame": {
@@ -25,7 +25,7 @@
   "edit_predictions": {
     "mode": "subtle"
   },
-  "agent": {
+  "assistant": {
     "default_profile": "write",
     "default_model": {
       "provider": "anthropic",
@@ -40,11 +40,7 @@
   "buffer_font_size": 13,
   "theme": {
     "mode": "system",
-    "light": "Catppuccin Latte",
-    "dark": "Catppuccin Macchiato"
-  },
-  "experimental.theme_overrides": {
-    // "border.variant": "#363a4f"
-    "border.variant": "#363a4f"
+    "light": "Min Light (Solid)",
+    "dark": "Min Dark (Solid)"
   }
 }
