@@ -40,6 +40,7 @@ brew install terraform
 brew install tmux
 brew install wget
 brew install yarn
+brew install cormacrelf/tap/dark-notify
 
 # apps
 brew install --cask 1password
