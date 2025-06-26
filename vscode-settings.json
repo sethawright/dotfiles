@@ -125,7 +125,7 @@
   "vim.smartRelativeLine": true,
   "workbench.editor.showTabs": "none",
   "breadcrumbs.showNamespaces": false,
-  "explorer.openEditors.visible": 3,
+  "explorer.openEditors.visible": 20,
   "files.autoSave": "onFocusChange",
   "notebook.formatOnSave.enabled": true,
   "notebook.formatOnCellExecution": true,
