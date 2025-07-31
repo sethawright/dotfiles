@@ -24,8 +24,8 @@ require("lazy").setup({
     { "mason-org/mason-lspconfig.nvim", version = "^1.0.0" },
 
     -- import/override with your plugins
-    { import = "lazyvim.plugins.extras.coding.blink" },
-    { import = "lazyvim.plugins.extras.coding.mini-snippets" },
+    -- { import = "lazyvim.plugins.extras.coding.blink" },
+    -- { import = "lazyvim.plugins.extras.coding.mini-snippets" },
     { import = "lazyvim.plugins.extras.coding.mini-comment" },
     { import = "lazyvim.plugins.extras.coding.mini-surround" },
     { import = "lazyvim.plugins.extras.coding.neogen" },
