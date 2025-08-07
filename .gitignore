@@ -8,6 +8,7 @@ offlineimaprc
 mutt/*
 vim/sessions
 vim/bin
+tmux/plugins
 zed/conversations
 zed/prompts
 zed/prompts/prompts-library-db.0.mdb/lock.mdb

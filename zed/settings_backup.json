@@ -25,7 +25,7 @@
   "edit_predictions": {
     "mode": "subtle"
   },
-  "assistant": {
+  "agent": {
     "default_profile": "write",
     "default_model": {
       "provider": "anthropic",
@@ -40,7 +40,11 @@
   "buffer_font_size": 13,
   "theme": {
     "mode": "system",
-    "light": "Min Light (Solid)",
-    "dark": "Min Dark (Solid)"
+    "light": "Github Light",
+    "dark": "Github Dark Dimmed"
+  },
+  "experimental.theme_overrides": {
+    // "border.variant": "#363a4f"
+    // "border.variant": "#363a4f"
   }
 }

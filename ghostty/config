@@ -1,14 +1,20 @@
-adjust-cell-height = 20%
+adjust-cell-height = 25%
 clipboard-read = allow
 clipboard-write = allow
 command =  /opt/homebrew/bin/fish -l -c "tmux attach -t home || tmux new-session -s home"
+
+# font-family = Victor Mono
 font-family = BlexMono Nerd Font Mono
-font-family-bold = BlexMono Nerd Font Mono Bold
-font-family-italic = BlexMono Nerd Font Mono Italic
-font-family-bold-italic = BlexMono Nerd Font Mono Bold Italic
-font-size = 13
+# font-family = SF Mono
+# font-family-italic = SF Mono Regular Italic
+# font-family-bold = SF Mono Bold
+# font-family = M+1CodeLat50 Nerd Font Mono
+# font-family = NotoSansM Nerd Font Mono
+
+font-size = 14
 font-thicken = true
-font-thicken-strength = 122
+font-thicken-strength = 0
+macos-non-native-fullscreen = true
 keybind = super+n=text:ç
 keybind = super+r=text:÷
 keybind = super+shift+[=text:˙
@@ -22,7 +28,7 @@ theme = dark:Github-Dark-Dimmed,light:Github-Light-Default
 # theme = dark:catppuccin-macchiato,light:catppuccin-latte
 mouse-hide-while-typing = true
 window-padding-balance = true
-window-padding-x = 10
-window-padding-y = 4,10
+window-padding-x = 30
+window-padding-y = 20
 # background-opacity = 0.95
 # background-blur = 100
