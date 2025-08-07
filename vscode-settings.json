@@ -442,6 +442,7 @@
   "workbench.editor.editorActionsLocation": "hidden",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "database-client.autoSync": true,
+<<<<<<< HEAD
   "github.copilot.nextEditSuggestions.enabled": true,
   "github.copilot.chat.codeGeneration.instructions": [
     {
@@ -474,4 +475,7 @@
   "vsicons.dontShowNewVersionMessage": true,
   "docker.extension.enableComposeLanguageServer": false,
   "typescript.tsserver.experimental.enableProjectDiagnostics": true
+=======
+  "github.copilot.nextEditSuggestions.enabled": true
+>>>>>>> cb60119b745906d54477398b9c97d8463afba3b7
 }
