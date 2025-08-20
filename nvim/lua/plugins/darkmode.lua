@@ -1,4 +1,14 @@
 local function get_ghostty_theme()
+  -- Define your theme mapping here - update as needed
+  local theme_map = {
+    ["nightfox"] = "nightfox",
+    ["dayfox"] = "dayfox",
+    ["Github-Dark-Dimmed"] = "github_dark",
+    ["Github-Light-Default"] = "github_light",
+    ["catppuccin-macchiato"] = "catppuccin-macchiato",
+    ["catppuccin-latte"] = "catppuccin-latte",
+  }
+
   local filepath = os.getenv("HOME") .. "/.config/ghostty/config"
   local file = io.open(filepath, "r")
   if not file then
@@ -8,22 +18,15 @@ local function get_ghostty_theme()
   for line in file:lines() do
     local dark, light = line:match("^theme%s*=%s*dark:([^,]+),light:([^\n]+)")
     if dark and light then
-      if dark:match("Github") or light:match("Github") then
-        local dark_scheme = "github_dark"
-        local light_scheme = "github_light"
-        file:close()
-        return dark_scheme, light_scheme
-      elseif dark:match("catppuccin") or light:match("catppuccin") then
-        local dark_scheme = "catppuccin-macchiato"
-        local light_scheme = "catppuccin-latte"
-        file:close()
-        return dark_scheme, light_scheme
-      elseif dark:match("nightfox") or light:match("dayfox") then
-        local dark_scheme = "nightfox"
-        local light_scheme = "dayfox"
-        file:close()
-        return dark_scheme, light_scheme
-      end
+      -- Strip whitespace and get themes from map
+      dark = dark:match("^%s*(.-)%s*$")
+      light = light:match("^%s*(.-)%s*$")
+
+      local dark_scheme = theme_map[dark] or dark
+      local light_scheme = theme_map[light] or light
+
+      file:close()
+      return dark_scheme, light_scheme
     end
   end
 
