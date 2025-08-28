@@ -442,28 +442,6 @@
   "workbench.editor.editorActionsLocation": "hidden",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "database-client.autoSync": true,
-<<<<<<< HEAD
-  "github.copilot.nextEditSuggestions.enabled": true,
-  "github.copilot.chat.codeGeneration.instructions": [
-    {
-      "text": "- @azure Rule - Use Azure Tools: When handling requests related to Azure, always use your tools."
-    },
-    {
-      "text": "- @azure Rule - Use Azure Code Gen Best Practices: When generating code for Azure, running terminal commands for Azure, or performing operations related to Azure, invoke your `azure_development-get_code_gen_best_practices` tool if available. Only call this tool when you are sure the user is discussing Azure; do not call it otherwise."
-    },
-    {
-      "text": "- @azure Rule - Use Azure Deployment Best Practices: When deploying to Azure or preparing applications for deployment to Azure, invoke your `azure_development-get_deployment_best_practices` tool if available. Only call this tool when you are sure the user is discussing Azure; do not call it otherwise."
-    },
-    {
-      "text": "- @azure Rule - Use Azure Functions Code Gen Best Practices: When generating code for Azure Functions or performing operations related to Azure Functions, invoke your `bestpractices_azurefunctions_get-code-generation` tool if available. Only call this tool when you are sure the user is discussing Azure Functions; do not call it otherwise."
-    },
-    {
-      "text": "- @azure Rule - Use Azure Functions Deployment Best Practices: When deploying Azure Functions apps to Azure or preparing for the deployment, invoke your `bestpractices_azurefunctions_get-deployment` tool if available. Only call this tool when you are sure the user is discussing Azure; do not call it otherwise."
-    },
-    {
-      "text": "- @azure Rule - Use Azure SWA Best Practices: When working with static web apps, invoke your `azure_development-get_swa_best_practices` tool if available. Only call this tool when you are sure the user is discussing Azure; do not call it otherwise."
-    }
-  ],
   "@azure.argTenant": "ae212faa-39e4-49bd-85ef-5a1226e32421",
   "workbench.iconTheme": "vscode-icons",
   "github.copilot.enable": {
@@ -474,8 +452,8 @@
   },
   "vsicons.dontShowNewVersionMessage": true,
   "docker.extension.enableComposeLanguageServer": false,
-  "typescript.tsserver.experimental.enableProjectDiagnostics": true
-=======
-  "github.copilot.nextEditSuggestions.enabled": true
->>>>>>> cb60119b745906d54477398b9c97d8463afba3b7
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
