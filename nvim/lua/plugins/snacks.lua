@@ -1,6 +1,14 @@
 return {
   "folke/snacks.nvim",
+  ---@type snacks.Config
   opts = {
+    ---@type table<string, snacks.win.Config>
+    styles = {
+      zen = {
+        width = 0.8,
+        height = 0.8,
+      },
+    },
     picker = {
       win = {
         input = {
