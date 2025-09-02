@@ -152,7 +152,7 @@ nmap <leader>ws <c-w>s
 nmap <leader><bar> <c-w>v
 nmap <leader>wv <c-w>v
 " Delete Window
-nmap <leader>wd <Action>(CloseEditorsGroup)
+nmap <leader>wd <Action>(CloseAllEditors)
 
 " Last Tab
 nmap <leader><tab>l <Action>(StoreDefaultLayout)<Action>(ChangeToolWindowLayout)
@@ -236,7 +236,8 @@ nmap <leader>gc <Action>(Vcs.Show.Log)
 nmap <leader>gs <Action>(Vcs.Show.Log)
 " Symbols
 nmap <leader>ss <Action>(GotoSymbol)
-nmap <leader>o <Action>(GotoSymbol)
+" Symbols within file
+nmap <leader>o <Action>(FileStructurePopup)
 " Goto Symbol (Workspace)
 nmap <leader>sS <Action>(GotoSymbol)
 " Word (Root Dir)
