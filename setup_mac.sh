@@ -35,6 +35,7 @@ brew install python
 brew install redis
 brew install ripgrep
 brew install ruby
+brew install rbenv
 brew install rust
 brew install terraform
 brew install tmux
@@ -64,7 +65,7 @@ brew install --cask visual-studio-code
 brew install --cask warp
 brew install --cask zoom
 
-pipx install poetry
+pipx install uv
 npm install -g pnpm
 npm install -g n
 
