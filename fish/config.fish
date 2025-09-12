@@ -62,3 +62,6 @@ alias q="/Users/sethwright/q/m64/q"
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
 alias claude="/Users/sethwright/.claude/local/claude"
+
+# rbenv
+status --is-interactive; and rbenv init - --no-rehash fish | source
