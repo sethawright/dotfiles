@@ -138,6 +138,34 @@ vim.keymap.set("v", "<leader>ar", function()
   vim.cmd("startinsert")
 end, { silent = true, desc = "Raycast (Send)" })
 
+vim.keymap.set("n", "<leader>yp", function()
+  local buf = vim.api.nvim_get_current_buf()
+  local file = vim.api.nvim_buf_get_name(buf)
+  if file == "" then
+    vim.notify("No file name for current buffer", vim.log.levels.WARN)
+    return
+  end
+
+  local function git_root()
+    local git = vim.system({ "git", "rev-parse", "--show-toplevel" }, { text = true }):wait()
+    if git.code == 0 then
+      return git.stdout:gsub("%s+$", "")
+    end
+    return nil
+  end
+
+  local root = git_root() or vim.fn.getcwd()
+  local rel = file
+  if root and file:sub(1, #root) == root then
+    rel = file:sub(#root + 2) -- strip trailing slash
+  else
+    rel = vim.fn.fnamemodify(file, ":~:.") -- fallback
+  end
+
+  vim.fn.setreg('"', rel)
+  pcall(vim.fn.setreg, "+", rel)
+end, { desc = "Copy relative file path" })
+
 vim.keymap.set("n", "<leader>yf", "<cmd>:%y+<cr>", { silent = true, desc = "Yank Entire File" })
 vim.keymap.set("n", "<leader>q", "<cmd>:q<cr>", { desc = "Quit" })
 
