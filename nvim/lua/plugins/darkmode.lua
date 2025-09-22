@@ -5,8 +5,12 @@ local function get_ghostty_theme()
     ["dayfox"] = "dayfox",
     ["Github-Dark-Dimmed"] = "github_dark",
     ["Github-Light-Default"] = "github_light",
-    ["catppuccin-macchiato"] = "catppuccin-macchiato",
-    ["catppuccin-latte"] = "catppuccin-latte",
+    ["Github Dark Dimmed"] = "github_dark",
+    ["Github Light Default"] = "github_light",
+    ["Catppuccin-Macchiato"] = "catppuccin-macchiato",
+    ["Catppuccin-Latte"] = "catppuccin-latte",
+    ["Catppuccin Macchiato"] = "catppuccin-macchiato",
+    ["Catppuccin Latte"] = "catppuccin-latte",
   }
 
   local filepath = os.getenv("HOME") .. "/.config/ghostty/config"
