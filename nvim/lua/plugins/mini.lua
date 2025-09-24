@@ -1,6 +1,6 @@
 return {
   {
-    "echasnovski/mini.files",
+    "nvim-mini/mini.files",
     opts = function(_, opts)
       opts.windows.preview = true
       local map_split = function(buf_id, lhs, direction)
