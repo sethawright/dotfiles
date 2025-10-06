@@ -20,6 +20,8 @@ brew tap epk/epk       # fonts
 brew tap shaunsingh/sfmono-nerd-font-ligaturized
 
 # utils
+brew install lazygit
+brew install lazydocker
 brew install fd
 brew install fish
 brew install fzf

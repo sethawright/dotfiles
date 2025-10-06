@@ -33,7 +33,7 @@ alias m="nvim"
 alias cleanup_branches="~/dotfiles/scripts/cleanup-branches.sh"
 alias venv="source ./.venv/bin/activate.fish"
 
-bind -s -k nul ~/dotfiles/scripts/tmux-sessionizer
+bind ctrl-space ~/dotfiles/scripts/tmux-sessionizer
 alias tms="~/dotfiles/scripts/tmux-sessionizer"
 alias tms="~/dotfiles/scripts/tmux-sessionizer"
 alias gid="~/dotfiles/scripts/gh-issue-develop"
@@ -57,6 +57,7 @@ alias gp="gg p"
 alias gpl="gg pl"
 alias gph="git push -u origin HEAD"
 alias q="/Users/sethwright/q/m64/q"
+alias ctmstart="~/dotfiles/scripts/ctmstart.sh"
 
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
@@ -65,3 +66,7 @@ alias claude="/Users/sethwright/.claude/local/claude"
 
 # rbenv
 status --is-interactive; and rbenv init - --no-rehash fish | source
+
+if test -f ~/Code/work/ctm-dev/ctm.fish
+    source ~/Code/work/ctm-dev/ctm.fish
+end
