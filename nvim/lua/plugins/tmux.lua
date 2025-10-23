@@ -1,21 +1,8 @@
 return {
   {
     "mrjones2014/smart-splits.nvim",
+    version = "v2.0.4",
     lazy = false,
-    ignored_filetypes = {
-      "nofile",
-      "quickfix",
-      "prompt",
-    },
-    ignored_buftypes = { "NvimTree" },
-    default_amount = 3,
-    at_edge = "stop",
-    move_cursor_same_row = false,
-
-    ignored_events = {
-      "BufEnter",
-      "WinEnter",
-    },
 
     keys = {
       {
@@ -46,6 +33,21 @@ return {
           require("smart-splits").move_cursor_right()
         end,
         desc = "move right",
+      },
+
+      {
+        "<C-j>",
+        function()
+          require("smart-splits").move_cursor_down()
+        end,
+        desc = "move down",
+      },
+      {
+        "<C-k>",
+        function()
+          require("smart-splits").move_cursor_up()
+        end,
+        desc = "move up",
       },
     },
   },

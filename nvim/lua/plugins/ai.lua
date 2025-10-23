@@ -41,7 +41,7 @@ return {
         },
       },
     },
-    enabled = false,
+    -- enabled = false,
     keys = {
       {
         "<leader>ac",
