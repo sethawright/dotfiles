@@ -1,6 +1,7 @@
 [user]
 	name = Seth Wright
 	email = 103055742+sethawright@users.noreply.github.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIZw1eQMIgjrji+gqmKqFJlvDiPX0O05NX0rPlHhGE9
 [core]
 	editor = nvim
 	excludesfile = /Users/seth/.gitignore_global
@@ -17,6 +18,10 @@
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [alias] tree = log --graph --decorate --pretty=oneline --abbrev-commit
+ tree = log --graph --decorate --pretty=oneline --abbrev-commit
+ tree = log --graph --decorate --pretty=oneline --abbrev-commit
+ tree = log --graph --decorate --pretty=oneline --abbrev-commit
+ tree = log --graph --decorate --pretty=oneline --abbrev-commit
 [diff]
 	tool = fugitive
 [merge]
@@ -44,3 +49,9 @@
 	rebase = false
 [submodule]
 	recurse = true
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+	gpgsign = true
