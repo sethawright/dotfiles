@@ -58,6 +58,10 @@ alias gpl="gg pl"
 alias gph="git push -u origin HEAD"
 alias q="/Users/sethwright/q/m64/q"
 alias ctmstart="~/dotfiles/scripts/ctmstart.sh"
+alias nvllm="~/dotfiles/scripts/nvllm.sh"
+alias ip="curl -4 ifconfig.me"
+alias ipv4="curl -4 ifconfig.me"
+alias ipv6="curl ifconfig.me"
 
 # bun
 set --export BUN_INSTALL "$HOME/.bun"

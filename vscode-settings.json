@@ -439,7 +439,6 @@
   "workbench.activityBar.location": "top",
   "markdown.preview.fontFamily": "'SF Mono','Monaspace Neon',monospace",
   "workbench.layoutControl.enabled": false,
-  "workbench.editor.editorActionsLocation": "hidden",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "database-client.autoSync": true,
   "@azure.argTenant": "ae212faa-39e4-49bd-85ef-5a1226e32421",
@@ -455,5 +454,7 @@
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "javascript.preferences.importModuleSpecifier": "non-relative"
 }
