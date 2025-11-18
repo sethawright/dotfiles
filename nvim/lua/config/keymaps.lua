@@ -4,6 +4,11 @@
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
+-- Allow tmux to handle M-[ binding
+vim.keymap.set({ "n", "i", "v", "t" }, "<M-[>", "<Nop>", { noremap = true, silent = true })
+-- Allow tmux to handle M-] binding
+vim.keymap.set({ "n", "i", "v", "t" }, "<M-]>", "<Nop>", { noremap = true, silent = true })
+
 vim.keymap.set("v", "<leader>ay", function()
   vim.cmd('normal! "zy')
   local selected_text = vim.fn.getreg("z")
