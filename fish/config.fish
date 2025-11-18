@@ -33,7 +33,7 @@ alias m="nvim"
 alias cleanup_branches="~/dotfiles/scripts/cleanup-branches.sh"
 alias venv="source ./.venv/bin/activate.fish"
 
-bind ctrl-space ~/dotfiles/scripts/tmux-sessionizer
+# bind ctrl-space ~/dotfiles/scripts/tmux-sessionizer
 alias tms="~/dotfiles/scripts/tmux-sessionizer"
 alias tms="~/dotfiles/scripts/tmux-sessionizer"
 alias gid="~/dotfiles/scripts/gh-issue-develop"
