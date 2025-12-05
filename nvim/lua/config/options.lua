@@ -18,6 +18,8 @@ vim.g.snacks_animate = false
 vim.filetype.add({
   extension = {
     ["http"] = "http",
+    ["html"] = "html",
+    ["mustache"] = "html",
   },
 })
 vim.api.nvim_set_hl(0, "StatusLine", { bg = "None" })

@@ -2,7 +2,7 @@
 tmux new-session -d -s ctm-server -n "rails"
 
 # Ensure docker dependencies are running first, then start rails
-tmux send-keys -t ctm-server:rails "cd ~/Code/work/ctm && docker compose up -d && ./bin/run.sh" C-m
+tmux send-keys -t ctm-server:rails "cd ~/Code/work/ctm && docker compose up -d && ./bin/debug.sh" C-m
 
 # Create new window for resque (jobs queue)
 tmux new-window -t ctm-server -n "resque"
