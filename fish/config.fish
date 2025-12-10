@@ -75,3 +75,7 @@ status --is-interactive; and rbenv init - --no-rehash fish | source
 if test -f ~/Code/work/ctm-dev/ctm.fish
     source ~/Code/work/ctm-dev/ctm.fish
 end
+
+if test -f ~/.env.local.fish
+    source ~/.env.local.fish
+end
