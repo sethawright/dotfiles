@@ -4,7 +4,7 @@
 	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIZw1eQMIgjrji+gqmKqFJlvDiPX0O05NX0rPlHhGE9
 [core]
 	editor = nvim
-	excludesfile = /Users/seth/.gitignore_global
+	excludesFile = ~/.gitignore_global
 	quotepath = false
 [color]
 	status = auto

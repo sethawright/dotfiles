@@ -4,7 +4,7 @@ set -gx FZF_DEFAULT_COMMAND 'rg --files --hidden --follow --glob "!{node_modules
 set ANDROID_HOME ~/Library/Android/sdk
 
 # set path
-set PATH /usr/local/bin /opt/homebrew/bin /usr/local/sbin /usr/local/opt/ruby/bin /usr/bin /usr/bin /bin /usr/sbin /sbin /opt/X11/bin $PATH
+set PATH /usr/local/bin /opt/homebrew/bin /usr/local/sbin /usr/local/opt/ruby/bin /usr/bin /usr/bin /bin /usr/sbin /sbin /opt/X11/bin ~/.local/bin $PATH
 set PATH $PATH /Users/sethwright/.cargo/bin
 set PATH $PATH $(brew --prefix python)/libexec/bin
 set PATH $PATH /Users/sethwright/.local/bin
@@ -64,6 +64,8 @@ alias nvllm="~/dotfiles/scripts/nvllm.sh"
 alias ip="curl -4 ifconfig.me"
 alias ipv4="curl -4 ifconfig.me"
 alias ipv6="curl ifconfig.me"
+alias vpnup="sudo wg-quick up wg0"
+alias vpndown="sudo wg-quick down wg0"
 
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
