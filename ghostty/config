@@ -4,14 +4,14 @@ clipboard-write = allow
 command =  /opt/homebrew/bin/fish -l -c "tmux attach -t home || tmux new-session -s home"
 
 # font-family = Victor Mono
-font-family = BlexMono Nerd Font Mono
-# font-family = SF Mono
-# font-family-italic = SF Mono Regular Italic
-# font-family-bold = SF Mono Bold
+# font-family = BlexMono Nerd Font Mono
+font-family = SF Mono
+font-family-italic = SF Mono Regular Italic
+font-family-bold = SF Mono Bold
 # font-family = M+1CodeLat50 Nerd Font Mono
 # font-family = NotoSansM Nerd Font Mono
 
-font-size = 13
+font-size = 15
 font-thicken = true
 font-thicken-strength = 0
 macos-non-native-fullscreen = true
