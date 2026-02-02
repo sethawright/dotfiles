@@ -35,6 +35,20 @@ return {
               "preview_scroll_down",
               mode = { "n", "i" },
             },
+            ["<c-l>"] = {
+              "focus_preview",
+              mode = { "n", "i" },
+            },
+          },
+        },
+        list = {
+          keys = {
+            ["<c-l>"] = "focus_preview",
+          },
+        },
+        preview = {
+          keys = {
+            ["<c-h>"] = "focus_list",
           },
         },
       },
