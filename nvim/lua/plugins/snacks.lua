@@ -8,6 +8,14 @@ return {
         width = 0.8,
         height = 0.8,
       },
+      lazygit = {
+        width = 0,
+        height = 0,
+      },
+      terminal = {
+        width = 0,
+        height = 0,
+      },
     },
     picker = {
       layout = {
