@@ -66,7 +66,7 @@ return {
     {
       "<leader>p",
       function()
-        Snacks.picker.files()
+        Snacks.picker.files({ hidden = true })
       end,
       desc = "Files",
     },
