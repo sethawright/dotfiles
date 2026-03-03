@@ -20,6 +20,8 @@ keybind = super+shift+bracket_right=text:¬
 keybind = super+w=text:≈
 keybind = super+z=text:⌟
 keybind = shift+enter=text:\x1b\r
+keybind = super+alt+h=text:Ë
+keybind = super+alt+l=text:Ï
 macos-titlebar-style = hidden
 resize-overlay = never
 # theme = dark:nightfox,light:dayfox
