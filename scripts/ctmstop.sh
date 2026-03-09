@@ -16,7 +16,7 @@ tmux send-keys -t ctm-server:logs C-c
 sleep 3
 
 # Stop docker containers
-cd ~/Code/work/ctm && docker compose down
+cd ~/work/ctm && docker compose down
 
 # Kill the tmux session
 tmux kill-session -t ctm-server
