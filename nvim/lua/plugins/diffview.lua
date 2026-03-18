@@ -1,13 +1,11 @@
 return {
   "sindrets/diffview.nvim",
-  enabled = false,
+  enabled = true,
   lazy = true,
   keys = {
-    { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "Diffview Open" },
-    { "<leader>gM", "<cmd>DiffviewOpen<cr>", desc = "Diffview Open (base branch)" },
-    { "<leader>gD", "<cmd>DiffviewClose<cr>", desc = "Diffview Close" },
-    { "<leader>gh", "<cmd>DiffviewFileHistory<cr>", desc = "Diffview File History" },
-    { "<leader>gH", "<cmd>DiffviewFileHistory %<cr>", desc = "Diffview Current File History" },
+    { "<leader>gvd", "<cmd>DiffviewOpen<cr>", desc = "Diffview Open" },
+    { "<leader>gvh", "<cmd>DiffviewFileHistory<cr>", desc = "Diffview File History" },
+    { "<leader>gvH", "<cmd>DiffviewFileHistory %<cr>", desc = "Diffview Current File History" },
   },
   opts = {
     show_help_hints = false,
