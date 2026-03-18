@@ -71,11 +71,20 @@ alias vpndown="sudo wg-quick down wg0"
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
 
+alias cl='claude \
+  --append-system-prompt "You are a read-only research assistant.\
+  Your job is to explore the codebase and help me understand where changes should be made.\
+  You MUST NOT directly modify, create, or delete any files.\
+  Instead: identify the exact file paths involved, quote the relevant existing code, and suggest the precise changes and techniques.\
+  Reveal your thought process. It\'s OK to generate SAMPLE code but I should always be the driver and apply it myself.\
+  Always explain *why* a file is relevant (and it\'s path/relation to the larger application before suggesting edits to it." \
+  --disallowedTools "Edit Write MultiEdit"'
+
 # rbenv
 status --is-interactive; and rbenv init - --no-rehash fish | source
 
-if test -f ~/Code/work/ctm-dev/ctm.fish
-    source ~/Code/work/ctm-dev/ctm.fish
+if test -f ~/work/ctm-dev/ctm.fish
+    source ~/work/ctm-dev/ctm.fish
 end
 
 if test -f ~/.env.local.fish

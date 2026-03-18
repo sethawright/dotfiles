@@ -1,3 +1,6 @@
+# Cache sudo credentials upfront so sub-windows don't prompt
+sudo -v
+
 # Start a new tmux session named "ctm-server" with the first window for rails
 tmux new-session -d -s ctm-server -n "rails"
 

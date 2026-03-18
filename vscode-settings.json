@@ -2,9 +2,9 @@
   "breadcrumbs.enabled": false,
   "editor.autoClosingQuotes": "never",
   "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit"
+    "source.fixAll": "explicit",
   },
-  "editor.fontFamily": "'BlexMono Nerd Font Mono','SF Mono','Monaspace Neon',monospace",
+  "editor.fontFamily": "'Jetbrains Mono NFM]','BlexMono Nerd Font Mono','SF Mono','Monaspace Neon',monospace",
   "editor.fontSize": 14,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
@@ -15,17 +15,17 @@
   "editor.tabSize": 2,
   "explorer.confirmDelete": false,
   "extensions.experimental.affinity": {
-    "asvetliakov.vscode-neovim": 1
+    "asvetliakov.vscode-neovim": 1,
   },
   "files.associations": {
     "*.env.development": "env",
-    "*.env.production": "env"
+    "*.env.production": "env",
   },
   "files.exclude": {
     "**/.classpath": true,
     "**/.factorypath": true,
     "**/.project": true,
-    "**/.settings": true
+    "**/.settings": true,
   },
   "git.autofetch": true,
   "githubPullRequests.defaultMergeMethod": "squash",
@@ -37,8 +37,8 @@
   "gitlens.remotes": [
     {
       "domain": "github.mheducation.com",
-      "type": "GitHub"
-    }
+      "type": "GitHub",
+    },
   ],
   "gitlens.statusBar.enabled": false,
   "redhat.telemetry.enabled": false,
@@ -62,56 +62,56 @@
     "editor.suggest.snippetsPreventQuickSuggestions": false,
     "editor.suggestSelection": "first",
     "editor.tabCompletion": "onlySnippets",
-    "editor.wordBasedSuggestions": "off"
+    "editor.wordBasedSuggestions": "off",
   },
   "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter"
+    "editor.defaultFormatter": "ms-python.black-formatter",
   },
   "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[yaml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "typescript.updateImportsOnFileMove.enabled": "always",
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "gitlens.autolinks": [
     {
       "prefix": "MGH-",
-      "url": "https://willowtree.atlassian.net/browse/MGH-<num>"
+      "url": "https://willowtree.atlassian.net/browse/MGH-<num>",
     },
     {
       "prefix": "MGH ",
       "url": "https://willowtree.atlassian.net/browse/MGH-<num>",
-      "ignoreCase": false
+      "ignoreCase": false,
     },
     {
       "prefix": "[MGH ",
       "url": "https://willowtree.atlassian.net/browse/MGH-<num>",
-      "ignoreCase": false
+      "ignoreCase": false,
     },
     {
       "prefix": "[MGH-",
       "ignoreCase": false,
-      "url": "https://willowtree.atlassian.net/browse/MGH-<num>"
-    }
+      "url": "https://willowtree.atlassian.net/browse/MGH-<num>",
+    },
   ],
   "vim.useSystemClipboard": true,
   "gitlens.views.branches.branches.layout": "list",
@@ -129,10 +129,10 @@
   "notebook.formatOnSave.enabled": true,
   "notebook.formatOnCellExecution": true,
   "yaml.schemas": {
-    "file:///Users/a503022951/.vscode/extensions/atlassian.atlascode-3.0.10/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+    "file:///Users/a503022951/.vscode/extensions/atlassian.atlascode-3.0.10/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml",
   },
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "notebook.output.wordWrap": true,
   "window.commandCenter": false,
@@ -142,50 +142,50 @@
   "console-ninja.featureSet": "Community",
   "cursor.cpp.disabledLanguages": ["plaintext", "markdown", "scminput"],
   "[svelte]": {
-    "editor.defaultFormatter": "svelte.svelte-vscode"
+    "editor.defaultFormatter": "svelte.svelte-vscode",
   },
   "vim.leader": "<space>",
   "vim.normalModeKeyBindingsNonRecursive": [
     {
       "before": ["<space>"],
-      "commands": ["whichkey.show"]
+      "commands": ["whichkey.show"],
     },
     {
       "before": ["]", "c"],
       "commands": [
         "workbench.action.compareEditor.nextChange",
-        "merge-conflict.next"
-      ]
+        "merge-conflict.next",
+      ],
     },
     {
       "after": ["ma", "o", "<esc>", "k", "'a"],
-      "before": ["]", "<space>"]
+      "before": ["]", "<space>"],
     },
     {
       "after": ["ma", "O", "<esc>", "j", "'a"],
-      "before": ["[", "<space>"]
+      "before": ["[", "<space>"],
     },
     {
       "before": ["[", "c"],
       "commands": [
         "workbench.action.compareEditor.previousChange",
-        "merge-conflict.previous"
-      ]
+        "merge-conflict.previous",
+      ],
     },
     {
       "before": ["K"],
-      "commands": ["editor.action.showDefinitionPreviewHover"]
+      "commands": ["editor.action.showDefinitionPreviewHover"],
     },
     {
       "before": ["g", "i"],
-      "commands": ["editor.action.goToImplementation"]
-    }
+      "commands": ["editor.action.goToImplementation"],
+    },
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
     {
       "before": ["<space>"],
-      "commands": ["whichkey.show"]
-    }
+      "commands": ["whichkey.show"],
+    },
   ],
   "whichkey.bindings": [
     {
@@ -196,19 +196,19 @@
         {
           "key": "f",
           "name": "Find file",
-          "command": "workbench.action.quickOpen"
+          "command": "workbench.action.quickOpen",
         },
         {
           "key": "r",
           "name": "Recent files",
-          "command": "workbench.action.openRecent"
+          "command": "workbench.action.openRecent",
         },
         {
           "key": "t",
           "name": "Find text",
-          "command": "workbench.action.findInFiles"
-        }
-      ]
+          "command": "workbench.action.findInFiles",
+        },
+      ],
     },
     {
       "key": "g",
@@ -218,14 +218,14 @@
         {
           "key": "g",
           "name": "Source Control",
-          "command": "workbench.view.scm"
+          "command": "workbench.view.scm",
         },
         {
           "key": "b",
           "name": "Blame",
-          "command": "gitlens.toggleFileBlame"
-        }
-      ]
+          "command": "gitlens.toggleFileBlame",
+        },
+      ],
     },
     {
       "key": "b",
@@ -235,24 +235,24 @@
         {
           "key": "o",
           "name": "Close other buffers",
-          "command": "workbench.action.closeOtherEditors"
+          "command": "workbench.action.closeOtherEditors",
         },
         {
           "key": "b",
           "name": "List buffers",
-          "command": "workbench.action.showAllEditorsByMostRecentlyUsed"
+          "command": "workbench.action.showAllEditorsByMostRecentlyUsed",
         },
         {
           "key": "d",
           "name": "Close buffer",
-          "command": "workbench.action.closeActiveEditor"
+          "command": "workbench.action.closeActiveEditor",
         },
         {
           "key": "x",
           "name": "Close all buffers",
-          "command": "workbench.action.closeAllEditors"
-        }
-      ]
+          "command": "workbench.action.closeAllEditors",
+        },
+      ],
     },
     {
       "key": "w",
@@ -262,29 +262,29 @@
         {
           "key": "m",
           "name": "Maximize editor",
-          "command": "workbench.action.toggleEditorWidths"
+          "command": "workbench.action.toggleEditorWidths",
         },
         {
           "key": "d",
           "name": "Close window",
-          "command": "workbench.action.closeEditorsInGroup"
+          "command": "workbench.action.closeEditorsInGroup",
         },
         {
           "key": "v",
           "name": "Split vertical",
-          "command": "workbench.action.splitEditorRight"
+          "command": "workbench.action.splitEditorRight",
         },
         {
           "key": "s",
           "name": "Split horizontal",
-          "command": "workbench.action.splitEditorDown"
+          "command": "workbench.action.splitEditorDown",
         },
         {
           "key": "q",
           "name": "Close window",
-          "command": "workbench.action.closeEditorsInGroup"
-        }
-      ]
+          "command": "workbench.action.closeEditorsInGroup",
+        },
+      ],
     },
     {
       "key": "s",
@@ -294,14 +294,14 @@
         {
           "key": "s",
           "name": "Search Symbols",
-          "command": "workbench.action.gotoSymbol"
+          "command": "workbench.action.gotoSymbol",
         },
         {
           "key": "p",
           "name": "Project Symbols",
-          "command": "workbench.action.showAllSymbols"
-        }
-      ]
+          "command": "workbench.action.showAllSymbols",
+        },
+      ],
     },
     {
       "key": "d",
@@ -311,34 +311,34 @@
         {
           "key": "a",
           "name": "Start Debugging",
-          "command": "workbench.action.debug.start"
+          "command": "workbench.action.debug.start",
         },
         {
           "key": "b",
           "name": "Toggle Breakpoint",
-          "command": "editor.debug.action.toggleBreakpoint"
+          "command": "editor.debug.action.toggleBreakpoint",
         },
         {
           "key": "d",
           "name": "Open Database Client",
-          "command": "github.cweijan.mysql.focus"
+          "command": "github.cweijan.mysql.focus",
         },
         {
           "key": "s",
           "name": "Stop Debugging",
-          "command": "workbench.action.debug.stop"
+          "command": "workbench.action.debug.stop",
         },
         {
           "key": "r",
           "name": "Run Without Debugging",
-          "command": "workbench.action.debug.run"
+          "command": "workbench.action.debug.run",
         },
         {
           "key": "u",
           "name": "Open Debug View",
-          "command": "workbench.view.debug"
-        }
-      ]
+          "command": "workbench.view.debug",
+        },
+      ],
     },
     {
       "key": "u",
@@ -348,24 +348,24 @@
         {
           "key": "s",
           "name": "Toggle Status Bar",
-          "command": "workbench.action.toggleStatusbarVisibility"
+          "command": "workbench.action.toggleStatusbarVisibility",
         },
         {
           "key": "z",
           "name": "Toggle Zen Mode",
-          "command": "workbench.action.toggleZenMode"
+          "command": "workbench.action.toggleZenMode",
         },
         {
           "key": "t",
           "name": "Toggle Terminal",
-          "command": "workbench.action.terminal.toggleTerminal"
-        }
-      ]
+          "command": "workbench.action.terminal.toggleTerminal",
+        },
+      ],
     },
     {
       "key": "t",
       "name": "Test...",
-      "command": "workbench.view.testing.focus"
+      "command": "workbench.view.testing.focus",
     },
     {
       "key": "a",
@@ -375,19 +375,19 @@
         {
           "key": "a",
           "name": "Focus Chat",
-          "command": "aichat.newchataction"
+          "command": "aichat.newchataction",
         },
         {
           "key": "m",
           "name": "Inline Modify",
-          "command": "aipopup.action.modal.generate"
+          "command": "aipopup.action.modal.generate",
         },
         {
           "key": "d",
           "name": "Close Chat",
-          "command": "aichat.close"
-        }
-      ]
+          "command": "aichat.close",
+        },
+      ],
     },
     {
       "key": "x",
@@ -397,43 +397,43 @@
         {
           "key": "x",
           "name": "Show All Problems",
-          "command": "workbench.actions.view.problems"
-        }
-      ]
+          "command": "workbench.actions.view.problems",
+        },
+      ],
     },
     {
       "key": "p",
       "name": "Quick Open",
       "type": "bindings",
-      "command": "workbench.action.quickOpen"
+      "command": "workbench.action.quickOpen",
     },
     {
       "key": "q",
       "name": "Close Split",
       "type": "bindings",
-      "command": "workbench.action.closeEditorsInGroup"
+      "command": "workbench.action.closeEditorsInGroup",
     },
     {
       "key": "e",
       "name": "Explorer",
       "type": "bindings",
-      "command": "workbench.view.explorer"
+      "command": "workbench.view.explorer",
     },
     {
       "key": "o",
       "name": "Quick Symbols",
-      "command": "workbench.action.gotoSymbol"
+      "command": "workbench.action.gotoSymbol",
     },
     {
       "key": "/",
       "name": "Search in workspace",
-      "command": "search.action.openNewEditorToSide"
+      "command": "search.action.openNewEditorToSide",
     },
     {
       "key": ",",
       "name": "Buffers",
-      "command": "workbench.action.showAllEditorsByMostRecentlyUsed"
-    }
+      "command": "workbench.action.showAllEditorsByMostRecentlyUsed",
+    },
   ],
   "workbench.statusBar.visible": false,
   "workbench.activityBar.location": "top",
@@ -447,14 +447,14 @@
     "*": false,
     "plaintext": false,
     "markdown": false,
-    "scminput": false
+    "scminput": false,
   },
   "vsicons.dontShowNewVersionMessage": true,
   "docker.extension.enableComposeLanguageServer": false,
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "typescript.preferences.importModuleSpecifier": "non-relative",
-  "javascript.preferences.importModuleSpecifier": "non-relative"
+  "javascript.preferences.importModuleSpecifier": "non-relative",
 }
