@@ -1,29 +1,29 @@
+# --- ghostty settings
+
 adjust-cell-height = 25%
 clipboard-read = allow
 clipboard-write = allow
 command =  /opt/homebrew/bin/fish -l -c "tmux attach -t home || tmux new-session -s home"
+
+# --- fonts
 
 # font-family = Victor Mono
 font-family = BlexMono Nerd Font Mono
 # font-family = Jetbrains Mono NFM
 # font-family = M+1CodeLat50 Nerd Font Mono
 # font-family = NotoSansM Nerd Font Mono
-
 font-size = 14
 font-thicken = true
 font-thicken-strength = 50
+
+# --- mac settings
+
 macos-non-native-fullscreen = true
-keybind = super+n=text:ç
-keybind = super+r=text:÷
-keybind = super+shift+bracket_left=text:˙
-keybind = super+shift+bracket_right=text:¬
-keybind = super+w=text:≈
-keybind = super+z=text:⌟
-keybind = shift+enter=text:\x1b\r
-keybind = super+alt+h=text:Ë
-keybind = super+alt+l=text:Ï
 macos-titlebar-style = hidden
 resize-overlay = never
+
+# --- theme
+
 # theme = dark:nightfox,light:dayfox
 theme = dark:Github Dark Dimmed,light:Github Light Default
 # theme = dark:Catppuccin Macchiato,light:Catppuccin Latte
@@ -33,3 +33,32 @@ window-padding-x = 15
 window-padding-y = 10
 # background-opacity = 0.95
 # background-blur = 100
+
+# --- keybinds
+
+# new tmux window
+keybind = super+n=text:ç
+keybind = super+r=text:÷
+
+# tmux next/prev window
+keybind = super+shift+bracket_left=text:˙
+keybind = super+shift+bracket_right=text:¬
+
+# tmux close window
+keybind = super+w=text:≈
+
+# tmux zoom
+keybind = super+z=text:⌟
+
+# newlines in claude/codex
+keybind = shift+enter=text:\x1b\r
+
+# swap tmux panes
+keybind = super+alt+h=text:Ë
+keybind = super+alt+l=text:Ï
+
+# pass these to tmux for pane sizing
+keybind = alt+left=unbind
+keybind = alt+right=unbind
+keybind = alt+up=unbind
+keybind = alt+down=unbind

@@ -14,12 +14,6 @@ return {
         "typescriptreact",
         "javascript",
         "javascriptreact",
-        "json",
-        "jsonc",
-        "markdown",
-        "css",
-        "html",
-        "yaml",
       }
 
       opts.formatters_by_ft = opts.formatters_by_ft or {}

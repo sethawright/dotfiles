@@ -4,7 +4,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
   },
-  "editor.fontFamily": "'Jetbrains Mono NFM]','BlexMono Nerd Font Mono','SF Mono','Monaspace Neon',monospace",
+  "editor.fontFamily": "'BlexMono Nerd Font Mono','SF Mono','Monaspace Neon',monospace",
   "editor.fontSize": 14,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
@@ -52,7 +52,6 @@
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.tabSizing": "shrink",
   "workbench.preferredDarkColorTheme": "GitHub Dark",
-  "workbench.preferredLightColorTheme": "GitHub Light",
   "workbench.startupEditor": "newUntitledFile",
   "[dart]": {
     "editor.formatOnSave": true,
@@ -135,7 +134,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "notebook.output.wordWrap": true,
-  "window.commandCenter": false,
   "projectManager.git.baseFolders": ["~/Code/x", "~/Code/seth"],
   "editor.lightbulb.enabled": "off",
   "terminal.integrated.env.osx": {},
@@ -442,7 +440,7 @@
   "javascript.updateImportsOnFileMove.enabled": "always",
   "database-client.autoSync": true,
   "@azure.argTenant": "ae212faa-39e4-49bd-85ef-5a1226e32421",
-  "workbench.iconTheme": "vscode-icons",
+  "workbench.iconTheme": "bearded-icons",
   "github.copilot.enable": {
     "*": false,
     "plaintext": false,
@@ -457,4 +455,8 @@
   },
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "javascript.preferences.importModuleSpecifier": "non-relative",
+  "workbench.preferredLightColorTheme": "GitHub Light",
+  "git.blame.editorDecoration.enabled": false,
+  "chat.viewSessions.orientation": "stacked",
+  "workbench.browser.showInTitleBar": true,
 }
