@@ -21,7 +21,7 @@ tmux send-keys -t ctm-server:ctm-events "cd ~/work/ctm-events && npm ci && ./bin
 
 # Create new window for ctmcalls (ngrok ws -> inflow)
 tmux new-window -t ctm-server -n "ctmcalls"
-tmux send-keys -t ctm-server:ctm-events "cd ~/work/ctm && ctmcalls" C-m
+tmux send-keys -t ctm-server:ctmcalls "cd ~/work/ctm && ctmcalls" C-m
 
 # Create new window for voiceai/chataiv1
 tmux new-window -t ctm-server -n "ctm-chat"
