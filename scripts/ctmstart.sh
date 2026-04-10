@@ -29,7 +29,7 @@ tmux send-keys -t ctm-server:ctm-chat "cd ~/work/ctm-chat && npm ci && ./bin/run
 
 # Create new window for live transcriptions
 tmux new-window -t ctm-server -n "ctm-ai"
-tmux send-keys -t ctm-server:ctm-ctm-ai "cd ~/work/ctm-ai && npm ci && ./bin/run.sh" C-m
+tmux send-keys -t ctm-server:ctm-ai "cd ~/work/ctm-ai && npm ci && ./bin/run.sh" C-m
 
 # Create new window for nginx
 tmux new-window -t ctm-server -n "nginx"
