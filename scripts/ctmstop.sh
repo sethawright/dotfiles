@@ -8,6 +8,9 @@ tmux send-keys -t ctm-server:rails C-c
 tmux send-keys -t ctm-server:resque C-c
 tmux send-keys -t ctm-server:scheduler C-c
 tmux send-keys -t ctm-server:ctm-events C-c
+tmux send-keys -t ctm-server:ctm-ai C-c
+tmux send-keys -t ctm-server:ctm-chat C-c
+tmux send-keys -t ctm-server:ctmcalls C-c
 tmux send-keys -t ctm-server:nginx C-c
 tmux send-keys -t ctm-server:pool C-c
 tmux send-keys -t ctm-server:logs C-c

@@ -15,9 +15,21 @@ tmux send-keys -t ctm-server:resque "cd ~/work/ctm && ./bin/pool" C-m
 tmux new-window -t ctm-server -n "scheduler"
 tmux send-keys -t ctm-server:scheduler "cd ~/work/ctm && ./bin/new_scheduler.sh" C-m
 
-# Create new window for ctm-events (ngrok ws -> inflow)
+# Create new window for ctm-events (ws comms to phonetrac)
 tmux new-window -t ctm-server -n "ctm-events"
-tmux send-keys -t ctm-server:ctm-events "ctmcalls" C-m
+tmux send-keys -t ctm-server:ctm-events "cd ~/work/ctm-events && npm ci && ./bin/run.sh" C-m
+
+# Create new window for ctmcalls (ngrok ws -> inflow)
+tmux new-window -t ctm-server -n "ctmcalls"
+tmux send-keys -t ctm-server:ctm-events "cd ~/work/ctm && ctmcalls" C-m
+
+# Create new window for voiceai/chataiv1
+tmux new-window -t ctm-server -n "ctm-chat"
+tmux send-keys -t ctm-server:ctm-chat "cd ~/work/ctm-chat && npm ci && ./bin/run.sh" C-m
+
+# Create new window for live transcriptions
+tmux new-window -t ctm-server -n "ctm-ai"
+tmux send-keys -t ctm-server:ctm-ctm-ai "cd ~/work/ctm-ai && npm ci && ./bin/run.sh" C-m
 
 # Create new window for nginx
 tmux new-window -t ctm-server -n "nginx"
