@@ -18,12 +18,12 @@ if [[ "$session_name" == "$POPUP_NAME" ]]; then
   else
     # Inside popup but not in docs: switch/create docs window.
     tmux select-window -t "$session_name:docs" 2>/dev/null ||
-      tmux new-window -t "$session_name" -n docs -c "$HOME/Code/work/docs" "cd ~/Code/work/docs && nvim _index.md"
+      tmux new-window -t "$session_name" -n docs -c "$HOME/work/docs" "cd ~/work/docs && nvim _index.md"
   fi
 else
   # Create the popup session if it doesn't exist, then display popup
   if ! tmux has-session -t "$POPUP_NAME" 2>/dev/null; then
-    tmux new-session -d -s "$POPUP_NAME" -n docs -c "$HOME/Code/work/docs" "cd ~/Code/work/docs && nvim _index.md"
+    tmux new-session -d -s "$POPUP_NAME" -n docs -c "$HOME/work/docs" "cd ~/work/docs && nvim _index.md"
   fi
 
   tmux display-popup -xC -yC -w 80% -h 75% \

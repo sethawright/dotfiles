@@ -4,8 +4,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
   },
-  "editor.fontFamily": "'BlexMono Nerd Font Mono','SF Mono','Monaspace Neon',monospace",
-  "editor.fontSize": 14,
+  "editor.fontFamily": "'SF Mono','Monaspace Neon',monospace",
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
@@ -459,4 +458,5 @@
   "git.blame.editorDecoration.enabled": false,
   "chat.viewSessions.orientation": "stacked",
   "workbench.browser.showInTitleBar": true,
+  "editor.fontSize": 13,
 }
