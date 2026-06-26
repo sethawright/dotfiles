@@ -1,5 +1,7 @@
 echo "Running mac setup! Grab a coffee."
 
+export NONINTERACTIVE=1
+
 # brew
 if test ! "$(command -v brew)"; then
   echo "Installing Homebrew"
@@ -17,7 +19,6 @@ brew upgrade
 # taps
 brew tap homebrew/cask # apps
 brew tap epk/epk       # fonts
-brew tap shaunsingh/sfmono-nerd-font-ligaturized
 
 # utils
 brew install lazygit

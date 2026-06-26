@@ -1,24 +1,27 @@
 # --- ghostty settings
 
-adjust-cell-height = 40%
+adjust-cell-height = 50%
 clipboard-read = allow
 clipboard-write = allow
-command =  /opt/homebrew/bin/fish -l -c "tmux attach -t home || tmux new-session -s home"
+command =  /opt/homebrew/bin/fish -l -c "$HOME/dotfiles/scripts/tmux-home.sh"
 
 # --- fonts
 
 # font-family = Victor Mono
 # font-family = BlexMono Nerd Font Mono
-font-family = Jetbrains Mono NFM
+# font-family = Jetbrains Mono NFM
 # font-family = M+1CodeLat50 Nerd Font Mono
 # font-family = NotoSansM Nerd Font Mono
-# font-family = SF Mono NerdFont
+font-family = SF Mono Terminal
 font-size = 13
 font-thicken = true
-font-thicken-strength = 50
+font-thicken-strength = 100
 
 # --- mac settings
 
+# official, blueprint, chalkboard, microchip, glass, holographic, paper, retro, xray
+macos-icon = custom
+macos-custom-icon = ~/.config/ghostty/Ghostty.icns
 macos-non-native-fullscreen = true
 macos-titlebar-style = hidden
 resize-overlay = never
@@ -32,8 +35,11 @@ mouse-hide-while-typing = true
 window-padding-balance = true
 window-padding-x = 15
 window-padding-y = 10
-# background-opacity = 0.95
-# background-blur = 100
+# background-blur = macos-glass-regular
+
+# --- quick terminal
+quick-terminal-position = bottom
+quick-terminal-size = 45%
 
 # --- keybinds
 
@@ -55,8 +61,8 @@ keybind = super+z=text:⌟
 keybind = shift+enter=text:\x1b\r
 
 # swap tmux panes
-keybind = super+alt+h=text:Ë
-keybind = super+alt+l=text:Ï
+keybind = ctrl+super+h=text:Ë
+keybind = ctrl+super+l=text:Ï
 
 # resize tmux panes
 keybind = shift+alt+left=text:Ó
@@ -67,3 +73,6 @@ keybind = shift+alt+l=text:Ô
 # pass these to tmux for pane sizing
 keybind = alt+up=unbind
 keybind = alt+down=unbind
+
+# quick terminal
+keybind = global:cmd+grave_accent=toggle_quick_terminal
