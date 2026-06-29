@@ -11,6 +11,9 @@ vim.keymap.set({ "n", "i", "v", "t" }, "<M-]>", "<Nop>", { noremap = true, silen
 -- Allow tmux to handle M-/ binding
 vim.keymap.set({ "n", "i", "v", "t" }, "<M-/>", "<Nop>", { noremap = true, silent = true })
 
+-- Adds watched element to dap
+vim.keymap.set({ "n", "v" }, "<leader>dw", require("dapui").elements.watches.add, { silent = true })
+
 local function get_path(absolute)
   local buf = vim.api.nvim_get_current_buf()
   local file = vim.api.nvim_buf_get_name(buf)

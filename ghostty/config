@@ -75,4 +75,4 @@ keybind = alt+up=unbind
 keybind = alt+down=unbind
 
 # quick terminal
-keybind = global:cmd+grave_accent=toggle_quick_terminal
+keybind = global:alt+\=toggle_quick_terminal
