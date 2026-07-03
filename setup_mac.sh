@@ -21,6 +21,7 @@ brew tap homebrew/cask # apps
 brew tap epk/epk       # fonts
 
 # utils
+brew install asdf
 brew install lazygit
 brew install lazydocker
 brew install fd
@@ -49,23 +50,11 @@ brew install cormacrelf/tap/dark-notify
 # apps
 brew install --cask 1password
 brew install --cask 1password-cli
-brew install --cask alacritty
-brew install --cask arc
 brew install --cask docker
-brew install --cask firefox
-brew install --cask github
-brew install --cask google-chrome
-brew install --cask jetbrains-toolbox
-brew install --cask ollama
-brew install --cask postman
-brew install --cask proxyman
 brew install --cask raycast
 brew install --cask slack
-brew install --cask sf-symbols
 brew install --cask tableplus
-brew install --cask topnotch
 brew install --cask visual-studio-code
-brew install --cask warp
 brew install --cask zoom
 
 pipx install uv
@@ -74,9 +63,6 @@ npm install -g n
 
 # git goodies
 curl -fsSL git.io/gg.sh | bash
-
-# pause for github login
-git clone https://github.com/sethawright/dotfiles.git
 
 # tmux plugin manager
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
@@ -87,6 +73,9 @@ ln -s ~/dotfiles/gitignore_global ./.gitignore_global
 
 # allow key repeat for vim input
 defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
+
+# sf mono
+cp /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/* ~/Library/Fonts
 
 mkdir -p ~/.ssh && cd ~/.ssh
 touch config
