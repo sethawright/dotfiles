@@ -65,10 +65,13 @@ keybind = ctrl+super+h=text:Ë
 keybind = ctrl+super+l=text:Ï
 
 # resize tmux panes
-keybind = shift+alt+left=text:Ó
-keybind = shift+alt+right=text:Ô
-keybind = shift+alt+h=text:Ó
-keybind = shift+alt+l=text:Ô
+keybind = super+alt+left=text:Ó
+keybind = super+alt+right=text:Ô
+keybind = super+alt+h=text:Ó
+keybind = super+alt+l=text:Ô
+
+# even out pane layout (sends ctrl+f then =)
+keybind = super+alt+equal=text:\x06=
 
 # pass these to tmux for pane sizing
 keybind = alt+up=unbind
