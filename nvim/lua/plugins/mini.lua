@@ -1,5 +1,27 @@
 return {
   {
+    "nvim-mini/mini-git",
+    main = "mini.git",
+    keys = {
+      {
+        "<leader>gb",
+        function()
+          require("util.git_blame").toggle()
+        end,
+        desc = "Git Blame (toggle)",
+      },
+    },
+    config = function()
+      require("mini.git").setup()
+
+      vim.api.nvim_set_hl(0, "GitBlameHashRoot", { link = "Tag" })
+      vim.api.nvim_set_hl(0, "GitBlameHash", { link = "Identifier" })
+      vim.api.nvim_set_hl(0, "GitBlameAuthor", { link = "String" })
+      vim.api.nvim_set_hl(0, "GitBlameDate", { link = "Comment" })
+      vim.api.nvim_set_hl(0, "GitBlameEmail", { link = "Comment" })
+    end,
+  },
+  {
     "nvim-mini/mini.files",
     opts = function(_, opts)
       opts.windows.preview = true

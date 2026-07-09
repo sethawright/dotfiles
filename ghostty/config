@@ -54,6 +54,9 @@ keybind = super+shift+bracket_right=text:¬
 # tmux close window
 keybind = super+w=text:≈
 
+# tmux kill session
+keybind = super+shift+x=text:˛
+
 # tmux zoom
 keybind = super+z=text:⌟
 

@@ -126,7 +126,7 @@ return {
       desc = "Git Log",
     },
     {
-      "<leader>gb",
+      "<leader>gB",
       function()
         Snacks.picker.git_branches()
       end,
