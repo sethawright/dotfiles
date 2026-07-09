@@ -6,6 +6,9 @@ return {
       denols = {
         enabled = true,
       },
+      oxlint = {},
+      oxfmt = {},
+      graphql = {},
     },
   },
 }
