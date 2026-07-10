@@ -67,6 +67,10 @@ keybind = shift+enter=text:\x1b\r
 keybind = ctrl+super+h=text:Ë
 keybind = ctrl+super+l=text:Ï
 
+# move tmux window left/right (cmd+opt+, / .)
+keybind = super+alt+comma=text:Í
+keybind = super+alt+period=text:Ì
+
 # resize tmux panes
 keybind = super+alt+left=text:Ó
 keybind = super+alt+right=text:Ô

@@ -459,4 +459,12 @@
   "chat.viewSessions.orientation": "stacked",
   "workbench.browser.showInTitleBar": true,
   "editor.fontSize": 13,
+  "yaml.disableSchemaDetection": [
+    "**/.github/workflows/*.yml",
+    "**/.github/workflows/*.yaml",
+    "**/.gitea/workflows/*.yml",
+    "**/.gitea/workflows/*.yaml",
+    "**/.forgejo/workflows/*.yml",
+    "**/.forgejo/workflows/*.yaml",
+  ],
 }
