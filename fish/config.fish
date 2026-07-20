@@ -57,6 +57,7 @@ alias gl="gg l"
 alias gp="gg p"
 alias gpl="gg pl"
 alias gph="git push -u origin HEAD"
+alias gpf="git fp"
 alias q="/Users/sethwright/q/m64/q"
 alias ctmstart="~/dotfiles/scripts/ctmstart.sh"
 alias ctmstop="~/dotfiles/scripts/ctmstop.sh"
@@ -92,8 +93,12 @@ if test -f ~/.env.local.fish
 end
 
 # pnpm
-set -gx PNPM_HOME "/Users/sethwright/Library/pnpm"
+set -gx PNPM_HOME /Users/sethwright/Library/pnpm
 if not string match -q -- "$PNPM_HOME/bin" $PATH
-  set -gx PATH "$PNPM_HOME/bin" $PATH
+    set -gx PATH "$PNPM_HOME/bin" $PATH
 end
 # pnpm end
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /Users/SethWright/.lmstudio/bin
+# End of LM Studio CLI section

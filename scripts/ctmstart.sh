@@ -9,7 +9,7 @@ tmux send-keys -t ctm-server:rails "cd ~/work/ctm && docker compose up -d && ./b
 
 # Create new window for resque (jobs queue)
 tmux new-window -t ctm-server -n "resque"
-tmux send-keys -t ctm-server:resque "cd ~/work/ctm && ./bin/pool" C-m
+tmux send-keys -t ctm-server:resque "cd ~/work/ctm && ./bin/pool_watch" C-m
 
 # Create new window for resque scheduler
 tmux new-window -t ctm-server -n "scheduler"

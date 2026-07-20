@@ -17,11 +17,16 @@
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
-[alias] tree = log --graph --decorate --pretty=oneline --abbrev-commit
- tree = log --graph --decorate --pretty=oneline --abbrev-commit
- tree = log --graph --decorate --pretty=oneline --abbrev-commit
- tree = log --graph --decorate --pretty=oneline --abbrev-commit
- tree = log --graph --decorate --pretty=oneline --abbrev-commit
+[alias]
+  tree = log --graph --decorate --pretty=oneline --abbrev-commit
+  fp = "!f() { \
+    b=$(git symbolic-ref --short HEAD 2>/dev/null); \
+    if [ -z \"$b\" ]; then echo 'Refusing: detached HEAD, not on a branch'; return 1; fi; \
+    case \"$b\" in \
+        main|master|release/*) echo \"Refusing to force push to $b\"; return 1;; \
+    esac; \
+    git push --force-with-lease \"$@\"; \
+  }; f"
 [diff]
 	tool = fugitive
 [merge]
@@ -55,3 +60,5 @@
 	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
 [commit]
 	gpgsign = true
+[alias]
+  tree = log --graph --decorate --pretty=oneline --abbrev-commit
