@@ -36,7 +36,7 @@ window-padding-balance = true
 window-padding-x = 15
 window-padding-y = 10
 # background-blur = macos-glass-regular
-background-opacity = 0.8
+# background-opacity = 0.92
 
 # --- quick terminal
 quick-terminal-position = bottom
@@ -65,8 +65,8 @@ keybind = super+z=text:⌟
 keybind = shift+enter=text:\x1b\r
 
 # swap tmux panes
-keybind = ctrl+super+h=text:Ë
-keybind = ctrl+super+l=text:Ï
+keybind = ctrl+super+left=text:Ë
+keybind = ctrl+super+right=text:Ï
 
 # move tmux window left/right (cmd+opt+, / .)
 keybind = super+alt+comma=text:Í

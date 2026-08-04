@@ -65,8 +65,8 @@ alias nvllm="~/dotfiles/scripts/nvllm.sh"
 alias ip="curl -4 ifconfig.me"
 alias ipv4="curl -4 ifconfig.me"
 alias ipv6="curl ifconfig.me"
-alias vpnup="sudo wg-quick up wg0"
-alias vpndown="sudo wg-quick down wg0"
+alias vpnup="sudo /opt/homebrew/bin/bash /opt/homebrew/bin/wg-quick up wg0"
+alias vpndown="sudo /opt/homebrew/bin/bash /opt/homebrew/bin/wg-quick down wg0"
 
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
@@ -82,7 +82,7 @@ alias cl='claude \
   --disallowedTools "Edit Write MultiEdit"'
 
 # rbenv
-status --is-interactive; and rbenv init - --no-rehash fish | source
+rvm default
 
 if test -f ~/work/ctm-dev/ctm.fish
     source ~/work/ctm-dev/ctm.fish
