@@ -1,6 +1,15 @@
 #!/bin/bash
 
-# Define array of directories
+# Symlink config directories out of this repo. Safe to re-run: links that
+# already point at the right place are left alone, and anything real that is
+# in the way gets moved aside rather than destroyed.
+
+set -u
+
+dotfiles_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+backup_stamp="$(date +%Y%m%d%H%M%S)"
+
+# each becomes ~/.config/<name>
 dirs=(
   "alacritty"
   "fish"
@@ -11,36 +20,33 @@ dirs=(
   "mise"
 )
 
-# Create ~/.config if it doesn't exist
-mkdir -p ~/.config
+link() {
+  local source="$1"
+  local target="$2"
 
-# Loop through each directory and create symbolic links
-for dir in "${dirs[@]}"; do
-  target="$HOME/.config/$dir"
-  source="$HOME/dotfiles/$dir"
-
-  # First verify the source exists
-  if [ ! -d "$source" ]; then
-    echo "Error: Source directory $source does not exist. Skipping..."
-    continue
+  if [ ! -e "$source" ]; then
+    echo "Skipping $target: $source does not exist"
+    return
   fi
 
-  # Handle existing target
-  if [ -L "$target" ]; then
-    echo "Removing existing symlink: $target"
-    unlink "$target"
-  elif [ -e "$target" ]; then
-    echo "Warning: $target exists and is not a symlink. Skipping..."
-    continue
+  if [ -L "$target" ] && [ "$(readlink "$target")" = "$source" ]; then
+    echo "Already linked: $target"
+    return
   fi
 
-  # Ensure parent directory exists
+  # a real file or directory here would be lost when the link replaces it
+  if [ -e "$target" ] && [ ! -L "$target" ]; then
+    echo "Moving aside: $target -> $target.$backup_stamp.bak"
+    mv "$target" "$target.$backup_stamp.bak"
+  fi
+
   mkdir -p "$(dirname "$target")"
+  ln -sfn "$source" "$target"
+  echo "Linked: $target -> $source"
+}
 
-  # Create symbolic link
-  echo "Creating symlink: $source -> $target"
-  ln -s "$source" "$target"
+for dir in "${dirs[@]}"; do
+  link "$dotfiles_dir/$dir" "$HOME/.config/$dir"
 done
 
-mkdir -p /Users/SethWright/Library/Application\ Support/lazygit/
-ln -s /Users/SethWright/dotfiles/lazygit/config.yml /Users/SethWright/Library/Application\ Support/lazygit/config.yml
+link "$dotfiles_dir/lazygit/config.yml" "$HOME/Library/Application Support/lazygit/config.yml"
