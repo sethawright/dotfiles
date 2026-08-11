@@ -8,6 +8,7 @@ dirs=(
   "tmux"
   "ghostty"
   "zed"
+  "mise"
 )
 
 # Create ~/.config if it doesn't exist

@@ -1,0 +1,17 @@
+# Global tool versions. Project configs override these.
+#
+# Rebuilding ruby 3.1.x on this mac needs:
+#   RUBY_CFLAGS="-Wno-default-const-init-field-unsafe" mise install --force ruby@3.1.7
+# Without it the socket extension is silently skipped and anything using
+# net-ssh dies with "cannot load such file -- socket". Cause: current clang
+# warns on ruby 3.1's own rstring.h, which fails a -Werror probe in the socket
+# extconf, so ruby tries to patch Apple's netinet6/in6.h by reading
+# /usr/include, a directory modern macOS does not have. Fixed in ruby 3.2+.
+
+[settings]
+# Most projects here pin only .ruby-version or .nvmrc, so read those too.
+idiomatic_version_file_enable_tools = ["ruby", "node"]
+
+[tools]
+ruby = "3.4.9"
+node = "24.16.0"

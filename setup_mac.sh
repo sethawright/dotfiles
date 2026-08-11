@@ -21,16 +21,16 @@ brew tap homebrew/cask # apps
 brew tap epk/epk       # fonts
 
 # utils
-brew install asdf
+brew install mise
 brew install lazygit
 brew install lazydocker
 brew install fd
 brew install fish
 brew install fzf
+brew install git
 brew install go
 brew install gh
 brew install neovim
-brew install node
 brew install pipx
 brew install php
 brew install pnpm
@@ -38,8 +38,6 @@ brew install postgresql
 brew install python
 brew install redis
 brew install ripgrep
-brew install ruby
-brew install rbenv
 brew install rust
 brew install terraform
 brew install tmux
@@ -58,8 +56,9 @@ brew install --cask visual-studio-code
 brew install --cask zoom
 
 pipx install uv
-npm install -g pnpm
-npm install -g n
+
+# ruby and node come from mise, never from brew, so project version files win
+brew install libyaml openssl@3 readline
 
 # git goodies
 curl -fsSL git.io/gg.sh | bash
@@ -83,6 +82,9 @@ chmod 600 config
 
 . ~/dotfiles/install_fonts.sh
 . ~/dotfiles/setup_dotfiles.sh
+
+# needs the symlinked ~/.config/mise from setup_dotfiles.sh to know what to get
+mise install
 
 brew cleanup
 

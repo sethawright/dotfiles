@@ -4,7 +4,7 @@ set -gx FZF_DEFAULT_COMMAND 'rg --files --hidden --follow --glob "!{node_modules
 set ANDROID_HOME ~/Library/Android/sdk
 
 # set path
-set PATH /usr/local/bin /opt/homebrew/bin /usr/local/sbin /usr/local/opt/ruby/bin /usr/bin /usr/bin /bin /usr/sbin /sbin /opt/X11/bin ~/.local/bin $PATH
+set PATH /usr/local/bin /opt/homebrew/bin /bin /usr/local/sbin /usr/bin /usr/bin /bin /usr/sbin /sbin /opt/X11/bin ~/.local/bin $PATH
 set PATH $PATH /Users/sethwright/.cargo/bin
 set PATH $PATH $(brew --prefix python)/libexec/bin
 set PATH $PATH /Users/sethwright/.local/bin
@@ -81,9 +81,6 @@ alias cl='claude \
   Always explain *why* a file is relevant (and it\'s path/relation to the larger application before suggesting edits to it." \
   --disallowedTools "Edit Write MultiEdit"'
 
-# rbenv
-rvm default
-
 if test -f ~/work/ctm-dev/ctm.fish
     source ~/work/ctm-dev/ctm.fish
 end
@@ -102,3 +99,13 @@ end
 # Added by LM Studio CLI (lms)
 set -gx PATH $PATH /Users/SethWright/.lmstudio/bin
 # End of LM Studio CLI section
+
+# Keep homebrew first so `bash` is 5.x, not the ancient /bin/bash 3.2.
+# Must stay at the very bottom, after everything else that touches PATH.
+fish_add_path --global --move --prepend /opt/homebrew/bin /opt/homebrew/sbin
+
+# mise owns ruby and node. Activate here, at the very end, so its tool paths
+# land ahead of the homebrew and /usr/bin entries set further up this file.
+if type -q mise
+    mise activate fish | source
+end
