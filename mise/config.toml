@@ -12,6 +12,14 @@
 # Most projects here pin only .ruby-version or .nvmrc, so read those too.
 idiomatic_version_file_enable_tools = ["ruby", "node"]
 
+# Build ruby instead of downloading mise's prebuilt binaries. The prebuilt ones
+# bundle their own openssl and look for its provider modules under the CI
+# machine's build path, which does not exist here, so
+# OpenSSL::Provider.load("legacy") blows up. ctm needs that provider for the
+# blowfish (bf-cbc) ids in IDStr.id. Building links homebrew's openssl, whose
+# legacy.dylib is really on disk. Costs a few minutes per ruby install.
+ruby.compile = true
+
 [tools]
 ruby = "3.4.9"
 node = "24.16.0"
