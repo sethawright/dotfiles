@@ -36,7 +36,7 @@ alias rc="bundle exec rails console"
 
 # bind ctrl-space ~/dotfiles/scripts/tmux-sessionizer
 alias tms="~/dotfiles/scripts/tmux-sessionizer"
-alias tms="~/dotfiles/scripts/tmux-sessionizer"
+alias tmw="~/dotfiles/scripts/tmux-worktreeizer"
 alias gid="~/dotfiles/scripts/gh-issue-develop"
 
 # git

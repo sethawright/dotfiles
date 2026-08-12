@@ -48,6 +48,9 @@ quick-terminal-size = 45%
 keybind = super+n=text:ç
 keybind = super+r=text:÷
 
+# tmux worktree picker (opt+. sends the same character opt+. composes)
+keybind = alt+period=text:≥
+
 # tmux next/prev window
 keybind = super+shift+bracket_left=text:˙
 keybind = super+shift+bracket_right=text:¬
