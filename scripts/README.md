@@ -72,16 +72,20 @@ so it costs the same for three rows or three hundred.
 | tab / shift-tab | jump to the next / previous repo |
 | ctrl-space | start the repo's processes, or stop them |
 | ctrl-t | create a worktree in the repo under the cursor |
-| ctrl-x | remove the worktree (keeps the branch, runs teardown) |
+| ctrl-x | remove the worktree and kill its session, then offer to delete the branch too (kept unless you say otherwise) |
+| ctrl-d | close the tmux session only -- worktree and branch untouched, no confirmation |
 | ctrl-r | refresh the pull request cache |
 | ctrl-s | `git fetch --prune` |
 | ctrl-o | open the pull request |
 
-These stay off the keys fzf uses for moving and editing (`ctrl-a b c d e f g h
-i j l m n p q u w y`, `ctrl-/`). Tab is the one exception, because its default
-needs `--multi`, which this does not use. Alt is avoided on purpose: terminals
-that compose Option into characters (ghostty by default) would deliver `alt-j`
-as `∆` straight into the query.
+These stay off the keys fzf uses for moving and editing (`ctrl-a b c e f g h i
+j l n p q u w y`, `ctrl-/`). Two deliberate exceptions: tab, because its
+default needs `--multi`, which this does not use; and ctrl-d, which is really
+fzf's delete-char/eof, taken anyway because it was the key wanted for closing
+a session. The cost: pressing it with a query typed closes a session instead
+of deleting a character. Alt is avoided on purpose too: terminals that compose
+Option into characters (ghostty by default) would deliver `alt-j` as `∆`
+straight into the query.
 
 ---
 
@@ -316,9 +320,12 @@ Other entry points: `tmw --new [repo]`, `tmw --manifest`,
   `.claude/worktrees` or `.codex/worktrees` is tagged `agent`, and because it is
   not under `$TW_ROOT` it is not part of an env — so teardown never fires for
   it.
-- **Removal keeps the branch.** `git worktree remove`, then `teardown`, and only
-  if the removal succeeded. Dirty or locked worktrees prompt first; a locked one
-  needs `--force` twice, which the tool handles.
+- **Removal keeps the branch by default.** `git worktree remove`, then
+  `teardown`, and only if the removal succeeded. Dirty or locked worktrees
+  prompt first; a locked one needs `--force` twice, which the tool handles.
+  Afterward it offers to delete the branch too -- opt in, since the worktree
+  going away is routine but discarding a branch (and any commits not merged
+  anywhere) is not.
 - **`.env.worktree`** is written in each env worktree and added to
   `.git/info/exclude`, so it never shows up in `git status`. The run command
   sources it, because `tmux set-environment` does not reach a respawned window.

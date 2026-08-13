@@ -112,14 +112,20 @@
 #              stop it if it is already going
 #   tab        jump to the next repo, wrapping at the end
 #   shift-tab  jump back to the previous repo
-#   ctrl-x     remove the selected worktree and kill its tmux session
+#   ctrl-x     remove the selected worktree and kill its tmux session, then
+#              offer to delete the branch too (kept unless you say otherwise)
+#   ctrl-d     close the tmux session only -- worktree and branch untouched.
+#              No confirmation, same as ctrl-space.
 #   ctrl-r     refresh the pull request cache for the selected repo
 #   ctrl-s     git fetch --prune the selected repo
 #   ctrl-o     open the pull request for the selected worktree in a browser
 #
-# These stay off the keys fzf already uses to move and edit: ctrl-a b c d e
-# f g h i j l m n p q u w y and ctrl-/. Only tab is reused, and only because
-# its default (toggle+down) needs --multi, which this does not use.
+# These stay off the keys fzf already uses to move and edit: ctrl-a b c e f g
+# h i j l n p q u w y and ctrl-/. Two deliberate exceptions: tab, reused
+# because its default (toggle+down) needs --multi, which this does not use;
+# and ctrl-d, which really is fzf's delete-char/eof, used here anyway because
+# it was the requested key. The cost: press it with a query typed and it
+# closes a session instead of deleting a character.
 #
 # Environment:
 #   TW_ROOT            where new worktrees go   (default ~/work/.worktrees)
@@ -259,6 +265,24 @@ appearance() {
 sessions_at() {
   tmux list-sessions -F "#{session_path}${TAB}#{session_name}" 2>/dev/null |
     awk -F"$TAB" -v p="$1" '$1 == p {print $2}'
+}
+
+# Every tmux session rooted at a path, gone. Moves the client off one first if
+# it is the session attached to this popup, so the popup itself survives.
+kill_sessions_at() {
+  local path=$1 current session killed=0
+  current="$(tmux display-message -p '#{session_name}' 2>/dev/null)"
+  while read -r session; do
+    [[ -n $session ]] || continue
+    if [[ $session == "$current" ]]; then
+      tmux switch-client -l 2>/dev/null || tmux switch-client -n 2>/dev/null
+    fi
+    tmux kill-session -t "=$session" 2>/dev/null && {
+      killed=$((killed + 1))
+      printf '%s\n' "$session"
+    }
+  done < <(sessions_at "$path")
+  ((killed > 0))
 }
 
 # ---------------------------------------------------------------- repos
@@ -522,6 +546,14 @@ TW_ENV_PORT_SPAN="${TW_ENV_PORT_SPAN:-40}"
 TW_ENV_SLOTS="${TW_ENV_SLOTS:-500}"
 
 # Every env name, which is every directory name under the worktree root.
+#
+# Ends with an explicit return: with pipefail on (set at the top of this
+# script), "for ... done | sort" takes its exit status from whichever
+# directory the loop happened to check last, which has nothing to do with
+# whether the function actually found anything. Silent when only the output
+# is read, as every caller here does, but a caller that ever checks the exit
+# status directly (service_port did, and that is how this got noticed) would
+# get a essentially random true/false.
 env_names() {
   local repo dir
   [[ -d $TW_ROOT ]] || return 0
@@ -532,14 +564,17 @@ env_names() {
       basename "${dir%/}"
     done
   done | sort -u
+  return 0
 }
 
-# Repo names taking part in an env, in a stable order.
+# Repo names taking part in an env, in a stable order. See env_names above for
+# why this ends with an explicit return.
 env_repos() {
   local name=$1 repo
   for repo in "$TW_ROOT"/*/; do
     [[ -d "$repo$name" ]] && basename "${repo%/}"
   done | sort
+  return 0
 }
 
 # Ports are derived from the name, never allocated, so that nothing has to
@@ -592,7 +627,7 @@ env_live_count() {
 # What a proxy reads to render a server block per env. Absent file means
 # nothing changes for it.
 write_manifest() {
-  local out="$CACHE_DIR/envs.json" name repo base port i first_env=1 first_svc path branch
+  local out="$CACHE_DIR/envs.json" name repo base port first_env=1 first_svc path branch
   mkdir -p "$CACHE_DIR"
   {
     printf '{\n'
@@ -608,18 +643,20 @@ write_manifest() {
       printf '      "primary_host": "%s",\n' "$(env_host "$name")"
       printf '      "port_base": %s,\n' "$base"
       printf '      "services": {\n'
-      i=0
       first_svc=1
       while read -r repo; do
         [[ -n $repo ]] || continue
         path="$(env_worktree "$repo" "$name")"
         branch="$(git -C "$path" rev-parse --abbrev-ref HEAD 2>/dev/null)"
-        port=$((base + i))
+        # Asked of service_port rather than computed here: this used to keep
+        # its own "base + position" math, which fell out of step the moment
+        # service_port was fixed to hash (env, repo) instead -- the manifest
+        # was pointing nginx at ports nothing was actually listening on.
+        port="$(service_port "$name" "$repo")" || continue
         ((first_svc)) || printf ',\n'
         first_svc=0
         printf '        "%s": { "path": "%s", "branch": "%s", "port": %s }' \
           "$repo" "$path" "$branch" "$port"
-        i=$((i + 1))
       done < <(env_repos "$name")
       printf '\n      }\n'
       printf '    }'
@@ -1444,7 +1481,7 @@ window_busy() {
 # otherwise override the one the env picked. The processes that do not listen
 # get ports above the block, which is harmless since they ignore them.
 run_command() {
-  local path=$1 port=$2 procfile script args
+  local path=$1 port=$2 procfile script args inner
   if procfile="$(procfile_for "$path")"; then
     args="start -f $procfile"
     [[ -f "$path/.env.worktree" ]] && args="$args -e .env.worktree"
@@ -1453,7 +1490,24 @@ run_command() {
     return 0
   fi
   script="$(run_script "$path")" || return 1
-  printf 'set -a; [ -f ./.env.worktree ] && . ./.env.worktree; set +a; exec %s' "$script"
+  # A POSIX command, handed to sh explicitly rather than trusted to whatever
+  # tmux's default-shell happens to be. A fish default-shell (a common choice,
+  # and this tool's own README example) cannot parse "VAR=value" lines when
+  # sourcing .env.worktree -- it prints a parse error and gives up on the file
+  # entirely. tmux's own session environment (see apply_env) covers for it
+  # when the command runs in a tmux pane, which is why this was easy to miss,
+  # but a plain "./bin/run.sh" by hand in a fish shell would silently run
+  # without the env. `exec sh -c '...'` still hands off the process directly,
+  # so remain-on-exit and job tracking are unaffected either way.
+  inner="set -a; [ -f ./.env.worktree ] && . ./.env.worktree; set +a; exec $(shquote "$script")"
+  printf 'exec sh -c %s' "$(shquote "$inner")"
+}
+
+# Single-quote a string for safe reinjection into a shell command line, in a
+# way that is the same idiom in POSIX sh, bash, zsh and fish alike: close the
+# quote, escaped literal quote, reopen the quote.
+shquote() {
+  printf "'%s'" "${1//\'/\'\\\'\'}"
 }
 
 # What to call it when reporting.
@@ -1650,7 +1704,7 @@ create_worktree() {
 # ---------------------------------------------------------------- remove
 
 do_remove() {
-  local kind=${1:-} repo=${2:-} path=${3:-} branch=${4:-} main answer out changed current locked teardown
+  local kind=${1:-} repo=${2:-} path=${3:-} branch=${4:-} main answer out changed locked teardown
   if [[ $kind != wt ]]; then
     printf 'nothing to remove here -- pick a worktree line (this is a "%s" line).\n' "${kind:-blank}"
     pause
@@ -1696,18 +1750,31 @@ do_remove() {
   fi
   git -C "$repo" worktree prune 2>/dev/null
 
-  # Move the client off the session before killing it, so this popup survives.
-  current="$(tmux display-message -p '#{session_name}' 2>/dev/null)"
-  while read -r session; do
-    [[ -n $session ]] || continue
-    if [[ $session == "$current" ]]; then
-      tmux switch-client -l 2>/dev/null || tmux switch-client -n 2>/dev/null
-    fi
-    tmux kill-session -t "=$session" 2>/dev/null
-  done < <(sessions_at "$path")
+  kill_sessions_at "$path" >/dev/null
 
   rmdir "$(dirname "$path")" 2>/dev/null
   printf 'removed %s\n' "$path"
+
+  # Opt in, not automatic: the worktree going away is routine, but throwing
+  # out a branch (and its commits, if it is not merged anywhere) is not.
+  if [[ -n $branch && $branch != "(detached)" ]]; then
+    read -rp "delete branch '$branch' too? [y/N] " answer
+    if [[ ${answer:-} == [yY]* ]]; then
+      if out="$(git -C "$repo" branch -d "$branch" 2>&1)"; then
+        printf 'deleted branch %s\n' "$branch"
+      else
+        printf '%s\n' "$out"
+        read -rp "force delete (throws away commits not merged anywhere)? [y/N] " answer
+        if [[ ${answer:-} == [yY]* ]]; then
+          if out="$(git -C "$repo" branch -D "$branch" 2>&1)"; then
+            printf 'deleted branch %s\n' "$branch"
+          else
+            printf '%s\n' "$out"
+          fi
+        fi
+      fi
+    fi
+  fi
 
   # Only now that the worktree is really gone: undo what the repo provisioned
   # for this env, such as dropping its own database. Run from the main checkout,
@@ -1730,6 +1797,29 @@ do_remove() {
         "$hook"
       ) || printf '%s failed; the worktree is already gone.\n' "$(basename "$hook")"
     done < <(hooks_for "$repo" teardown | tail -r)
+  fi
+}
+
+# Close the tmux session for a worktree, nothing else -- the worktree and its
+# branch are untouched, unlike ctrl-x. No confirmation, to stay as quick as
+# ctrl-space; the only thing at risk is unsaved state in a pane (an nvim
+# buffer, mainly), same as closing any terminal window.
+do_kill_session() {
+  local kind=${1:-} path=${3:-} killed
+  case $kind in
+  wt | repo) ;;
+  *)
+    printf 'pick a worktree or repo row to close its session.\n'
+    pause
+    return 0
+    ;;
+  esac
+  killed="$(kill_sessions_at "$path")"
+  if [[ -n $killed ]]; then
+    printf 'closed session: %s\n' "$(printf '%s' "$killed" | paste -sd, -)"
+  else
+    printf 'no session was open for %s\n' "$path"
+    pause
   fi
 }
 
@@ -1776,12 +1866,13 @@ main_ui() {
       --color='pointer:blue,prompt:blue:bold,gutter:-1' \
       --color='info:bright-black,header:bright-black,separator:bright-black' \
       --color='border:bright-black,scrollbar:bright-black,query:-1:bold' \
-      --header='enter open   ` repos/worktrees/envs   ctrl-t new   ctrl-x remove   ctrl-r prs   ctrl-s fetch   ctrl-o pr' \
+      --header='enter open   ` repos/worktrees/envs   ctrl-t new   ctrl-x remove   ctrl-d close session   ctrl-r prs   ctrl-s fetch   ctrl-o pr' \
       --preview "$SELF --preview {1} {2} {3} {4}" \
       --preview-window='right,50%,border-left,wrap' \
       --preview-label=' details ' \
       --color='preview-border:bright-black,preview-label:bold' \
       --bind "ctrl-x:execute($SELF --remove {1} {2} {3} {4})+reload($SELF --view-list)" \
+      --bind "ctrl-d:execute($SELF --kill-session {1} {2} {3})+reload($SELF --view-list)" \
       --bind "ctrl-r:execute($SELF --refresh {2})+reload($SELF --view-list)" \
       --bind "ctrl-s:execute($SELF --fetch {2})+reload($SELF --view-list)" \
       --bind "ctrl-o:execute-silent($SELF --open-pr {5})" \
@@ -1812,6 +1903,10 @@ case "${1:-}" in
 --remove)
   shift
   do_remove "$@"
+  ;;
+--kill-session)
+  shift
+  do_kill_session "$@"
   ;;
 --new)
   shift
