@@ -107,7 +107,8 @@
 #              whatever you opened
 #   backspace  step out of a folder, once the query is empty. While there is
 #              something typed it deletes characters as usual.
-#   ctrl-t     create a worktree in the repo the cursor is on
+#   ctrl-t     create a worktree in the repo the cursor is on, run its setup,
+#              and start it running if it has anything to run
 #   ctrl-space start the repo run script in the session's server window, or
 #              stop it if it is already going
 #   tab        jump to the next repo, wrapping at the end
@@ -118,7 +119,8 @@
 #              No confirmation, same as ctrl-space.
 #   ctrl-r     refresh the pull request cache for the selected repo
 #   ctrl-s     git fetch --prune the selected repo
-#   ctrl-o     open the pull request for the selected worktree in a browser
+#   ctrl-o     open a browser: the pull request on a worktree row, the env's
+#              host on an env row. No-op wherever neither applies.
 #
 # These stay off the keys fzf already uses to move and edit: ctrl-a b c e f g
 # h i j l n p q u w y and ctrl-/. Two deliberate exceptions: tab, reused
@@ -485,13 +487,8 @@ END {
   }
 
   if (view == "flat") {
-    # The main checkout is a worktree too, so it belongs in the flat list.
-    print "repo", repo, wpath[1], hb, prurlof(hb), \
-          paint(mark(wpath[1]), "36") " " \
-          paint(pad(rname, 40), REPO_C) " " \
-          paint(pad("[" hb "]", 24), "90") " " \
-          paint(pad(hst, 10), statuscolor(hst)) " " \
-          paint(pad(prtxt(hb), 17), prcolor(hb))
+    # Just the worktrees here -- the main checkout is not one, and repos.list
+    # is where it belongs.
   } else {
     print "repo", repo, wpath[1], hb, prurlof(hb), \
           paint(mark(wpath[1]), "36") " " \
@@ -666,6 +663,20 @@ write_manifest() {
   printf '%s\n' "$out"
 }
 
+# Any create or remove can change which repos are in an env, so the manifest
+# is kept current automatically rather than waiting for someone to remember
+# --manifest. $TMW_DIR/hooks/manifest is the one hook that is not per repo --
+# there is no repo to resolve it against, since this fires regardless of which
+# repo's worktree just changed -- so it is a single optional script, run if it
+# exists, with nothing to configure. Best effort: a proxy that is not running,
+# or a hook that fails, never blocks the create or remove itself.
+refresh_manifest_hook() {
+  write_manifest >/dev/null
+  local hook="$TMW_DIR/hooks/manifest"
+  [[ -x $hook ]] && "$hook"
+  return 0
+}
+
 list_envs() {
   local name repos count base mark label run runs up dead states
   if [[ -z "$(env_names)" ]]; then
@@ -699,7 +710,7 @@ list_envs() {
 
     label="$count repo"
     ((count == 1)) || label="$label"s
-    printf 'env\t%s\t%s\t%s\t\t' "$name" "$base" "$(env_host "$name")"
+    printf 'env\t%s\t%s\t%s\thttps://%s\t' "$name" "$base" "$(env_host "$name")" "$(env_host "$name")"
     printf '%s %s %s %s %s %s\n' \
       "$(pv_paint 36 "$mark")" \
       "$(printf '\033[1;34m%-28s\033[0m' "$name")" \
@@ -1122,7 +1133,13 @@ do_jump() {
 # takes only one, since starting two servers makes no sense; there the personal
 # hook wins.
 #
-# Hooks: env, setup, teardown, run. All optional.
+# One more, shaped differently because it is not about any one repo: envs.json
+# (the manifest a proxy reads) is rewritten after every create or remove, and
+# $TMW_DIR/hooks/manifest runs right after if it exists -- for example, to
+# reload a proxy that just picked up a new env. No repo to resolve it against,
+# so it is a single optional script, not two.
+#
+# Hooks: env, setup, teardown, run, manifest. All optional.
 repo_hook() {
   local repo=$1 hook=$2 f
   for f in "$repo/bin/$hook.sh" "$repo/bin/$hook"; do
@@ -1698,6 +1715,14 @@ create_worktree() {
     }
   done < <(hooks_for "$path" setup)
 
+  # Start it now if there is anything to start, rather than making ctrl-space
+  # the very next keystroke after setup already took a while. Silently skipped
+  # for a repo with no Procfile or run script -- do_run_toggle's own checks
+  # (a port already taken, another live env sharing infra) still apply, since
+  # those are real enough to ask about even right after creating a worktree.
+  run_command "$path" "" >/dev/null 2>&1 && do_run_toggle wt "$repo" "$path"
+
+  refresh_manifest_hook
   open_session "$repo" "$path"
 }
 
@@ -1798,6 +1823,8 @@ do_remove() {
       ) || printf '%s failed; the worktree is already gone.\n' "$(basename "$hook")"
     done < <(hooks_for "$repo" teardown | tail -r)
   fi
+
+  refresh_manifest_hook
 }
 
 # Close the tmux session for a worktree, nothing else -- the worktree and its
@@ -1866,7 +1893,7 @@ main_ui() {
       --color='pointer:blue,prompt:blue:bold,gutter:-1' \
       --color='info:bright-black,header:bright-black,separator:bright-black' \
       --color='border:bright-black,scrollbar:bright-black,query:-1:bold' \
-      --header='enter open   ` repos/worktrees/envs   ctrl-t new   ctrl-x remove   ctrl-d close session   ctrl-r prs   ctrl-s fetch   ctrl-o pr' \
+      --header='enter open   ` repos/worktrees/envs   ctrl-t new   ctrl-x remove   ctrl-d close session   ctrl-r prs   ctrl-s fetch   ctrl-o browser' \
       --preview "$SELF --preview {1} {2} {3} {4}" \
       --preview-window='right,50%,border-left,wrap' \
       --preview-label=' details ' \
@@ -1875,7 +1902,7 @@ main_ui() {
       --bind "ctrl-d:execute($SELF --kill-session {1} {2} {3})+reload($SELF --view-list)" \
       --bind "ctrl-r:execute($SELF --refresh {2})+reload($SELF --view-list)" \
       --bind "ctrl-s:execute($SELF --fetch {2})+reload($SELF --view-list)" \
-      --bind "ctrl-o:execute-silent($SELF --open-pr {5})" \
+      --bind "ctrl-o:execute-silent($SELF --open-url {5})" \
       --bind "$backtick:transform:$SELF --view-toggle" \
       --bind "bspace:transform:$SELF --view-back {q}" \
       --bind "ctrl-t:become($SELF --new {2})" \
@@ -1948,7 +1975,7 @@ case "${1:-}" in
   shift
   do_jump "$@"
   ;;
---open-pr)
+--open-url)
   shift
   [[ -n ${1:-} ]] || exit 0
   open "$1"

@@ -76,7 +76,7 @@ so it costs the same for three rows or three hundred.
 | ctrl-d | close the tmux session only -- worktree and branch untouched, no confirmation |
 | ctrl-r | refresh the pull request cache |
 | ctrl-s | `git fetch --prune` |
-| ctrl-o | open the pull request |
+| ctrl-o | open a browser: the pull request on a worktree row, the env's host on an env row |
 
 These stay off the keys fzf uses for moving and editing (`ctrl-a b c e f g h i
 j l n p q u w y`, `ctrl-/`). Two deliberate exceptions: tab, because its
@@ -91,8 +91,8 @@ straight into the query.
 
 ## Hooks
 
-**Anything specific to a repository belongs in a hook.** Four hooks, all
-optional, and **two places** for each:
+**Anything specific to a repository belongs in a hook.** Five hooks, all
+optional. Four of them are per repo, with **two places** each:
 
 ```
 in the repo       <repo>/bin/<hook>.sh   or  <repo>/bin/<hook>
@@ -122,11 +122,19 @@ main="${TW_MAIN:-$(cd "$(git rev-parse --path-format=absolute --git-common-dir)/
 | `run` | ctrl-space, if there is no Procfile | start the thing |
 | `teardown` | after a worktree is removed | undo what setup provisioned |
 | `env` | whenever env variables are handed out | translate this tool's facts into the names your code reads |
+| `manifest` | after every create or remove | react to envs.json changing, e.g. reload a proxy |
 
 `setup`, `run` and `teardown` are ordinary scripts, run with the worktree as the
 working directory (`teardown` runs from the main checkout, since the worktree is
 already gone by then). `env` is different: it **prints `KEY=VALUE` lines** on
 stdout, and they get added to the environment.
+
+`manifest` is different too: it is not about any one repo (a create or remove
+in any repo can change an env's membership), so there is no repo to resolve it
+against and no repo-committed half — just one optional script at
+`$TMW_DIR/hooks/manifest`, run after the manifest is rewritten. The tool
+rewrites `envs.json` itself on every create and remove now, so this hook only
+needs to react to it, not trigger it.
 
 ### The env hook
 
@@ -202,6 +210,12 @@ ctrl-space runs, in the session's `server` window:
 
 A second press stops it. Nothing there means nothing happens.
 
+ctrl-t runs this too, automatically, right after setup — creating a worktree
+for something runnable starts it running, rather than leaving ctrl-space as
+the next keystroke. Silently skipped when there is nothing to run. The same
+checks ctrl-space does on its own still apply: a taken port, or another live
+env sharing this one's redis/mysql/elasticsearch, still ask before starting.
+
 Put workers and schedulers in the Procfile too, not just the web process — with
 per-env queues, the main checkout's workers are looking somewhere else and would
 never pick up this env's jobs.
@@ -239,7 +253,9 @@ take three (web, debugger, control app) and a front end two.
 
 ### The manifest
 
-`tmux-worktreeizer --manifest` writes `~/.cache/tmux-worktreeizer/envs.json`:
+Written to `~/.cache/tmux-worktreeizer/envs.json` automatically after every
+create or remove (and by `tmux-worktreeizer --manifest` directly, if you want
+it without either):
 
 ```json
 { "domain": "test",
