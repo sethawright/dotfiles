@@ -72,7 +72,7 @@ so it costs the same for three rows or three hundred.
 | tab / shift-tab | jump to the next / previous repo |
 | ctrl-space | start the repo's processes, or stop them |
 | ctrl-t | create a worktree in the repo under the cursor |
-| ctrl-x | remove the worktree and kill its session, then offer to delete the branch too (kept unless you say otherwise) |
+| ctrl-x | remove the worktree and kill its session, then offer to delete the branch too (kept unless you say otherwise). On an env row: every worktree in that env, one confirmation |
 | ctrl-d | close the tmux session only -- worktree and branch untouched, no confirmation |
 | ctrl-r | refresh the pull request cache |
 | ctrl-s | `git fetch --prune` |

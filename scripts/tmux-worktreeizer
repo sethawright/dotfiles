@@ -114,7 +114,9 @@
 #   tab        jump to the next repo, wrapping at the end
 #   shift-tab  jump back to the previous repo
 #   ctrl-x     remove the selected worktree and kill its tmux session, then
-#              offer to delete the branch too (kept unless you say otherwise)
+#              offer to delete the branch too (kept unless you say otherwise).
+#              on an env row: the same, for every worktree in that env at
+#              once, one confirmation instead of one per worktree
 #   ctrl-d     close the tmux session only -- worktree and branch untouched.
 #              No confirmation, same as ctrl-space.
 #   ctrl-r     refresh the pull request cache for the selected repo
@@ -1705,11 +1707,24 @@ create_worktree() {
   # Setup hooks, repo first, run where they can be watched since installing
   # dependencies takes a while. Looked up against the worktree: the branch
   # decides which scripts exist, and the worktree is where they run.
-  local setup
+  #
+  # Given the env's own facts (CTM_WT_ENV and friends), same as do_remove gives
+  # teardown -- a setup hook deciding what to provision needs to know which env
+  # it is provisioning for just as much as teardown needs to know what to undo.
+  local setup envname
+  envname="$(env_of_path "$path")" || envname=""
   while read -r setup; do
     [[ -n $setup ]] || continue
     printf 'running %s in the new worktree...\n\n' "$setup"
-    (cd "$path" && "$setup") || {
+    (
+      cd "$path" || exit 1
+      if [[ -n $envname ]]; then
+        set -a
+        eval "$(env_exports "$envname" "$(basename "$repo")")"
+        set +a
+      fi
+      "$setup"
+    ) || {
       printf '\n%s failed. The worktree is there; fix it and re-run.\n' "$setup"
       pause
     }
@@ -1730,6 +1745,14 @@ create_worktree() {
 
 do_remove() {
   local kind=${1:-} repo=${2:-} path=${3:-} branch=${4:-} main answer out changed locked teardown
+
+  # An env row's own field 2 is the env name, not a repo -- tear down every
+  # worktree in it, rather than making you drill in and ctrl-x each one.
+  if [[ $kind == env ]]; then
+    do_remove_env "$repo"
+    return
+  fi
+
   if [[ $kind != wt ]]; then
     printf 'nothing to remove here -- pick a worktree line (this is a "%s" line).\n' "${kind:-blank}"
     pause
@@ -1822,6 +1845,117 @@ do_remove() {
         "$hook"
       ) || printf '%s failed; the worktree is already gone.\n' "$(basename "$hook")"
     done < <(hooks_for "$repo" teardown | tail -r)
+  fi
+
+  refresh_manifest_hook
+}
+
+# Every worktree in an env, torn down together. One combined confirmation up
+# front (with each member's dirty/lock state shown, same as a single removal
+# would show) stands in for the per-worktree ones do_remove asks on its own --
+# asking that many times over is exactly the chore this exists to skip.
+do_remove_env() {
+  local name=$1 repo path branch changed locked answer out envname hook teardown
+  local -a repos=() paths=() branches=()
+
+  while read -r repo; do
+    [[ -n $repo ]] || continue
+    path="$(env_worktree "$repo" "$name")"
+    [[ -d $path ]] || continue
+    repos+=("$repo")
+    paths+=("$path")
+  done < <(env_repos "$name")
+
+  if ((${#paths[@]} == 0)); then
+    printf 'nothing to remove: no worktrees found for env %s\n' "$name"
+    pause
+    return 0
+  fi
+
+  printf 'remove env %s (%d worktree(s))\n' "$name" "${#paths[@]}"
+  local i repo_path
+  for i in "${!paths[@]}"; do
+    path="${paths[$i]}"
+    repo_path="$(repo_path_for "${repos[$i]}")"
+    branch="$(git -C "$path" symbolic-ref --quiet --short HEAD 2>/dev/null)"
+    [[ -n $branch ]] || branch="(detached)"
+    branches[i]="$branch"
+    changed="$(git -C "$path" status --porcelain 2>/dev/null | wc -l | tr -d ' ')"
+    locked="$([[ -n $repo_path ]] && lock_reason "$repo_path" "$path")"
+    printf '  %-14s %s\n' "${repos[$i]}" "$path"
+    printf '                 branch %-20s dirty %s file(s)%s\n' \
+      "$branch" "$changed" "${locked:+   locked: $locked}"
+  done
+  printf 'sessions close and teardown hooks run for each. branches are kept, asked separately below.\n'
+  read -rp "remove all ${#paths[@]}? [y/N] " answer || return 0
+  [[ $answer == [yY]* ]] || return 0
+
+  local removed=0
+  for i in "${!paths[@]}"; do
+    path="${paths[$i]}"
+    repo="${repos[$i]}"
+    repo_path="$(repo_path_for "$repo")"
+    if [[ -z $repo_path ]]; then
+      printf '  %s: could not resolve the repo, skipped\n' "$repo"
+      continue
+    fi
+
+    teardown="$(hooks_for "$repo_path" teardown | tail -r | paste -sd, -)"
+
+    # Already agreed above, dirty/locked included, to remove everything shown --
+    # a second force prompt per worktree here would be the exact tedium this
+    # command exists to avoid.
+    if ! out="$(git -C "$repo_path" worktree remove "$path" 2>&1)"; then
+      if ! out="$(git -C "$repo_path" worktree remove --force --force "$path" 2>&1)"; then
+        printf '  %s: %s\n' "$repo" "$out"
+        continue
+      fi
+    fi
+    git -C "$repo_path" worktree prune 2>/dev/null
+    kill_sessions_at "$path" >/dev/null
+    rmdir "$(dirname "$path")" 2>/dev/null
+    printf '  removed %s\n' "$path"
+    removed=$((removed + 1))
+
+    if [[ -n $teardown ]] && envname="$(env_of_path "$path")"; then
+      while IFS= read -r hook; do
+        [[ -n $hook ]] || continue
+        (
+          cd "$repo_path" || exit 1
+          set -a
+          eval "$(env_exports "$envname" "$repo")"
+          set +a
+          "$hook"
+        ) || printf '    %s failed; the worktree is already gone.\n' "$(basename "$hook")"
+      done < <(hooks_for "$repo_path" teardown | tail -r)
+    fi
+  done
+  printf 'removed %d of %d worktree(s) for env %s\n' "$removed" "${#paths[@]}" "$name"
+
+  # One combined question for every branch, not one per worktree. Only ever
+  # a safe -d here -- an unmerged branch is left for you to force by hand,
+  # since silently discarding commits in a batch is a different order of
+  # risk than routine worktree cleanup.
+  local -a to_delete=()
+  for i in "${!paths[@]}"; do
+    [[ ${branches[$i]} != "(detached)" ]] && to_delete+=("$i")
+  done
+  if ((${#to_delete[@]} > 0)); then
+    printf 'branches: %s\n' "$(for i in "${to_delete[@]}"; do printf '%s/%s ' "${repos[$i]}" "${branches[$i]}"; done)"
+    read -rp "delete these branches too, where already merged? [y/N] " answer
+    if [[ ${answer:-} == [yY]* ]]; then
+      for i in "${to_delete[@]}"; do
+        repo="${repos[$i]}"
+        branch="${branches[$i]}"
+        repo_path="$(repo_path_for "$repo")"
+        [[ -n $repo_path ]] || continue
+        if out="$(git -C "$repo_path" branch -d "$branch" 2>&1)"; then
+          printf '  deleted %s/%s\n' "$repo" "$branch"
+        else
+          printf '  %s/%s: not deleted (not merged) -- remove it yourself if you are sure\n' "$repo" "$branch"
+        fi
+      done
+    fi
   fi
 
   refresh_manifest_hook
