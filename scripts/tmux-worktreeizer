@@ -2,26 +2,38 @@
 #
 # tmux-worktreeizer -- pick a git worktree and open a tmux session for it.
 #
-# Two modes, toggled with the backtick key:
+# Three modes, cycled with the backtick key:
 #
 #   repos       one row per repo. Enter opens that folder:
 #
-#                 ~/work/ctm            [master]   pushed   2 worktrees
-#                 ~/work/ctm-chat       [master]   pushed
+#                 ~/src/api             [master]   pushed   2 worktrees
+#                 ~/src/web             [master]   pushed
 #
-#               enter on ~/work/ctm gives its own worktrees, and this is
+#               enter on ~/src/api gives its own worktrees, and this is
 #               the only place the create row lives:
 #
-#                 ~/work/ctm            [master]   pushed
-#                 |- create new worktree (ctm)
-#                 |- ctm/hal-1234-thing [hal-1234-thing]  +2  PR #10717 open
+#                 ~/src/api             [master]   pushed
+#                 |- create new worktree (api)
+#                 |- api/fix-timeouts   [fix-timeouts]  +2  PR #412 open
 #
 #   worktrees   every worktree in every repo, flattened into one list, with
 #               no group headers and no create rows:
 #
-#                 ctm                   [master]   pushed
-#                 ctm/hal-1234-thing    [hal-1234-thing]  +2  PR #10717 open
-#                 ctm-ui/busy-gould     [(detached)]      detached  agent
+#                 api                   [master]   pushed
+#                 api/fix-timeouts      [fix-timeouts]  +2  PR #412 open
+#                 web/busy-gould        [(detached)]      detached  agent
+#
+#   envs        a name shared by worktrees in several repos is an env. Enter
+#               shows what is in it:
+#
+#                 fix-timeouts   fix-timeouts.test  :20040  2 repos: api, web
+#
+#               Repos with no worktree of that name are not part of the env,
+#               and callers fall back to their main checkout. Ports come from
+#               the name itself, so nothing keeps a ledger of them.
+#
+#               tmux-worktreeizer --manifest writes the env list as JSON, for
+#               a proxy to render a server block per env.
 #
 # ctrl-t creates a worktree in whichever repo the cursor is on, from either
 # mode, so you never have to walk into a folder just to make one.
@@ -37,7 +49,7 @@
 #   [branch]   what is checked out, shown when it differs from the directory
 #   status     see below
 #   PR #n      from the cached pull request list, empty if nothing matched
-#   tags       agent, locked, prunable, bare
+#   tags       agent, live, locked, prunable, bare
 #
 # Status:
 #   pushed     has an upstream and matches it
@@ -48,21 +60,56 @@
 #
 # Tags:
 #   agent      lives under .claude/worktrees or .codex/worktrees
+#   live       an agent process has this worktree as its working directory
 #   locked     git worktree lock was used, removal needs the force prompt
 #   prunable   git thinks this one is stale and can be pruned
+#
+# Running things:
+#   Creating a worktree runs the repo's setup hook in it.
+#
+#   Removing one runs the teardown hook, if there is one, to undo what setup
+#   provisioned, such as dropping the env's own database. It runs after the
+#   worktree is really gone, from the main checkout, and only for worktrees under
+#   the worktree root, so an agent worktree never sets it off.
+#
+#   ctrl-space runs the repo in the session's server window, and stops it on a
+#   second press. With a Procfile.dev (or Procfile) that means foreman over all
+#   its entries in the one window, each line prefixed with the process name;
+#   without one it means the run hook, else bin/debug.sh, bin/run.sh, bin/dev.sh.
+#   A repo with none of those is skipped.
+#
+#   An app is rarely only its web process. Workers and schedulers belong in
+#   the Procfile too: if an env has its own queues, the main checkout's workers
+#   are looking somewhere else and would never pick up its jobs.
+#
+#   Worktrees in an env get that env's addresses, on the tmux session and in a
+#   .env.worktree file the run command sources:
+#
+#     TW_ENV, TW_ENV_INDEX, TW_ENV_HOST, TW_PORT, PORT,
+#     and TW_<REPO>_PORT / TW_<REPO>_HOST for every repo in the env
+#
+#   An env hook turns those into whatever the repo reads. See the README.
+#
+#   A service reads the peer it needs and falls back to the shared one when the
+#   variable is absent. Ports are four apart, so a service can use those after
+#   its own: a rails app may want three (web, debugger, control socket).
 #
 # Usage:
 #   tmux-worktreeizer          the picker
 #   tmux-worktreeizer --new    skip the picker, create a worktree in this repo
+#   tmux-worktreeizer --manifest       write envs.json for a proxy to read
+#   tmux-worktreeizer --env-exports E  print one env's variables
 #
 # Keys:
 #   enter      in the repo list, open that folder; anywhere else, open (or
 #              switch to) the tmux session, or start the create flow
-#   `          swap between the repo list and the flat worktree list, or
-#              step back out of a folder you opened
+#   `          cycle repos -> worktrees -> envs, or step back out of
+#              whatever you opened
 #   backspace  step out of a folder, once the query is empty. While there is
 #              something typed it deletes characters as usual.
 #   ctrl-t     create a worktree in the repo the cursor is on
+#   ctrl-space start the repo run script in the session's server window, or
+#              stop it if it is already going
 #   tab        jump to the next repo, wrapping at the end
 #   shift-tab  jump back to the previous repo
 #   ctrl-x     remove the selected worktree and kill its tmux session
@@ -78,12 +125,18 @@
 #   TW_ROOT            where new worktrees go   (default ~/work/.worktrees)
 #   TW_ROOTS           colon separated dirs scanned for repos
 #   TW_REPOS           colon separated extra repo paths
+#   TW_EDITOR          the editor window's command (default $EDITOR, then vi)
 #   TW_BRANCH_PREFIX   pre-filled prefix when naming a brand new branch
 #   TW_PR_TTL          seconds before the pull request cache goes stale
 #   TW_NO_FETCH        set to skip the fetch in the create flow
+#   TW_ENV_DOMAIN      hostname suffix for envs   (default localhost)
+#   TW_ENV_PORT_BASE   first port envs draw from  (default 20000)
+#   TW_ENV_PORT_SPAN   ports reserved per env     (default 40)
+#   TW_AGENT_PATTERN   process names counted as agents, for the live tag
 #
-# A post-create hook at ~/.config/tmux-worktreeizer/post-create (executable)
-# is run as: post-create <repo> <worktree-path> <branch>
+# Repo specific behaviour lives in hooks: env, setup, teardown, run. Looked up
+# in $TMW_DIR/repos/<repo>/, then $TMW_DIR/hooks/, then the repo's own bin/.
+# $TMW_DIR defaults to ~/.config/tmw. See the README for the contract.
 
 set -uo pipefail
 
@@ -91,11 +144,15 @@ SELF="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]
 TAB=$'\t'
 
 TW_ROOT="${TW_ROOT:-$HOME/work/.worktrees}"
-TW_ROOTS="${TW_ROOTS:-$HOME/work:$HOME/Code/work:$HOME/Code/lrn:$HOME/Code/seth}"
+TW_ROOTS="${TW_ROOTS:-$HOME/src:$HOME/work}"
 TW_REPOS="${TW_REPOS:-$HOME/dotfiles}"
 TW_PR_TTL="${TW_PR_TTL:-900}"
 CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/tmux-worktreeizer"
-HOOK="${XDG_CONFIG_HOME:-$HOME/.config}/tmux-worktreeizer/post-create"
+
+# Everything machine or repo specific lives here: a config file for settings,
+# and hooks for the parts only a given repo can know. See the README.
+TMW_DIR="${TMW_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}/tmw}"
+[[ -f $TMW_DIR/config ]] && . "$TMW_DIR/config"
 
 # ---------------------------------------------------------------- helpers
 
@@ -341,12 +398,29 @@ function prcolor(b, s) {
   if (s == "closed") return "31"
   return ""
 }
-function mark(p) { return (p in sess) ? "*" : " " }
+function mark(p) {
+  if (runstate[p] == "up") return ">"
+  if (runstate[p] == "dead") return "!"
+  return (p in sess) ? "*" : " "
+}
+function runtxt(p) {
+  if (runstate[p] == "up") return ":" runport[p]
+  if (runstate[p] == "booting") return "booting"
+  if (runstate[p] == "dead") return "dead"
+  return ""
+}
+function runcolor(p) {
+  if (runstate[p] == "up") return "32"
+  if (runstate[p] == "booting") return "33"
+  if (runstate[p] == "dead") return "31"
+  return ""
+}
 function prurlof(b) { return (b in prurl) ? prurl[b] : "" }
 
 $1 == "B" { up[$2] = $3; track[$2] = $4 }
 $1 == "P" { if (!($2 in prnum)) { prnum[$2] = $3; prstate[$2] = $4; prurl[$2] = $5 } }
 $1 == "S" { sess[$2] = $3 }
+$1 == "R" { runport[$2] = $3; runstate[$2] = $4; agentlive[$2] = $5 }
 $1 == "W" { n++; wpath[n] = $2; wbranch[n] = $3; wflags[n] = $4 }
 
 END {
@@ -365,6 +439,24 @@ END {
           paint(pad(hst, 10), statuscolor(hst)) " " \
           paint(pad(prtxt(hb), 17), prcolor(hb)) " " \
           paint(extra > 0 ? extra " worktree" (extra == 1 ? "" : "s") : "", "90")
+    exit
+  }
+
+  # Inside an env, only the worktree matching that env name matters here.
+  if (view == "env") {
+    for (i = 2; i <= n; i++) {
+      if (base(wpath[i]) != pick) continue
+      b = wbranch[i]
+      st = statustxt(b)
+      print "wt", repo, wpath[i], b, prurlof(b), \
+            paint(mark(wpath[i]), "36") " " \
+            padkeep(rname "/" pick, 40, paint(rname, REPO_C) "/" pick) " " \
+            paint(pad((b == "" || b == pick) ? "" : "[" b "]", 24), "90") " " \
+            paint(pad(st, 10), statuscolor(st)) " " \
+            paint(pad(runtxt(wpath[i]), 8), runcolor(wpath[i])) " " \
+            paint(pad(prtxt(b), 14), prcolor(b)) " " \
+            paint(wflags[i], "90")
+    }
     exit
   }
 
@@ -397,6 +489,8 @@ END {
       shown = (b == "" || b == name) ? "" : "[" b "]"
       tag = wflags[i]
       if (agent) tag = tag (tag ? "," : "") "agent"
+      # An agent process is sitting in this worktree right now.
+      if (agentlive[wpath[i]] == 1) tag = tag (tag ? "," : "") "live"
       # The repo name rides along on every row so that typing it filters the
       # whole group -- fzf can only search what it displays.
       pre = (view == "flat") ? "" : "|- "
@@ -406,7 +500,8 @@ END {
                     pre paint(rname "/", "90") name) " " \
             paint(pad(shown, 24), "90") " " \
             paint(pad(st, 10), statuscolor(st)) " " \
-            paint(pad(prtxt(b), 17), prcolor(b)) " " \
+            paint(pad(runtxt(wpath[i]), 8), runcolor(wpath[i])) " " \
+            paint(pad(prtxt(b), 14), prcolor(b)) " " \
             paint(tag, "90")
     }
   }
@@ -414,8 +509,195 @@ END {
 }
 '
 
+# ---------------------------------------------------------------- envs
+#
+# An env is just a name. Every worktree called that name, in any repo, is part
+# of it; repos without one fall back to their main checkout. So making a
+# change in one repo that needs a change in another means using the same
+# worktree name in both, and everything else keeps pointing at master.
+
+TW_ENV_DOMAIN="${TW_ENV_DOMAIN:-localhost}"
+TW_ENV_PORT_BASE="${TW_ENV_PORT_BASE:-20000}"
+TW_ENV_PORT_SPAN="${TW_ENV_PORT_SPAN:-40}"
+TW_ENV_SLOTS="${TW_ENV_SLOTS:-500}"
+
+# Every env name, which is every directory name under the worktree root.
+env_names() {
+  local repo dir
+  [[ -d $TW_ROOT ]] || return 0
+  for repo in "$TW_ROOT"/*/; do
+    [[ -d $repo ]] || continue
+    for dir in "$repo"*/; do
+      [[ -d $dir ]] || continue
+      basename "${dir%/}"
+    done
+  done | sort -u
+}
+
+# Repo names taking part in an env, in a stable order.
+env_repos() {
+  local name=$1 repo
+  for repo in "$TW_ROOT"/*/; do
+    [[ -d "$repo$name" ]] && basename "${repo%/}"
+  done | sort
+}
+
+# Ports are derived from the name, never allocated, so that nothing has to
+# keep a ledger and the numbers survive restarts.
+env_port_base() {
+  local sum
+  sum="$(printf '%s' "$1" | cksum | awk '{print $1}')"
+  printf '%d' "$((TW_ENV_PORT_BASE + (sum % TW_ENV_SLOTS) * TW_ENV_PORT_SPAN))"
+}
+
+# An env is a hostname *prefix*, not a hostname. Services keep their own names
+# (app, ui, ask, socks ...) because only nginx knows which name each one
+# answers on, that app and api share an upstream, and that some services are
+# paths rather than hostnames. This pattern is for display only; nginx composes
+# the real names by putting the prefix in front of its own.
+# Set outside a ${...:-default} because a literal } would end the expansion.
+: "${TW_ENV_HOST_PATTERN=}"
+[[ -n $TW_ENV_HOST_PATTERN ]] || TW_ENV_HOST_PATTERN='{env}.{domain}'
+
+env_host() {
+  local out="$TW_ENV_HOST_PATTERN"
+  out="${out//\{env\}/$1}"
+  printf '%s' "${out//\{domain\}/$TW_ENV_DOMAIN}"
+}
+
+env_worktree() { printf '%s/%s/%s' "$TW_ROOT" "$1" "$2"; }
+
+# Turn a repo name back into its path, since repos can live under any root.
+repo_path_for() {
+  local want=$1 repo
+  while read -r repo; do
+    if [[ "$(basename "$repo")" == "$want" ]]; then
+      printf '%s' "$repo"
+      return 0
+    fi
+  done < <(repo_list)
+  return 1
+}
+
+# How many of an env's worktrees have a tmux session open.
+env_live_count() {
+  local name=$1 repo n=0
+  while read -r repo; do
+    [[ -n $repo ]] || continue
+    [[ -n "$(sessions_at "$(env_worktree "$repo" "$name")")" ]] && n=$((n + 1))
+  done < <(env_repos "$name")
+  printf '%d' "$n"
+}
+
+# What a proxy reads to render a server block per env. Absent file means
+# nothing changes for it.
+write_manifest() {
+  local out="$CACHE_DIR/envs.json" name repo base port i first_env=1 first_svc path branch
+  mkdir -p "$CACHE_DIR"
+  {
+    printf '{\n'
+    printf '  "domain": "%s",\n' "$TW_ENV_DOMAIN"
+    printf '  "envs": {\n'
+    while read -r name; do
+      [[ -n $name ]] || continue
+      ((first_env)) || printf ',\n'
+      first_env=0
+      base="$(env_port_base "$name")"
+      printf '    "%s": {\n' "$name"
+      printf '      "prefix": "%s",\n' "$name"
+      printf '      "primary_host": "%s",\n' "$(env_host "$name")"
+      printf '      "port_base": %s,\n' "$base"
+      printf '      "services": {\n'
+      i=0
+      first_svc=1
+      while read -r repo; do
+        [[ -n $repo ]] || continue
+        path="$(env_worktree "$repo" "$name")"
+        branch="$(git -C "$path" rev-parse --abbrev-ref HEAD 2>/dev/null)"
+        port=$((base + i))
+        ((first_svc)) || printf ',\n'
+        first_svc=0
+        printf '        "%s": { "path": "%s", "branch": "%s", "port": %s }' \
+          "$repo" "$path" "$branch" "$port"
+        i=$((i + 1))
+      done < <(env_repos "$name")
+      printf '\n      }\n'
+      printf '    }'
+    done < <(env_names)
+    printf '\n  }\n}\n'
+  } >"$out"
+  printf '%s\n' "$out"
+}
+
+list_envs() {
+  local name repos count base mark label run runs up dead states
+  if [[ -z "$(env_names)" ]]; then
+    printf 'sep\t\t\t\t\t%sno envs yet. Create worktrees with the same name in two repos.%s\n' \
+      "$C_DIM" "$C_OFF"
+    return 0
+  fi
+  states="$(run_state_map 2>/dev/null)"
+  while read -r name; do
+    [[ -n $name ]] || continue
+    repos="$(env_repos "$name" | paste -sd, -)"
+    count="$(env_repos "$name" | grep -c . | tr -d ' ')"
+    base="$(env_port_base "$name")"
+
+    # How many of this env's services are actually serving.
+    up="$(printf '%s\n' "$states" | awk -F"$TAB" -v r="$TW_ROOT/" -v n="/$name" \
+      '$1 ~ "^" r && $1 ~ n "$" && $3 == "up" { c++ } END { print c + 0 }')"
+    dead="$(printf '%s\n' "$states" | awk -F"$TAB" -v r="$TW_ROOT/" -v n="/$name" \
+      '$1 ~ "^" r && $1 ~ n "$" && $3 == "dead" { c++ } END { print c + 0 }')"
+
+    if ((up > 0)); then
+      mark='>'
+      run="$(pv_paint 32 "$up/$count up")"
+    elif ((dead > 0)); then
+      mark='!'
+      run="$(pv_paint 31 'crashed')"
+    else
+      mark=' '
+      run="$(pv_paint 90 'stopped')"
+    fi
+
+    label="$count repo"
+    ((count == 1)) || label="$label"s
+    printf 'env\t%s\t%s\t%s\t\t' "$name" "$base" "$(env_host "$name")"
+    printf '%s %s %s %s %s %s\n' \
+      "$(pv_paint 36 "$mark")" \
+      "$(printf '\033[1;34m%-28s\033[0m' "$name")" \
+      "$(printf '\033[90m%-22s\033[0m' "$(env_host "$name")")" \
+      "$(printf '\033[90m:%-6s\033[0m' "$base")" \
+      "$(printf '%-9s' "$run")" \
+      "$(pv_paint 90 "$label: $repos")"
+  done < <(env_names)
+}
+
+# One row per worktree in an env, so enter on an env shows what is in it.
+list_env_members() {
+  local name=$1 repo tmpdir sess_file run_file i=0
+  tmpdir="$(mktemp -d)"
+  sess_file="$tmpdir/sessions"
+  tmux list-sessions -F "S${TAB}#{session_path}${TAB}#{session_name}" 2>/dev/null >"$sess_file" || :
+  touch "$sess_file"
+  run_file="$tmpdir/runstate"
+  run_state_map >"$run_file" 2>/dev/null || :
+  touch "$run_file"
+  local path
+  while read -r repo; do
+    [[ -n $repo ]] || continue
+    path="$(repo_path_for "$repo")" || continue
+    i=$((i + 1))
+    render_repo "$path" "$sess_file" env "$name" "$run_file" \
+      >"$tmpdir/out.$(printf '%04d' "$i")" &
+  done < <(env_repos "$name")
+  wait
+  cat "$tmpdir"/out.* 2>/dev/null
+  rm -rf "$tmpdir"
+}
+
 render_repo() {
-  local repo=$1 sess_file=$2 view=${3:-group} pr_file
+  local repo=$1 sess_file=$2 view=${3:-group} pick=${4:-} run_file=${5:-} pr_file
   pr_file="$(pr_cache_file "$repo")"
   {
     git -C "$repo" for-each-ref \
@@ -423,21 +705,25 @@ render_repo() {
       refs/heads 2>/dev/null
     [[ -f $pr_file ]] && sed "s|^|P${TAB}|" "$pr_file"
     cat "$sess_file"
+    [[ -n $run_file && -f $run_file ]] && sed "s|^|R${TAB}|" "$run_file"
     git -C "$repo" worktree list --porcelain 2>/dev/null |
       awk "$PORCELAIN_AWK" | sed "s|^|W${TAB}|"
   } | awk -F"$TAB" -v OFS="$TAB" -v repo="$repo" -v HOME="$HOME" -v color=1 \
-    -v view="$view" -v REPO_C="1;34" "$RENDER_AWK"
+    -v view="$view" -v pick="$pick" -v REPO_C="1;34" "$RENDER_AWK"
 }
 
 list_view() {
-  local view=$1 only=${2:-} tmpdir sess_file here repo key i=0
+  local view=$1 only=${2:-} tmpdir sess_file run_file here repo key i=0
   tmpdir="$(mktemp -d)"
   sess_file="$tmpdir/sessions"
   tmux list-sessions -F "S${TAB}#{session_path}${TAB}#{session_name}" 2>/dev/null >"$sess_file" || :
   touch "$sess_file"
+  run_file="$tmpdir/runstate"
+  run_state_map >"$run_file" 2>/dev/null || :
+  touch "$run_file"
 
   if [[ -n $only ]]; then
-    render_repo "$only" "$sess_file" "$view"
+    render_repo "$only" "$sess_file" "$view" "" "$run_file"
     rm -rf "$tmpdir"
     return
   fi
@@ -459,7 +745,7 @@ list_view() {
 
   while IFS="$TAB" read -r _ _ repo; do
     i=$((i + 1))
-    render_repo "$repo" "$sess_file" "$view" >"$tmpdir/out.$(printf '%04d' "$i")" &
+    render_repo "$repo" "$sess_file" "$view" "" "$run_file" >"$tmpdir/out.$(printf '%04d' "$i")" &
   done <"$tmpdir/repos"
   wait
 
@@ -490,38 +776,48 @@ view_write() { printf '%s\t%s\n' "$1" "$2" >"$(state_file)"; }
 # The actions fzf should run to show the current view.
 view_actions() {
   local mode=$1 drill=$2 prompt
-  if [[ -n $drill ]]; then
-    prompt="$(basename "$drill")> "
-  elif [[ $mode == flat ]]; then
-    prompt='worktrees> '
-  else
-    prompt='repos> '
-  fi
+  case $drill in
+  env:*) prompt="${drill#env:}> " ;;
+  '')
+    case $mode in
+    flat) prompt='worktrees> ' ;;
+    envs) prompt='envs> ' ;;
+    *) prompt='repos> ' ;;
+    esac
+    ;;
+  *) prompt="$(basename "$drill")> " ;;
+  esac
   printf 'reload(%s --view-list)+change-prompt(%s)+first' "$SELF" "$prompt"
 }
 
 do_view_list() {
   local mode drill
   IFS="$TAB" read -r mode drill <<<"$(view_read)"
-  if [[ -n $drill ]]; then
-    list_view tree "$drill"
-  elif [[ $mode == flat ]]; then
-    list_view flat
-  else
-    list_view repos
-  fi
+  case $drill in
+  env:*) list_env_members "${drill#env:}" ;;
+  '')
+    case $mode in
+    flat) list_view flat ;;
+    envs) list_envs ;;
+    *) list_view repos ;;
+    esac
+    ;;
+  *) list_view tree "$drill" ;;
+  esac
 }
 
-# The backtick key: leave a drilled-in repo, or flip between the two modes.
+# The backtick key: leave whatever you drilled into, or move to the next mode.
 do_view_toggle() {
   local mode drill
   IFS="$TAB" read -r mode drill <<<"$(view_read)"
   if [[ -n $drill ]]; then
     drill=""
-  elif [[ $mode == repos ]]; then
-    mode=flat
   else
-    mode=repos
+    case $mode in
+    repos) mode=flat ;;
+    flat) mode=envs ;;
+    *) mode=repos ;;
+    esac
   fi
   view_write "$mode" "$drill"
   view_actions "$mode" "$drill"
@@ -544,11 +840,14 @@ do_view_back() {
   fi
 }
 
-# Enter drills into a repo when browsing repos, and otherwise just accepts.
+# Enter opens a repo or an env when browsing them, and otherwise just accepts.
 do_view_enter() {
   local kind=${1:-} repo=${2:-} mode drill
   IFS="$TAB" read -r mode drill <<<"$(view_read)"
-  if [[ -z $drill && $mode == repos && $kind == repo && -n $repo ]]; then
+  if [[ -z $drill && $mode == envs && $kind == env && -n $repo ]]; then
+    view_write "$mode" "env:$repo"
+    view_actions "$mode" "env:$repo"
+  elif [[ -z $drill && $mode == repos && $kind == repo && -n $repo ]]; then
     view_write "$mode" "$repo"
     view_actions "$mode" "$repo"
   else
@@ -597,6 +896,28 @@ do_preview() {
 
   case $kind in
   sep | '') return 0 ;;
+  env)
+    local name=$2 base=$3 host=$4 member repo port i=0 wt
+    printf '%s%s%s\n' "$C_TITLE" "$name" "$C_OFF"
+    printf '%severy service keeps its own name, with %s in front:%s\n' "$C_DIM" "$name" "$C_OFF"
+    printf '%s  https://%s  and the same prefix on ui, ask, socks ...%s\n\n' "$C_DIM" "$host" "$C_OFF"
+    pv_field 'ports' "$base - $((base + TW_ENV_PORT_SPAN - 1))"
+    pv_section 'in this env'
+    while read -r member; do
+      [[ -n $member ]] || continue
+      wt="$(env_worktree "$member" "$name")"
+      port=$((base + i))
+      i=$((i + 1))
+      printf '  %-22s %s%s%s  %s\n' "$member" "$C_DIM" "port $port" "$C_OFF" \
+        "$([[ -n "$(sessions_at "$wt")" ]] && pv_paint 32 'session open' || pv_paint 90 'no session')"
+    done < <(env_repos "$name")
+    pv_section 'falling back to the main checkout'
+    while read -r repo; do
+      repo="$(basename "$repo")"
+      env_repos "$name" | grep -qx "$repo" || printf '  %s%s%s\n' "$C_DIM" "$repo" "$C_OFF"
+    done < <(repo_list) | head -12
+    return 0
+    ;;
   new)
     rname="$(basename "$repo")"
     printf '%screate a new worktree in %s%s\n\n' "$C_TITLE" "$rname" "$C_OFF"
@@ -744,6 +1065,305 @@ do_jump() {
 
 # ---------------------------------------------------------------- sessions
 
+# ---------------------------------------------------------------- running
+
+# Repos declare how to set themselves up and how to run. Absent means skip.
+# ---------------------------------------------------------------- hooks
+#
+# Everything a repo needs that this tool cannot know goes in a hook, and there
+# are two places for one:
+#
+#   in the repo      <repo>/bin/<hook>.sh, or bin/<hook>
+#   on this machine  $TMW_DIR/repos/<repo>/<hook>, or $TMW_DIR/hooks/<hook>
+#
+# The repo's own hook is the important one: it is committed, so a teammate who
+# has never heard of this tool still gets working setup by running it directly.
+# The machine one is for anything personal, or for a repo you cannot commit to.
+#
+# setup, teardown and env run BOTH, repo first, so the personal hook adds to the
+# committed one instead of replacing it. teardown runs them in reverse. run
+# takes only one, since starting two servers makes no sense; there the personal
+# hook wins.
+#
+# Hooks: env, setup, teardown, run. All optional.
+repo_hook() {
+  local repo=$1 hook=$2 f
+  for f in "$repo/bin/$hook.sh" "$repo/bin/$hook"; do
+    [[ -x $f ]] && {
+      printf '%s' "$f"
+      return 0
+    }
+  done
+  return 1
+}
+
+personal_hook() {
+  local repo=$1 hook=$2 name f main
+  # Resolve to the repo the path belongs to: given a worktree, basename would
+  # be the worktree's own name rather than the repo's.
+  if main="$(repo_of "$repo" 2>/dev/null)"; then
+    name="$(basename "$main")"
+  else
+    name="$(basename "${repo:-}")"
+  fi
+  [[ -n $name ]] || return 1
+  for f in "$TMW_DIR/repos/$name/$hook" "$TMW_DIR/hooks/$hook"; do
+    [[ -x $f ]] && {
+      printf '%s' "$f"
+      return 0
+    }
+  done
+  return 1
+}
+
+# Both of them, repo first. One line each, empty when there are none.
+hooks_for() {
+  local repo=$1 hook=$2 f found=1
+  f="$(repo_hook "$repo" "$hook")" && {
+    printf '%s\n' "$f"
+    found=0
+  }
+  f="$(personal_hook "$repo" "$hook")" && {
+    printf '%s\n' "$f"
+    found=0
+  }
+  return $found
+}
+
+# Just one, for hooks where running two would be wrong.
+hook_for() {
+  personal_hook "$1" "$2" || repo_hook "$1" "$2"
+}
+
+# debug.sh first: where a repo has both, that tends to be the development
+# server and run.sh something else.
+# A run hook if there is one, else the conventional scripts. debug.sh first,
+# because where both exist that tends to be the development server.
+run_script() {
+  local repo=$1 f
+  hook_for "$repo" run && return 0
+  for f in bin/debug.sh bin/run.sh bin/dev.sh; do
+    [[ -x "$repo/$f" ]] && {
+      printf '%s' "$repo/$f"
+      return 0
+    }
+  done
+  return 1
+}
+
+# A repo that needs more than one process declares them in a Procfile, and
+# runs them all in one window. An app is rarely just its web process: workers
+# and schedulers belong there too, since with per-env queues the shared workers
+# are looking elsewhere and would never see this env.s jobs.
+procfile_for() {
+  local path=$1 f
+  for f in Procfile.dev Procfile; do
+    [[ -f "$path/$f" ]] && {
+      printf '%s' "$f"
+      return 0
+    }
+  done
+  return 1
+}
+
+# name<TAB>command per entry. Commented lines do not match, so they stay off.
+procfile_entries() {
+  awk '
+    /^[a-zA-Z0-9_-]+:[[:space:]]/ {
+      i = index($0, ":")
+      name = substr($0, 1, i - 1)
+      cmd = substr($0, i + 1)
+      sub(/^[[:space:]]+/, "", cmd)
+      sub(/[[:space:]]+$/, "", cmd)
+      if (cmd != "") print name "\t" cmd
+    }' "$1"
+}
+
+upper_snake() { printf '%s' "$1" | tr 'a-z.-' 'A-Z__'; }
+
+# Which env a worktree belongs to, empty when it is not under the worktree root.
+env_of_path() {
+  local path=$1
+  [[ $path == "$TW_ROOT"/* ]] || return 1
+  basename "$path"
+}
+
+# A small stable number per env, used for the redis db block the way CI uses
+# its bucket label. 0 is reserved for the main checkouts.
+env_index() {
+  local sum
+  sum="$(printf '%s' "$1" | cksum | awk '{print $1}')"
+  printf '%d' "$((sum % 15 + 1))"
+}
+
+# The port a given repo gets inside an env. Four apart, because a service can
+# need more than one: a rails app may want three (web, debugger, control app)
+# and a front end two. A span of 40 still fits ten services.
+service_port() {
+  local name=$1 repo=$2 base i=0 member
+  base="$(env_port_base "$name")"
+  while read -r member; do
+    [[ -n $member ]] || continue
+    if [[ $member == "$repo" ]]; then
+      printf '%d' "$((base + i * 4))"
+      return 0
+    fi
+    i=$((i + 1))
+  done < <(env_repos "$name")
+  return 1
+}
+
+port_listening() { lsof -nP -iTCP:"$1" -sTCP:LISTEN -t >/dev/null 2>&1; }
+
+# Worktrees an agent is sitting in, by asking which directories the agent
+# processes have as their working directory. No integration with the agents
+# themselves, so it says "something is working here", not what it is doing.
+# One pgrep and one lsof, about 40ms for a couple of dozen processes.
+agent_cwds() {
+  local pids
+  pids="$(pgrep -f "${TW_AGENT_PATTERN:-claude|codex|opencode|aider|gemini}" 2>/dev/null |
+    paste -sd, -)"
+  [[ -n $pids ]] || return 0
+  lsof -a -p "$pids" -d cwd -Fn 2>/dev/null | sed -n 's/^n//p' | sort -u
+}
+
+# Every listening TCP port on the machine, in one call. Asking per row would
+# mean an lsof for each one, which is far too slow for a list.
+listening_ports() {
+  lsof -nP -iTCP -sTCP:LISTEN 2>/dev/null |
+    awk 'NR > 1 { n = split($9, a, ":"); print a[n] }' | sort -u
+}
+
+# What is running for each worktree in an env: path, its port, and one of
+# up / booting / dead / empty. Built from two batched calls, so adding rows
+# costs nothing.
+run_state_map() {
+  local ports panes agents name repo path port session state repo_path
+  ports="$(listening_ports)"
+  agents="$(agent_cwds)"
+  panes="$(tmux list-panes -a -F "#{session_name}${TAB}#{window_name}${TAB}#{pane_current_command}${TAB}#{pane_dead}" 2>/dev/null)"
+  while read -r name; do
+    [[ -n $name ]] || continue
+    while read -r repo; do
+      [[ -n $repo ]] || continue
+      path="$(env_worktree "$repo" "$name")"
+      port="$(service_port "$name" "$repo")" || port=""
+      repo_path="$(repo_path_for "$repo")" || repo_path="$repo"
+      session="$(sessions_at "$path" | head -1)"
+      [[ -n $session ]] || session="$(session_name_for "$repo_path" "$path")"
+      state=""
+      if [[ -n $port ]] && printf '%s\n' "$ports" | grep -qx "$port"; then
+        state=up
+      elif printf '%s\n' "$panes" |
+        awk -F"$TAB" -v s="$session" '$1 == s && $2 == "server" && $4 == 1 { found = 1 } END { exit !found }'; then
+        state=dead
+      elif printf '%s\n' "$panes" |
+        awk -F"$TAB" -v s="$session" '$1 == s && $2 == "server" && $3 !~ /^(fish|bash|zsh|sh|dash)$/ { found = 1 } END { exit !found }'; then
+        state=booting
+      fi
+      printf '%s\t%s\t%s\t%s\n' "$path" "$port" "$state" \
+        "$(printf '%s\n' "$agents" | grep -qxF "$path" && printf 1 || printf '')"
+    done < <(env_repos "$name")
+  done < <(env_names)
+
+  # Agent worktrees are not under the worktree root, so they never appear above.
+  # Emit them with no port or run state, just the flag.
+  while read -r path; do
+    [[ -n $path ]] || continue
+    [[ $path == "$TW_ROOT"/* ]] && continue
+    printf '%s\t\t\t1\n' "$path"
+  done < <(printf '%s\n' "$agents")
+}
+
+# Everything a service in this env needs to find its peers. A peer that has no
+# worktree in the env is simply absent here, so the reader falls back to the
+# shared main checkout on its default port.
+# The facts about an env, in this tool's own names. Nothing here knows what any
+# application calls things.
+env_facts() {
+  local name=$1 repo=${2:-} member port key
+  printf 'TW_ENV=%s\n' "$name"
+  printf 'TW_ENV_INDEX=%s\n' "$(env_index "$name")"
+  printf 'TW_ENV_HOST=%s\n' "$(env_host "$name")"
+  printf 'TW_ENV_DOMAIN=%s\n' "$TW_ENV_DOMAIN"
+  # Comma separated: a space here would break eval and every .env parser.
+  printf 'TW_ENV_REPOS=%s\n' "$(env_repos "$name" | paste -sd, -)"
+  printf 'TW_PORT_BASE=%s\n' "$(env_port_base "$name")"
+  printf 'TW_PORT_SPAN=%s\n' "$TW_ENV_PORT_SPAN"
+  while read -r member; do
+    [[ -n $member ]] || continue
+    port="$(service_port "$name" "$member")" || continue
+    key="$(upper_snake "$member")"
+    printf 'TW_%s_PORT=%s\n' "$key" "$port"
+    printf 'TW_%s_HOST=%s\n' "$key" "127.0.0.1:$port"
+  done < <(env_repos "$name")
+  [[ -n $repo ]] || return 0
+  printf 'TW_REPO=%s\n' "$repo"
+  printf 'TW_WORKTREE=%s\n' "$(env_worktree "$repo" "$name")"
+  # The main checkout, so a setup hook can copy or link the files git ignores
+  # (.env, seed data, caches) out of it.
+  printf 'TW_MAIN=%s\n' "$(repo_path_for "$repo" 2>/dev/null)"
+  if port="$(service_port "$name" "$repo")"; then
+    printf 'TW_PORT=%s\n' "$port"
+    # PORT too, since that is what most things read to choose a port.
+    printf 'PORT=%s\n' "$port"
+  fi
+}
+
+# Those facts, plus whatever the repo's env hook makes of them. The hook is the
+# only place that knows an application's own variable names, database offsets or
+# endpoints; it receives the facts in its environment and prints more
+# KEY=VALUE lines. See the README for the hook contract.
+env_exports() {
+  local name=$1 repo=${2:-} facts hook repo_path
+  facts="$(env_facts "$name" "$repo")"
+  printf '%s\n' "$facts"
+  repo_path="$(repo_path_for "$repo" 2>/dev/null)" || repo_path="$repo"
+  # Both hooks, repo first: a later line for the same name wins, so the machine
+  # hook can adjust what the committed one published.
+  while read -r hook; do
+    [[ -n $hook ]] || continue
+    (
+      set -a
+      eval "$facts"
+      set +a
+      "$hook"
+    )
+  done < <(hooks_for "$repo_path" env)
+}
+
+# Put the same values on the tmux session, so every window inherits them, and
+# in a file for anything started outside tmux.
+apply_env() {
+  local session=$1 name=$2 repo=$3 path=$4 line key value common
+  while IFS='=' read -r key value; do
+    [[ -n $key ]] || continue
+    tmux set-environment -t "=$session" "$key" "$value" 2>/dev/null
+  done < <(env_exports "$name" "$repo")
+
+  env_exports "$name" "$repo" >"$path/.env.worktree" 2>/dev/null || return 0
+
+  # Keep that file out of git status without touching a tracked .gitignore.
+  common="$(git -C "$path" rev-parse --path-format=absolute --git-common-dir 2>/dev/null)" || return 0
+  grep -qxF '.env.worktree' "$common/info/exclude" 2>/dev/null ||
+    printf '.env.worktree\n' >>"$common/info/exclude" 2>/dev/null || true
+}
+
+# Other envs that look alive. Shared redis and mysql mean two running envs
+# quietly interfere, so this is worth warning about.
+other_live_envs() {
+  local mine=$1 name port
+  while read -r name; do
+    [[ -n $name && $name != "$mine" ]] || continue
+    port="$(env_port_base "$name")"
+    if [[ -n "$(env_live_count "$name")" ]] && ((  $(env_live_count "$name") > 0 )); then
+      printf '%s\n' "$name"
+    elif port_listening "$port"; then
+      printf '%s\n' "$name"
+    fi
+  done < <(env_names)
+}
+
 session_name_for() {
   local repo=$1 path=$2 name
   if [[ $path == "$repo" ]]; then
@@ -752,6 +1372,31 @@ session_name_for() {
     name="$(basename "$repo")/$(basename "$path")"
   fi
   printf '%s' "${name//[.:]/_}"
+}
+
+# Create the session if it is missing, and give it the env either way. One
+# place only, so the run path and the open path cannot drift apart.
+has_window() {
+  tmux list-windows -t "=$1" -F '#{window_name}' 2>/dev/null | grep -qxF "$2"
+}
+
+ensure_session() {
+  local name=$1 path=$2 repo=$3 envname w
+  envname="$(env_of_path "$path")" || envname=""
+  if ! tmux has-session -t "=$name" 2>/dev/null; then
+    tmux new-session -ds "$name" -c "$path" -n editor \
+      "${TW_EDITOR:-${EDITOR:-vi}}; exec $SHELL"
+    # Before the other windows exist, so they inherit it.
+    [[ -n $envname ]] && apply_env "$name" "$envname" "$(basename "$repo")" "$path"
+  elif [[ -n $envname ]]; then
+    apply_env "$name" "$envname" "$(basename "$repo")" "$path"
+  fi
+  # Also for a session that already exists: a window whose process exits is
+  # closed by tmux, so server can be missing from a session that once had it.
+  for w in server shell; do
+    has_window "$name" "$w" || tmux new-window -d -t "=$name:" -c "$path" -n "$w"
+  done
+  tmux select-window -t "=$name:editor" 2>/dev/null
 }
 
 open_session() {
@@ -764,19 +1409,135 @@ open_session() {
 
   name="$(sessions_at "$path" | head -1)"
   [[ -n $name ]] || name="$(session_name_for "$repo" "$path")"
-
-  if ! tmux has-session -t "=$name" 2>/dev/null; then
-    tmux new-session -ds "$name" -c "$path" -n editor "nvim; exec $SHELL"
-    tmux new-window -t "=$name:" -c "$path" -n server
-    tmux new-window -t "=$name:" -c "$path" -n shell
-    tmux select-window -t "=$name:editor"
-  fi
+  ensure_session "$name" "$path" "$repo"
 
   if [[ -n ${TMUX:-} ]]; then
     tmux switch-client -t "=$name"
   else
     tmux attach-session -t "=$name"
   fi
+}
+
+# Is that window running something other than a shell? A dead pane keeps
+# reporting the command it used to run, so check that first or a stopped
+# process looks like it is still going and the toggle can never start again.
+window_busy() {
+  local session=$1 window=$2 line cmd dead
+  line="$(tmux list-panes -t "=$session:$window" -F "#{pane_current_command}${TAB}#{pane_dead}" 2>/dev/null | head -1)"
+  [[ -n $line ]] || return 1
+  cmd="${line%%${TAB}*}"
+  dead="${line##*${TAB}}"
+  [[ $dead == 1 ]] && return 1
+  [[ -n $cmd && $cmd != "$(basename "$SHELL")" && $cmd != fish && $cmd != bash && $cmd != zsh ]]
+}
+
+# The command for the server window: foreman over the Procfile when there is
+# one, otherwise the single run script. Everything lands in one window --
+# foreman prefixes each line with the process name, which beats hunting through
+# a window per process.
+#
+# -e loads the env file (foreman's own mechanism, so no wrapper needed) and -p
+# sets the base port, because foreman assigns PORT per process itself and would
+# otherwise override the one the env picked. The processes that do not listen
+# get ports above the block, which is harmless since they ignore them.
+run_command() {
+  local path=$1 port=$2 procfile script args
+  if procfile="$(procfile_for "$path")"; then
+    args="start -f $procfile"
+    [[ -f "$path/.env.worktree" ]] && args="$args -e .env.worktree"
+    [[ -n $port ]] && args="$args -p $port"
+    printf 'exec foreman %s' "$args"
+    return 0
+  fi
+  script="$(run_script "$path")" || return 1
+  printf 'set -a; [ -f ./.env.worktree ] && . ./.env.worktree; set +a; exec %s' "$script"
+}
+
+# What to call it when reporting.
+run_label() {
+  local path=$1 procfile
+  if procfile="$(procfile_for "$path")"; then
+    printf '%s (%s)' "$procfile" "$(procfile_entries "$path/$procfile" | cut -f1 | paste -sd, -)"
+  else
+    basename "$(run_script "$path")"
+  fi
+}
+
+# Start the repo run script in the session's server window, or stop it if it is
+# already going.
+do_run_toggle() {
+  local kind=${1:-} repo=${2:-} path=${3:-} session envname script others port
+  case $kind in
+  wt | repo) ;;
+  *)
+    printf 'pick a worktree or repo row to run.\n'
+    pause
+    return 0
+    ;;
+  esac
+  [[ -d $path ]] || {
+    printf 'nothing at %s\n' "$path"
+    pause
+    return 0
+  }
+
+  if ! run_command "$path" "" >/dev/null; then
+    printf 'no Procfile.dev, bin/debug.sh, bin/run.sh or bin/dev.sh in %s.\n' \
+      "$(basename "$path")"
+    pause
+    return 0
+  fi
+
+  session="$(sessions_at "$path" | head -1)"
+  [[ -n $session ]] || session="$(session_name_for "$repo" "$path")"
+
+  # foreman passes the interrupt on to its children.
+  if window_busy "$session" server; then
+    tmux send-keys -t "=$session:server" C-c
+    printf 'stopped %s in %s\n' "$(run_label "$path")" "$session"
+    return 0
+  fi
+
+  # Something can hold the port without this tool having started it -- a
+  # process launched from a plain shell, or a leftover from a crash. Starting on
+  # top of it just fails with EADDRINUSE, so say who has it instead.
+  if envname="$(env_of_path "$path")"; then
+    port="$(service_port "$envname" "$(basename "$repo")")" || port=""
+    if [[ -n $port ]] && port_listening "$port"; then
+      printf 'port %s is already taken, and not by this session:\n' "$port"
+      lsof -nP -iTCP:"$port" -sTCP:LISTEN 2>/dev/null | sed 's/^/  /' | head -4
+      printf 'stop that first, then press it again.\n'
+      pause
+      return 0
+    fi
+  fi
+
+  if envname="$(env_of_path "$path")"; then
+    # Two running envs share redis, mysql and elasticsearch. Cross-talk there
+    # is silent, so say so before adding a second one.
+    others="$(other_live_envs "$envname" | paste -sd, -)"
+    if [[ -n $others ]]; then
+      printf 'These envs already look alive: %s\n' "$others"
+      printf 'They share redis, mysql and elasticsearch with this one.\n'
+      read -rp "start anyway? [y/N] " answer || return 0
+      [[ $answer == [yY]* ]] || return 0
+    fi
+    port="$(service_port "$envname" "$(basename "$repo")")" || port=""
+  fi
+  ensure_session "$session" "$path" "$repo"
+
+  local cmd
+  cmd="$(run_command "$path" "$port")"
+  if has_window "$session" server; then
+    tmux respawn-window -k -t "=$session:server" -c "$path" "$cmd" || return 1
+  else
+    tmux new-window -d -t "=$session:" -n server -c "$path" "$cmd" || return 1
+  fi
+  # Keep the window when the command dies, or a failed start closes it and takes
+  # the error with it -- which looks just like nothing having happened.
+  tmux set-option -t "=$session:server" remain-on-exit on 2>/dev/null
+  printf 'started %s in %s%s\n' "$(run_label "$path")" "$session" \
+    "${port:+ on port $port}"
 }
 
 # ---------------------------------------------------------------- create
@@ -866,7 +1627,19 @@ create_worktree() {
   fi
 
   printf 'created %s\n' "$path"
-  [[ -x $HOOK ]] && "$HOOK" "$repo" "$path" "$branch"
+
+  # Setup hooks, repo first, run where they can be watched since installing
+  # dependencies takes a while. Looked up against the worktree: the branch
+  # decides which scripts exist, and the worktree is where they run.
+  local setup
+  while read -r setup; do
+    [[ -n $setup ]] || continue
+    printf 'running %s in the new worktree...\n\n' "$setup"
+    (cd "$path" && "$setup") || {
+      printf '\n%s failed. The worktree is there; fix it and re-run.\n' "$setup"
+      pause
+    }
+  done < <(hooks_for "$path" setup)
 
   open_session "$repo" "$path"
 }
@@ -874,7 +1647,7 @@ create_worktree() {
 # ---------------------------------------------------------------- remove
 
 do_remove() {
-  local kind=${1:-} repo=${2:-} path=${3:-} branch=${4:-} main answer out changed current locked
+  local kind=${1:-} repo=${2:-} path=${3:-} branch=${4:-} main answer out changed current locked teardown
   if [[ $kind != wt ]]; then
     printf 'nothing to remove here -- pick a worktree line (this is a "%s" line).\n' "${kind:-blank}"
     pause
@@ -896,6 +1669,13 @@ do_remove() {
   printf '  dirty   %s file(s)\n' "$changed"
   printf '  session %s\n' "$(sessions_at "$path" | paste -sd, - || true)"
   [[ -n $locked ]] && printf '  locked  %s\n' "$locked"
+  # Only worktrees under the worktree root are envs with anything provisioned,
+  # so only they get a teardown -- an agent worktree must never set it off.
+  if env_of_path "$path" >/dev/null 2>&1 && teardown="$(hooks_for "$repo" teardown | tail -r | paste -sd, -)"; then
+    printf '  teardown runs after removal: %s\n' "$(hooks_for "$repo" teardown | xargs -n1 basename | paste -sd, -)"
+  else
+    teardown=""
+  fi
   printf 'the branch itself is kept.\n'
   read -rp "remove it? [y/N] " answer || return 0
   [[ $answer == [yY]* ]] || return 0
@@ -925,6 +1705,29 @@ do_remove() {
 
   rmdir "$(dirname "$path")" 2>/dev/null
   printf 'removed %s\n' "$path"
+
+  # Only now that the worktree is really gone: undo what the repo provisioned
+  # for this env, such as dropping its own database. Run from the main checkout,
+  # because the copy inside the worktree went with it, and given the env
+  # explicitly rather than from a file that no longer exists. Skipped entirely
+  # for anything that is not an env worktree, so agent worktrees never trigger
+  # somebody else's cleanup.
+  local envname hook
+  if [[ -n $teardown ]] && envname="$(env_of_path "$path")"; then
+    printf '\n'
+    # Reverse of setup: whatever the machine added comes off before the repo's
+    # own teardown runs.
+    while IFS= read -r hook; do
+      [[ -n $hook ]] || continue
+      (
+        cd "$repo" || exit 1
+        set -a
+        eval "$(env_exports "$envname" "$(basename "$repo")")"
+        set +a
+        "$hook"
+      ) || printf '%s failed; the worktree is already gone.\n' "$(basename "$hook")"
+    done < <(hooks_for "$repo" teardown | tail -r)
+  fi
 }
 
 # ---------------------------------------------------------------- ui
@@ -970,7 +1773,7 @@ main_ui() {
       --color='pointer:blue,prompt:blue:bold,gutter:-1' \
       --color='info:bright-black,header:bright-black,separator:bright-black' \
       --color='border:bright-black,scrollbar:bright-black,query:-1:bold' \
-      --header='enter open   ` repos/worktrees   ctrl-t new   ctrl-x remove   ctrl-r prs   ctrl-s fetch   ctrl-o pr' \
+      --header='enter open   ` repos/worktrees/envs   ctrl-t new   ctrl-x remove   ctrl-r prs   ctrl-s fetch   ctrl-o pr' \
       --preview "$SELF --preview {1} {2} {3} {4}" \
       --preview-window='right,50%,border-left,wrap' \
       --preview-label=' details ' \
@@ -982,6 +1785,7 @@ main_ui() {
       --bind "$backtick:transform:$SELF --view-toggle" \
       --bind "bspace:transform:$SELF --view-back {q}" \
       --bind "ctrl-t:become($SELF --new {2})" \
+      --bind "ctrl-space:execute($SELF --run {1} {2} {3})+reload($SELF --view-list)" \
       --bind "enter:transform:$SELF --view-enter {1} {2}" \
       --bind "tab:transform:$SELF --jump next {*1}" \
       --bind "btab:transform:$SELF --jump prev {*1}"
@@ -1008,6 +1812,11 @@ case "${1:-}" in
   ;;
 --new)
   shift
+  if [[ -n ${1:-} && ! -d $1 ]]; then
+    printf 'pick a repo or a worktree row first -- "%s" is not a directory.\n' "$1"
+    pause
+    exit 0
+  fi
   repo="$(repo_of "${1:-$PWD}")" || die "not inside a git repository"
   create_worktree "$repo"
   ;;
@@ -1018,6 +1827,16 @@ case "${1:-}" in
   refresh_prs "$1"
   ;;
 --view-list) do_view_list ;;
+--manifest) write_manifest ;;
+--env-exports)
+  shift
+  [[ -n ${1:-} ]] || die "usage: --env-exports <env> [repo]"
+  env_exports "$@"
+  ;;
+--run)
+  shift
+  do_run_toggle "$@"
+  ;;
 --view-toggle) do_view_toggle ;;
 --view-back)
   shift

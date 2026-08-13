@@ -50,3 +50,21 @@ for dir in "${dirs[@]}"; do
 done
 
 link "$dotfiles_dir/lazygit/config.yml" "$HOME/Library/Application Support/lazygit/config.yml"
+
+# tmux-worktreeizer's personal config and per-repo hooks (see scripts/README.md).
+# Some of what lives there is company code, so it is a separate private repo
+# rather than a directory in this one -- cloned straight to ~/.config/tmw, not
+# symlinked, since it is its own repo already.
+tmw_dir="$HOME/.config/tmw"
+tmw_repo="https://github.com/sethawright/tmw-config.git"
+if [ -e "$tmw_dir" ] && [ ! -d "$tmw_dir/.git" ]; then
+  echo "Moving aside: $tmw_dir -> $tmw_dir.$backup_stamp.bak"
+  mv "$tmw_dir" "$tmw_dir.$backup_stamp.bak"
+fi
+if [ -d "$tmw_dir/.git" ]; then
+  echo "Already cloned: $tmw_dir"
+elif command -v git >/dev/null 2>&1; then
+  echo "Cloning tmw-config -> $tmw_dir"
+  git clone --quiet "$tmw_repo" "$tmw_dir" ||
+    echo "Could not clone $tmw_repo (no access from this machine?); skipping."
+fi
