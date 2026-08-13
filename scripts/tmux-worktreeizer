@@ -1200,17 +1200,20 @@ env_index() {
 # need more than one: a rails app may want three (web, debugger, control app)
 # and a front end two. A span of 40 still fits ten services.
 service_port() {
-  local name=$1 repo=$2 base i=0 member
+  local name=$1 repo=$2 base slots sum slot
+  # Only a repo actually in the env gets a port; that also guards the hash
+  # below from handing out a port to a repo this env has never heard of.
+  env_repos "$name" | grep -qxF "$repo" || return 1
   base="$(env_port_base "$name")"
-  while read -r member; do
-    [[ -n $member ]] || continue
-    if [[ $member == "$repo" ]]; then
-      printf '%d' "$((base + i * 4))"
-      return 0
-    fi
-    i=$((i + 1))
-  done < <(env_repos "$name")
-  return 1
+  slots=$((TW_ENV_PORT_SPAN / 4))
+  # Hashed from (env, repo) rather than this repo's position in the env's
+  # current member list: a repo's port must depend only on its own name, or
+  # every other repo in the env shifts port the moment one more joins or
+  # leaves -- which used to strand an already-running process on a port that
+  # no longer matched what a fresh lookup would compute for it.
+  sum="$(printf '%s\t%s' "$name" "$repo" | cksum | awk '{print $1}')"
+  slot=$((sum % slots))
+  printf '%d' "$((base + slot * 4))"
 }
 
 port_listening() { lsof -nP -iTCP:"$1" -sTCP:LISTEN -t >/dev/null 2>&1; }

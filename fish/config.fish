@@ -12,7 +12,7 @@ set PATH $PATH vendor/bin
 set PATH $PATH node_modules/.bin
 set PATH $PATH $ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
 
-set -gx PNPM_HOME /Users/sethwright/Library/pnpm
+set -gx PNPM_HOME /Users/SethWright/Library/pnpm
 set -gx PATH "$PNPM_HOME" $PATH
 
 alias l="ls -lah"
@@ -90,7 +90,7 @@ if test -f ~/.env.local.fish
 end
 
 # pnpm
-set -gx PNPM_HOME /Users/sethwright/Library/pnpm
+set -gx PNPM_HOME /Users/SethWright/Library/pnpm
 if not string match -q -- "$PNPM_HOME/bin" $PATH
     set -gx PATH "$PNPM_HOME/bin" $PATH
 end
