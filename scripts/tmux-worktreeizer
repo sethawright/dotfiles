@@ -177,6 +177,28 @@ default_branch() {
   git -C "$repo" rev-parse --abbrev-ref HEAD 2>/dev/null
 }
 
+# Light or dark, so the highlighted row is readable either way. Prefers the
+# symlink tmux-dark-notify keeps, since that is what tmux itself follows.
+appearance() {
+  local link
+  link="$(readlink "${XDG_STATE_HOME:-$HOME/.local/state}/tmux/tmux-dark-notify-theme.conf" 2>/dev/null)"
+  case $link in
+  *light*)
+    printf 'light'
+    return
+    ;;
+  *dark*)
+    printf 'dark'
+    return
+    ;;
+  esac
+  if [[ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" == Dark ]]; then
+    printf 'dark'
+  else
+    printf 'light'
+  fi
+}
+
 sessions_at() {
   tmux list-sessions -F "#{session_path}${TAB}#{session_name}" 2>/dev/null |
     awk -F"$TAB" -v p="$1" '$1 == p {print $2}'
@@ -338,7 +360,7 @@ END {
     extra = n - 1
     print "repo", repo, wpath[1], hb, prurlof(hb), \
           paint(mark(wpath[1]), "36") " " \
-          paint(pad(tildify(wpath[1]), 40), "1") " " \
+          paint(pad(tildify(wpath[1]), 40), REPO_C) " " \
           paint(pad("[" hb "]", 24), "90") " " \
           paint(pad(hst, 10), statuscolor(hst)) " " \
           paint(pad(prtxt(hb), 17), prcolor(hb)) " " \
@@ -350,14 +372,14 @@ END {
     # The main checkout is a worktree too, so it belongs in the flat list.
     print "repo", repo, wpath[1], hb, prurlof(hb), \
           paint(mark(wpath[1]), "36") " " \
-          paint(pad(rname, 40), "1") " " \
+          paint(pad(rname, 40), REPO_C) " " \
           paint(pad("[" hb "]", 24), "90") " " \
           paint(pad(hst, 10), statuscolor(hst)) " " \
           paint(pad(prtxt(hb), 17), prcolor(hb))
   } else {
     print "repo", repo, wpath[1], hb, prurlof(hb), \
           paint(mark(wpath[1]), "36") " " \
-          paint(pad(tildify(wpath[1]), 40), "1") " " \
+          paint(pad(tildify(wpath[1]), 40), REPO_C) " " \
           paint(pad("[" hb "]", 24), "90") " " \
           paint(pad(hst, 10), statuscolor(hst)) " " \
           paint(prtxt(hb), prcolor(hb))
@@ -404,7 +426,7 @@ render_repo() {
     git -C "$repo" worktree list --porcelain 2>/dev/null |
       awk "$PORCELAIN_AWK" | sed "s|^|W${TAB}|"
   } | awk -F"$TAB" -v OFS="$TAB" -v repo="$repo" -v HOME="$HOME" -v color=1 \
-    -v view="$view" "$RENDER_AWK"
+    -v view="$view" -v REPO_C="1;34" "$RENDER_AWK"
 }
 
 list_view() {
@@ -539,57 +561,145 @@ list_all() { list_view group; }
 
 # ---------------------------------------------------------------- preview
 
+C_OFF=$'\033[0m'
+C_DIM=$'\033[90m'
+C_BOLD=$'\033[1m'
+C_TITLE=$'\033[1;34m'
+
+pv_field() { printf '%s%-9s%s %s\n' "$C_DIM" "$1" "$C_OFF" "$2"; }
+pv_section() { printf '\n%s%s%s\n' "$C_BOLD" "$1" "$C_OFF"; }
+pv_paint() { printf '\033[%sm%s%s' "$1" "$2" "$C_OFF"; }
+
+pv_status_color() {
+  case $1 in
+  pushed) printf '32' ;;
+  no-remote) printf '33' ;;
+  gone) printf '31' ;;
+  detached) printf '35' ;;
+  *) printf '36' ;;
+  esac
+}
+
+pv_pr_color() {
+  case $1 in
+  open) printf '32' ;;
+  draft) printf '33' ;;
+  merged) printf '35' ;;
+  closed) printf '31' ;;
+  *) printf '90' ;;
+  esac
+}
+
 do_preview() {
-  local kind=${1:-} repo=${2:-} path=${3:-} branch=${4:-} pr_file line
+  local kind=${1:-} repo=${2:-} path=${3:-} branch=${4:-}
+  local rname pr_file upstream track sessions locked
+  local changed untracked stat state num url
+
   case $kind in
   sep | '') return 0 ;;
   new)
-    printf 'create a new worktree in %s\n\n' "$(basename "$repo")"
-    printf '  base    pick an existing branch, or start a new one\n'
-    printf '  path    %s/%s/<name>\n' "${TW_ROOT/#$HOME/~}" "$(basename "$repo")"
-    printf '  name    prompted, with a suggestion filled in\n\n'
-    printf 'existing worktrees\n'
-    git -C "$repo" worktree list 2>/dev/null | sed 's|^|  |'
+    rname="$(basename "$repo")"
+    printf '%screate a new worktree in %s%s\n\n' "$C_TITLE" "$rname" "$C_OFF"
+    pv_field 'base' 'an existing branch, or a new one off the default branch'
+    pv_field 'path' "${TW_ROOT/#$HOME/~}/$rname/$C_DIM<name>$C_OFF"
+    pv_field 'name' 'you get a prompt with a suggestion already filled in'
+    pv_section 'worktrees that exist now'
+    git -C "$repo" worktree list 2>/dev/null | sed "s|^|  |;s|$HOME|~|"
     return 0
     ;;
   esac
 
-  printf '%s\n' "${path/#$HOME/~}"
-  printf 'repo      %s\n' "${repo/#$HOME/~}"
-  printf 'branch    %s\n' "${branch:-(detached)}"
+  rname="$(basename "$repo")"
 
-  local upstream track
-  upstream="$(git -C "$repo" for-each-ref --format='%(upstream:short) %(upstream:track)' \
-    "refs/heads/$branch" 2>/dev/null)"
-  [[ -n ${upstream// /} ]] && printf 'upstream  %s\n' "$upstream"
+  # Title: which worktree this is, then where it lives.
+  if [[ $path == "$repo" ]]; then
+    printf '%s%s%s %s(the repo itself)%s\n' "$C_TITLE" "$rname" "$C_OFF" "$C_DIM" "$C_OFF"
+  else
+    printf '%s%s/%s%s\n' "$C_TITLE" "$rname" "$(basename "$path")" "$C_OFF"
+  fi
+  printf '%s%s%s\n\n' "$C_DIM" "${path/#$HOME/~}" "$C_OFF"
 
+  if [[ -n $branch ]]; then
+    pv_field 'branch' "$branch"
+  else
+    pv_field 'branch' "$(pv_paint 35 'detached head')"
+  fi
+
+  # Upstream, and how far from it.
+  if [[ -n $branch ]]; then
+    upstream="$(git -C "$repo" for-each-ref --format='%(upstream:short)' \
+      "refs/heads/$branch" 2>/dev/null)"
+    track="$(git -C "$repo" for-each-ref --format='%(upstream:track)' \
+      "refs/heads/$branch" 2>/dev/null)"
+    if [[ -z $upstream ]]; then
+      pv_field 'upstream' "$(pv_paint 33 'none, nothing pushed yet')"
+    elif [[ $track == '[gone]' ]]; then
+      pv_field 'upstream' "$upstream $(pv_paint 31 'gone from the remote')"
+    elif [[ -z $track ]]; then
+      pv_field 'upstream' "$upstream $(pv_paint 32 'in sync')"
+    else
+      pv_field 'upstream' "$upstream $(pv_paint 36 "$track")"
+    fi
+  fi
+
+  # Working tree state.
   if [[ -d $path ]]; then
-    local changed untracked
     changed="$(git -C "$path" status --porcelain --untracked-files=no 2>/dev/null | wc -l | tr -d ' ')"
     untracked="$(git -C "$path" ls-files --others --exclude-standard 2>/dev/null | wc -l | tr -d ' ')"
-    printf 'dirty     %s changed, %s untracked\n' "$changed" "$untracked"
+    stat="$(git -C "$path" diff --shortstat 2>/dev/null | sed 's/^ *//')"
+    if ((changed == 0 && untracked == 0)); then
+      pv_field 'files' "$(pv_paint 32 'clean')"
+    else
+      pv_field 'files' "$(pv_paint 33 "$changed changed, $untracked untracked")${stat:+  $C_DIM$stat$C_OFF}"
+    fi
   else
-    printf 'dirty     directory is missing\n'
+    pv_field 'files' "$(pv_paint 31 'the directory is missing')"
   fi
 
-  local sessions
   sessions="$(sessions_at "$path" | paste -sd, -)"
-  printf 'session   %s\n' "${sessions:-none}"
-
-  pr_file="$(pr_cache_file "$repo")"
-  if [[ -n $branch && -f $pr_file ]]; then
-    line="$(awk -F"$TAB" -v b="$branch" '$1 == b {print "#" $2 " " $3 "  " $4; exit}' "$pr_file")"
-    printf 'pr        %s\n' "${line:-none found in cache}"
+  if [[ -n $sessions ]]; then
+    pv_field 'session' "$(pv_paint 32 "$sessions")"
   else
-    printf 'pr        no cache yet (ctrl-r to fetch)\n'
+    pv_field 'session' "$(pv_paint 90 'none open')"
   fi
 
-  if [[ -d $path ]]; then
-    printf '\nrecent commits\n'
-    git -C "$path" log --oneline --decorate -8 2>/dev/null | sed 's|^|  |'
-    printf '\nchanges\n'
-    git -C "$path" status --short 2>/dev/null | head -20 | sed 's|^|  |'
+  # Pull request, from the cache.
+  pr_file="$(pr_cache_file "$repo")"
+  if [[ -z $branch ]]; then
+    pv_field 'pr' "$(pv_paint 90 'no branch, so no pull request')"
+  elif [[ ! -f $pr_file ]]; then
+    pv_field 'pr' "$(pv_paint 90 'not fetched yet, ctrl-r to look')"
+  else
+    IFS="$TAB" read -r num state url < <(awk -F"$TAB" -v b="$branch" \
+      '$1 == b {print $2 "\t" $3 "\t" $4; exit}' "$pr_file")
+    if [[ -n ${num:-} ]]; then
+      pv_field 'pr' "$(pv_paint "$(pv_pr_color "$state")" "#$num $state")  $C_DIM$url$C_OFF"
+    else
+      pv_field 'pr' "$(pv_paint 90 'none found for this branch')"
+    fi
   fi
+
+  locked="$(lock_reason "$repo" "$path")"
+  [[ -n $locked ]] && pv_field 'locked' "$(pv_paint 33 "$locked")"
+
+  [[ -d $path ]] || return 0
+
+  # Commits that only exist here are the ones worth seeing first.
+  if [[ -n $branch ]] && git -C "$path" rev-parse --verify --quiet '@{u}' >/dev/null 2>&1; then
+    if [[ -n "$(git -C "$path" log --oneline '@{u}..HEAD' 2>/dev/null)" ]]; then
+      pv_section 'not pushed yet'
+      git -C "$path" log --color=always --oneline --decorate '@{u}..HEAD' 2>/dev/null |
+        head -10 | sed 's|^|  |'
+    fi
+  fi
+
+  if ((changed > 0 || untracked > 0)); then
+    pv_section 'changes'
+    git -C "$path" -c color.status=always status --short 2>/dev/null | head -20 | sed 's|^|  |'
+  fi
+
+  pv_section 'recent commits'
+  git -C "$path" log --color=always --oneline --decorate -8 2>/dev/null | sed 's|^|  |'
 }
 
 # ---------------------------------------------------------------- jumping
@@ -824,7 +934,7 @@ usage() {
 }
 
 main_ui() {
-  local line kind repo path backtick
+  local line kind repo path backtick row_bg match
   command -v fzf >/dev/null 2>&1 || die "fzf is not installed"
   command -v tmux >/dev/null 2>&1 || die "tmux is not installed"
 
@@ -833,6 +943,14 @@ main_ui() {
   mkdir -p "$CACHE_DIR"
   view_write repos ""
   backtick="$(printf '\140')"
+
+  if [[ "$(appearance)" == dark ]]; then
+    row_bg=237
+    match=cyan
+  else
+    row_bg=254
+    match=blue
+  fi
 
   line="$(
     do_view_list | fzf \
@@ -844,9 +962,19 @@ main_ui() {
       --height='100%' \
       --prompt='repos> ' \
       --info=inline \
+      --highlight-line \
+      --pointer='>' \
+      --scrollbar='|' \
+      --ellipsis='>' \
+      --color="bg+:$row_bg,fg+:-1:bold,hl:$match:bold,hl+:$match:bold" \
+      --color='pointer:blue,prompt:blue:bold,gutter:-1' \
+      --color='info:bright-black,header:bright-black,separator:bright-black' \
+      --color='border:bright-black,scrollbar:bright-black,query:-1:bold' \
       --header='enter open   ` repos/worktrees   ctrl-t new   ctrl-x remove   ctrl-r prs   ctrl-s fetch   ctrl-o pr' \
       --preview "$SELF --preview {1} {2} {3} {4}" \
       --preview-window='right,50%,border-left,wrap' \
+      --preview-label=' details ' \
+      --color='preview-border:bright-black,preview-label:bold' \
       --bind "ctrl-x:execute($SELF --remove {1} {2} {3} {4})+reload($SELF --view-list)" \
       --bind "ctrl-r:execute($SELF --refresh {2})+reload($SELF --view-list)" \
       --bind "ctrl-s:execute($SELF --fetch {2})+reload($SELF --view-list)" \
