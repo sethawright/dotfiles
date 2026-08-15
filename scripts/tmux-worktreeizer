@@ -266,6 +266,22 @@ appearance() {
   fi
 }
 
+# The palette every picker here uses, from lib/fzf-theme.sh so this and
+# tmux-sessionizer look like the same tool. Sourcing it is optional: without
+# it the 256-colour pair below still gives a readable list, which keeps this
+# script runnable on its own.
+fzf_colors() {
+  if [[ -r "${SELF%/*}/lib/fzf-theme.sh" ]]; then
+    # shellcheck source=lib/fzf-theme.sh
+    . "${SELF%/*}/lib/fzf-theme.sh"
+    fzf_theme_colors "$(appearance)"
+  elif [[ "$(appearance)" == dark ]]; then
+    printf 'bg+:237,hl:cyan:bold,hl+:cyan:bold,pointer:blue,prompt:blue:bold'
+  else
+    printf 'bg+:254,hl:blue:bold,hl+:blue:bold,pointer:blue,prompt:blue:bold'
+  fi
+}
+
 sessions_at() {
   tmux list-sessions -F "#{session_path}${TAB}#{session_name}" 2>/dev/null |
     awk -F"$TAB" -v p="$1" '$1 == p {print $2}'
@@ -715,7 +731,7 @@ list_envs() {
     printf 'env\t%s\t%s\t%s\thttps://%s\t' "$name" "$base" "$(env_host "$name")" "$(env_host "$name")"
     printf '%s %s %s %s %s %s\n' \
       "$(pv_paint 36 "$mark")" \
-      "$(printf '\033[1;34m%-28s\033[0m' "$name")" \
+      "$(printf '\033[1m%-28s\033[0m' "$name")" \
       "$(printf '\033[90m%-22s\033[0m' "$(env_host "$name")")" \
       "$(printf '\033[90m:%-6s\033[0m' "$base")" \
       "$(printf '%-9s' "$run")" \
@@ -759,7 +775,7 @@ render_repo() {
     git -C "$repo" worktree list --porcelain 2>/dev/null |
       awk "$PORCELAIN_AWK" | sed "s|^|W${TAB}|"
   } | awk -F"$TAB" -v OFS="$TAB" -v repo="$repo" -v HOME="$HOME" -v color=1 \
-    -v view="$view" -v pick="$pick" -v REPO_C="1;34" "$RENDER_AWK"
+    -v view="$view" -v pick="$pick" -v REPO_C="1" "$RENDER_AWK"
 }
 
 list_view() {
@@ -1644,7 +1660,8 @@ create_worktree() {
     {
       printf 'new branch from %s\n' "$defbranch"
       branch_choices "$repo"
-    } | fzf --reverse --prompt="base for new worktree in $rname> " --height='100%'
+    } | fzf --reverse --prompt="base for new worktree in $rname> " --height='100%' \
+      --color="$(fzf_colors)" --pointer='>' --info=inline
   )" || return 0
   [[ -n $base ]] || return 0
 
@@ -1991,7 +2008,7 @@ usage() {
 }
 
 main_ui() {
-  local line kind repo path backtick row_bg match
+  local line kind repo path backtick colors
   command -v fzf >/dev/null 2>&1 || die "fzf is not installed"
   command -v tmux >/dev/null 2>&1 || die "tmux is not installed"
 
@@ -2001,13 +2018,7 @@ main_ui() {
   view_write repos ""
   backtick="$(printf '\140')"
 
-  if [[ "$(appearance)" == dark ]]; then
-    row_bg=237
-    match=cyan
-  else
-    row_bg=254
-    match=blue
-  fi
+  colors="$(fzf_colors)"
 
   line="$(
     do_view_list | fzf \
@@ -2023,15 +2034,11 @@ main_ui() {
       --pointer='>' \
       --scrollbar='|' \
       --ellipsis='>' \
-      --color="bg+:$row_bg,fg+:-1:bold,hl:$match:bold,hl+:$match:bold" \
-      --color='pointer:blue,prompt:blue:bold,gutter:-1' \
-      --color='info:bright-black,header:bright-black,separator:bright-black' \
-      --color='border:bright-black,scrollbar:bright-black,query:-1:bold' \
+      --color="$colors" \
       --header='enter open   ` repos/worktrees/envs   ctrl-t new   ctrl-x remove   ctrl-d close session   ctrl-r prs   ctrl-s fetch   ctrl-o browser' \
       --preview "$SELF --preview {1} {2} {3} {4}" \
       --preview-window='right,50%,border-left,wrap' \
       --preview-label=' details ' \
-      --color='preview-border:bright-black,preview-label:bold' \
       --bind "ctrl-x:execute($SELF --remove {1} {2} {3} {4})+reload($SELF --view-list)" \
       --bind "ctrl-d:execute($SELF --kill-session {1} {2} {3})+reload($SELF --view-list)" \
       --bind "ctrl-r:execute($SELF --refresh {2})+reload($SELF --view-list)" \

@@ -1,9 +1,21 @@
 #!/usr/bin/env bash
 
+# The same palette tmux-worktreeizer uses, so the two pickers match. Optional:
+# without it fzf falls back to its own defaults and this still works.
+colors=""
+theme="$(dirname "${BASH_SOURCE[0]}")/lib/fzf-theme.sh"
+if [[ -r $theme ]]; then
+  # shellcheck source=lib/fzf-theme.sh
+  . "$theme"
+  colors="$(fzf_theme_colors)"
+fi
+
 if [[ $# -eq 1 ]]; then
   selected=$1
 else
-  selected=$(find ~/work ~/Code/work ~/Code/lrn ~/Code/seth ~/dotfiles -type d -mindepth 1 -maxdepth 1 -not -name '.*' | fzf)
+  selected=$(find ~/work ~/Code/work ~/Code/work/ctm/packages ~/Code/lrn ~/Code/seth ~/dotfiles -type d -mindepth 1 -maxdepth 1 -not -name '.*' |
+    fzf --reverse --prompt='open> ' --info=inline --pointer='>' \
+      --height='100%' ${colors:+--color="$colors"})
 fi
 
 if [[ -z $selected ]]; then

@@ -295,6 +295,16 @@ A tmux binding, in `tmux.conf`:
 bind-key -n M-. display-popup -d "#{pane_current_path}" -xC -yC -w 90% -h 80% -E "tmw"
 ```
 
+### Colours
+
+Optional. If `lib/fzf-theme.sh` sits next to the script it is sourced for the
+fzf palette, so this and any other picker sharing it look like one tool. It
+picks light or dark per invocation — from whatever `tmux-dark-notify` last
+wrote, else macOS's `AppleInterfaceStyle` — so switching appearance takes
+effect on the next picker rather than the next login. Without the file the
+script falls back to a plain 256-colour pair and still runs, so it stays a
+single-file tool if you want it to be.
+
 On macOS, terminals that leave Option as Option send a composed character rather
 than `M-.`, so bind that character instead — `≥` for Option-. on a US layout —
 and keep `M-.` for terminals where Option really is Alt.

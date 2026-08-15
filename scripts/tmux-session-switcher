@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Switch to an existing tmux session. Bound to M-, and meant to look like the
+# M-/ picker (tmux-sessionizer) next to it, which is why the fzf options here
+# are the same ones rather than fzf's defaults.
+#
+# This was an inline pipeline in tmux.conf; it is a file so it can share the
+# palette, and so the light/dark choice happens per invocation rather than
+# being frozen into the config.
+
+colors=""
+theme="$(dirname "${BASH_SOURCE[0]}")/lib/fzf-theme.sh"
+if [[ -r $theme ]]; then
+  # shellcheck source=lib/fzf-theme.sh
+  . "$theme"
+  colors="$(fzf_theme_colors)"
+fi
+
+# popup- sessions are the throwaway ones display-popup makes for these very
+# pickers, so switching to one is never what anybody means.
+selected="$(
+  tmux list-sessions -F '#{session_name}' 2>/dev/null |
+    grep -v '^popup-' |
+    fzf --reverse --prompt='session> ' --info=inline --pointer='>' \
+      --height='100%' ${colors:+--color="$colors"}
+)" || exit 0
+
+[[ -n $selected ]] || exit 0
+tmux switch-client -t "$selected"

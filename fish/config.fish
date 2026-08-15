@@ -85,6 +85,10 @@ if test -f ~/work/ctm-dev/ctm.fish
     source ~/work/ctm-dev/ctm.fish
 end
 
+if test -f ~/.config/tmw/shell.fish
+    source ~/.config/tmw/shell.fish
+end
+
 if test -f ~/.env.local.fish
     source ~/.env.local.fish
 end
