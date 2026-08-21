@@ -20,6 +20,11 @@ idiomatic_version_file_enable_tools = ["ruby", "node"]
 # legacy.dylib is really on disk. Costs a few minutes per ruby install.
 ruby.compile = true
 
+# Gems every new ruby version should get automatically, so switching or
+# installing a ruby version (e.g. via mise) doesn't silently drop tools like
+# ruby-lsp that used to live under the old system ruby's shared gem path.
+ruby.default_packages_file = "~/dotfiles/mise/default-gems"
+
 [tools]
 ruby = "3.4.9"
 node = "24.16.0"

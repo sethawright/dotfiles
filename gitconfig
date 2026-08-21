@@ -28,17 +28,13 @@
     git push --force-with-lease \"$@\"; \
   }; f"
 [diff]
-	tool = fugitive
+	tool = nvimdiff
 [merge]
-	tool = fugitive
+	tool = nvimdiff
 [difftool]
 	prompt = false
 [mergetool "fugitive"]
 	cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
-[difftool "vscode"]
-    cmd = code --wait --diff $LOCAL $REMOTE
-[mergetool "vscode"]
-    cmd = code --wait $MERGED
 [filter "media"]
 	required = true
 	clean = git media clean %f
@@ -62,3 +58,8 @@
 	gpgsign = true
 [alias]
   tree = log --graph --decorate --pretty=oneline --abbrev-commit
+[difftool "Kaleidoscope"]
+	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[mergetool "Kaleidoscope"]
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	trustExitCode = true

@@ -7,4 +7,4 @@
 --
 --   "diffview"   -> sindrets/diffview.nvim
 --   "diffbandit" -> CoreyKaylor/diffbandit.nvim
-return "diffbandit"
+return "diffview"
