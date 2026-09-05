@@ -42,6 +42,19 @@ return {
             modified = icons.git.modified,
             removed = icons.git.removed,
           },
+          -- Count what the rail shows, so the numbers follow the <leader>uG
+          -- mode. Rebuilding lualine_x above drops the source LazyVim's
+          -- mini-diff extra sets, and without it lualine runs its own
+          -- `git diff` and reports unstaged-only counts.
+          source = function()
+            local summary = vim.b.minidiff_summary
+            return summary
+              and {
+                added = summary.add,
+                modified = summary.change,
+                removed = summary.delete,
+              }
+          end,
         },
         progressbar,
       }

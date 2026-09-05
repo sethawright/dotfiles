@@ -1,6 +1,6 @@
 # --- ghostty settings
 
-adjust-cell-height = 50%
+adjust-cell-height = 10%
 clipboard-read = allow
 clipboard-write = allow
 command =  /opt/homebrew/bin/fish -l -c "$HOME/dotfiles/scripts/tmux-home.sh"
@@ -13,7 +13,7 @@ font-family = BlexMono Nerd Font Mono
 # font-family = M+1CodeLat50 Nerd Font Mono
 # font-family = NotoSansM Nerd Font Mono
 # font-family = SF Mono Terminal
-font-size = 13
+font-size = 14
 font-thicken = true
 font-thicken-strength = 100
 

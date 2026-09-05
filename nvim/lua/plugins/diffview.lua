@@ -61,6 +61,22 @@ return {
         { "n", "q", "<Cmd>tabclose<CR>", { silent = true } },
         {
           "n",
+          "<cr>",
+          function()
+            require("diffview.actions").focus_entry()
+          end,
+          { desc = "Open the diff and focus the file pane", silent = true },
+        },
+        {
+          "n",
+          "`",
+          function()
+            require("diffview.actions").toggle_files()
+          end,
+          { desc = "Toggle the file panel", silent = true },
+        },
+        {
+          "n",
           "<space>",
           function()
             require("diffview.actions").toggle_stage_entry()
@@ -70,7 +86,14 @@ return {
       },
       view = {
         { "n", "<leader>q", "<Cmd>tabclose<CR>", { silent = true } },
-        { "n", "<leader>q", "<Cmd>tabclose<CR>", { silent = true } },
+        {
+          "n",
+          "`",
+          function()
+            require("diffview.actions").toggle_files()
+          end,
+          { desc = "Toggle the file panel", silent = true },
+        },
         {
           "n",
           "<space>",
