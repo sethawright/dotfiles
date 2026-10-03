@@ -1,3 +1,7 @@
+# The following lines were added by Docker Desktop to add commands to your PATH.
+export PATH="$PATH:/Users/sethwright/.docker/bin"
+# End of Docker Desktop section.
+
 set -gx EDITOR nvim
 set -gx FZF_DEFAULT_COMMAND 'rg --files --hidden --follow --glob "!{node_modules/*,vendor/*,.git/*}"'
 
@@ -113,3 +117,6 @@ fish_add_path --global --move --prepend /opt/homebrew/bin /opt/homebrew/sbin
 if type -q mise
     mise activate fish | source
 end
+if test -f ~/work/ctm-dev/ctm.fish; source ~/work/ctm-dev/ctm.fish; end
+fish_add_path /opt/homebrew/opt/mysql-client@8.0/bin
+/opt/homebrew/bin/mise activate fish | source
