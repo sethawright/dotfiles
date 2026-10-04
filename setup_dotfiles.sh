@@ -61,6 +61,7 @@ if [ -e "$tmw_dir" ] && [ ! -d "$tmw_dir/.git" ]; then
   echo "Moving aside: $tmw_dir -> $tmw_dir.$backup_stamp.bak"
   mv "$tmw_dir" "$tmw_dir.$backup_stamp.bak"
 fi
+
 if [ -d "$tmw_dir/.git" ]; then
   echo "Already cloned: $tmw_dir"
 elif command -v git >/dev/null 2>&1; then
@@ -68,3 +69,9 @@ elif command -v git >/dev/null 2>&1; then
   git clone --quiet "$tmw_repo" "$tmw_dir" ||
     echo "Could not clone $tmw_repo (no access from this machine?); skipping."
 fi
+
+# Tinycast settings and compiled extensions live in a private repo.
+"$dotfiles_dir/scripts/tinycast-config" setup || {
+  echo "Tinycast restore failed. Fix the error above and re-run setup_dotfiles.sh."
+  exit 1
+}

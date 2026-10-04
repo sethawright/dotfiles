@@ -9,7 +9,6 @@
 # /usr/include, a directory modern macOS does not have. Fixed in ruby 3.2+.
 
 [settings]
-# Most projects here pin only .ruby-version or .nvmrc, so read those too.
 idiomatic_version_file_enable_tools = ["ruby", "node"]
 
 # Build ruby instead of downloading mise's prebuilt binaries. The prebuilt ones

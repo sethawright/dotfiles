@@ -41,6 +41,8 @@ brew install ripgrep
 brew install rust
 brew install terraform
 brew install tmux
+brew install claude-code
+brew install codex
 brew install wget
 brew install yarn
 brew install cormacrelf/tap/dark-notify
@@ -48,8 +50,23 @@ brew install cormacrelf/tap/dark-notify
 # apps
 brew install --cask 1password
 brew install --cask 1password-cli
-brew install --cask docker
+brew install --cask docker-desktop
+brew install --cask chatgpt
+brew install --cask firefox
+brew install --cask ghostty
+brew install --cask github
+brew install --cask google-chrome
+brew install --cask google-chrome@canary
+brew install --cask jetbrains-toolbox
+brew install --cask linear
+brew install --cask ngrok
+brew install --cask postman
+brew install --cask proxyman
+brew install --cask rubymine
 brew install --cask raycast
+brew install --cask tinycast
+brew install --cask codex
+brew install --cask claude
 brew install --cask slack
 brew install --cask tableplus
 brew install --cask visual-studio-code
@@ -81,14 +98,15 @@ touch config
 chmod 600 config
 
 . ~/dotfiles/install_fonts.sh
+
+# Private workflow configuration is restored by setup_dotfiles.sh.
+gh auth status >/dev/null 2>&1 || gh auth login
 . ~/dotfiles/setup_dotfiles.sh
 
 # needs the symlinked ~/.config/mise from setup_dotfiles.sh to know what to get
 mise install
 
 brew cleanup
-
-gh auth login
 
 echo "1. Set up and sign in to 1password"
 echo "2. Set up 1password ssh agent"
