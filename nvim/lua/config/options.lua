@@ -5,6 +5,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.opt.laststatus = 1
 vim.opt.clipboard = "unnamedplus"
+vim.opt.autoread = true
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.swapfile = false
