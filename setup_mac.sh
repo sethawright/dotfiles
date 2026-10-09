@@ -83,6 +83,9 @@ curl -fsSL git.io/gg.sh | bash
 # tmux plugin manager
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+# aws cli
+curl -fsSL https://awscli.amazonaws.com/v2/install.sh | bash
+
 cd ~
 ln -s ~/dotfiles/gitconfig ./.gitconfig
 ln -s ~/dotfiles/gitignore_global ./.gitignore_global

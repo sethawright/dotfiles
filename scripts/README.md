@@ -67,7 +67,7 @@ so it costs the same for three rows or three hundred.
 | key | |
 |---|---|
 | enter | open the folder / open the session / start the create flow |
-| `` ` `` | cycle repos → worktrees → envs, or step back out |
+| `` ` `` | cycle repos → worktrees (→ envs, with `TW_ENVS=1`), or step back out |
 | backspace | step out of a folder once the query is empty |
 | tab / shift-tab | jump to the next / previous repo |
 | ctrl-space | start the repo's processes, or stop them |
@@ -77,6 +77,7 @@ so it costs the same for three rows or three hundred.
 | ctrl-r | refresh the pull request cache |
 | ctrl-s | `git fetch --prune` |
 | ctrl-o | open a browser: the pull request on a worktree row, the env's host on an env row |
+| M-] / M-[ | move the picker to the next / previous machine: here, then each Tailscale peer (ctrl-] is next too) |
 
 These stay off the keys fzf uses for moving and editing (`ctrl-a b c e f g h i
 j l n p q u w y`, `ctrl-/`). Two deliberate exceptions: tab, because its
@@ -228,7 +229,27 @@ nesting means an inner failure tears the outer one down.
 
 ---
 
+## Other machines
+
+M-] and M-[ move the picker to the next or previous Tailscale peer that
+answers ssh, wrapping round through this machine. They are also bound as `‘`
+and `“`, which is what Option+] and Option+[ type when the terminal composes
+Option into characters, the same reason tmux.conf binds `≥` for M-. Over there it is the same picker, with that machine's
+repos, config and hooks: a copy of this script is shipped to
+`~/.cache/tmux-worktreeizer/remote/` each time, so the other machine does not
+need its dotfiles pulled. Opening a session there detaches this terminal's
+tmux client and attaches it to the remote session over ssh; detaching over
+there comes back to the session the picker was opened from. Shares
+`lib/tmux-remote.sh` with tmux-session-switcher and tmux-sessionizer.
+
+---
+
 ## Envs
+
+**Off by default.** Set `TW_ENVS=1` (in `$TMW_DIR/config` or the environment)
+to turn on everything in this section: the derived ports, `.env.worktree`, the
+`env` hook, teardown, `envs.json` and the envs view. With it off, a worktree is
+just a checkout and a tmux session.
 
 **An env is a name.** Every worktree called that name, in any repo, is part of
 it. Repos without one are not in the env, and callers fall back to their main

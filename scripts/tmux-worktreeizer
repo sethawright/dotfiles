@@ -123,6 +123,11 @@
 #   ctrl-s     git fetch --prune the selected repo
 #   ctrl-o     open a browser: the pull request on a worktree row, the env's
 #              host on an env row. No-op wherever neither applies.
+#   M-] M-[    move the picker to the next / previous machine: here, then
+#              each Tailscale peer. Opening a session over there attaches this
+#              terminal to it. ctrl-] is next too. Also bound as ‘ and “,
+#              what Option+] and Option+[ type in a terminal that composes
+#              Option into characters (ghostty by default).
 #
 # These stay off the keys fzf already uses to move and edit: ctrl-a b c e f g
 # h i j l n p q u w y and ctrl-/. Two deliberate exceptions: tab, reused
@@ -139,6 +144,8 @@
 #   TW_BRANCH_PREFIX   pre-filled prefix when naming a brand new branch
 #   TW_PR_TTL          seconds before the pull request cache goes stale
 #   TW_NO_FETCH        set to skip the fetch in the create flow
+#   TW_ENVS            1 turns envs on: ports, .env.worktree, the env hook,
+#                      teardown, the manifest and the envs view (default 0)
 #   TW_ENV_DOMAIN      hostname suffix for envs   (default localhost)
 #   TW_ENV_PORT_BASE   first port envs draw from  (default 20000)
 #   TW_ENV_PORT_SPAN   ports reserved per env     (default 40)
@@ -157,6 +164,7 @@ TW_ROOT="${TW_ROOT:-$HOME/work/.worktrees}"
 TW_ROOTS="${TW_ROOTS:-$HOME/src:$HOME/work}"
 TW_REPOS="${TW_REPOS:-$HOME/dotfiles}"
 TW_PR_TTL="${TW_PR_TTL:-900}"
+TW_ENVS="${TW_ENVS:-0}"
 CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/tmux-worktreeizer"
 
 # Everything machine or repo specific lives here: a config file for settings,
@@ -569,8 +577,11 @@ TW_ENV_SLOTS="${TW_ENV_SLOTS:-500}"
 # is read, as every caller here does, but a caller that ever checks the exit
 # status directly (service_port did, and that is how this got noticed) would
 # get a essentially random true/false.
+envs_enabled() { [[ $TW_ENVS == 1 ]]; }
+
 env_names() {
   local repo dir
+  envs_enabled || return 0
   [[ -d $TW_ROOT ]] || return 0
   for repo in "$TW_ROOT"/*/; do
     [[ -d $repo ]] || continue
@@ -689,6 +700,7 @@ write_manifest() {
 # exists, with nothing to configure. Best effort: a proxy that is not running,
 # or a hook that fails, never blocks the create or remove itself.
 refresh_manifest_hook() {
+  envs_enabled || return 0
   write_manifest >/dev/null
   local hook="$TMW_DIR/hooks/manifest"
   [[ -x $hook ]] && "$hook"
@@ -853,7 +865,7 @@ view_actions() {
     ;;
   *) prompt="$(basename "$drill")> " ;;
   esac
-  printf 'reload(%s --view-list)+change-prompt(%s)+first' "$SELF" "$prompt"
+  printf 'reload(%s --view-list)+change-prompt(%s%s)+first' "$SELF" "$(host_prompt)" "$prompt"
 }
 
 do_view_list() {
@@ -881,7 +893,7 @@ do_view_toggle() {
   else
     case $mode in
     repos) mode=flat ;;
-    flat) mode=envs ;;
+    flat) envs_enabled && mode=envs || mode=repos ;;
     *) mode=repos ;;
     esac
   fi
@@ -1256,6 +1268,7 @@ upper_snake() { printf '%s' "$1" | tr 'a-z.-' 'A-Z__'; }
 # Which env a worktree belongs to, empty when it is not under the worktree root.
 env_of_path() {
   local path=$1
+  envs_enabled || return 1
   [[ $path == "$TW_ROOT"/* ]] || return 1
   basename "$path"
 }
@@ -1486,7 +1499,9 @@ open_session() {
   [[ -n $name ]] || name="$(session_name_for "$repo" "$path")"
   ensure_session "$name" "$path" "$repo"
 
-  if [[ -n ${TMUX:-} ]]; then
+  if [[ -n ${TW_RESULT:-} ]]; then
+    printf 'open\t%s\n' "$name" >"$TW_RESULT"
+  elif [[ -n ${TMUX:-} ]]; then
     tmux switch-client -t "=$name"
   else
     tmux attach-session -t "=$name"
@@ -2003,12 +2018,109 @@ do_kill_session() {
 
 # ---------------------------------------------------------------- ui
 
+# ---------------------------------------------------------------- hosts
+#
+# The picker can run on any Tailscale peer as well as here. It runs there in
+# full -- its own repos, config and hooks -- inside this same popup, from a
+# copy of this script shipped over first, so the other machine never needs
+# its dotfiles pulled to match. It reports back through a result file rather
+# than stdout, since over ssh -t stdout is the terminal fzf is drawing on.
+#
+# TW_HOST is the machine the picker is showing; TW_RESULT, when set, is where
+# main_ui writes what was chosen instead of switching tmux itself: "open
+# <session>", "next-host" or "prev-host".
+
+host_prompt() {
+  [[ -n ${TW_HOST:-} && $TW_HOST != local ]] && printf '%s:' "$TW_HOST"
+  return 0
+}
+
+load_remote_lib() {
+  local lib="${SELF%/*}/lib/tmux-remote.sh"
+  [[ -r $lib ]] || return 1
+  # shellcheck source=lib/tmux-remote.sh
+  . "$lib"
+}
+
+host_list() {
+  printf 'local\n'
+  load_remote_lib && tailscale_peers
+}
+
+# The host after current, or before it with a step of -1, wrapping both ways.
+step_host() {
+  local current=$1 step=$2 hosts i n
+  mapfile -t hosts < <(host_list)
+  n=${#hosts[@]}
+  for ((i = 0; i < n; i++)); do
+    if [[ ${hosts[i]} == "$current" ]]; then
+      printf '%s' "${hosts[(i + step + n) % n]}"
+      return 0
+    fi
+  done
+  printf 'local'
+}
+
+# Runs the picker on host and leaves its result in the local file $2.
+remote_picker() {
+  local host=$1 result=$2 dir='$HOME/.cache/tmux-worktreeizer/remote'
+  tar -C "${SELF%/*}" -cf - "${SELF##*/}" lib |
+    ssh "${ssh_opts[@]}" "$host" "env PATH=$remote_path sh -c 'mkdir -p $dir && tar -C $dir -xf -'" || {
+    printf 'could not reach %s\n' "$host"
+    pause
+    printf 'next-host\n' >"$result"
+    return 0
+  }
+  ssh -t "$host" "env PATH=$remote_path TW_HOST=$host TW_RESULT=$dir/result TW_EDITOR=${TW_EDITOR:-${EDITOR:-vi}} sh -c 'rm -f $dir/result; bash $dir/${SELF##*/} --here'"
+  remote_sh "$host" <<<"cat $dir/result 2>/dev/null" >"$result"
+}
+
+# The picker, here first, moving on to the next machine on ctrl-].
+host_loop() {
+  local host=local result action session
+  load_remote_lib || {
+    main_ui
+    return
+  }
+  result="$(mktemp)"
+  trap 'rm -f "$result"' EXIT
+
+  while :; do
+    : >"$result"
+    if [[ $host == local ]]; then
+      export TW_HOST=local TW_RESULT="$result"
+      main_ui
+    else
+      remote_picker "$host" "$result"
+    fi
+
+    IFS="$TAB" read -r action session <"$result"
+    case $action in
+    next-host) host="$(step_host "$host" 1)" ;;
+    prev-host) host="$(step_host "$host" -1)" ;;
+    open)
+      if [[ $host == local ]]; then
+        if [[ -n ${TMUX:-} ]]; then
+          tmux switch-client -t "=$session"
+        else
+          tmux attach-session -t "=$session"
+        fi
+      else
+        attach_remote "$host" "$session"
+      fi
+      return 0
+      ;;
+    *) return 0 ;;
+    esac
+  done
+}
+
 usage() {
   sed -n '2,/^set -uo/p' "$SELF" | sed -e 's/^# \{0,1\}//' -e '/^set -uo/d'
 }
 
 main_ui() {
-  local line kind repo path backtick colors
+  local out key line kind repo path backtick colors views
   command -v fzf >/dev/null 2>&1 || die "fzf is not installed"
   command -v tmux >/dev/null 2>&1 || die "tmux is not installed"
 
@@ -2019,8 +2131,10 @@ main_ui() {
   backtick="$(printf '\140')"
 
   colors="$(fzf_colors)"
+  views=repos/worktrees
+  envs_enabled && views+=/envs
 
-  line="$(
+  out="$(
     do_view_list | fzf \
       --ansi \
       --delimiter="$TAB" \
@@ -2028,14 +2142,15 @@ main_ui() {
       --reverse \
       --no-sort \
       --height='100%' \
-      --prompt='repos> ' \
+      --prompt="$(host_prompt)repos> " \
       --info=inline \
       --highlight-line \
       --pointer='>' \
       --scrollbar='|' \
       --ellipsis='>' \
       --color="$colors" \
-      --header='enter open   ` repos/worktrees/envs   ctrl-t new   ctrl-x remove   ctrl-d close session   ctrl-r prs   ctrl-s fetch   ctrl-o browser' \
+      --header="enter open   \` $views   ctrl-t new   ctrl-x remove   ctrl-d close session   ctrl-r prs   ctrl-s fetch   ctrl-o browser   M-[ M-] hosts" \
+      --expect='ctrl-],alt-],alt-[,‘,“' \
       --preview "$SELF --preview {1} {2} {3} {4}" \
       --preview-window='right,50%,border-left,wrap' \
       --preview-label=' details ' \
@@ -2052,6 +2167,19 @@ main_ui() {
       --bind "tab:transform:$SELF --jump next {*1}" \
       --bind "btab:transform:$SELF --jump prev {*1}"
   )" || return 0
+  key="$(head -1 <<<"$out")"
+  line="$(sed -n 2p <<<"$out")"
+
+  case $key in
+  'ctrl-]' | 'alt-]' | ‘)
+    [[ -n ${TW_RESULT:-} ]] && printf 'next-host\n' >"$TW_RESULT"
+    return 0
+    ;;
+  'alt-[' | “)
+    [[ -n ${TW_RESULT:-} ]] && printf 'prev-host\n' >"$TW_RESULT"
+    return 0
+    ;;
+  esac
   [[ -n $line ]] || return 0
 
   IFS="$TAB" read -r kind repo path _ <<<"$line"
@@ -2128,6 +2256,7 @@ case "${1:-}" in
   git -C "$1" fetch --prune
   ;;
 -h | --help) usage ;;
-'') main_ui ;;
+--here) main_ui ;;
+'') host_loop ;;
 *) die "unknown argument: $1" ;;
 esac
