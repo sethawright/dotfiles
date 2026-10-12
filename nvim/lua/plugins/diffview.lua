@@ -49,6 +49,13 @@ return {
       end,
     },
     view = {
+      -- Full repo-relative path above each diff pane (the file panel truncates).
+      default = {
+        winbar_info = true,
+      },
+      file_history = {
+        winbar_info = true,
+      },
       merge_tool = {
         layout = "diff3_mixed",
       },

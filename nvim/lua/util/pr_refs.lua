@@ -33,7 +33,7 @@ local function view_pr(number)
   if number then
     args[#args + 1] = tostring(number)
   end
-  vim.list_extend(args, { "--json", "number,baseRefName,headRefName,isCrossRepository" })
+  vim.list_extend(args, { "--json", "number,baseRefName,headRefName,isCrossRepository,state" })
   local out = vim.fn.systemlist(args)
   if vim.v.shell_error ~= 0 then
     return nil
@@ -66,16 +66,20 @@ function M.resolve(number)
   local base = "origin/" .. pr.baseRefName
   local head = "origin/" .. pr.headRefName
 
-  if pr.isCrossRepository then
-    -- A fork's head branch isn't on origin; GitHub keeps it at pull/N/head.
-    -- Fetched alone so FETCH_HEAD is the head, not the base.
-    fetch({ pr.baseRefName })
+  -- A merged stack deletes its branches; a stale local ref would diff the
+  -- wrong commits, so stop instead.
+  if not fetch({ pr.baseRefName }) then
+    return nil, ("can't fetch base branch %s (PR #%d is %s)"):format(pr.baseRefName, pr.number, pr.state:lower())
+  end
+
+  -- A fork's head branch isn't on origin, and a merged head branch may be
+  -- deleted; GitHub keeps both at pull/N/head. Fetched alone so FETCH_HEAD is
+  -- the head.
+  if pr.isCrossRepository or not fetch({ pr.headRefName }) then
     if not fetch({ "pull/" .. pr.number .. "/head" }) then
       return nil, "git fetch failed for PR #" .. pr.number
     end
     head = vim.trim(vim.fn.system({ "git", "rev-parse", "FETCH_HEAD" }))
-  elseif not fetch({ pr.baseRefName, pr.headRefName }) then
-    vim.notify("PR diff: git fetch failed; using local origin refs", vim.log.levels.WARN)
   end
 
   return base, head, ("PR #%d: %s...%s"):format(pr.number, pr.baseRefName, pr.headRefName)
