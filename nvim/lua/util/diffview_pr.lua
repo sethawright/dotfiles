@@ -1,33 +1,18 @@
--- "Pull request" diff: what this branch would show as a PR against its
--- default branch (main/master), i.e. the diff from the merge-base, not a
--- plain two-dot diff against the branch tip.
+-- "Pull request" diff: what GitHub's "Files changed" tab shows for a PR (the
+-- current branch's by default), i.e. the diff from the merge-base with the
+-- PR's base branch, not a plain two-dot diff against the branch tip. See
+-- util.pr_refs.
 local M = {}
 
-local function ref_exists(ref)
-  vim.fn.system({ "git", "rev-parse", "--verify", "--quiet", ref })
-  return vim.v.shell_error == 0
-end
-
-local function default_branch()
-  local out = vim.fn.systemlist({ "git", "symbolic-ref", "--short", "refs/remotes/origin/HEAD" })
-  if vim.v.shell_error == 0 and out[1] and out[1] ~= "" then
-    return out[1]
-  end
-
-  for _, ref in ipairs({ "origin/main", "origin/master", "main", "master" }) do
-    if ref_exists(ref) then
-      return ref
-    end
-  end
-end
-
-function M.open()
-  local target = default_branch()
-  if not target then
-    vim.notify("Diffview PR: couldn't find a main/master branch to diff against", vim.log.levels.ERROR)
+---@param number? number PR number; defaults to the current branch's PR
+function M.open(number)
+  local base, head, label = require("util.pr_refs").resolve(number)
+  if not base then
+    vim.notify("Diffview PR: " .. head, vim.log.levels.ERROR)
     return
   end
-  vim.cmd("DiffviewOpen " .. target .. "...HEAD")
+  vim.notify("Diffview " .. label)
+  vim.cmd("DiffviewOpen " .. base .. "..." .. head)
 end
 
 return M

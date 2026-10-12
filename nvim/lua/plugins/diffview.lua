@@ -9,9 +9,9 @@ return {
     {
       "<leader>gvp",
       function()
-        require("util.diffview_pr").open()
+        require("util.pr_picker").open(require("util.diffview_pr").open)
       end,
-      desc = "Diffview PR (diff vs default branch)",
+      desc = "Diffview PR (pick an open PR)",
     },
   },
   opts = {

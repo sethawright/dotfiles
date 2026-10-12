@@ -86,13 +86,13 @@ return {
       end,
       desc = "DiffBandit Current File History",
     },
-    -- PR diff (merge-base vs default branch).
+    -- Pick an open PR, then diff it as GitHub does (merge-base vs its base).
     {
       "<leader>gvp",
       function()
-        require("util.diffbandit_pr").open()
+        require("util.pr_picker").open(require("util.diffbandit_pr").open)
       end,
-      desc = "DiffBandit PR (diff vs default branch)",
+      desc = "DiffBandit PR (pick an open PR)",
     },
   },
   opts = {},
