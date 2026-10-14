@@ -391,11 +391,115 @@ Usage: oblique.sh [option]
 
   (none)       A random card for when you are stuck.
   --unstuck    The same as no option.
-  --standup    Today's standup card. It is the same for everyone on the same day.
+  --standup    Today's standup card. It is the same for everyone all day.
   --standup --random
                A random standup card. It is different each time.
   --list       Show the full deck, in its two groups.
-  --help       Show this help.
+  --help       Show how to use the cards.
+EOF
+}
+
+help() {
+  usage
+  cat <<'EOF'
+
+WHAT THIS IS
+
+  Oblique Strategies is a deck of cards that Brian Eno and Peter Schmidt
+  made in 1975. Each card has one short instruction or question. The cards
+  do not give you the answer. They change how you look at the problem.
+
+  This deck is our own. It is written for a team that works with coding
+  agents. Agents can take away the parts of the work that felt like making
+  something. The cards try to give some of those parts back: authorship,
+  surprise, craft, attention, and time with other people.
+
+TWO WAYS TO USE IT
+
+  Standup (--standup)
+    One card is a theme for the day. Read it aloud at standup. Keep it in
+    mind during the day. Nobody has to do it.
+
+  Unstuck (no option)
+    This is how Eno used the deck. Draw a card when the work stops: when
+    you are under pressure, when you go in circles, when the work is
+    correct but has no life, or when there are too many choices. In flow,
+    do not draw a card. It can break the flow.
+
+    Good moments to draw a card:
+      - The agent failed three times, and you will send the same prompt again.
+      - You feel the pressure to "just make it pass."
+      - You read a large diff and feel nothing.
+      - You cannot choose between two designs.
+
+HOW TO TAKE IT SERIOUSLY
+
+  1. Trust the card, even when you cannot see how it applies. Eno's
+     instruction was the same. If you cannot follow the card, look for a
+     way to follow it. That effort is the useful part.
+  2. Give it a real try. Spend at least a few minutes with the card before
+     you decide that it does not work.
+  3. Do not draw again because you do not like the card. A card you
+     dislike is often the one you need.
+  4. Notice what happens. Write one line about it, if you can.
+
+HOW NOT TO TAKE IT TOO SERIOUSLY
+
+  - A card is an invitation, never an order. When someone gives a card to
+    another person as an instruction, it stops working. Eno found this in
+    the studio: some musicians disliked cards that were given to them.
+  - Do not measure it. Do not count cards per sprint. Metrics turn play
+    into work.
+  - Keep it short at standup. Read the card, maybe say one thing, continue.
+
+THE TEAM RITUAL
+
+  - At standup: one person runs oblique.sh --standup and reads the card.
+  - In the retro, ask two questions:
+      "Did anyone use a card this week? What happened?"
+      "When this week did you feel like a maker?"
+    Write the answers down. After some weeks, you will see what brings the
+    joy back for this team.
+  - If the team does not like today's card, run oblique.sh --standup --random.
+
+THE SAME CARD FOR EVERYONE
+
+  oblique.sh --standup gives everyone the same card on the same day, on
+  macOS and on Linux, if:
+    - everyone has the same version of this file,
+    - everyone has the same date (the script uses the local date), and
+    - nobody adds --random.
+
+  Keep one shared copy of this script, so the deck stays the same.
+
+CHANGE THE DECK
+
+  The deck belongs to the team. Eno and Schmidt did not invent their cards.
+  They wrote down what already helped them. Do the same: ask each person to
+  write a few cards from their own experience, and add them.
+
+  Each card is one line in the cards() function, in this format:
+
+    standup|Play|Make something useless today.
+    unstuck|Reframe|Is the problem the code or the question?
+    both|People|Show a person the ugliest part.
+
+  The first word says where the card goes: standup, unstuck, or both.
+  The second part is the category. A new category shows up automatically.
+  Remove the cards that nobody likes. Change the first word if a card is
+  in the wrong group.
+
+  When you change the deck, everyone gets a new standup card. Share the
+  change with the whole team.
+
+WHERE THE IDEAS COME FROM
+
+  Brian Eno and Peter Schmidt (Oblique Strategies), Fred Brooks (The Joys
+  of the Craft), Corita Kent (art department rules), Bruce Mau (Incomplete
+  Manifesto for Growth), Sol LeWitt (letter to Eva Hesse), Pauline Oliveros
+  (Sonic Meditations), George Polya (How to Solve It), SCAMPER (Osborn and
+  Eberle), Kent Beck, and writing on AI and the joy of programming.
+  The card text is our own. The original Eno cards are not in this deck.
 EOF
 }
 
@@ -447,7 +551,11 @@ case "${1:-}" in
     echo
     ;;
   -h|--help)
-    usage
+    if [[ -t 1 ]]; then
+      help | ${PAGER:-less -FX}
+    else
+      help
+    fi
     ;;
   *)
     usage >&2
