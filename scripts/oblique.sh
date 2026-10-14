@@ -109,8 +109,6 @@ standup|Useful|Use the product as a customer for 20 minutes.
 standup|Useful|Use the product on a slow phone.
 standup|Useful|Write the release note first.
 standup|Useful|Thank someone for something they built.
-unstuck|Useful|What would the user do if this did not exist?
-unstuck|Useful|Remove the feature. Does anyone notice?
 standup|Making|Build a small tool that only you will use.
 standup|Making|Make the thing you wanted when you were new here.
 standup|Making|Build it twice: once with the agent, once without. Compare them.
@@ -533,32 +531,35 @@ draw() {
 }
 
 case "${1:-}" in
-  ""|--unstuck)
-    draw unstuck
-    ;;
-  --standup)
-    case "${2:-}" in
-      "") draw standup today ;;
-      --random) draw standup random ;;
-      *) usage >&2; exit 1 ;;
-    esac
-    ;;
-  --list)
-    printf '\nSTANDUP: a theme for the day\n\n'
-    list_cards_for standup
-    printf '\nUNSTUCK: draw one when the work stops\n\n'
-    list_cards_for unstuck
-    echo
-    ;;
-  -h|--help)
-    if [[ -t 1 ]]; then
-      help | ${PAGER:-less -FX}
-    else
-      help
-    fi
-    ;;
+"" | --unstuck)
+  draw unstuck
+  ;;
+--standup)
+  case "${2:-}" in
+  "") draw standup today ;;
+  --random) draw standup random ;;
   *)
     usage >&2
     exit 1
     ;;
+  esac
+  ;;
+--list)
+  printf '\nSTANDUP: a theme for the day\n\n'
+  list_cards_for standup
+  printf '\nUNSTUCK: draw one when the work stops\n\n'
+  list_cards_for unstuck
+  echo
+  ;;
+-h | --help)
+  if [[ -t 1 ]]; then
+    help | ${PAGER:-less -FX}
+  else
+    help
+  fi
+  ;;
+*)
+  usage >&2
+  exit 1
+  ;;
 esac
