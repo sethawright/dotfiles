@@ -64,6 +64,7 @@ alias gph="git push -u origin HEAD"
 alias gpf="git fp"
 alias q="/Users/sethwright/q/m64/q"
 alias ctmstart="~/dotfiles/scripts/ctmstart.sh"
+alias oblique="~/dotfiles/scripts/oblique.sh"
 alias ctmstop="~/dotfiles/scripts/ctmstop.sh"
 alias nvllm="~/dotfiles/scripts/nvllm.sh"
 alias ip="curl -4 ifconfig.me"
@@ -117,6 +118,8 @@ fish_add_path --global --move --prepend /opt/homebrew/bin /opt/homebrew/sbin
 if type -q mise
     mise activate fish | source
 end
-if test -f ~/work/ctm-dev/ctm.fish; source ~/work/ctm-dev/ctm.fish; end
+if test -f ~/work/ctm-dev/ctm.fish
+    source ~/work/ctm-dev/ctm.fish
+end
 fish_add_path /opt/homebrew/opt/mysql-client@8.0/bin
 /opt/homebrew/bin/mise activate fish | source

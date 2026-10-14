@@ -15,6 +15,12 @@
 # shell runs the line.
 remote_path='/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin'
 
+# Ghostty sets TERM=xterm-ghostty and ssh passes it on, but the other Mac keeps
+# that terminal's description inside Ghostty.app, where tmux does not look, so
+# tmux stops with "missing or unusable terminal". The empty entry after the
+# colon keeps the usual places in the search too.
+remote_env="PATH=$remote_path TERMINFO_DIRS=/Applications/Ghostty.app/Contents/Resources/terminfo:"
+
 # BatchMode so a host that wants a password or an unknown host key is skipped
 # rather than hanging the popup; ConnectTimeout for peers that are asleep.
 ssh_opts=(-o BatchMode=yes -o ConnectTimeout=3)
@@ -33,7 +39,7 @@ tailscale_peers() {
 
 # Runs the sh script on stdin on the host.
 remote_sh() {
-  ssh "${ssh_opts[@]}" "$1" "env PATH=$remote_path sh -s"
+  ssh "${ssh_opts[@]}" "$1" "env $remote_env sh -s"
 }
 
 # Runs the sh script on stdin on every peer at once, printing each line it
@@ -56,7 +62,7 @@ each_peer() {
 # to the session the picker was opened from.
 attach_remote() {
   local host=$1 session=$2
-  local attach="ssh -t $host \"env PATH=$remote_path tmux attach -t '$session'\""
+  local attach="ssh -t $host \"env $remote_env tmux attach -t '$session'\""
 
   if [[ -z $TMUX ]]; then
     eval "exec $attach"

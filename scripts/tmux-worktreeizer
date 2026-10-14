@@ -2071,7 +2071,7 @@ remote_picker() {
     printf 'next-host\n' >"$result"
     return 0
   }
-  ssh -t "$host" "env PATH=$remote_path TW_HOST=$host TW_RESULT=$dir/result TW_EDITOR=${TW_EDITOR:-${EDITOR:-vi}} sh -c 'rm -f $dir/result; bash $dir/${SELF##*/} --here'"
+  ssh -t "$host" "env $remote_env TW_HOST=$host TW_RESULT=$dir/result TW_EDITOR=${TW_EDITOR:-${EDITOR:-vi}} sh -c 'rm -f $dir/result; bash $dir/${SELF##*/} --here'"
   remote_sh "$host" <<<"cat $dir/result 2>/dev/null" >"$result"
 }
 

@@ -47,8 +47,8 @@ local function fetch(args)
   return vim.v.shell_error == 0
 end
 
--- Returns `base, head, label` (refs to pass as `base...head`), or nil and an
--- error message.
+-- Returns `base, head, label, pr_number` (refs to pass as `base...head`), or
+-- nil and an error message. pr_number is nil when there is no PR.
 ---@param number? number PR number; defaults to the current branch's PR
 function M.resolve(number)
   local pr = view_pr(number)
@@ -78,7 +78,7 @@ function M.resolve(number)
     vim.notify("PR diff: git fetch failed; using local origin refs", vim.log.levels.WARN)
   end
 
-  return base, head, ("PR #%d: %s...%s"):format(pr.number, pr.baseRefName, pr.headRefName)
+  return base, head, ("PR #%d: %s...%s"):format(pr.number, pr.baseRefName, pr.headRefName), pr.number
 end
 
 return M

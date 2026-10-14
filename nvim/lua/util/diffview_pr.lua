@@ -6,13 +6,16 @@ local M = {}
 
 ---@param number? number PR number; defaults to the current branch's PR
 function M.open(number)
-  local base, head, label = require("util.pr_refs").resolve(number)
+  local base, head, label, pr_number = require("util.pr_refs").resolve(number)
   if not base then
     vim.notify("Diffview PR: " .. head, vim.log.levels.ERROR)
     return
   end
   vim.notify("Diffview " .. label)
   vim.cmd("DiffviewOpen " .. base .. "..." .. head)
+  if pr_number then
+    require("util.diffview_pr_status").attach(pr_number)
+  end
 end
 
 return M
