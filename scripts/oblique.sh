@@ -35,7 +35,6 @@ unstuck|Accident|Do it badly on purpose.
 unstuck|Accident|Follow the agent's wrong path for five minutes.
 unstuck|Accident|Use the error as an idea for a feature.
 unstuck|Accident|Read the warning you usually ignore.
-unstuck|Accident|Let the agent finish the wrong idea. What did you learn?
 unstuck|Accident|Pick a random line in the file. Start there.
 both|Constraint|No agent for the next hour.
 standup|Constraint|Ask the agent fewer questions than yesterday.
@@ -85,10 +84,10 @@ standup|People|Work on one problem as a group for an hour.
 standup|People|Ask the newest person for their opinion first.
 standup|People|Give a specific compliment in a code review.
 standup|People|Swap tasks with a colleague for an hour.
-standup|People|Have lunch with someone from another team.
+standup|People|Have a video lunch with a teammate. Do not talk about work.
 standup|People|Call someone instead of writing a message.
 standup|People|Ask the team what they made this week.
-standup|People|Learn everything you can from the person next to you.
+standup|People|Learn everything you can from one colleague today.
 unstuck|People|Explain the problem to someone who is not in the room.
 unstuck|People|Ask someone who does not know the code.
 unstuck|People|Ask for help now, not in an hour.
@@ -117,7 +116,7 @@ standup|Making|Build it twice: once with the agent, once without. Compare them.
 standup|Making|Write a script you will delete tomorrow.
 standup|Making|Make a prototype in one hour. Show it at the end of the day.
 standup|Making|Write one function slowly, by hand, with full attention.
-standup|Making|Start a side project at lunch.
+standup|Making|Start a small side project today. Give it 30 minutes.
 standup|Making|Make the internal tool beautiful.
 standup|Making|Build the demo before the feature.
 standup|Making|Make something for a teammate, not for a ticket.
@@ -126,7 +125,6 @@ standup|Making|Write code today that you would show in an interview.
 unstuck|Making|Build a tiny version outside the codebase first.
 unstuck|Making|Make a copy you can throw away. Break it freely.
 standup|Puzzle|Pick the hardest bug in the backlog. Keep it for yourself.
-standup|Puzzle|Solve one problem today without help from the agent.
 standup|Puzzle|Read one clever piece of code until you understand it fully.
 unstuck|Puzzle|Predict the output before you run it.
 unstuck|Puzzle|Draw the moving parts. Which one moves when it should not?
@@ -139,9 +137,9 @@ standup|Learning|Read the source of a library you use every day.
 standup|Learning|Read the documentation, not the summary.
 standup|Learning|Learn the keyboard shortcut you avoid.
 standup|Learning|Write down one thing you understand today that you did not understand yesterday.
-standup|Learning|Read a chapter of an old programming book.
+standup|Learning|Read one old essay about programming.
 standup|Learning|Learn how one part of production works that you have never seen.
-standup|Learning|Try a language you do not use at work.
+standup|Learning|Spend 30 minutes in a language you do not use at work.
 standup|Learning|Read the git history of the file you change today.
 unstuck|Learning|Ask the agent to explain the code. Then explain it back in your own words.
 unstuck|Learning|What would you need to know to do this alone?
@@ -150,25 +148,20 @@ standup|Medium|Write one paragraph about why this system exists.
 unstuck|Medium|Describe it as a story. Who does what, and when?
 unstuck|Medium|Write the interface you wish existed. Then build it.
 unstuck|Medium|Write the README first.
-unstuck|Medium|Model it with index cards on a table.
 both|Experiment|There is no win and no fail today. Only make.
 standup|Experiment|Consider everything today an experiment.
 standup|Experiment|Try one idea you are sure will fail.
 standup|Experiment|Change one habit for one day only.
-standup|Experiment|Be happy whenever you can.
-standup|Experiment|Find a place you trust. Try trusting it for a while.
 unstuck|Experiment|Do not make and judge at the same time. Make now, review later.
 unstuck|Experiment|Change one thing. Only one.
 unstuck|Experiment|Write down what you expect. Then run it.
-standup|Process|Let the process lead today, not the outcome.
-standup|Process|Allow today to change your mind.
-standup|Process|Work on the wrong problem for an hour.
+standup|Process|Change your mind about one thing today. Say it aloud.
+standup|Process|Spend 20 minutes on a problem that is not yours.
 standup|Process|Collect ideas today. Do not judge them.
-standup|Process|Begin anywhere.
+unstuck|Process|Begin anywhere.
 standup|Process|Slow down for one task.
 standup|Process|Keep a notebook open all day.
 unstuck|Process|Go deep. Read one level below where you usually stop.
-unstuck|Process|Make a mess first. Clean it later.
 unstuck|Process|Copy a solution you admire. Then change it.
 unstuck|Process|Capture the accident. Take a screenshot before you fix it.
 standup|Do|Do the task you avoided yesterday first.
@@ -177,12 +170,10 @@ unstuck|Do|Stop planning. Write the first test.
 unstuck|Do|Do the next small thing.
 unstuck|Do|Ship the smallest piece now.
 unstuck|Do|Stop looking for the right way. Do it one way.
-standup|Design|Today, protect the future, not only the feature.
-standup|Design|Delete code today.
+standup|Design|Today, make one future change easier.
 unstuck|Design|Make the change easy. Then make the easy change.
 unstuck|Design|Tidy first. Then change.
 unstuck|Design|What would make the next change easier?
-unstuck|Design|Which option does this close? Keep it open.
 unstuck|Design|Make it work. Then make it right. Then make it fast.
 unstuck|Design|Can you do this without a new abstraction?
 unstuck|Design|Inline it. Look again.
@@ -207,7 +198,6 @@ unstuck|Reframe|Make it general. Is the general problem easier?
 unstuck|Reframe|Work backward from the result.
 unstuck|Reframe|What is unknown? What do you already know?
 unstuck|Reframe|Did you use all the information?
-unstuck|Reframe|Draw it.
 unstuck|Reframe|Look at the problem from the user's side.
 unstuck|Reframe|Find a comparison outside software.
 unstuck|Reframe|Split the problem in two. Solve the easier half.
@@ -219,8 +209,6 @@ unstuck|Reframe|What would you do with a week? What would you do with an hour?
 unstuck|Transform|Replace one part. What else could do this job?
 unstuck|Transform|Combine two parts into one.
 unstuck|Transform|Use an idea from another part of the codebase.
-unstuck|Transform|Make one part much more important than the rest.
-unstuck|Transform|Use it for something else.
 unstuck|Transform|Remove a step.
 unstuck|Transform|Reverse the order.
 unstuck|Transform|Turn it inside out. Let the callee call the caller.
@@ -238,11 +226,9 @@ unstuck|Debug|Read the code that runs, not the code you think runs.
 unstuck|Debug|What changed?
 unstuck|Debug|Test the thing you are sure about.
 unstuck|Debug|Clear the cache. Restart everything.
-unstuck|Debug|Explain it line by line to a rubber duck.
 unstuck|Debug|Write the test that fails. Then stop.
 unstuck|Debug|Compare a working case to a broken case.
 unstuck|Debug|Look at the timestamps.
-unstuck|Debug|Is it the data or the code?
 unstuck|Debug|Find who saw this before. Search the history.
 unstuck|Debug|Turn off half of it.
 standup|Agent|Use one agent at a time today.
@@ -256,7 +242,6 @@ unstuck|Agent|Ask the agent for its plan. Change one step.
 unstuck|Agent|Make the agent write the test first.
 unstuck|Agent|Tell the agent what not to do.
 unstuck|Agent|Give the agent one good example.
-unstuck|Agent|Ask the agent to explain your own code to you.
 unstuck|Agent|Ask the agent to walk you through the change, step by step.
 unstuck|Agent|Show the agent the error, not your guess.
 unstuck|Agent|Let the agent try once with no help. Watch what it does.
@@ -282,46 +267,35 @@ unstuck|Pace|Is it finished?
 unstuck|Pace|Leave it. Come back after lunch.
 unstuck|Pace|Sleep on it.
 unstuck|Pace|Get a glass of water. Then decide.
-unstuck|Pace|Wait ten minutes before you send the next prompt.
 unstuck|Pace|Go faster. Make a rough version now.
 both|Place|Walk while you think. Sit down only to decide.
 standup|Place|Work outside.
-standup|Place|Work in a room you have never worked in.
-standup|Place|Work at a coffee shop. Leave your laptop at home.
-standup|Place|Work from the place where your users are.
-standup|Place|Go to a colleague's desk. Work from there for an hour.
+standup|Place|Work away from your desk for one hour. Take only a notebook.
 standup|Place|Work standing at the kitchen counter.
 standup|Place|Work next to a window.
-standup|Place|Work from a library.
-standup|Place|Work in the same room as the team.
-standup|Place|Work in a park for the first hour.
-standup|Place|Work on a train or a bus.
+standup|Place|Work in a Slack huddle with the team. Talk only when you need to.
+standup|Place|Work from a different room this morning. Take only the laptop.
 unstuck|Place|Move to a different chair.
 unstuck|Place|Leave the room.
 both|Device|Use a small screen. Close every window except one.
-standup|Device|Work on your phone only.
-standup|Device|Use only a tablet and a pen.
+standup|Device|Work on your phone only until lunch.
 standup|Device|Unplug the second monitor.
 standup|Device|Work with no internet for one hour. What can you still do?
 standup|Device|Try a tool you have never used.
 standup|Device|Use only the terminal today.
 standup|Device|Use an editor you do not usually use.
-standup|Device|Use graph paper and a pencil for design.
-standup|Device|Work on an old laptop.
 standup|Device|Leave your phone in another room.
 unstuck|Device|Write the prompt by voice.
 unstuck|Device|Turn off syntax highlighting.
-unstuck|Device|Turn the monitor to portrait.
 unstuck|Device|Read the code on paper or on your phone, not in the editor.
 standup|Paper and hands|Draw the architecture before you open the editor.
 standup|Paper and hands|Keep a paper list of what you finish today.
 unstuck|Paper and hands|Write the prompt by hand. Then type it.
-unstuck|Paper and hands|Print the diff. Review it with a pen.
-unstuck|Paper and hands|Explain the change on a whiteboard. Give the agent a photo of it.
-unstuck|Paper and hands|Write the steps on sticky notes. Move them around.
+unstuck|Paper and hands|Explain the change on paper. Give the agent a photo of it.
+unstuck|Paper and hands|Write each step on a small piece of paper. Move them around.
 unstuck|Paper and hands|Draw the data as boxes and arrows.
 unstuck|Paper and hands|Write the query by hand first.
-standup|Body|Have one meeting as a walk.
+standup|Body|Take one call as a walk, with no video.
 standup|Body|Eat lunch outside.
 standup|Body|Move every hour today.
 unstuck|Body|Stand up for this task.
@@ -336,21 +310,18 @@ standup|Senses|Change the editor theme to something you do not like.
 standup|Senses|Work with only natural light.
 standup|Senses|Listen to one album from start to end while you work.
 unstuck|Senses|Make the font very large.
-unstuck|Senses|Read the code in a different font.
 unstuck|Senses|Close your eyes. Describe the system from memory.
-standup|Time|Work at a time of day when you do not usually work.
 standup|Time|Start the agent at the end of the day. Read the result in the morning.
 standup|Time|Work in 25-minute blocks today.
 standup|Time|Spend the first hour of the day only thinking.
 standup|Time|Do the creative work before you read messages.
 standup|Time|End the day with 30 minutes of free exploration.
-standup|Time|Spend this afternoon on something you love.
+standup|Time|Spend one hour this afternoon on something you love.
 unstuck|Time|Give yourself 15 minutes. Stop when the time ends.
 unstuck|Time|Set a timer for five minutes. Write anything.
 standup|Play|Make something useless today.
 standup|Play|Follow your curiosity for one hour.
 standup|Play|Notice the moment today when you feel like a maker.
-standup|Play|End the day with something to show.
 standup|Play|Give your branch a ridiculous name.
 standup|Play|Hide a small joke in a test name.
 standup|Play|Make a tiny game.
@@ -361,6 +332,15 @@ standup|Play|Solve one small puzzle with a teammate in the fewest characters.
 standup|Play|Make a sound play when the tests pass.
 standup|Play|Do a 20-minute coding exercise just for practice.
 standup|Play|Make a terrible version together. Laugh about it.
+standup|Mario Kart|Race once at the end of standup. Last place reads the card tomorrow.
+standup|Mario Kart|End the day with one race. The winner names a branch tomorrow.
+standup|Mario Kart|Rainbow Road day: take the hardest task on the board.
+standup|Mario Kart|Which character is the code you work on today? Why?
+both|Mario Kart|Someone is in last place. Give them help, not a blue shell.
+unstuck|Mario Kart|Mushroom, star, or blue shell? A small push, no fear, or attack the biggest problem.
+unstuck|Mario Kart|Banana peel: find the thing you will slip on later. Remove it now.
+unstuck|Mario Kart|Shortcut or track? Decide on purpose.
+unstuck|Mario Kart|Stuck? Race once. Then look again.
 standup|Care|Do the boring task with care.
 standup|Care|Fix one small thing that nobody asked for.
 standup|Care|Read one message from a real user.
@@ -489,8 +469,10 @@ CHANGE THE DECK
   Remove the cards that nobody likes. Change the first word if a card is
   in the wrong group.
 
-  When you change the deck, everyone gets a new standup card. Share the
-  change with the whole team.
+  When you add or remove a card, most days keep their standup card. Only
+  the days that the new or removed card wins are different. To change the
+  words of a card, or its category, is safe in the same way. Share each
+  change with the whole team, so everyone has the same deck.
 
 WHERE THE IDEAS COME FROM
 
@@ -511,22 +493,44 @@ list_cards_for() {
   cards_for "$1" | awk -F'|' '{ printf "  %-16s %s\n", $1, $2 }'
 }
 
-draw() {
-  local use=$1 order=${2:-random} index
-  local pool=()
-  while IFS= read -r line; do
-    pool+=("$line")
-  done < <(cards_for "$use")
+# Each card gets a score from today's date and its own text, and the highest
+# score wins. So when someone adds or removes a card, only the days that card
+# wins are different. Every other day keeps its card.
+# The numbers stay small enough that every awk gets the same result.
+todays_card() {
+  cards_for standup | LC_ALL=C awk -F'|' -v day="$(date +%Y-%m-%d)" '
+    function score(text, base,    total, i) {
+      total = 0
+      for (i = 1; i <= length(text); i++) {
+        total = (total * base + code[substr(text, i, 1)]) % prime
+      }
+      return total
+    }
+    BEGIN {
+      prime = 67108859
+      for (i = 1; i < 128; i++) code[sprintf("%c", i)] = i
+      base = 2 + score(day, 131) % (prime - 3)
+    }
+    {
+      current = score($2, base)
+      if (NR == 1 || current > best) { best = current; card = $0 }
+    }
+    END { print card }
+  '
+}
 
+draw() {
+  local use=$1 order=${2:-random} card
   if [[ $order == today ]]; then
-    local seed
-    seed=$(date +%Y-%m-%d | cksum | cut -d' ' -f1)
-    index=$((seed % ${#pool[@]}))
+    card=$(todays_card)
   else
-    index=$((RANDOM % ${#pool[@]}))
+    local pool=()
+    while IFS= read -r line; do
+      pool+=("$line")
+    done < <(cards_for "$use")
+    card=${pool[$((RANDOM % ${#pool[@]}))]}
   fi
 
-  local card=${pool[$index]}
   local category
   category=$(printf '%s' "${card%%|*}" | tr '[:lower:]' '[:upper:]')
   printf '\n  %s\n\n  %s\n\n' "$category" "${card#*|}"
