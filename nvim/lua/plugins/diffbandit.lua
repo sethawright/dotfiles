@@ -86,14 +86,6 @@ return {
       end,
       desc = "DiffBandit Current File History",
     },
-    -- Pick an open PR, then diff it as GitHub does (merge-base vs its base).
-    {
-      "<leader>gvp",
-      function()
-        require("util.pr_picker").open(require("util.diffbandit_pr").open)
-      end,
-      desc = "DiffBandit PR (pick an open PR)",
-    },
   },
   opts = {},
   config = function(_, opts)
@@ -117,7 +109,7 @@ return {
     -- Three session shapes need three different toggles:
     --   * commit-panel host (gvd)          -> host:toggle_commit_panel()
     --   * plain git diff session (kind git) -> session:toggle_commit_panel()
-    --   * compare/commit *review* (gvp/gvh) -> the built-in toggle routes
+    --   * commit *review* (gvh)            -> the built-in toggle routes
     --     through the review host's `close`, which tears down the whole
     --     review (looks like a "quit"), and its show is git-only. So hide/show
     --     the review's nav+commit windows directly, reusing diffbandit's own
@@ -184,7 +176,7 @@ return {
       if not sess then
         return
       end
-      -- A review panel (gvp compare / gvh commit) must NOT use the built-in
+      -- A review panel (gvh commit) must NOT use the built-in
       -- toggle: its hide routes through the review host's close, tearing down
       -- the whole review. Only a non-review git session gets the built-in
       -- toggle; everything else is hidden/shown manually.

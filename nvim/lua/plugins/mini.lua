@@ -49,6 +49,14 @@ return {
           -- Tweak keys to your liking
           map_split(buf_id, "<C-s>", "belowright horizontal")
           map_split(buf_id, "<C-v>", "belowright vertical")
+
+          local git_files = require("util.minifiles_git")
+          vim.keymap.set("n", "gs", function()
+            git_files.toggle("status")
+          end, { buffer = buf_id, desc = "Toggle changed files (HEAD)" })
+          vim.keymap.set("n", "gm", function()
+            git_files.toggle("base")
+          end, { buffer = buf_id, desc = "Toggle changed files (base branch)" })
         end,
       })
     end,
@@ -63,6 +71,20 @@ return {
           mini.reveal_cwd()
         end,
         desc = "Open mini.files (cwd)",
+      },
+      {
+        "<leader>ge",
+        function()
+          require("util.minifiles_git").open("base")
+        end,
+        desc = "Explorer: changed vs base branch",
+      },
+      {
+        "<leader>gE",
+        function()
+          require("util.minifiles_git").open("status")
+        end,
+        desc = "Explorer: changed vs HEAD",
       },
     },
   },

@@ -6,13 +6,6 @@ return {
     { "<leader>gvd", "<cmd>DiffviewOpen<cr>", desc = "Diffview Open" },
     { "<leader>gvh", "<cmd>DiffviewFileHistory<cr>", desc = "Diffview File History" },
     { "<leader>gvH", "<cmd>DiffviewFileHistory %<cr>", desc = "Diffview Current File History" },
-    {
-      "<leader>gvp",
-      function()
-        require("util.pr_picker").open(require("util.diffview_pr").open)
-      end,
-      desc = "Diffview PR (pick an open PR)",
-    },
   },
   opts = {
     show_help_hints = false,
