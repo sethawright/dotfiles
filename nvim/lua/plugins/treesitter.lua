@@ -10,6 +10,7 @@ return {
         "jsdoc",
         "glimmer",
         "graphql",
+        "rbs",
       })
       opts.incremental_selection = {
         enable = false,
