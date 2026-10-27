@@ -36,7 +36,8 @@ vim.api.nvim_create_autocmd("FileType", {
   group = augroup("wrap_spell"),
   pattern = { "gitcommit", "markdown" },
   callback = function()
-    vim.opt_local.wrap = true
+    -- Wrapping breaks wide markdown tables apart, so only commit messages wrap.
+    vim.opt_local.wrap = vim.bo.filetype == "gitcommit"
     vim.opt_local.number = false
     vim.opt_local.relativenumber = false
     vim.opt_local.signcolumn = "no"

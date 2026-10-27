@@ -10,6 +10,7 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.swapfile = false
 vim.opt.backup = false
+vim.opt.modeline = false -- don't run `vim:`/`ex:` settings embedded in files
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
 vim.opt.guifont = "SFMono Nerd Font:h12"

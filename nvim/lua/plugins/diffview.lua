@@ -4,6 +4,19 @@ return {
   lazy = true,
   keys = {
     { "<leader>gvd", "<cmd>DiffviewOpen<cr>", desc = "Diffview Open" },
+    {
+      "<leader>gvm",
+      function()
+        -- Same base-branch pick as `<leader>gm`, but against the remote ref.
+        -- Diff from the merge-base so only this branch's work shows (plus the
+        -- working tree), not whatever landed on master since the branch point.
+        local base = vim.fn.system("git rev-parse --verify --quiet origin/main"):find("^%x") and "origin/main"
+          or "origin/master"
+        local mb = vim.trim(vim.fn.system("git merge-base " .. base .. " HEAD"))
+        vim.cmd("DiffviewOpen " .. (mb:find("^%x+$") and mb or base))
+      end,
+      desc = "Diffview Open (base branch)",
+    },
     { "<leader>gvh", "<cmd>DiffviewFileHistory<cr>", desc = "Diffview File History" },
     { "<leader>gvH", "<cmd>DiffviewFileHistory %<cr>", desc = "Diffview Current File History" },
   },
