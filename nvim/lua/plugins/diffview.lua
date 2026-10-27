@@ -67,11 +67,18 @@ return {
       },
     },
     file_panel = {
-      listing_style = "list",
+      listing_style = "tree",
+      tree_options = {
+        flatten_dirs = true,
+        folder_statuses = "only_folded",
+      },
     },
     keymaps = {
       file_panel = {
         { "n", "q", "<Cmd>tabclose<CR>", { silent = true } },
+        -- diffview binds `-` to stage/unstage (already on <space> below), which
+        -- shadowed the global `-` window-shrink mapping. Drop it.
+        { "n", "-", false },
         {
           "n",
           "<cr>",
