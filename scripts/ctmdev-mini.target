@@ -1,0 +1,5 @@
+# *.ctmdev.us served by seth-mini over Tailscale. Switch with: ctmdev local|mini
+# local= keeps AAAA lookups off the public zone, which answers ::1.
+local=/ctmdev.us/
+address=/ctmdev.us/100.94.32.118
+address=/rig.ctmdev.us/100.63.10.49

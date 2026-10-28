@@ -1,0 +1,5 @@
+# *.ctmdev.us served by this MacBook. Switch with: ctmdev local|mini
+# local= keeps AAAA lookups off the public zone, which answers ::1.
+local=/ctmdev.us/
+address=/ctmdev.us/127.0.0.1
+address=/rig.ctmdev.us/100.63.10.49

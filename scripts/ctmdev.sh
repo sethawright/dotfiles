@@ -2,13 +2,16 @@
 # Point *.ctmdev.us at this MacBook (local) or at seth-mini over Tailscale (mini).
 # dnsmasq only reads address= lines at start, so a swap restarts it.
 # The targets end in .target so Homebrew's dnsmasq.d/*.conf glob loads only the active symlink.
+# The targets live next to this script and are copied into dnsmasq.d on every swap.
 set -euo pipefail
 
 dir=/opt/homebrew/etc/dnsmasq.d
 active="$dir/ctmdev-active.conf"
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 case "${1:-status}" in
   local|mini)
+    cp "$here"/ctmdev-local.target "$here"/ctmdev-mini.target "$dir/"
     ln -sfn "ctmdev-$1.target" "$active"
     sudo brew services restart dnsmasq >/dev/null
     sudo dscacheutil -flushcache
